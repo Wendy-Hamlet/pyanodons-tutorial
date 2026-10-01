@@ -121,6 +121,15 @@ a moving belt.
    in 77 minutes, 28.5 of them behind Small parts), assemblers make the building materials into
    chests. Not balanced — every machine just produces; the items needed in very large numbers
    (Transport belts, Mechanical inserters) come first and their bottlenecks are raised later.
+11. **Make on the spot what needs nothing or only Water** (Soil, Limestone, Seaweed, Sap, CO2 from
+   Moondrop greenhouses, Vacuum, Methane ...): each block that uses one runs its own machines for
+   it, so every block balances itself and these items stay off the bus. `rate-plan.js` finds them
+   (plan option `local: 'free'`); see [first-save-review](first-save-review.md#5-the-bus-to-trains).
+12. **Every byproduct gets a buffer**, so that a consumer that stops cannot jam its producer.
+   **Stone travels as Stone bricks**: they stack to 1,000 against Stone's 50 (an iron chest holds
+   32,000 bricks, i.e. 64,000 Stone, against 1,600 Stone), and a Jaw crusher turns 4 bricks back
+   into 8 Stone where Stone is needed, for some fuel (smelting) and power (crushing). The bus then
+   carries half as many items. Plan option `carry` in `rate-plan.js`.
 
 ## Trains
 

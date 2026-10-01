@@ -139,9 +139,9 @@ Ash separation has to swallow (10 Ash per second per Solid separator: about 11 o
 
 Left over per minute: Coal gas 1,500, Tar 750, Meat 30, Guts 30, Chitin 15, Brain 15, Iron oxide 5.
 
-Building every machine of the plan once (`--build`) takes, among others: 8,645 Stone brick,
-6,535 Iron plate, 3,925 Small parts, 1,740 Aluminium plate (the vrauk paddocks), 1,584 Glass,
-1,495 Steel, 1,394 Air-core inductors, 1,250 Tin plate, 820 Titanium plate, 423 Steam engines and
+Building every machine of the plan once (`--build`, whole machines per block) takes, among others: 8,645 Stone brick,
+6,517 Iron plate, 3,915 Small parts, 1,740 Aluminium plate (the vrauk paddocks), 1,584 Glass,
+1,495 Steel, 1,388 Air-core inductors, 1,250 Tin plate, 820 Titanium plate, 423 Steam engines and
 **542 Simple circuit boards** (Research centers, Slaughterhouses, Reproductive complexes,
 Screeners), plus the organisms as modules (390 Moss, 384 Vrauks, 250 Seaweed, 70 Trees, 48 Sap
 trees, 16 Moondrop).
@@ -222,8 +222,10 @@ Vitreloy and Fish oil.
 ## 8. What it suggests for the bus
 
 1. A main bus of nine items carries this factory: Stone, Soil, Native flora, Ash, Wood,
-   Limestone, Iron plate, Seaweed, Moss. Copper plate joins it with the circuit factory; the
-   combined plan is in [first-save-review](first-save-review.md#5-the-bus-to-trains).
+   Limestone, Iron plate, Seaweed, Moss. Copper plate joins it with the circuit factory. With
+   the author's two bus rules (water-only items made where they are used, Stone carried as
+   bricks) Soil, Limestone and Seaweed leave it: see the combined plan in
+   [first-save-review](first-save-review.md#5-the-bus-to-trains).
 2. Raw ores with one consumer (Quartz, Iron, Copper, Raw coal) go straight from the mine to their
    block; blocks that touch can hand over directly (output ports, see
    [techniques](techniques.md#machines-with-an-output-port)).

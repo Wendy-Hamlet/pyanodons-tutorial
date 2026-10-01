@@ -64,52 +64,91 @@ assemblers too, all 4 Soot separators; 10 of 13 lead furnaces were out of fuel.
 ## 5. The bus to trains
 
 `plans/bus-to-trains.js` joins red science 60/min, pY1 30/min and Simple circuit boards 10/min
-with the author's recipes (see [red-py1-factory](red-py1-factory.md) for each part). Items that
-leave their block for several blocks:
+with the author's recipes (see [red-py1-factory](red-py1-factory.md) for each part) and the
+author's two rules for the bus:
+
+**Rule 1: make on the spot what needs nothing or only Water.** An item qualifies when every input
+of its recipe is Water or another such item (`rate-plan.js` finds them, loops included):
+
+| Item | Made in (machines) |
+|---|---|
+| Soil | red 5 Soil extractors, moss 1.9 |
+| Limestone | cellulose 11.8 Soil extractors, latex 7.5 |
+| Seaweed | petri dish 13.6 Seaweed crops, latex 11.4 |
+| Sap | PCB 14.8 Sap extractors, latex 13.3, vrauks 10 |
+| CO2 | moss 0.9 Moondrop greenhouses, formaldehyde 0.4 |
+| Methane, Moondrop, Moondrop seeds | formaldehyde (5.6 greenhouses, 0.2 nurseries) |
+| Muddy sludge, Creamy latex, Vacuum | moss, latex, PCB and components |
+
+Every block then balances itself and none of these items travels; only Water is piped to more
+blocks. Small shares round up per block (two Pressure pumps instead of one).
+
+**Rule 2: Stone travels as Stone bricks.** Every byproduct needs a buffer, so that a consumer that
+stops cannot stop the producer, and bricks buffer well: they stack to 1,000, Stone to 50, so an
+iron chest (32 slots) holds 32,000 bricks (64,000 Stone) against 1,600 Stone. The iron block's
+crushing Stone fills a chest in 3 hours as bricks, in 4.5 minutes as Stone. The iron and copper
+blocks smelt their Stone into bricks, the bricks block smelts the mined Stone, and the blocks
+that need Stone (moss, battery, latex) crush bricks back, 4 into 8, in Jaw crushers. Cost: 20.3
+more Stone furnaces (4.0 MW of fuel) and 7.9 Jaw crushers (7.9 MW), 6.6 more Raw coal/s in all.
+In return the bus carries 860 bricks/min instead of 1,720 Stone: one belt instead of two.
+
+Items that then leave their block for several blocks:
 
 | Item | From (/min) | To (/min) | Total |
 |---|---|---|---|
-| Stone | crushing iron 355 and copper 203, mined 1,162 | bricks 960, moss 443, battery 167, latex 150 | 1,720 (2 belts) |
-| Ash | burners | wood (logs) 464, red 360; **8,504 left over** | 824 |
-| Soil | soil and limestone | red 600, moss 222 | 822 |
+| Stone brick | bricks 581, iron 178, copper 102 | red 480, moss 222, battery 83, latex 75 | 860 (1 belt) |
+| Ash | burners | wood (logs) 464, red 360; **8,902 left over** | 824 |
 | Native flora | mined | red 600, vrauks 188 | 788 |
 | Wood | wood | cellulose 495, red 240, PCB 7 | 741 |
-| Limestone | soil and limestone | cellulose 283, latex 180 | 463 |
 | Iron plate | iron | small parts 210, red 120, components 25 | 355 |
 | Moss | moss | vrauks 188, pY1 90, wood 77 | 355 |
-| Seaweed | seaweed | petri dish 180, latex 150 | 330 |
-| Copper plate | copper | small parts 110, moondrop 33, battery 33, PCB 17, components 10 | 203 |
-| Sap | sap | PCB 67, latex 60, vrauks 45 | 172 |
+| Copper plate | copper | small parts 110, formaldehyde 33, battery 33, PCB 17, components 10 | 203 |
 | Cellulose | cellulose | pY1 54, battery 17 | 71 |
 | Coke | tar refinery (Pitch) | components 13, ceramic 2 | 15 |
 
-Pipes: Water 95,251/min (1,590/s), Steam 11,917, Tar 2,778 (750 from the plan's own Coal
-distillation, the rest from the coke site or Tailings pond), CO2 2,217 (moondrop greenhouses to
-moss farms), Creosote 667, Formaldehyde 333, Vacuum 250.
+Pipes: Water 95,251/min to nine blocks (red 30,000 for its Soil, latex 18,000, cellulose 14,133,
+moss 13,304, wood 9,273, ...), Steam 11,917, Tar 2,778 (750 from the plan's own Coal
+distillation, the rest from the coke site or Tailings pond), Creosote 667, Formaldehyde 333.
+
+Byproducts that need a buffer (per minute):
+
+| Block | Byproducts |
+|---|---|
+| iron, copper | Stone 355 and 203, as bricks 178 and 102 |
+| coal | Coal gas 1,500, Tar 750 (to the tar refinery), Iron oxide 5 |
+| tar refinery | Pitch 3,486, Anthracene oil 2,204, Middle oil 833, Light oil 80, Naphthalene oil 80, Hydrogen 40 |
+| latex | Meat 30, Guts 30, Chitin 15, Brain 15, Cages 15 (back to vrauks) |
+| every burner | Ash, 9,726 in all |
 
 What changes against the first save:
 
-1. **An Ash belt.** The plan burns 155 Raw coal/s (102 for electricity, 33 for process steam,
-   21 in burners) and so leaves **9,328 Ash/min**; logs and red science use 824. The rest goes to
-   Ash separation: about 14 Solid separators. Their yield is small: per minute 425 Coal dust,
-   43 Iron oxide and 170 Soot, and the Soot gives 17 Iron, 17 Copper, 8.5 Aluminium, 8.5 Zinc and
-   8.5 Lead ore. Ash separation disposes of Ash; it does not replace the zinc and lead mines
+1. **An Ash belt.** The plan burns 162 Raw coal/s (107 for electricity, 33 for process steam,
+   22 in burners) and so leaves **9,726 Ash/min**; logs and red science use 824. The rest goes to
+   Ash separation: about 15 Solid separators. Their yield is small: per minute 445 Coal dust,
+   45 Iron oxide and 178 Soot, and the Soot gives 18 Iron, 18 Copper, 9 Aluminium, 9 Zinc and
+   9 Lead ore. Ash separation disposes of Ash; it does not replace the zinc and lead mines
    (the circuits need 333 Zinc and 160 Lead ore per minute).
 2. **A metals belt from the outposts.** The circuits need, per minute, 31 Tin, 27 Lead and 33 Zinc
    plate. Smelted at their fields (an outpost cell, like the steel site) that is 91 plates/min,
    a tenth of a belt; as ore it would be 804/min. One item per lane avoids a mixed lane jamming
    when one metal is not taken.
-3. **Stone on the bus** instead of bricks in the inventory: 1,720/min, a third of it from
-   crushing iron and copper ore.
-4. **Every block takes its inputs from the bus or a neighbour**, including Coke and plates for the
-   circuit components.
+3. **Stone bricks on the bus** instead of bricks in the inventory (rule 2).
+4. **Every block takes its inputs from the bus, a neighbour or its own water-only machines**,
+   including Coke and plates for the circuit components.
 5. **A mall at the end of the bus**: Iron plate, Copper plate, Stone brick, Small parts, Glass and
    circuits are on it already; Steel comes from the steel outpost; Pipes, Steam engines and
    inductors are made in the mall itself ([key intermediates](red-py1-factory.md#7-other-key-intermediates-before-trains)).
    Its burners need a fuel belt, or electric Automated factories.
 
-Power for this factory at full load: 152.9 MW electric, 62.6 MW burner fuel, 316 MW of fuel fluid
+Power for this factory at full load: 160.8 MW electric, 66.6 MW burner fuel, 316 MW of fuel fluid
 for 32 Glassworks.
+
+**Option: Moss without Stone and Logs without Ash.** With the other Moss recipe (8 per 100 s, no
+Stone) and Logs from water only (4 per 3 seedlings), Moss, Wood and Cellulose become water-only
+too and leave the bus, which keeps only Copper plate, Stone brick (638/min), Iron plate, Native
+flora and Coke; Ash goes to red science alone. The price: 80 Moss farms instead of 28 (1,200 Moss
+as modules instead of 420), 23 Fastwood forestries instead of 10, 12 Botanical nurseries instead
+of 7, 8 MW more electricity. Set `moss: 'Moss-1'` and `log: 'log2'` in the plan to see it.
 
 ## 6. The author's recipes
 

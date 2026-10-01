@@ -55,7 +55,9 @@ parameters for yours.
 - `rate-plan.js <plan.js> [--build]`: solves a production plan (per-minute targets, one chosen
   recipe per item, all rates solved together so byproducts and returned cages count): machines,
   item flows, raw inputs, power, flows between the plan's blocks (bus or direct link) and what
-  the machines cost to build; with `fuel` set, the fuel burnt and its Ash. Plans live in
+  the machines cost to build; with `fuel` set, the fuel burnt and its Ash; `local: 'free'` makes
+  water-only items in each block that uses them, `carry` moves an item packed (Stone as bricks),
+  and every block lists the byproducts it must buffer. Plans live in
   `research/plans/`. `products.js` reads 2.1 product chances for it and the other recipe tools.
 - `building-inputs.js <tech,...>`: which items the buildings of a stage are made of, ranked by
   how many building recipes use them (finds the key intermediates a mall has to make).

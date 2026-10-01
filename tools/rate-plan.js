@@ -4,6 +4,11 @@
 //   - every recipe's crafts and machines (machine speed with the plan's modules),
 //   - every item: produced, consumed, by which recipes, and which targets (product lines) use it,
 //   - raw inputs (with drill counts for mined resources) and surplus byproducts,
+//   - power, and with plan.fuel the fuel burnt (boilers and steam engines included) and its Ash,
+//   - with plan.blocks: each block's products, machines, inputs and byproducts to buffer, and
+//     the flows between blocks (bus or direct link). plan.local = 'free' makes every item that
+//     needs nothing or only Water in the blocks that use it; plan.carry moves an item between
+//     blocks in a packed form (Stone as Stone bricks), packing and unpacking included,
 //   - with --build: what building every machine of the plan once costs.
 // Plans are JS modules (research/plans/*.js) whose comments say why each recipe was chosen.
 // Usage: node --max-old-space-size=4096 tools/rate-plan.js <plan.js> [--lang en|zh] [--build]
@@ -118,22 +123,99 @@ for (;;) {
   for (const [item] of negative) delete active[item];
 }
 
+
 // ---- totals per item ----------------------------------------------------------------------------
 const flows = (x) => {
   const items = {};
   const get = (i) => (items[i] = items[i] || { made: 0, used: 0, by: {}, makers: {} });
   for (const [r, n] of Object.entries(x)) {
     const { out, inn } = io(r);
-    for (const [i, a] of Object.entries(out)) { get(i).made += a * n; get(i).makers[r] = a * n; }
-    for (const [i, a] of Object.entries(inn)) { get(i).used += a * n; get(i).by[r] = a * n; }
+    for (const [i, a] of Object.entries(out)) { get(i).made += a * n; get(i).makers[r] = (get(i).makers[r] || 0) + a * n; }
+    for (const [i, a] of Object.entries(inn)) { get(i).used += a * n; get(i).by[r] = (get(i).by[r] || 0) + a * n; }
   }
   return items;
 };
-const all = flows(rates);
+let all = flows(rates);
 const perTarget = Object.fromEntries(Object.keys(targets).map((t) => [t, flows(run({ [t]: targets[t] }))]));
-
 const isFluid = (i) => !!raw.fluid[i];
 const pm = (v) => v * 60;
+const sum = (o) => Object.values(o).reduce((a, v) => a + v, 0);
+
+// ---- blocks: which block runs how many crafts of each recipe -------------------------------------
+const madeBy = Object.fromEntries(Object.entries(active).map(([i, r]) => [r, i]));
+const blockOf = {};
+for (const [b, items] of Object.entries(plan.blocks || {})) for (const i of items) blockOf[i] = b;
+const homeOf = (r) => blockOf[madeBy[r]] || (plan.blocks ? '?' : '全部');
+
+// Items made from nothing or from free inputs only (Water by default), directly or through other
+// such items, found as the largest set closed under the chosen recipes (so self-feeding loops like
+// Moondrop <-> Moondrop seeds count). With plan.local = 'free' every block that uses one makes its
+// own share: no item of that kind travels between blocks.
+const freeInputs = new Set(plan.freeInputs || ['water']);
+const local = new Set(plan.local === 'free' ? Object.keys(active) : []);
+for (let changed = true; changed;) {
+  changed = false;
+  for (const i of [...local]) {
+    if (targets[i] || Object.keys(io(active[i]).inn).some((j) => !local.has(j) && !freeInputs.has(j))) { local.delete(i); changed = true; }
+  }
+}
+// Shares: the fraction of a recipe's crafts each block runs. A local item's recipe is shared out
+// like its consumption; loops between local items settle by iteration.
+const share = {};
+for (const r of Object.keys(rates)) share[r] = local.has(madeBy[r]) ? {} : { [homeOf(r)]: 1 };
+for (let k = 0; k < 300; k++) {
+  for (const i of local) {
+    const by = (all[i] || { by: {} }).by;
+    const total = sum(by);
+    const s = {};
+    for (const [c, v] of Object.entries(by)) for (const [b, w] of Object.entries(share[c] || {})) s[b] = (s[b] || 0) + (v / total) * w;
+    share[active[i]] = s;
+  }
+}
+const own = {}; // recipe -> { block: crafts per second }
+for (const [r, x] of Object.entries(rates)) own[r] = Object.fromEntries(Object.entries(share[r]).map(([b, w]) => [b, w * x]));
+const netByBlock = (i) => {
+  const net = {};
+  for (const [r, perBlock] of Object.entries(own)) {
+    const { out, inn } = io(r);
+    if (!out[i] && !inn[i]) continue;
+    for (const [b, c] of Object.entries(perBlock)) net[b] = (net[b] || 0) + ((out[i] || 0) - (inn[i] || 0)) * c;
+  }
+  return net;
+};
+
+// Carried forms (plan.carry): an item travels between blocks packed as another, e.g. Stone as
+// Stone bricks. Blocks with Stone to spare pack it, blocks short of Stone unpack bricks; Stone from
+// outside is packed in the block `packIn`. The extra crafts count everywhere (machines, power).
+const carried = {};
+for (const [x, spec] of Object.entries(plan.carry || {})) {
+  const perPack = io(spec.pack).inn[x];
+  const perUnpack = io(spec.unpack).out[x];
+  const net = netByBlock(x);
+  const add = (r, b, c) => {
+    own[r] = own[r] || {};
+    own[r][b] = (own[r][b] || 0) + c;
+    rates[r] = (rates[r] || 0) + c;
+  };
+  // The packing block takes outside Stone as it comes; only the other blocks pack and unpack.
+  let spare = 0;
+  let short = 0;
+  for (const [b, v] of Object.entries(net)) {
+    if (b === spec.packIn) continue;
+    if (v > 1e-9) { add(spec.pack, b, v / perPack); spare += v; }
+    if (v < -1e-9) { add(spec.unpack, b, -v / perUnpack); short -= v; }
+  }
+  if (short > spare + 1e-9) add(spec.pack, spec.packIn, (short - spare) / perPack);
+  carried[x] = spec;
+}
+if (Object.keys(carried).length) all = flows(rates);
+const label = (r) => {
+  for (const [x, spec] of Object.entries(carried)) {
+    if (r === spec.unpack) return `解包：${nm(spec.as)} → ${nm(x)}`;
+  }
+  return nm(madeBy[r] || r);
+};
+const crafts = (r, c) => (c * (raw.recipe[r].energy_required ?? 0.5)) / speedOf(machineOf(r));
 
 console.log(`# ${plan.title || path.basename(args[0])}`);
 console.log(`\n目标（每分钟）：${Object.entries(plan.targets).map(([k, v]) => `${nm(k)} ${v}`).join('、')}`);
@@ -143,13 +225,10 @@ if (plan.techs) console.log(`可用配方：开局 + ${techs.size} 项科技（$
 console.log('\n## 配方与机器\n');
 console.log('| 配方 | 产物 | 每分钟次数 | 机器 | 速度 | 台数 |');
 console.log('|---|---|---|---|---|---|');
-const machineCount = {};
-for (const [item, r] of Object.entries(chosen)) {
-  if (!active[item]) { console.log(`| ${rn(r)} | ${nm(item)} | 0（副产物已够） | | | |`); continue; }
+for (const [item, r] of Object.entries(chosen)) if (!active[item]) console.log(`| ${rn(r)} | ${nm(item)} | 0（副产物已够） | | | |`);
+for (const [r, x] of Object.entries(rates)) {
   const m = machineOf(r);
-  const n = (rates[r] * (raw.recipe[r].energy_required ?? 0.5)) / speedOf(m);
-  machineCount[m] = (machineCount[m] || 0) + Math.ceil(n - 1e-9);
-  console.log(`| ${rn(r)} | ${nm(item)} | ${fmt(pm(rates[r]))} | ${nm(m)} | ${fmt(speedOf(m), 3)} | ${fmt(n)} |`);
+  console.log(`| ${rn(r)} | ${label(r)} | ${fmt(pm(x))} | ${nm(m)} | ${fmt(speedOf(m), 3)} | ${fmt(crafts(r, x))} |`);
 }
 
 // Items.
@@ -198,18 +277,16 @@ for (const [i, f] of order) {
   console.log(`| ${nm(i)}${isFluid(i) ? '（流体）' : ''} | ${fmt(pm(need))} | ${split} | ${src} |`);
 }
 console.log('\n## 多余的副产物（每分钟）\n');
-const surplus = order.concat(Object.entries(all).filter(([, f]) => f.used < 1e-9))
-  .filter(([i, f], k, a) => a.findIndex(([j]) => j === i) === k && f.made - f.used > 1e-9 && !targets[i]);
+const surplus = Object.entries(all).filter(([i, f]) => f.made - f.used > 1e-9 && !targets[i]).sort((a, b) => (b[1].made - b[1].used) - (a[1].made - a[1].used));
 console.log(surplus.map(([i, f]) => `${nm(i)} ${fmt(pm(f.made - f.used))}`).join('、') || '无');
 
 // Energy at full load, by what the machines run on (fractional machine counts), plus the drills
 // mining the raw inputs.
 const energy = { ...drillPower };
-for (const [item, r] of Object.entries(active)) {
+for (const [r, x] of Object.entries(rates)) {
   const m = machineOf(r);
-  const n = (rates[r] * (raw.recipe[r].energy_required ?? 0.5)) / speedOf(m);
   const kind = entity(m).energy_source.type;
-  energy[kind] = (energy[kind] || 0) + n * watts(entity(m).energy_usage);
+  energy[kind] = (energy[kind] || 0) + crafts(r, x) * watts(entity(m).energy_usage);
 }
 console.log(`\n## 能耗（满负荷，含开采原料的采矿机）\n\n${Object.entries(energy).map(([k, w]) => `${{ electric: '电', burner: '燃料（热能）', fluid: '燃烧流体', heat: '热', void: '无' }[k] || k} ${fmt(w / 1e6, 1)} MW`).join('、')}`);
 
@@ -251,45 +328,72 @@ if (plan.fuel) {
   }
 }
 
-// Blocks: the plan's groups of items made together. An item that leaves its block (or a raw
-// input) going to ONE other block is a direct link; going to several, it belongs on the bus.
+// Machines per block (fractional), from the shares.
+const blocks = [...new Set([...Object.keys(plan.blocks || {}), ...Object.values(own).flatMap((o) => Object.keys(o))])];
+const machinesIn = (b) => {
+  const m = {};
+  for (const [r, perBlock] of Object.entries(own)) {
+    if (!perBlock[b]) continue;
+    const name = machineOf(r);
+    m[name] = (m[name] || 0) + crafts(r, perBlock[b]);
+  }
+  return m;
+};
+
 if (plan.blocks) {
-  const blockOf = {};
-  for (const [b, items] of Object.entries(plan.blocks)) for (const i of items) blockOf[i] = b;
-  const madeBy = Object.fromEntries(Object.entries(active).map(([i, r]) => [r, i]));
-  const blockOfRecipe = (r) => blockOf[madeBy[r]] || '?';
-  // Per item and block: made minus used. Blocks short of an item import it from blocks with a
-  // surplus (byproducts included, e.g. cages coming back) and from raw supply.
+  // Links: per item and block, made minus used. Blocks short of an item import it from blocks with
+  // some to spare (byproducts included, e.g. cages coming back) and from raw supply.
   const links = {};
-  for (const [i, f] of Object.entries(all)) {
-    const net = {};
-    for (const [r, v] of Object.entries(f.makers)) net[blockOfRecipe(r)] = (net[blockOfRecipe(r)] || 0) + v;
-    for (const [r, v] of Object.entries(f.by)) net[blockOfRecipe(r)] = (net[blockOfRecipe(r)] || 0) - v;
+  for (const i of Object.keys(all)) {
+    const net = netByBlock(i);
     const to = Object.fromEntries(Object.entries(net).filter(([, v]) => v < -1e-9).map(([b, v]) => [b, -v]));
     if (!Object.keys(to).length) continue;
     const from = Object.fromEntries(Object.entries(net).filter(([, v]) => v > 1e-9));
-    const short = Object.values(to).reduce((a, v) => a + v, 0) - Object.values(from).reduce((a, v) => a + v, 0);
+    const short = sum(to) - sum(from);
     if (short > 1e-9) from['原料'] = short;
     links[i] = { from, to };
   }
-  console.log('\n## 区块\n');
-  console.log('| 区块 | 产物（每分钟） | 机器 | 从外面进来（每分钟） |');
-  console.log('|---|---|---|---|');
-  for (const [b, items] of Object.entries(plan.blocks)) {
-    const made = items.filter((i) => active[i]).map((i) => `${nm(i)} ${fmt(pm(all[i].made))}`).join('、');
-    const machines = {};
-    for (const i of items.filter((x) => active[x])) {
+
+  if (local.size) {
+    console.log('\n## 现用现制：只靠水（或凭空）就能做的物品，在用它的区块里就地生产\n');
+    for (const i of local) {
       const r = active[i];
-      const m = machineOf(r);
-      machines[m] = (machines[m] || 0) + (rates[r] * (raw.recipe[r].energy_required ?? 0.5)) / speedOf(m);
+      const per = Object.entries(own[r] || {}).filter(([, c]) => c > 1e-12).sort((a, b) => b[1] - a[1]);
+      console.log(`- ${nm(i)}（${rn(r)}，${nm(machineOf(r))}）：${per.map(([b, c]) => `${b} ${fmt(crafts(r, c))} 台`).join('、')}`);
+    }
+  }
+
+  console.log('\n## 区块\n');
+  console.log('| 区块 | 产物（每分钟） | 机器 | 从外面进来（每分钟） | 副产物：要缓存（每分钟） |');
+  console.log('|---|---|---|---|---|');
+  for (const b of blocks) {
+    // Products: the items the block's recipes are run for, counted over all its recipes;
+    // everything else they give is a byproduct.
+    const mains = new Set();
+    const outputs = {};
+    for (const [r, perBlock] of Object.entries(own)) {
+      const c = perBlock[b];
+      if (!c || c < 1e-12) continue;
+      mains.add(madeBy[r] || Object.keys(carried).find((x) => carried[x].unpack === r));
+      for (const [i, a] of Object.entries(io(r).out)) outputs[i] = (outputs[i] || 0) + a * c;
+    }
+    const made = [...mains].filter((i) => outputs[i]).map((i) => `${nm(i)}${local.has(i) ? '（现制）' : ''} ${fmt(pm(outputs[i]))}`);
+    const byproducts = Object.fromEntries(Object.entries(outputs).filter(([i]) => !mains.has(i)));
+    // A byproduct needs a buffer when it leaves the block or is left over.
+    const leaving = Object.entries(byproducts).map(([i]) => [i, netByBlock(i)[b] || 0]).filter(([, v]) => v > 1e-9);
+    // A byproduct packed for the bus (Stone as bricks) still needs its buffer, now as the pack.
+    for (const [x, spec] of Object.entries(carried)) {
+      const c = (own[spec.pack] || {})[b];
+      if (b !== spec.packIn && c > 1e-12) leaving.push([spec.as, io(spec.pack).out[spec.as] * c, x]);
     }
     const inputs = Object.entries(links).filter(([, l]) => l.to[b]).map(([i, l]) => `${nm(i)} ${fmt(pm(l.to[b]))}（${Object.keys(l.from).join('+')}）`).join('、');
-    console.log(`| ${b} | ${made} | ${Object.entries(machines).map(([m, n]) => `${nm(m)} ${fmt(n)}`).join('、')} | ${inputs} |`);
+    console.log(`| ${b} | ${made.join('、')} | ${Object.entries(machinesIn(b)).map(([m, n]) => `${nm(m)} ${fmt(n)}`).join('、')} | ${inputs} | ${leaving.map(([i, v, x]) => `${nm(i)} ${fmt(pm(v))}${x ? `（由${nm(x)}打包）` : ''}`).join('、')} |`);
   }
+
   console.log('\n## 区块之间的物流（每分钟）\n');
   console.log('| 物品 | 来自 | 去向 | 合计 | 方式 |');
   console.log('|---|---|---|---|---|');
-  const rows = Object.entries(links).map(([i, l]) => [i, l, Object.values(l.to).reduce((a, v) => a + v, 0)]);
+  const rows = Object.entries(links).map(([i, l]) => [i, l, sum(l.to)]);
   rows.sort((a, b) => Object.keys(b[1].to).length - Object.keys(a[1].to).length || b[2] - a[2]);
   for (const [i, l, total] of rows) {
     const to = Object.entries(l.to).sort((a, b) => b[1] - a[1]).map(([b, v]) => `${b} ${fmt(pm(v))}`).join('；');
@@ -299,15 +403,17 @@ if (plan.blocks) {
   }
 }
 
-// What every machine of the plan costs to build, once.
+// What every machine of the plan costs to build, once (whole machines per block).
 if (args.includes('--build')) {
+  const machineCount = {};
+  for (const b of blocks) for (const [m, n] of Object.entries(machinesIn(b))) machineCount[m] = (machineCount[m] || 0) + Math.ceil(n - 1e-9);
   const makes = {};
   for (const [r, rec] of Object.entries(raw.recipe)) {
     if (rec.hidden) continue;
     for (const p of arr(rec.results)) if (!makes[p.name] || r === p.name) makes[p.name] = r;
   }
   const cost = {};
-  console.log('\n## 建造这些机器（各一次）\n');
+  console.log(`\n## 建造这些机器（各一次${plan.blocks ? '，每个区块各自向上取整' : ''}）\n`);
   for (const [m, n] of Object.entries(machineCount).sort((a, b) => b[1] - a[1])) {
     const r = makes[m];
     const ins = r ? arr(raw.recipe[r].ingredients) : [];
