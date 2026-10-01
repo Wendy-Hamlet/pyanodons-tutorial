@@ -42,6 +42,8 @@ Plates per second over the run (10-minute averages, from the recorder):
 The dip between 0:20 and 0:50 is the rebuild: the first drill-and-furnace pairs came down before
 the smelting units were all running.
 
+![The base at 1:17: the Raw coal module (top left) with power, labs and Soil extractor beside it; the Raw coal belt (black line) to the copper unit, the stone-brick corner and the two iron units; the mall on the right](../images/ch1-base.jpg)
+
 ## 1. Before you land
 
 ### What you start with
@@ -134,25 +136,9 @@ right away (0:10 in the run); it starts as soon as a lab has power.
 ## 3. The smelting unit (0:15–0:30)
 
 The author's smelting unit puts the ore drills and a column of 10 Stone furnaces on one fuel
-loop. This is the copper unit as it stood at the end of the run (each character is one tile):
+loop. This is the copper unit as it stood at the end of the run:
 
-```
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Raw coal belt (section 4)
-..............sss..............................   3 fuel taps
-.v<<<<<<<<<<<<<<<..............................   fuel loop: Raw coal inner lane, Ash outer lane
-.v......sNsNsN.................................
-.v......mmmmmm.................................
-.v......mmmmmm>>>>>>>>>>>>>>>>>>>>>>>>>UCCC....   ore → furnaces; plates pass into 3 chests
-.v.>>>>>>>>>>>>^...NsNsNsNsNsNsNsNsNsNsunnn....
-.vmmmmmmmmmmmmmm...FFFFFFFFFFFFFFFFFFFF>>>>....
-.vmmmmmmmmmmmmmm...FFFFFFFFFFFFFFFFFFFF>>>>....
-.vSnSnSnSnSnSnSn...SnSnSnSnSnSnSnSnSnSnusss....
-.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>UCCC....   fuel loop under the furnaces; Ash into 3 chests
-```
-
-`m` Burner mining drill (2×2), `F` Stone furnace (2×2), `> < ^ v` belts, `U`/`u` underground
-entrance/exit, `C` chest; inserters are drawn by the direction they drop in (`n e s w`), in
-capitals when filtered.
+![The author's copper smelting unit at 1:17: the Raw coal belt along the top, three fuel taps, the fuel loop round the drills and furnaces, and the plate and Ash chests on the right](../images/ch1-copper-unit.jpg)
 
 - **Drill rows.** Two rows of drills face the ore belt between them, one lane each, and the belt
   turns up to run past the furnaces. The rows cover the whole ore strip and hold more drills than
@@ -161,9 +147,9 @@ capitals when filtered.
   minute against 14.5 MJ for a working drill). The author's iron unit runs 18 drills for 10
   furnaces this way. Uneven rows later in the game are mined-out spots, not missing drills.
 - **Fuel loop.** Raw coal enters on the inner lane at the top, runs down the side, under the lower
-  drill row and the furnaces. Every drill and furnace has a fuel inserter (lower case) and an
-  Ash inserter filtered to Ash (capitals), which drops onto the outer lane. An underground belt at
-  the end lets only the Ash lane through, into three chests.
+  drill row and the furnaces. Every drill and furnace has a fuel inserter and an Ash inserter
+  filtered to Ash, which drops onto the outer lane. An underground belt at the end lets only the
+  Ash lane through, into three chests.
 - **The column** is the author's blueprint, measured on iron and on copper at **0.91 plates/s
   and 0.60 Ash/s** each, with no mixed items:
   - Half a belt of ore is 7.5/s and a Stone furnace eats 0.8 ore/s, so 10 furnaces take half a
@@ -181,6 +167,8 @@ capitals when filtered.
     into a chest.
 - **Fuel need.** At full output a unit burns about **2.0 Raw coal/s**: 10 furnaces × 0.067 plus
   about 8 working drills × 0.167 (the spare ones burn nothing).
+
+![The author's iron smelting unit at 1:17: 18 drills on two rows feed one 10-furnace column](../images/ch1-iron-unit.jpg)
 
 **Before Raw coal comes by belt**, the first unit took its fuel from three chests at the start of
 the loop, filled by hand. At 2.0 Raw coal/s, the 942 Raw coal the author carried would have lasted
@@ -221,11 +209,13 @@ field: the author wanted the edge mined out first, and there the full module did
 1:10. The four-drill
 pinwheel from the landing stayed as a hand-picked reserve.
 
+![The 7-drill Raw coal module at the edge of the field, with the landing pinwheel above it (entity info on)](../images/ch1-raw-coal-alt.jpg)
+
 ### One belt for the whole base
 
 The module's output became a Raw coal belt along the base (the robots laid 179 belts at
 0:45–0:50). Each smelting unit takes its fuel from it with **three inserters** dropping onto the
-start of its fuel loop (`sss` in the drawing above): 3 × 0.83 items/s (the measured rate from a
+start of its fuel loop (the three inserters under the Raw coal belt in the copper unit picture): 3 × 0.83 items/s (the measured rate from a
 moving full belt onto another belt) = 2.5/s for a need of 2.0/s. A furnace-only column needs a
 single tap (0.67/s; verified, all 10 furnaces kept working).
 
@@ -317,6 +307,8 @@ plates come from a chest refilled by hand for now (the mall uses little copper; 
 comes later); Small parts go into a chest. Next: two more machines for Transport
 belts and Mechanical inserters.
 
+![The first mall (entity info on): Iron stick, Bolts and Iron gear wheel on the top row, fed with Iron plates from the belt; Copper cable from the chest of Copper plates and Small parts on the bottom row](../images/ch1-mall-alt.jpg)
+
 Planning numbers, from data: 1 Small part/s takes 1.75 Iron plate/s and 0.75 Copper plate/s, and
 only 1.25 machines' worth of time (Iron stick 0.375, Copper cable 0.375, Iron gear wheel 0.25,
 Bolts 0.15, Small parts 0.1). One machine per recipe is mostly idle; the inserters set the pace —
@@ -374,6 +366,8 @@ Coal processing 1 opens the better iron route and is the subject of the next cha
   production every 10 minutes, handcrafting); the final save (`Py-exploration`) read with
   `tools/inspect-save.ps1` (consistency check passed; structures drawn with
   `tools/render-area.js`, including inserter filter modes and the ore left under drills).
+- Pictures: in-game screenshots taken in the author's game with the companion's `/pt-shots`
+  (areas listed by `tools/shots.js plan`, collected by `tools/shots.js pull`).
 - Prototype values (sizes, power, recipes, technology costs and triggers, rock yields):
   `tools/dump-data.ps1` dumps `data.raw` for the exact mod set; `tools/recipe-tree.js` expands
   recipe trees; handcrafting recipe time is the sum of recipe times over the recorded crafts.
