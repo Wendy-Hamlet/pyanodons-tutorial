@@ -23,7 +23,8 @@ const root = args[0] || path.join(process.env.APPDATA || '', 'Factorio', 'script
 const localeDir = require('./paths').dump;
 const load = (kind) => { try { return require(`${localeDir}/${kind}-locale.json`).names; } catch { return {}; } };
 const L = { item: load('item'), entity: load('entity'), technology: load('technology'), fluid: load('fluid'), tile: load('tile') };
-const zh = (name) => L.item[name] || L.entity[name] || L.fluid[name] || L.tile[name] || name;
+// The recorder counts every tree type as "tree".
+const zh = (name) => (name === 'tree' ? '树木' : L.item[name] || L.entity[name] || L.fluid[name] || L.tile[name] || name);
 const tech = (name) => L.technology[name] || name;
 const clock = (t) => {
   const m = Math.floor(t / 3600);
@@ -139,8 +140,15 @@ for (const l of recent) {
   }
 }
 const GROUPS = { built: '手动建造', robot_built: '机器人建造', ghosts: '放置虚影', machines: '其中机器', mined: '手动拆除/采集', robot_mined: '机器人拆除', ghosts_removed: '移除虚影', died: '被摧毁', tiles: '铺地砖', tiles_mined: '拆地砖' };
-const list = (counts, n = 15) => Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, n)
-  .map(([k, v]) => `${zh(k.replace(/^tile\//, ''))}×${v}`).join('，');
+// Counts merged by display name: several prototypes can share one Chinese name (wreck variants).
+const list = (counts, n = 15) => {
+  const named = {};
+  for (const [k, v] of Object.entries(counts)) {
+    const name = zh(k.replace(/^tile\//, ''));
+    named[name] = Math.round(((named[name] || 0) + v) * 10) / 10;
+  }
+  return Object.entries(named).sort((a, b) => b[1] - a[1]).slice(0, n).map(([k, v]) => `${k}×${v}`).join('，');
+};
 if (lastPlayers) console.log(`玩家位置：${Object.entries(lastPlayers).map(([n, [x, y, s]]) => `${n} (${x}, ${y}) @${s}`).join('，')}`);
 for (const [key, value] of Object.entries(sums)) {
   const [surface, group] = key.split('|');
