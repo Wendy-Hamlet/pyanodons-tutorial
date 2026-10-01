@@ -1,0 +1,9 @@
+{
+  "name": "py-tutorial-companion",
+  "version": "0.1.0",
+  "title": "Py tutorial companion",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "description": "Puts the Py tutorial's blueprint book into your cursor and exports a held book or blueprint for the tutorial's tools.",
+  "dependencies": ["base >= 2.1.0"]
+}

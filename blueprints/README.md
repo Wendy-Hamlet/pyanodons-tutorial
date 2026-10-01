@@ -2,9 +2,10 @@
 
 [中文版](README.zh-CN.md)
 
-Import a file's content with the in-game "Import string" button. Every design was built and run
-in the engine by `tools/design-lab` (5 minutes of game time, rates measured after the first
-minute); the numbers are from those runs. Explanations: [chapter 1](../chapters/01-landing-to-red-science.md).
+Import a file's content with the in-game "Import string" button; `book.txt` holds all of them as
+one blueprint book (order and label in `book.json`). Every design was built and run in the
+engine by `tools/design-lab` (5 minutes of game time, rates measured after the first minute); the
+numbers are from those runs. Explanations: [chapter 1](../chapters/01-landing-to-red-science.md).
 
 | File | What it is | Measured |
 |---|---|---|
@@ -30,3 +31,23 @@ minute); the numbers are from those runs. Explanations: [chapter 1](../chapters/
   shows where one inserter takes Raw coal from a belt running past on the east.
 - At the top, underground belts let only the outer lanes through; plates go to two chests (one
   Mechanical inserter moves 0.82 items/s into a chest, less than 0.91 plates/s), Ash to one.
+
+## Syncing with a running game
+
+`tools/companion` is a small mod (no prototypes besides two shortcut buttons) that moves this
+folder in and out of the game:
+
+1. `node tools/bp-sync.js push` rebuilds `book.txt` and the mod's `book.lua` from these files.
+2. In game, the "Tutorial blueprint book" shortcut (or `/pt-book`) puts the book into your
+   cursor. In single player it first reloads the mod scripts from disk (`game.reload_mods()`),
+   so a push made while the game runs is picked up without reloading the save.
+3. Hold the book (from the inventory or the blueprint library) and press "Export held
+   blueprint" (or `/pt-export`); it writes `script-output/py-tutorial-companion/export.txt`.
+4. `node tools/bp-sync.js pull` matches the exported blueprints to these files by label,
+   rewrites only those whose content changed, adds new ones, reports missing ones (never deletes)
+   and pushes again. `--dry` only reports. A changed design has to be measured again before its
+   numbers above are trusted.
+
+`tools/check-companion.ps1` checks the round trip in the engine: the book imports cleanly (4
+blueprints with their labels and entity counts), an unchanged export pulls as "unchanged", and an
+edited one shows exactly the edits (one changed, one relabelled as new plus missing).

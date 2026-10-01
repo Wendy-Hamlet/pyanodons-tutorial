@@ -1,0 +1,10 @@
+{
+  "label": "Py tutorial",
+  "description": "Measured designs from the Pyanodons step-by-step tutorial.",
+  "blueprints": [
+    "raw-coal-module",
+    "iron-smelting-column",
+    "copper-smelting-column",
+    "smelting-column-with-fuel-tap"
+  ]
+}

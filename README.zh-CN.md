@@ -37,6 +37,7 @@
 - `render-area.js x1 y1 x2 y2 out.png`：把存档里的一块区域画成放大图并输出字符网格，便于逐格读懂结构。
 - `extract-design.js <名称> x1 y1 x2 y2`：把存档里的一块区域复制进实验场。
 - `design-lab/`：实验场。把设计（自己的，或从存档复制来的）建在无限供料箱和计数终点旁边，测量产量、断料后残留的物品和采矿机状态，并导出蓝图。
+- `bp-sync.js` + `companion/`（一个模组）+ `check-companion.ps1`：把 `blueprints/` 作为一本蓝图书放进运行中的游戏，并把改过的蓝图导回，见[蓝图](blueprints/README.zh-CN.md#与运行中的游戏同步)。
 - `take-screenshots.ps1`：用图形模式运行实验场来截取游戏内画面。Steam 版游戏会让 Steam 重新启动它，请在 Steam 关于启动参数的弹窗中点确认。
 - `newgame-observer/` + `summarize-newgame.js`：观察新开一局有什么；用从存档读出的 `--map-gen-settings` 建图，可以复现同一个世界。
 - `belt-lab/`、`ch1-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。

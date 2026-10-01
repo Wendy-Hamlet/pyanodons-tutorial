@@ -56,6 +56,9 @@ parameters for yours.
 - `design-lab/`: builds designs (own ones and ones copied from saves) next to infinite sources and
   counting sinks, measures throughput, stranded items after a supply cut and drill states, and
   exports blueprints.
+- `bp-sync.js` + `companion/` (a mod) + `check-companion.ps1`: moves `blueprints/` into a running
+  game as one blueprint book and pulls edited blueprints back; see
+  [blueprints](blueprints/README.md#syncing-with-a-running-game).
 - `take-screenshots.ps1`: runs the design lab with graphics to take in-game screenshots. The Steam
   build of the game has Steam relaunch it; confirm Steam's dialog about launch arguments.
 - `newgame-observer/` + `summarize-newgame.js`: what a fresh game offers; create the map with
