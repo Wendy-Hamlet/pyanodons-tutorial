@@ -85,6 +85,10 @@ console.log(top(items.produced, 30).map(([n, c]) => `${zh('item', n)} ${fmt(c)}`
 h('累计流体产量（前 15）');
 console.log(top((report.fluids || {}).produced, 15).map(([n, c]) => `${zh('fluid', n)} ${fmt(c)}`).join('、'));
 
+h('全地图资源（已生成区域内的矿格数）');
+const tiles = Object.entries(report.resource_tiles || {}).sort((a, b) => b[1] - a[1]);
+console.log(tiles.length ? tiles.map(([n, c]) => `${zh('entity', n)} ${c}`).join('、') : '（报告里没有这项）');
+
 h('基地附近资源（按区块聚合的矿区）');
 const patches = {};
 for (const b of report.resources || []) {

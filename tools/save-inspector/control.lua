@@ -293,6 +293,15 @@ script.on_event(defines.events.on_tick, function()
     items = safe(function() return flow(force.get_item_production_statistics(surface)) end),
     fluids = safe(function() return flow(force.get_fluid_production_statistics(surface)) end),
   }
+  -- Resource tiles per resource over everything generated so far (is it on this map at all?).
+  report.resource_tiles = safe(function()
+    local out = {}
+    for name in pairs(prototypes.get_entity_filtered({ { filter = "type", type = "resource" } })) do
+      local n = surface.count_entities_filtered({ name = name })
+      if n > 0 then out[name] = n end
+    end
+    return out
+  end)
   if box then
     report.resources, report.resource_area = resources(surface, box, 160)
     report.enemies_near = surface.count_entities_filtered({ force = "enemy", area = report.resource_area })
