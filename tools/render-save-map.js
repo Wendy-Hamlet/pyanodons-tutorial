@@ -4,10 +4,10 @@
 const fs = require('fs');
 const zlib = require('zlib');
 
-const dir = 'C:/tmp/cf-dump/data/script-output';
+const paths = require('./paths');
 const out = process.argv[2] || 'C:/tmp/cf-dump/base-map.png';
 const scale = Number(process.argv[3] || 1);
-const entities = require(`${dir}/cellforge/entities.json`);
+const entities = require(`${paths.save}/entities.json`);
 
 const COLORS = {
   'transport-belt': [200, 160, 0], 'underground-belt': [150, 110, 0], splitter: [255, 120, 0],

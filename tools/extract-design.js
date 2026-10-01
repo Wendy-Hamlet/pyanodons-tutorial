@@ -8,7 +8,7 @@ const path = require('path');
 
 const [key, ...nums] = process.argv.slice(2);
 const [x1, y1, x2, y2] = nums.map(Number);
-const all = require('C:/tmp/cf-dump/data/script-output/cellforge/entities.json');
+const all = require(`${require('./paths').save}/entities.json`);
 const file = path.join(__dirname, 'design-lab', 'extracted.lua');
 
 const inside = (e) => e.x >= x1 && e.x < x2 + 1 && e.y >= y1 && e.y < y2 + 1;

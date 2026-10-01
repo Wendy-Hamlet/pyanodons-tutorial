@@ -38,16 +38,21 @@ and design principle in one place) · [Railways under Pyanodons](research/py-rai
 
 ## Tools (`tools/`)
 
-Everything runs against an isolated Factorio setup in `C:\tmp\cf-dump` (your mods hard-linked,
-its own config and write-data), so your own config, mods and saves are only ever read or copied.
+Everything runs against isolated Factorio setups (your mods hard-linked or copied, their own
+config and write-data), so your own config, mods and saves are only ever read or copied:
+`C:\tmp\cf-dump` is a fixed snapshot of your mods that every measurement runs against (rebuilt
+only on purpose, with `dump-data.ps1`), and `C:\tmp\cf-save` mirrors your current mods afresh
+before every save inspection (`save-env.ps1`).
 Paths in the scripts match the author's machine (game in `E:\SteamLibrary`); adjust the
 parameters for yours.
 
 - `dump-data.ps1` + `analyze-py.js`: `data.raw` of your exact mod set, and a summary of it.
 - `recipe-tree.js <item> --techs a,b`: production tree and raw totals using only the recipes
   unlocked at that point (Chinese names).
-- `inspect-save.ps1 -Save <name> [-Ticks 3700]` + `summarize-save.js` + `render-save-map.js`:
-  read-only snapshot of a save (research, inventory, buildings with directions and filters,
+- `inspect-save.ps1 -Save <name|latest|file.zip> [-Ticks 3700]` + `summarize-save.js` +
+  `render-save-map.js`: first checks that the save loads with exactly the mods and startup
+  settings it was played with (it stops otherwise, unless `-AllowModChanges`); then a
+  read-only snapshot of the save (research, inventory, buildings with directions and filters,
   production, nearby ore) and a PNG map; also finds mining outposts, exports each as a blueprint
   string and, with `-Ticks`, measures their real mining rates for a minute.
 - `render-area.js x1 y1 x2 y2 out.png`: close-up PNG plus a character grid of one area of a

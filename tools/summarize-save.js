@@ -1,11 +1,12 @@
 // Prints a Chinese summary of the snapshot written by tools/inspect-save.ps1, using the zh-CN
 // locale dump (run factorio --dump-prototype-locale with locale=zh-CN in the dump config).
-// Usage: node tools/summarize-save.js [script-output dir]
+// Usage: node tools/summarize-save.js [snapshot dir]
 
-const dir = process.argv[2] || 'C:/tmp/cf-dump/data/script-output';
-const report = require(`${dir}/cellforge/save-report.json`);
-const entities = require(`${dir}/cellforge/entities.json`);
-const load = (kind) => { try { return require(`${dir}/${kind}-locale.json`).names; } catch { return {}; } };
+const paths = require('./paths');
+const dir = process.argv[2] || paths.save;
+const report = require(`${dir}/save-report.json`);
+const entities = Object.values(require(`${dir}/entities.json`)); // an empty list is written as {}
+const load = (kind) => { try { return require(`${paths.dump}/${kind}-locale.json`).names; } catch { return {}; } };
 const L = { item: load('item'), entity: load('entity'), recipe: load('recipe'), technology: load('technology'), fluid: load('fluid') };
 const zh = (kind, name) => (L[kind] && L[kind][name]) || L.item[name] || L.entity[name] || L.fluid[name] || name;
 const top = (obj, n) => Object.entries(obj || {}).sort((a, b) => b[1] - a[1]).slice(0, n);
@@ -14,6 +15,10 @@ const h = (title) => console.log(`\n## ${title}`);
 
 const hours = report.ticks_played / 60 / 3600;
 console.log(`游戏时长 ${hours.toFixed(1)} 小时（tick ${report.tick}）`);
+const changed = Object.entries((report.config && report.config.mod_changes) || {});
+if (changed.length || (report.config && report.config.startup_settings_changed)) {
+  console.log(`注意：读档环境与存档不一致（${changed.map(([n, c]) => `${n} ${c.old || '无'}→${c.new || '无'}`).join('，')}${report.config.startup_settings_changed ? ' 启动设置不同' : ''}）`);
+}
 
 h('地图设置');
 const map = report.map || {};
@@ -30,7 +35,7 @@ console.log('已研究：' + r.researched.map((t) => zh('technology', t)).join('
 console.log('现在可研究：' + r.available.map((t) => zh('technology', t)).join('、'));
 
 h('玩家');
-for (const p of report.players) {
+for (const p of Object.values(report.players || {})) { // {} when the save has no players
   console.log(`${p.name} @ (${Math.round(p.position.x)}, ${Math.round(p.position.y)}) ${p.surface}，控制方式 ${p.controller}`);
   console.log('背包：' + p.inventory.sort((a, b) => b.count - a.count).map((i) => `${zh('item', i.name)}×${i.count}`).join('、'));
   if (p.crafting_queue.length) console.log('手搓队列：' + p.crafting_queue.map((c) => `${zh('recipe', c.recipe)}×${c.count}`).join('、'));

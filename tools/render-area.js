@@ -13,7 +13,7 @@ const zlib = require('zlib');
 const [x1, y1, x2, y2] = process.argv.slice(2, 6).map(Number);
 const out = process.argv[6] || 'C:/tmp/cf-dump/area.png';
 const scale = Number(process.argv[7] || 8);
-const all = require('C:/tmp/cf-dump/data/script-output/cellforge/entities.json');
+const all = require(`${require('./paths').save}/entities.json`);
 const inside = (e) => e.x2 > x1 && e.x1 < x2 && e.y2 > y1 && e.y1 < y2;
 const list = all.filter(inside);
 

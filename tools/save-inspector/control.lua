@@ -1,6 +1,8 @@
 -- Read-only snapshot of a save. tools/inspect-save.ps1 loads a COPY of the save in an isolated
 -- Factorio setup with this mod added; on the first tick it writes
 -- script-output/cellforge/save-report.json and entities.json, and changes nothing in the world.
+-- `config` in the report is what the game said changed when loading the save here (this mod
+-- itself excluded); inspect-save.ps1 uses it to check the setup matches the save.
 
 local function safe(fn)
   local ok, value = pcall(fn)
@@ -230,6 +232,19 @@ local function sample(surface)
   end
 end
 
+-- Raised when this mod is added, after on_init; also lists every other difference.
+script.on_configuration_changed(function(data)
+  local changes = {}
+  for name, change in pairs(data.mod_changes) do
+    if name ~= script.mod_name then changes[name] = { old = change.old_version, new = change.new_version } end
+  end
+  storage.config = {
+    mod_changes = next(changes) and changes or nil, -- an empty table would become a JSON array
+    startup_settings_changed = data.mod_startup_settings_changed,
+    game_old = data.old_version, game_new = data.new_version,
+  }
+end)
+
 script.on_event(defines.events.on_tick, function()
   local surface = game.surfaces.nauvis
   if storage.measure then
@@ -253,6 +268,7 @@ script.on_event(defines.events.on_tick, function()
   local report = {
     tick = game.tick,
     ticks_played = game.ticks_played,
+    config = storage.config,
     mods = script.active_mods,
     map = safe(function()
       local s = surface.map_gen_settings
