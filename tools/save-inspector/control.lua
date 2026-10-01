@@ -106,6 +106,25 @@ local function entities(surface)
       elseif e.type == "entity-ghost" then
         entry.ghost = e.ghost_name -- what the robots still have to build
       end
+      -- Fluids: what each fluid storage holds and which connected segment it belongs to (pipes and
+      -- machines sharing a segment id are joined).
+      local nf = e.fluids_count
+      if nf and nf > 0 then
+        entry.fluid_boxes = {}
+        for i = 1, nf do
+          local f = e.get_fluid(i)
+          local seg = e.has_fluid_segment(i) and e.get_fluid_segment_id(i) or nil
+          entry.fluid_boxes[#entry.fluid_boxes + 1] = { index = i, fluid = f and f.name, amount = f and math.floor(f.amount), segment = seg }
+        end
+      end
+      -- Items on belts, both lanes together.
+      if e.type == "transport-belt" or e.type == "underground-belt" then
+        local items = {}
+        for line = 1, e.get_max_transport_line_index() do
+          for _, c in pairs(e.get_transport_line(line).get_contents()) do items[c.name] = (items[c.name] or 0) + c.count end
+        end
+        if next(items) then entry.items = items end
+      end
       if e.burner then
         entry.fuel = item_count(e.burner.inventory)
         entry.burnt = item_count(e.burner.burnt_result_inventory)

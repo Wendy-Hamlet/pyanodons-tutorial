@@ -58,6 +58,9 @@ parameters for yours.
   string and, with `-Ticks`, measures their real mining rates for a minute.
 - `render-area.js x1 y1 x2 y2 out.png`: close-up PNG plus a character grid of one area of a
   snapshot, for reading a structure tile by tile.
+- `trace-layout.js x1 y1 x2 y2`: the logistics of an area of a snapshot: belt lines with what
+  they carry and who loads and unloads them, fluid networks (connected segments and their fluid)
+  and every machine's inputs and outputs. Snapshots record belt contents, fluids and filter modes.
 - `extract-design.js <key> x1 y1 x2 y2` (or `<key> --blueprint <file>`): copies an area of a
   snapshot, or a whole blueprint file, into the design lab.
 - `design-lab/`: builds designs (own ones and ones copied from saves) next to infinite sources and
