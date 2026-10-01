@@ -57,7 +57,8 @@ parameters for yours.
   string and, with `-Ticks`, measures their real mining rates for a minute.
 - `render-area.js x1 y1 x2 y2 out.png`: close-up PNG plus a character grid of one area of a
   snapshot, for reading a structure tile by tile.
-- `extract-design.js <key> x1 y1 x2 y2`: copies an area of a snapshot into the design lab.
+- `extract-design.js <key> x1 y1 x2 y2` (or `<key> --blueprint <file>`): copies an area of a
+  snapshot, or a whole blueprint file, into the design lab.
 - `design-lab/`: builds designs (own ones and ones copied from saves) next to infinite sources and
   counting sinks, measures throughput, stranded items after a supply cut and drill states, and
   exports blueprints.

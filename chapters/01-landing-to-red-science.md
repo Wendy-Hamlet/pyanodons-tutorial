@@ -275,7 +275,11 @@ pY science pack 1) is not needed for the Raw coal module.
 - Belt lanes, underground lane filtering and inserter rates: `tools/belt-lab`.
 - The Raw coal module was read from the author's save with `tools/inspect-save.ps1`, copied with
   `tools/extract-design.js`, and run with the smelting columns, the fuel tap and the drain test in
-  `tools/design-lab`, which also exported the blueprints.
+  `tools/design-lab`, which also exported the blueprints. The author then trimmed the module's
+  blueprint in game (the 8 tiles of trunk belt cut out with it are gone) and it came back through
+  `tools/bp-sync.js pull`; the trimmed blueprint was measured again straight from the file
+  (`extract-design.js --blueprint`): unchanged, 15.00 Raw coal/s and 1.40 Ash/s, all 9 drills
+  working.
 - Mining productivity adding output without fuel: a one-off engine probe.
 - From data only, not yet measured: Flora collector and Soil extractor rates, lab consumption,
   handcrafting time.

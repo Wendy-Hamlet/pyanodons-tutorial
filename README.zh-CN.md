@@ -35,7 +35,7 @@
 - `recipe-tree.js <物品> --techs a,b`：只用某个时间点已解锁的配方展开生产树并汇总原料（中文名）。
 - `inspect-save.ps1 -Save <存档名|latest|文件.zip> [-Ticks 3700]` + `summarize-save.js` + `render-save-map.js`：先检查存档是否以游玩时完全相同的模组和启动设置载入（不一致就停止，除非加 `-AllowModChanges`），然后只读地读取存档（研究、背包、带朝向和过滤设置的建筑、产量、附近矿物），并画出基地地图；还会找出各个矿区，把每个矿区导出成蓝图字符串，加上 `-Ticks` 时再实测一分钟内的真实开采速度。
 - `render-area.js x1 y1 x2 y2 out.png`：把存档里的一块区域画成放大图并输出字符网格，便于逐格读懂结构。
-- `extract-design.js <名称> x1 y1 x2 y2`：把存档里的一块区域复制进实验场。
+- `extract-design.js <名称> x1 y1 x2 y2`（或 `<名称> --blueprint <文件>`）：把存档里的一块区域，或一整个蓝图文件，复制进实验场。
 - `design-lab/`：实验场。把设计（自己的，或从存档复制来的）建在无限供料箱和计数终点旁边，测量产量、断料后残留的物品和采矿机状态，并导出蓝图。
 - `companion/`：配合游玩的小模组（[说明](tools/companion/README.zh-CN.md)）：下面的蓝图书功能，以及游戏记录器（研究、聊天、建造活动、产量；日志自动轮转），由 `recorder-summary.js` 读取，由 `check-recorder.ps1` 检查。
 - `bp-sync.js` + `companion/` + `check-companion.ps1`：把 `blueprints/` 作为一本蓝图书放进运行中的游戏，并把改过的蓝图导回，见[蓝图](blueprints/README.zh-CN.md#与运行中的游戏同步)。

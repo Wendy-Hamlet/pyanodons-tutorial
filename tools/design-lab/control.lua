@@ -214,7 +214,8 @@ local function coal_field(ox, oy, fuel_downstream)
 end
 
 ---------------------------------------------------------------------------------------------
--- A structure copied out of a save by tools/extract-design.js, rebuilt at (ox, oy) on Raw coal.
+-- A structure copied out of a save or a blueprint by tools/extract-design.js, rebuilt at (ox, oy)
+-- on Raw coal.
 -- Every drill gets 5 Raw coal to start; every belt end with nothing after it gets a counting sink.
 ---------------------------------------------------------------------------------------------
 local extracted = require("extracted")
@@ -293,7 +294,9 @@ script.on_init(function()
   surface.set_tiles(tiles)
 
   -- Earlier runs (results in the tutorial): coal_field(0, -10, true/false), input-upstream columns,
-  -- from_save("user-loop", ...). `shot` = screenshot key and zoom, taken when rendering is available.
+  -- from_save("user-loop", ...), from_save("user-module", ...) (the module as cut from the save,
+  -- with 8 tiles of the save's trunk belt). `shot` = screenshot key and zoom, taken when rendering
+  -- is available.
   storage.designs = {
     { label = "copper column, input downstream", kind = "smelt", shot = { "copper-smelting-column", 1.5 },
       d = smelting_column(-60, -10, "copper-ore", "copper-plate", true, 10) },
@@ -302,7 +305,7 @@ script.on_init(function()
     { label = "copper column fuelled by 1 tap", kind = "smelt", shot = { "smelting-column-with-fuel-tap", 1.5 },
       d = smelting_column(-20, -10, "copper-ore", "copper-plate", true, 10, 1) },
     { label = "raw coal module (author's design)", kind = "coal", shot = { "raw-coal-module", 2 },
-      d = from_save("user-module", -100, 40) },
+      d = from_save("raw-coal-module", -100, 40) }, -- from blueprints/raw-coal-module.txt
     { label = "tap from a moving full belt", kind = "tap", d = tap_rate(20, -10, true) },
     { label = "tap from a standing full belt", kind = "tap", d = tap_rate(30, -10, false) },
   }
