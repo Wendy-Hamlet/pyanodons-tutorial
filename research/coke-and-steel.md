@@ -1,0 +1,133 @@
+# Coke, steel, crushing and Ash separation
+
+[中文版](coke-and-steel.zh-CN.md) · [Index](../README.md)
+
+Reference for the stage after [chapter 1](../chapters/01-landing-to-red-science.md); the chapter
+itself will follow the author's recorded play. Everything here is **from data** (`tools/dump-data.ps1`,
+`tools/recipe-tree.js`) unless it says *verified*; the stage's machines have not been measured in
+the engine yet.
+
+## The main line
+
+The stage has two goals, both of which need steel buildings, and steel needs coke:
+
+1. **Grade-1 iron** (the Crusher technology): a Jaw crusher turns 5 Iron ore into 3 Processed
+   iron ore, and 3 Processed iron ore smelt into 1 Iron plate — **5 ore per plate instead of 8**,
+   60 % more plates from the same ore. The Jaw crusher costs 30 Steel plate.
+2. **Ash separation**: a Solid separator turns the Ash every coal-burning machine leaves into Iron
+   oxide (2 per Iron plate), Soot (which separates into five ores) and Coal dust. The Solid
+   separator costs 50 Steel plate.
+3. **Steel** comes from an Advanced foundry: 5 Coke + 20 Iron ore + 5 Limestone → 1 Steel plate.
+4. **Coke**, before pY science pack 1, only comes from two distillations: Raw coal → Coal → Coke.
+   (The author's map has no Coal ore at all: `tools/inspect-save.ps1` counts every resource on the
+   generated map.)
+
+## Technologies
+
+| Technology | Cost | Needs | Unlocks for this stage |
+|---|---|---|---|
+| Coal processing 1 (done in chapter 1) | 12 red | — | Destructive distillation column MK 01, High pressure furnace MK 01, Exhaust pipe, Tailings pond; Coal from Raw coal, Coke from Coal, Limestone, Iron plate from Iron oxide |
+| Steel processing | 18 red | Coal processing 1 | Advanced foundry MK 01, Steel plate, Sinkhole |
+| Soil washing | 18 red | — | Washer MK 01, Sand, Muddy sludge |
+| Crusher | 24 red | Steel processing, Soil washing | Jaw crusher MK 01, Processed iron ore, Iron plate from it, Gravel, Sand, Stone from bricks, Saline water |
+| Ash separation | 60 red | Steel processing | Solid separator MK 01, Ash separation, Soot separation |
+
+120 red packs in all: about 29 minutes of handcrafting recipe time at 14.3 s a pack.
+
+Later: **Coke processing - Stage 1** (50 × (pY science pack 1 + 2 red)) makes Coke straight from
+Raw coal in a High pressure furnace, 10 Raw coal → 4 Coke + 20 Coke oven gas in 2 s — more than
+twice the Coke per Raw coal of the two distillations (1.8 per 10).
+
+## Recipes and rates
+
+Rates are per machine at crafting speed 1 (every machine below is MK 01 with speed 1).
+
+| Recipe | Machine | In → out | Per machine per second |
+|---|---|---|---|
+| Coal | Destructive distillation column | 10 Raw coal → 3 Coal + 60 Coal gas + 30 Tar + 1 Iron oxide (2 s) | 5 Raw coal → 1.5 Coal, 30 Coal gas, 15 Tar, 0.5 Iron oxide |
+| Coal gas from coal | Destructive distillation column | 10 Coal → 6 Coke + 40 Coal gas + 50 Tar + 1 Iron oxide (3 s) | 3.33 Coal → 2 Coke, 13.3 Coal gas, 16.7 Tar, 0.33 Iron oxide |
+| Limestone | Soil extractor | 400 Water → 8 Limestone (20 s) | 20 Water → 0.4 Limestone |
+| Steel plate | Advanced foundry | 5 Coke + 20 Iron ore + 5 Limestone → 1 (15 s) | 0.067 Steel (4 a minute) |
+| Iron plate (from Iron oxide) | Stone furnace or Advanced foundry | 20 Iron oxide → 10 (3.5 s) | 5.7 Iron oxide → 2.9 Iron plate |
+| Processed iron ore | Jaw crusher | 5 Iron ore → 3 Processed iron ore + 1 Stone (2 s) | 2.5 Iron ore → 1.5 Processed, 0.5 Stone |
+| Iron plate (from Processed iron ore) | Stone furnace or Advanced foundry | 3 → 1 (6 s) | 0.17 Iron plate |
+| Ash separation | Solid separator | 10 Ash → 1 Coal dust + 1 Iron oxide + 1 Soot (1 s) | 10 Ash |
+| Soot separation | Solid separator | 2 Soot → 1 each Iron, Copper, Aluminium, Zinc and Lead ore + 1 Ash (1 s) | 2 Soot |
+
+All outputs are fixed amounts (no probabilities). Wood also distils into Coal one to one (10 Wood
+→ 10 Coal + 10 Coal gas + 30 Tar + 1 Iron oxide), but Wood is what red science needs.
+
+### Byproducts
+
+Every distillation also makes Coal gas, Tar and Iron oxide, and the column stops when any output
+is full, so each needs a way out:
+
+| Byproduct | Ways out now | Notes |
+|---|---|---|
+| Coal gas | **Exhaust pipe** (1×1, no power, Coal processing 1) vents it; a High pressure furnace burns 50 into 1 Ash per second at 2 MW | The vent costs nothing to run |
+| Tar | Tailings pond (18×18, stores 1,000,000); **Sinkhole** (3×3, needs 15 Steel) voids it; or Carbolic oil in a distillation column (Tar + Steam + Raw coal), which has no use yet | Store it until the Sinkhole is built |
+| Iron oxide | Smelts into Iron plate, 2 to 1 | Pure gain |
+| Stone (Jaw crusher) | Stone bricks, furnaces | |
+| Coal dust (Ash separation) | No use yet | Store it |
+| Muddy sludge (Washer) | Sinkhole | |
+
+(The Burner, which destroys solid items, needs pY science pack 1 and Titanium plate.)
+
+## One Advanced foundry, fully fed
+
+| Need per second | Machines |
+|---|---|
+| 0.33 Coke | 0.17 distillation columns on Coal |
+| 0.56 Coal | 0.37 distillation columns on Raw coal |
+| 1.85 Raw coal | (the Raw coal belt carries 15) |
+| 1.33 Iron ore | |
+| 0.33 Limestone, 16.7 Water | 0.83 Soil extractor |
+
+So two distillation columns (one per recipe, both mostly idle), one Soil extractor of its own
+(the one making Soil for red science cannot do both) and one foundry make 4 Steel plates a
+minute. Byproducts: 13.3 Coal gas, 8.3 Tar and 0.24 Iron oxide per second.
+
+Per Steel plate: 27.8 Raw coal, 20 Iron ore, 5 Limestone (250 Water); 200 Coal gas, 125 Tar,
+3.6 Iron oxide.
+
+**The first 80 Steel plates** (Jaw crusher 30 + Solid separator 50) take 20 minutes of one
+foundry, 2,222 Raw coal, 1,600 Iron ore and 400 Limestone (17 minutes of one Soil extractor).
+A Sinkhole adds 15.
+
+## Power
+
+Every machine of this stage is electric:
+
+| Machine | Size | Power |
+|---|---|---|
+| Destructive distillation column MK 01 | 8×8 | 500 kW |
+| High pressure furnace MK 01 | 7×7 | 2 MW |
+| Advanced foundry MK 01 | 6×6 | 1.2 MW |
+| Jaw crusher MK 01 | 7×7 | 1 MW |
+| Solid separator MK 01 | 7×7 | 1.5 MW |
+| Washer MK 01 | 6×6 | 400 kW |
+| Soil extractor MK 01 | 7×7 | 400 kW |
+
+One Boiler makes 7.5 Steam/s, enough for 1.85 MW (verified: a Steam engine turns 15 Steam/s into
+3.7 MW). The steel line above draws 2.6 MW while every machine works (about 1.8 MW on average,
+since the columns idle), on top of chapter 1's labs, Soil extractor and Flora collector: the
+second Boiler, and soon a second engine pair, comes with this stage. Crushing is power-hungry:
+grade-1 iron costs 2 MJ of crusher time per plate (one Jaw crusher, 1 MW, makes enough Processed
+iron ore for 0.5 plates/s), so crushing the 13.5 Iron ore/s of chapter 1's base would take 5.4
+Jaw crushers and 5.4 MW.
+
+## What the two goals give
+
+- **Grade-1 iron**: one Jaw crusher and three Stone furnaces turn 2.5 Iron ore/s into 0.5 Iron
+  plate/s (plus 0.5 Stone/s), where direct smelting gives 0.31.
+- **Ash separation**: chapter 1's base made about 6 Ash/s (see its production table). One Solid
+  separator (10 Ash/s) turns that into 0.6 Iron oxide/s (0.3 Iron plate/s, about a sixth more
+  iron), 0.6 Soot/s (0.3/s each of Iron, Copper, Aluminium, Zinc and Lead ore, plus 0.3 Ash back)
+  and 0.6 Coal dust/s to store. The 5,668 Ash the author carried at the end of chapter 1 is about
+  ten minutes of one separator.
+
+## To verify in the engine
+
+Distillation, foundry, crusher and separator rates; the Exhaust pipe venting Coal gas without
+limit; a full steel line with its byproducts handled — with `tools/design-lab` once the stage is
+played.

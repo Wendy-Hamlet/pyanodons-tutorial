@@ -9,7 +9,7 @@
 
 1. [开局到红瓶](chapters/01-landing-to-red-science.zh-CN.md)
 
-参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [Py 下的铁路](research/py-railway.md)（英文）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
+参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [焦炭、炼钢、碎矿与灰烬分离](research/coke-and-steel.zh-CN.md)（下一阶段的配方、产率和副产物）· [Py 下的铁路](research/py-railway.md)（英文）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
 
 ## 编写时使用的环境
 

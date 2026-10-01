@@ -12,7 +12,8 @@ scripts used, so you can re-check them against your own mod versions.
 1. [Landing to red science](chapters/01-landing-to-red-science.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
-and design principle in one place) · [Railways under Pyanodons](research/py-railway.md) ·
+and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
+(the next stage's recipes, rates and byproducts) · [Railways under Pyanodons](research/py-railway.md) ·
 [Blueprints](blueprints/README.md) (measured designs, ready to import).
 
 ## Setup the chapters were written against
