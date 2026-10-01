@@ -2,10 +2,12 @@
 
 [中文版](README.zh-CN.md)
 
-Import a file's content with the in-game "Import string" button; `book.txt` holds all of them as
-one blueprint book (order and label in `book.json`). Every design was built and run in the
-engine by `tools/design-lab` (5 minutes of game time, rates measured after the first minute); the
-numbers are from those runs. Explanations: [chapter 1](../chapters/01-landing-to-red-science.md).
+The pictures are in-game screenshots of the designs running in `tools/design-lab`
+(`tools/take-screenshots.ps1`; the infinity chests and loaders at the edges are the lab's
+sources and sinks, not part of the blueprints). Import a file's content with the in-game
+"Import string" button; `book.txt` holds all of them as one blueprint book (order and label in
+`book.json`). Every design was built and run in the engine by `tools/design-lab` (5 minutes of
+game time, rates measured after the first minute); the numbers are from those runs. Explanations: [chapter 1](../chapters/01-landing-to-red-science.md).
 
 | File | In game | What it is | Measured |
 |---|---|---|---|
@@ -24,6 +26,8 @@ numbers are from those runs. Explanations: [chapter 1](../chapters/01-landing-to
 
 ## Raw coal module
 
+![Raw coal module running in the design lab](../images/raw-coal-module.jpg)
+
 - Two drill rows face one output belt; each row fills one lane.
 - One drill feeds only the service belt, which runs behind both rows and tunnels under the
   output belt. Fuel travels on the inner lane; Ash-filtered inserters put Ash on the outer lane;
@@ -32,6 +36,8 @@ numbers are from those runs. Explanations: [chapter 1](../chapters/01-landing-to
   edge of a field the full module may not fit; the author's run used a 7-drill cut of it there.
 
 ## Smelting column
+
+![Smelting column running in the design lab](../images/smelting-column.jpg)
 
 - Ten Stone furnaces in a row between two belts flowing the same way. Top belt: ore on the lane
   next to the furnaces, plates come back on the outer lane. Bottom belt: Raw coal next to the

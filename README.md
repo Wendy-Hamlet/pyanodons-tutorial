@@ -71,7 +71,13 @@ parameters for yours.
   game as one blueprint book and pulls edited blueprints back; see
   [blueprints](blueprints/README.md#syncing-with-a-running-game).
 - `take-screenshots.ps1`: runs the design lab with graphics to take in-game screenshots. The Steam
-  build of the game has Steam relaunch it; confirm Steam's dialog about launch arguments.
+  build of the game has Steam relaunch it; confirm Steam's dialog about launch arguments. The
+  lab disables freeplay's crash site and intro, which would otherwise land on the designs and
+  hold the game until Tab is pressed.
+- `shots.js` + `/pt-shots` (companion): screenshots of the author's real game. `shots.js plan`
+  lists areas, `/pt-shots` in game takes them, `shots.js pull` copies them into `images/`.
+  (Loading a real save with `--benchmark-graphics` crashed the game, so this goes through the
+  running game instead.)
 - `newgame-observer/` + `summarize-newgame.js`: what a fresh game offers; create the map with
   `--map-gen-settings` taken from a snapshot to reproduce a world.
 - `belt-lab/`, `ch1-probe/`, `drill-probe/`, `train-probe/`, `station-probe/`: engine

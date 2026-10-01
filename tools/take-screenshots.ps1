@@ -1,6 +1,6 @@
 # Takes the tutorial's in-game screenshots: builds the design-lab map headlessly, then runs it with
 # graphics (--benchmark-graphics), where tools/design-lab calls game.take_screenshot after the
-# designs have run for a minute. The game exits by itself; the PNGs are copied to images/.
+# designs have run for a minute. The game exits by itself; the JPGs are copied to images/.
 #
 # The Steam build of the graphical client asks Steam to relaunch it; Steam then shows a dialog
 # about launching with custom arguments. Confirm it. Headless runs never need Steam.
@@ -46,7 +46,7 @@ try {
     }
     if (-not $seen) { throw "the game never started (Steam dialog not confirmed?)" }
 
-    $shots = Get-ChildItem "$Shot\data\script-output\cellforge\shots" -Filter *.png -ErrorAction SilentlyContinue
+    $shots = Get-ChildItem "$Shot\data\script-output\cellforge\shots" -Filter *.jpg -ErrorAction SilentlyContinue
     if (-not $shots) { throw "no screenshots written; see $Shot\data\factorio-current.log" }
     $shots | Copy-Item -Destination $images -Force
     $shots | Select-Object Name, Length
