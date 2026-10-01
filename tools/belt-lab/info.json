@@ -1,0 +1,8 @@
+{
+  "name": "cf-belt-lab",
+  "version": "0.0.1",
+  "title": "Belt mechanics lab",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "dependencies": ["base", "? pypostprocessing"]
+}

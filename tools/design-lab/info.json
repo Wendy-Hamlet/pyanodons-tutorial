@@ -1,0 +1,8 @@
+{
+  "name": "cf-design-lab",
+  "version": "0.0.1",
+  "title": "Design lab",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "dependencies": ["base", "? pypostprocessing"]
+}
