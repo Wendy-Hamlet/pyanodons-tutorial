@@ -3,7 +3,7 @@
 // Usage: node tools/render-area.js x1 y1 x2 y2 out.png [scale]
 //
 // Grid legend: belts ^ > v <; underground entrance U, exit u; inserter: drop direction as
-// n e s w (uppercase = filtered, filters listed below); M mining drill on Raw coal, m mining drill
+// n e s w (uppercase = filtered, filters listed below; "all but X" = blacklist); M mining drill on Raw coal, m mining drill
 // on any other resource (listed below), drop tiles marked * when empty; C chest, F furnace,
 // B boiler, p electric pole, # anything else.
 
@@ -56,7 +56,11 @@ for (const e of sorted) {
     mark({ x: e.x + (e.drop.x - e.x) * 0.35, y: e.y + (e.drop.y - e.y) * 0.35 }, e.filter ? [255, 255, 255] : [20, 30, 60]);
     const dx = e.drop.x - e.x, dy = e.drop.y - e.y;
     let ch = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'e' : 'w') : (dy > 0 ? 's' : 'n');
-    if (e.filter) { ch = ch.toUpperCase(); filters[e.filter] = (filters[e.filter] || 0) + 1; }
+    if (e.filter) {
+      ch = ch.toUpperCase();
+      const key = (e.filter_mode === 'blacklist' ? 'all but ' : '') + e.filter;
+      filters[key] = (filters[key] || 0) + 1;
+    }
     put(e.x, e.y, ch);
   } else if (e.type === 'mining-drill') {
     const coal = e.target === 'raw-coal';

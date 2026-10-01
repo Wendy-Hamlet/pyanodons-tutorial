@@ -99,6 +99,7 @@ local function entities(surface)
         if e.use_filters then
           local f = e.get_filter(1)
           entry.filter = f and (type(f) == "table" and f.name or f)
+          entry.filter_mode = e.inserter_filter_mode -- "whitelist" or "blacklist"
         end
       elseif e.type == "underground-belt" then
         entry.ug = e.belt_to_ground_type
