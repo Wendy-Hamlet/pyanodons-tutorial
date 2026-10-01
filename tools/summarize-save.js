@@ -58,6 +58,27 @@ console.log(top(byRecipe, 60).map(([k, c]) => { const [rec, m] = k.split('|'); r
 const idle = entities.filter((e) => (e.type === 'assembling-machine') && !e.recipe).length;
 if (idle) console.log(`未设置配方的组装类机器：${idle} 台`);
 
+// Ore left under each drill (save inspector): drills over a mined-out spot have stopped for
+// good, and rows are often built longer than needed on purpose, so downstream drills take over
+// when upstream ones run dry.
+h('采矿机下方剩余矿量');
+const drills = entities.filter((e) => e.type === 'mining-drill');
+const byResource = {};
+for (const d of drills) {
+  const left = Object.values(d.ore || {}).reduce((a, b) => a + b, 0);
+  const key = d.target || Object.keys(d.ore || {})[0] || '无矿';
+  const r = byResource[key] || (byResource[key] = { drills: 0, empty: 0, low: 0, total: 0, status: {} });
+  r.drills += 1;
+  r.total += left;
+  if (left === 0) r.empty += 1;
+  else if (left < 1000) r.low += 1;
+  r.status[d.status] = (r.status[d.status] || 0) + 1;
+}
+for (const [name, r] of Object.entries(byResource)) {
+  const status = Object.entries(r.status).map(([s, c]) => `${s} ${c}`).join('，');
+  console.log(`${zh('entity', name)}：${r.drills} 台，下方共剩 ${fmt(r.total)}；已采空 ${r.empty} 台，少于 1000 的 ${r.low} 台（状态：${status}）`);
+}
+
 h('累计产量（前 30）');
 const items = report.items || {};
 console.log(top(items.produced, 30).map(([n, c]) => `${zh('item', n)} ${fmt(c)}`).join('、'));

@@ -88,6 +88,12 @@ local function entities(surface)
       elseif e.type == "mining-drill" then
         entry.target = e.mining_target and e.mining_target.name
         entry.drop = e.drop_position
+        -- Ore still under the drill, per resource: a drill with none left has stopped for good.
+        entry.ore = {}
+        for _, r in pairs(surface.find_entities_filtered({ area = e.mining_area, type = "resource" })) do
+          entry.ore[r.name] = (entry.ore[r.name] or 0) + r.amount
+        end
+        if not next(entry.ore) then entry.ore = nil end
       elseif e.type == "inserter" then
         entry.pickup, entry.drop = e.pickup_position, e.drop_position
         if e.use_filters then
