@@ -47,6 +47,12 @@ function push() {
   if (missing.length) throw new Error(`book.json lists files that do not exist: ${missing.join(', ')}`);
   const names = [...manifest.blueprints, ...present.filter((n) => !manifest.blueprints.includes(n))];
   const entries = names.map(readPrint);
+  // The game cuts blueprint descriptions to 500 bytes on import (measured with check-companion.ps1);
+  // a longer one would come back "changed" from every export. Chinese text takes 3 bytes a character.
+  names.forEach((n, i) => {
+    const bytes = Buffer.byteLength((Object.values(entries[i])[0].description || ''), 'utf8');
+    if (bytes > 500) throw new Error(`${n}: description is ${bytes} bytes; the game keeps only 500`);
+  });
   const version = Object.values(entries[0])[0].version;
   const book = {
     blueprint_book: {

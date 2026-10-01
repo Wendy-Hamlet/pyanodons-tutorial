@@ -73,6 +73,14 @@ local function on_belts(x, y1, y2, item)
   end
   return n
 end
+-- Items of `item` on all belt-like entities in a tile area, every lane.
+local function on_area(x1, y1, x2, y2, item)
+  local n = 0
+  for _, b in pairs(surface.find_entities_filtered({ area = { { x1, y1 }, { x2 + 1, y2 + 1 } }, type = { "transport-belt", "underground-belt" } })) do
+    for line = 1, b.get_max_transport_line_index() do n = n + b.get_transport_line(line).get_item_count(item) end
+  end
+  return n
+end
 local function sink(x, y, dir)
   local v = VEC[dir]
   fixture(place({ name = "loader", position = { x + 0.5 + 1.5 * v[1], y + 0.5 + 1.5 * v[2] }, direction = dir, type = "input" }, "sink loader"))
@@ -231,6 +239,7 @@ local function from_save(key, ox, oy)
     local built = place({ name = e.name, position = { ox + e.x, oy + e.y }, direction = e.dir and defines.direction[e.dir] or nil, type = e.ug })
     if built then
       if e.filter then built.use_filters = true; built.set_filter(1, e.filter) end
+      if e.mode then built.inserter_filter_mode = e.mode end
       if built.type == "mining-drill" then
         d.drills[#d.drills + 1] = built
         built.get_fuel_inventory().insert({ name = "raw-coal", count = 5 })
@@ -250,6 +259,40 @@ local function from_save(key, ox, oy)
   end
   d.area = { ox, oy, ox + spec.width - 1, oy + spec.height - 1 }
   d.size = spec.width .. "x" .. spec.height
+  return d
+end
+
+---------------------------------------------------------------------------------------------
+-- A horizontal smelting column from blueprints/ (blueprints/smelting-column.txt, the author's
+-- design, copied with extract-design.js --blueprint): ore belt along the top, fuel belt along the
+-- bottom, both flowing east. Fixtures side-load ore onto the top belt's lane next to the furnaces
+-- and Raw coal onto the bottom belt's lane next to the furnaces, half a belt each. Chests above the
+-- furnaces collect plates, chests below them Ash.
+---------------------------------------------------------------------------------------------
+local function column_from_blueprint(key, ox, oy, ore_item, plate_item)
+  local spec = extracted[key]
+  local d = { furnaces = {}, plate_chests = {}, ash_chests = {} }
+  for _, e in ipairs(spec.entities) do
+    local built = place({ name = e.name, position = { ox + e.x, oy + e.y }, direction = e.dir and defines.direction[e.dir] or nil, type = e.ug })
+    if built then
+      if e.filter then built.use_filters = true; built.set_filter(1, e.filter) end
+      if e.mode then built.inserter_filter_mode = e.mode end
+      if built.type == "furnace" then
+        d.furnaces[#d.furnaces + 1] = built
+      elseif built.type == "container" then
+        local list = e.y < spec.height / 2 and d.plate_chests or d.ash_chests
+        list[#list + 1] = built
+      end
+    end
+  end
+  local bottom = oy + spec.height - 1
+  for x = ox - 3, ox - 1 do fixture(belt(x, oy, E)); fixture(belt(x, bottom, E)) end
+  fixture(belt(ox - 2, oy + 1, N))
+  fixture(belt(ox - 1, bottom - 1, S))
+  d.sources = { source(ox - 2, oy + 1, N, ore_item), source(ox - 1, bottom - 1, S, "raw-coal") }
+  d.plate_item, d.ore_item = plate_item, ore_item
+  d.area = { ox, oy, ox + spec.width - 1, bottom }
+  d.belt_area = d.area
   return d
 end
 
@@ -293,16 +336,17 @@ script.on_init(function()
   for x = -120, 119 do for y = -120, 119 do tiles[#tiles + 1] = { name = "grass-1", position = { x, y } } end end
   surface.set_tiles(tiles)
 
-  -- Earlier runs (results in the tutorial): coal_field(0, -10, true/false), input-upstream columns,
+  -- Earlier runs (results in the tutorial): coal_field(0, -10, true/false), input-upstream and
+  -- input-downstream vertical columns (smelting_column without taps),
   -- from_save("user-loop", ...), from_save("user-module", ...) (the module as cut from the save,
   -- with 8 tiles of the save's trunk belt). `shot` = screenshot key and zoom, taken when rendering
   -- is available.
   storage.designs = {
-    { label = "copper column, input downstream", kind = "smelt", shot = { "copper-smelting-column", 1.5 },
-      d = smelting_column(-60, -10, "copper-ore", "copper-plate", true, 10) },
-    { label = "iron column, input downstream", kind = "smelt",
-      d = smelting_column(-40, -10, "iron-ore", "iron-plate", true, 10) },
-    { label = "copper column fuelled by 1 tap", kind = "smelt", shot = { "smelting-column-with-fuel-tap", 1.5 },
+    { label = "smelting column (author's blueprint) on iron", kind = "smelt", shot = { "smelting-column", 1.5 },
+      d = column_from_blueprint("smelting-column", 0, 30, "iron-ore", "iron-plate") },
+    { label = "smelting column (author's blueprint) on copper", kind = "smelt",
+      d = column_from_blueprint("smelting-column", 0, 45, "copper-ore", "copper-plate") },
+    { label = "copper column fuelled by 1 tap", kind = "smelt",
       d = smelting_column(-20, -10, "copper-ore", "copper-plate", true, 10, 1) },
     { label = "raw coal module (author's design)", kind = "coal", shot = { "raw-coal-module", 2 },
       d = from_save("raw-coal-module", -100, 40) }, -- from blueprints/raw-coal-module.txt
@@ -327,8 +371,12 @@ local function snapshot(x)
       local p, o = count_items(c, d.plate_item)
       plates, wrong = plates + p, wrong + o
     end
-    local ash, ash_wrong = count_items(d.ash_chest, "ash")
-    return { plates = plates, ash = ash, wrong = wrong + ash_wrong }
+    local ash = 0
+    for _, c in ipairs(d.ash_chests or { d.ash_chest }) do
+      local a, o = count_items(c, "ash")
+      ash, wrong = ash + a, wrong + o
+    end
+    return { plates = plates, ash = ash, wrong = wrong }
   else
     -- Raw coal and ash leaving through sinks, plus ash collected in the design's own chests.
     local ash, wrong = x.totals.ash or 0, 0
@@ -401,10 +449,17 @@ script.on_event(defines.events.on_tick, function(event)
   elseif event.tick == T_DRAIN then
     for _, x in ipairs(storage.designs) do
       if x.kind == "smelt" then
-        local o, f = x.d.ore_column, x.d.fuel_column
+        local ore_left, coal_left
+        if x.d.belt_area then
+          local a = x.d.belt_area
+          ore_left = on_area(a[1], a[2], a[3], a[4], x.d.ore_item)
+          coal_left = on_area(a[1], a[2], a[3], a[4], "raw-coal")
+        else
+          local o, f = x.d.ore_column, x.d.fuel_column
+          ore_left, coal_left = on_belts(o[1], o[2], o[3], x.d.ore_item), on_belts(f[1], f[2], f[3], "raw-coal")
+        end
         out("%s, %d s after supply stopped: %d ore and %d raw coal left on the belts; furnaces: %s", x.label,
-          (T_DRAIN - T_END) / 60, on_belts(o[1], o[2], o[3], x.d.ore_item), on_belts(f[1], f[2], f[3], "raw-coal"),
-          status_counts(x.d.furnaces))
+          (T_DRAIN - T_END) / 60, ore_left, coal_left, status_counts(x.d.furnaces))
       end
     end
     out("DONE")

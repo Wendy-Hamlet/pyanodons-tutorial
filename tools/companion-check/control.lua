@@ -15,16 +15,17 @@ script.on_event(defines.events.on_tick, function()
   local pages = stack.get_inventory(defines.inventory.item_main)
   for i = 1, #pages do
     if pages[i].valid_for_read then
-      out("page %d: %s (%d entities)", i, pages[i].label, pages[i].get_blueprint_entity_count())
+      out("page %d: %s (%d entities, description %d bytes)", i, pages[i].label, pages[i].get_blueprint_entity_count(),
+        #(pages[i].blueprint_description or ""))
     end
   end
   remote.call("py-tutorial-companion", "write_export", stack.export_stack())
 
-  -- Edits: drop the last entity of page 2, relabel page 4.
+  -- Edits: drop the last entity of page 2, relabel page 1.
   local entities = pages[2].get_blueprint_entities()
   entities[#entities] = nil
   pages[2].set_blueprint_entities(entities)
-  pages[4].label = "Renamed in game"
+  pages[1].label = "Renamed in game"
   helpers.write_file("py-tutorial-companion/export-edited.txt", stack.export_stack())
   inv.destroy()
   out("done")

@@ -1,7 +1,7 @@
 # Checks the blueprint round trip of tools/companion in the isolated Py setup: pushes the book,
 # imports it in the engine (through the companion's own code), exports it, and runs
 # `bp-sync.js pull --dry` on the unchanged export (expect all "unchanged") and on an edited one
-# (expect one CHANGED, one NEW and one missing). Both mods are removed again afterwards.
+# (expect page 2 CHANGED, page 1 NEW under its new label and missing under the old one). Both mods are removed again afterwards.
 #
 # Usage: powershell -ExecutionPolicy Bypass -File tools\check-companion.ps1
 param(

@@ -164,8 +164,8 @@ capitals when filtered.
   drill row and the furnaces. Every drill and furnace has a fuel inserter (lower case) and an
   Ash inserter filtered to Ash (capitals), which drops onto the outer lane. An underground belt at
   the end lets only the Ash lane through, into three chests.
-- **The column** follows the author's principles, measured with the tutorial's column blueprints
-  at **0.91 plates/s and 0.60 Ash/s** with no mixed items:
+- **The column** is the author's blueprint, measured on iron and on copper at **0.91 plates/s
+  and 0.60 Ash/s** each, with no mixed items:
   - Half a belt of ore is 7.5/s and a Stone furnace eats 0.8 ore/s, so 10 furnaces take half a
     belt (theoretical 0.94 plates/s).
   - Each belt carries one input on the lane next to the machines and one output on the far lane;
@@ -188,10 +188,9 @@ about 8 minutes, and at 0:25 all 62 inserters of the unit stood waiting for item
 That is the reason for section 4. Once the unit ran, the robots removed the first drill-and-furnace
 pairs (0:25–0:30), and the copper unit followed at 0:30–0:35.
 
-Blueprints: [`iron-smelting-column.txt`](../blueprints/iron-smelting-column.txt),
-[`copper-smelting-column.txt`](../blueprints/copper-smelting-column.txt) and
-[`smelting-column-with-fuel-tap.txt`](../blueprints/smelting-column-with-fuel-tap.txt) are the
-measured columns; the drill rows depend on your ore patch.
+Blueprint: [`smelting-column.txt`](../blueprints/smelting-column.txt), the author's column for
+iron or copper (in game "0.94" with the two plate icons). The drill rows depend on your ore
+patch, so they are not part of it.
 
 ## 4. Raw coal on a belt (0:35–0:50)
 
@@ -215,9 +214,11 @@ Mining productivity 1 (+10 %, which adds output without adding fuel use, verifie
 enough, but then fuel has to be tapped off the output belt mid-way, which costs more parts than
 the drill it saves.
 
-In the run the module went down from the blueprint book at 0:35–0:40 in a 7-drill version: one
-fuel drill and six on the output belt, at most about 10.8 Raw coal/s (6 × 2 minus what the 7
-drills burn). That covered the base, which burned about 6 Raw coal/s by 1:10. The four-drill
+In the run the module went down from the blueprint book at 0:35–0:40, at the edge of the coal
+field: the author wanted the edge mined out first, and there the full module did not fit. A
+7-drill version — one fuel drill and six on the output belt, at most about 10.8 Raw coal/s
+(6 × 2 minus what the 7 drills burn) — was plenty for a base that burned about 6 Raw coal/s by
+1:10. The four-drill
 pinwheel from the landing stayed as a hand-picked reserve.
 
 ### One belt for the whole base
@@ -312,7 +313,8 @@ The first version went down at 1:10–1:17 next to the plate chests of an iron u
 Burner assembling machines MK 01 (from Assembly; 3×3, 75 kW, 0.025 Raw coal/s each) making Iron
 stick, Bolts, Iron gear wheel, Copper cable and Small parts, passing items from machine to
 machine with inserters. Iron plates arrive on a short belt from the unit's plate chests; Copper
-plates come from a chest; Small parts go into a chest. Next: two more machines for Transport
+plates come from a chest refilled by hand for now (the mall uses little copper; automating it
+comes later); Small parts go into a chest. Next: two more machines for Transport
 belts and Mechanical inserters.
 
 Planning numbers, from data: 1 Small part/s takes 1.75 Iron plate/s and 0.75 Copper plate/s, and
@@ -388,6 +390,9 @@ Coal processing 1 opens the better iron route and is the subject of the next cha
   `tools/bp-sync.js pull`; the trimmed blueprint was measured again straight from the file
   (`extract-design.js --blueprint`): unchanged, 15.00 Raw coal/s and 1.40 Ash/s, all 9 drills
   working.
+- The author's smelting column blueprint was copied from the file (`extract-design.js
+  --blueprint`) and run in `tools/design-lab` on iron and on copper: 0.908 plates/s and 0.604
+  Ash/s each, no mixed items, 0 ore left on the belts 120 s after the supply stopped.
 - Mining productivity adding output without fuel: a one-off engine probe.
 - Computed from measured rates, not measured as a whole: a unit's 2.0 Raw coal/s, the 7-drill
   module's 10.8 Raw coal/s, three taps' 2.5/s, the Boiler's 0.28 MW load.

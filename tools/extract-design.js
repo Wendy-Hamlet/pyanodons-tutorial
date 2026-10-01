@@ -23,6 +23,7 @@ function fromBlueprint(bpFile) {
     name: e.name, x: e.position.x, y: e.position.y, size: SIZE[e.name] || 1,
     dir: e.direction !== undefined ? DIR[e.direction] : (e.name.includes('belt') ? 'north' : undefined),
     ug: e.type, filter: e.use_filters && e.filters ? e.filters[0].name : undefined,
+    filter_mode: e.filter_mode,
   }));
 }
 
@@ -45,6 +46,7 @@ const lines = picked.map((e) => {
   if (e.dir) fields.push(`dir = ${lua(e.dir)}`);
   if (e.ug) fields.push(`ug = ${lua(e.ug)}`);
   if (e.filter) fields.push(`filter = ${lua(e.filter)}`);
+  if (e.filter_mode === 'blacklist') fields.push('mode = "blacklist"');
   return `    { ${fields.join(', ')} },`;
 });
 const block = `  [${lua(key)}] = { width = ${x2 - x1 + 1}, height = ${y2 - y1 + 1}, entities = {\n${lines.join('\n')}\n  } },\n`;
