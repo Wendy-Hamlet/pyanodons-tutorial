@@ -1,0 +1,8 @@
+{
+  "name": "cf-recorder-check",
+  "version": "0.0.1",
+  "title": "Recorder check",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "dependencies": ["base", "py-tutorial-companion"]
+}

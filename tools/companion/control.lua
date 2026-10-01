@@ -5,6 +5,9 @@
 --   export (/pt-export): writes the held blueprint book or blueprint (an item, or a record taken
 --                        from the blueprint library) to script-output/py-tutorial-companion/
 --                        export.txt, for `node tools/bp-sync.js pull`.
+-- It also records the game as it is played (recorder.lua).
+
+local recorder = require("recorder")
 
 local EXPORT_FILE = "py-tutorial-companion/export.txt"
 
@@ -90,7 +93,10 @@ local function export_held(player)
   player.print({ "py-tutorial-companion.exported", label or "?", EXPORT_FILE })
 end
 
+script.on_init(recorder.on_init)
+script.on_configuration_changed(recorder.on_configuration_changed)
 script.on_load(watch_pending)
+recorder.register()
 
 script.on_event(defines.events.on_lua_shortcut, function(event)
   local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
@@ -111,5 +117,7 @@ commands.add_command("pt-export", { "py-tutorial-companion.command-export" }, fu
   if player then export_held(player) end
 end)
 
--- For tools/check-companion.ps1, which has no player to act through.
-remote.add_interface("py-tutorial-companion", { fill = fill, write_export = write_export })
+-- For the check scripts (tools/check-companion.ps1, check-recorder.ps1), which have no player.
+remote.add_interface("py-tutorial-companion", {
+  fill = fill, write_export = write_export, set_test_limits = recorder.set_test_limits,
+})
