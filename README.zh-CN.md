@@ -37,9 +37,9 @@
 - `render-area.js x1 y1 x2 y2 out.png`：把存档里的一块区域画成放大图并输出字符网格，便于逐格读懂结构。
 - `extract-design.js <名称> x1 y1 x2 y2`（或 `<名称> --blueprint <文件>`）：把存档里的一块区域，或一整个蓝图文件，复制进实验场。
 - `design-lab/`：实验场。把设计（自己的，或从存档复制来的）建在无限供料箱和计数终点旁边，测量产量、断料后残留的物品和采矿机状态，并导出蓝图。
-- `companion/`：配合游玩的小模组（[说明](tools/companion/README.zh-CN.md)）：下面的蓝图书功能，以及游戏记录器（研究、聊天、建造活动、产量；日志自动轮转），由 `recorder-summary.js` 读取，由 `check-recorder.ps1` 检查。
+- `companion/`：配合游玩的小模组（[说明](tools/companion/README.zh-CN.md)）：下面的蓝图书功能，以及游戏记录器（研究、聊天、建造活动、产量；日志自动轮转），由 `recorder-summary.js`（最新状态）和 `recorder-phases.js`（把整局按固定时长分段成时间线，用于根据真实游玩写章节）读取，由 `check-recorder.ps1` 检查。
 - `bp-sync.js` + `companion/` + `check-companion.ps1`：把 `blueprints/` 作为一本蓝图书放进运行中的游戏，并把改过的蓝图导回，见[蓝图](blueprints/README.zh-CN.md#与运行中的游戏同步)。
 - `take-screenshots.ps1`：用图形模式运行实验场来截取游戏内画面。Steam 版游戏会让 Steam 重新启动它，请在 Steam 关于启动参数的弹窗中点确认。
 - `newgame-observer/` + `summarize-newgame.js`：观察新开一局有什么；用从存档读出的 `--map-gen-settings` 建图，可以复现同一个世界。
-- `belt-lab/`、`ch1-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。
+- `belt-lab/`、`ch1-probe/`、`drill-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。
 - 本地化名称：在配置里设 `locale=zh-CN`（或 `en`），运行 `factorio --dump-prototype-locale`，会在脚本输出目录生成 `*-locale.json`。

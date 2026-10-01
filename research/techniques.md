@@ -48,6 +48,8 @@ side it points to. (Engine, `tools/belt-lab`.)
 | Coal-type fuels (Raw coal, Coal, Coke, …) leave 1 Ash per item; Logs and Wood leave nothing. | Data |
 | The burnt-result slot holds 1000 Ash; when full the machine stops. At full load on Raw coal: Boiler 13.5 min, Burner mining drill 100 min, Stone furnace ~4 h. | Data, engine |
 | Mining productivity is free output: +10 % gives 2.17 Raw coal/s per drill with unchanged fuel use. | Engine (one-off probe) |
+| A Burner mining drill that cannot drop its ore ("waiting for space") burns nothing: 0.01 MJ in a minute, against 14.5 MJ for a working one. | Engine, `tools/drill-probe` |
+| An inserter never takes fuel out of a furnace, so one filtered to everything *but* Ash (blacklist) takes only the product. | Engine (`tools/ch1-probe`), seen in the author's run |
 
 ## Steam power
 
@@ -87,6 +89,16 @@ side it points to. (Engine, `tools/belt-lab`.)
    onto its inner lane. A full Raw coal belt fuels about 22 columns.
 7. **Opening order.** Handcraft all red science until Wood is mass-produced; automate Iron plates
    (and Raw coal) first.
+8. **Smelting unit.** Ore drill rows and a 10-furnace column on one fuel loop; the drill rows cover
+   the whole ore strip and hold more drills than needed, because downstream drills take over when
+   upstream ones mine out and blocked drills burn nothing. Uneven rows are mined-out spots. A unit
+   burns about 2.0 Raw coal/s and takes it with three taps (3 × 0.83/s).
+9. **One column blueprint for every plate.** Plate-side output inserters filtered to everything
+   but Ash (blacklist), so the same blueprint smelts iron or copper.
+10. **Mall.** Once handcrafting holds you up (in the author's first run: 48 minutes of recipe time
+   in 77 minutes, 28.5 of them behind Small parts), assemblers make the building materials into
+   chests. Not balanced — every machine just produces; the items needed in very large numbers
+   (Transport belts, Mechanical inserters) come first and their bottlenecks are raised later.
 
 ## Trains
 

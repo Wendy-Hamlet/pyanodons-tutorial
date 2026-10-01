@@ -64,7 +64,9 @@ parameters for yours.
   exports blueprints.
 - `companion/`: a small mod to play with ([its page](tools/companion/README.md)): the
   blueprint book below, and a play recorder (research, chat, building activity, production;
-  rotated logs) read by `recorder-summary.js` and checked by `check-recorder.ps1`.
+  rotated logs) read by `recorder-summary.js` (latest state) and `recorder-phases.js` (the
+  whole game as a timeline in fixed slices, used to write chapters from real play), checked by
+  `check-recorder.ps1`.
 - `bp-sync.js` + `companion/` + `check-companion.ps1`: moves `blueprints/` into a running
   game as one blueprint book and pulls edited blueprints back; see
   [blueprints](blueprints/README.md#syncing-with-a-running-game).
@@ -72,7 +74,7 @@ parameters for yours.
   build of the game has Steam relaunch it; confirm Steam's dialog about launch arguments.
 - `newgame-observer/` + `summarize-newgame.js`: what a fresh game offers; create the map with
   `--map-gen-settings` taken from a snapshot to reproduce a world.
-- `belt-lab/`, `ch1-probe/`, `train-probe/`, `station-probe/`: engine measurements behind the
-  chapters and research notes.
+- `belt-lab/`, `ch1-probe/`, `drill-probe/`, `train-probe/`, `station-probe/`: engine
+  measurements behind the chapters and research notes.
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.
