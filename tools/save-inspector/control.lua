@@ -103,6 +103,8 @@ local function entities(surface)
         end
       elseif e.type == "underground-belt" then
         entry.ug = e.belt_to_ground_type
+      elseif e.type == "entity-ghost" then
+        entry.ghost = e.ghost_name -- what the robots still have to build
       end
       if e.burner then
         entry.fuel = item_count(e.burner.inventory)

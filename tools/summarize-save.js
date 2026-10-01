@@ -43,8 +43,8 @@ for (const p of Object.values(report.players || {})) { // {} when the save has n
 
 h('已建造（按数量）');
 const byName = {};
-for (const e of entities) byName[e.name] = (byName[e.name] || 0) + 1;
-console.log(top(byName, 40).map(([n, c]) => `${zh('entity', n)}×${c}`).join('、'));
+for (const e of entities) byName[e.ghost ? `${e.ghost}（虚影）` : e.name] = (byName[e.ghost ? `${e.ghost}（虚影）` : e.name] || 0) + 1;
+console.log(top(byName, 50).map(([n, c]) => `${n.endsWith('（虚影）') ? zh('entity', n.slice(0, -4)) + '（虚影）' : zh('entity', n)}×${c}`).join('、'));
 const box = report.base_box;
 if (box) console.log(`基地范围：x ${Math.round(box.x1)}..${Math.round(box.x2)}，y ${Math.round(box.y1)}..${Math.round(box.y2)}（${Math.round(box.x2 - box.x1)}×${Math.round(box.y2 - box.y1)} 格）`);
 
