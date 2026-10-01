@@ -84,7 +84,8 @@ parameters for yours.
   running game instead.)
 - `newgame-observer/` + `summarize-newgame.js`: what a fresh game offers; create the map with
   `--map-gen-settings` taken from a snapshot to reproduce a world.
-- `belt-lab/`, `ch1-probe/`, `drill-probe/`, `train-probe/`, `station-probe/`: engine
-  measurements behind the chapters and research notes.
+- `belt-lab/`, `ch1-probe/`, `drill-probe/`, `inserter-probe/`, `train-probe/`, `station-probe/`:
+  engine measurements behind the chapters and research notes. `run-probe.ps1 <probe>` runs one
+  (copies it into the fixed setup, creates a map, runs it, prints its results, removes it).
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.

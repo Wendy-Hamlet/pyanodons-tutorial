@@ -35,7 +35,29 @@ side it points to. (Engine, `tools/belt-lab`.)
 |---|---|
 | The Mechanical inserter (Py's burner inserter) needs no fuel and no power at all. | Data (`void` energy), engine |
 | It has 1 filter slot. | Data |
-| Belt → chest: 0.82 items/s. Belt → belt: 0.83/s from a moving full belt, 0.86/s from a standing one. | Engine, `tools/belt-lab`, `tools/design-lab` |
+| Throughput: see the table below. Belt → belt: 0.83/s from a moving full belt, 0.86/s from a standing one. | Engine, `tools/inserter-probe`, `tools/design-lab` |
+| The Py encyclopedia's 0.78/s for the Mechanical inserter matches one full turn at its rotation speed (0.013 turn per tick = 77 ticks); the engine moves 0.80/s chest to chest and more from a belt, where the hand meets the items. | Data, engine |
+
+Items per second without inserter capacity bonus (Iron plates, basic belt, 60 s per case,
+`tools/inserter-probe`). A machine is reached like a chest (not measured separately).
+
+| Inserter | Chest → chest | Chest → moving belt | Moving full belt → chest | Standing full belt → chest |
+|---|---|---|---|---|
+| Mechanical inserter | 0.80 | 0.80 | 0.83 | 0.85 |
+| Inserter (electric) | 1.25 | 1.25 | 1.25 | 1.27 |
+| Long-handed inserter | 1.25 | 1.25 | 1.20 | 1.20 |
+| Fast inserter | 2.50 | 2.50 | 2.82 | 2.73 |
+
+For planning: 0.80/s per Mechanical inserter into or out of a machine, 0.83/s when it takes from
+a moving belt.
+
+## Machines with an output port
+
+| Fact | Source |
+|---|---|
+| Some machines drop their products themselves, like a mining drill, so they need no output inserter (inserters can add throughput): Soil extractor, Sap extractor, Wood processing unit, Sand extractor, Classifier, Ground borer, Clay pit, Casting unit (prototype field `vector_to_place_result`). | Data |
+| A Soil extractor facing north drops 3.8 tiles below its centre, on the tile just past its bottom edge. A Foundry standing there gets the Limestone directly (24 Limestone in 60 s, all inside the Foundry); a belt there gets it on one lane only, the lane nearer the extractor. | Engine, `tools/inserter-probe` |
+| The author's steel site stacks one Soil extractor on each Foundry this way. According to the author, a splitter can spread a port's output evenly over both lanes of a belt (not measured yet). | Author's save, author |
 | Taking from a Stone furnace or Boiler, an inserter takes the product **and** the Ash, never the fuel. | Engine, `tools/ch1-probe` |
 | Taking from a Burner mining drill, an **unfiltered** inserter also pulls the fuel out and starves the drill; filtered to Ash it takes only Ash. | Engine, `tools/ch1-probe` |
 

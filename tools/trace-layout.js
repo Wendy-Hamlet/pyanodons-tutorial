@@ -78,7 +78,12 @@ for (const i of list.filter((e) => e.type === 'inserter' && e.pickup && e.drop))
   add(loads, to, { via: i, from, filter: f });
   add(unloads, from, { via: i, to, filter: f });
 }
-for (const d of list.filter((e) => e.type === 'mining-drill' && e.drop)) add(loads, at.get(key(d.drop.x, d.drop.y)), { via: d, from: d, filter: '' });
+// Drills and machines with an output port drop their products themselves (no inserter).
+for (const d of list.filter((e) => e.drop && (e.type === 'mining-drill' || e.type === 'assembling-machine' || e.type === 'furnace'))) {
+  const to = at.get(key(d.drop.x, d.drop.y));
+  add(loads, to, { via: d, from: d, filter: '' });
+  if (d.type !== 'mining-drill') add(unloads, d, { via: d, to, filter: '出货口' });
+}
 
 const sum = (arr) => {
   const out = {};
@@ -128,7 +133,11 @@ for (const m of list.filter((e) => ['assembling-machine', 'furnace', 'storage-ta
   const out = unloads.get(m) || [];
   const fl = (m.fluid_boxes || []).map((f) => `${f.fluid ? zh(f.fluid) : '空'}@段${f.segment}`).join('、');
   console.log(`${name(m)} ${pos(m)}${m.recipe ? ` 配方 ${zh(m.recipe)}` : ''} 状态 ${m.status || '?'}`);
-  const src = (s) => { const l = tileLine.get(key(s.via.pickup.x, s.via.pickup.y)); return l ? `带线${l.id}` : name(s.from); };
+  const src = (s) => {
+    if (!s.via.pickup) return `${name(s.from)}${pos(s.from)}出货口`;
+    const l = tileLine.get(key(s.via.pickup.x, s.via.pickup.y));
+    return l ? `带线${l.id}` : name(s.from);
+  };
   const dst = (s) => { const l = tileLine.get(key(s.via.drop.x, s.via.drop.y)); return l ? `带线${l.id}` : name(s.to); };
   if (inn.length) console.log(`  进：${inn.map((s) => `${src(s)}${s.filter ? `[${s.filter}]` : ''}`).join('、')}`);
   if (out.length) console.log(`  出：${out.map((s) => `${dst(s)}${s.filter ? `[${s.filter}]` : ''}`).join('、')}`);

@@ -85,6 +85,12 @@ local function entities(surface)
       if e.type == "assembling-machine" or e.type == "furnace" then
         local recipe = e.get_recipe()
         entry.recipe = recipe and recipe.name
+        -- Machines with an output port (soil and sap extractors, wood processing units...) drop
+        -- their products themselves, onto a belt or straight into the machine standing there.
+        if e.prototype.vector_to_place_result then
+          entry.drop = e.drop_position
+          entry.drop_to = e.drop_target and e.drop_target.name
+        end
       elseif e.type == "mining-drill" then
         entry.target = e.mining_target and e.mining_target.name
         entry.drop = e.drop_position
