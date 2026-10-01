@@ -18,9 +18,10 @@ The stage has two goals, both of which need steel buildings, and steel needs cok
    oxide (2 per Iron plate), Soot (which separates into five ores) and Coal dust. The Solid
    separator costs 50 Steel plate.
 3. **Steel** comes from an Advanced foundry: 5 Coke + 20 Iron ore + 5 Limestone → 1 Steel plate.
-4. **Coke**, before pY science pack 1, only comes from two distillations: Raw coal → Coal → Coke.
-   (The author's map has no Coal ore at all: `tools/inspect-save.ps1` counts every resource on the
-   generated map.)
+4. **Coke**, until Steel is made, comes from two distillations: Raw coal → Coal → Coke. (The
+   author's map has no Coal ore at all: `tools/inspect-save.ps1` counts every resource on the
+   generated map.) Once Tar processing is researched, Coke becomes a large byproduct of Tar —
+   see "Later sources of Coke".
 
 ## Technologies
 
@@ -34,9 +35,6 @@ The stage has two goals, both of which need steel buildings, and steel needs cok
 
 120 red packs in all: about 29 minutes of handcrafting recipe time at 14.3 s a pack.
 
-Later: **Coke processing - Stage 1** (50 × (pY science pack 1 + 2 red)) makes Coke straight from
-Raw coal in a High pressure furnace, 10 Raw coal → 4 Coke + 20 Coke oven gas in 2 s — more than
-twice the Coke per Raw coal of the two distillations (1.8 per 10).
 
 ## Recipes and rates
 
@@ -94,6 +92,20 @@ Per Steel plate: 27.8 Raw coal, 20 Iron ore, 5 Limestone (250 Water); 200 Coal g
 foundry, 2,222 Raw coal, 1,600 Iron ore and 400 Limestone (17 minutes of one Soil extractor).
 A Sinkhole adds 15.
 
+## The author's goal: full belts
+
+The author's target for the stage: a full belt of Raw coal into Coke, and a full belt of Iron
+ore into Steel.
+
+- **15 Raw coal/s through both distillations**: 3 columns on Raw coal and 1.35 on Coal give
+  **2.7 Coke/s**, plus 108 Coal gas, 67.5 Tar and 1.95 Iron oxide per second.
+- **15 Iron ore/s into Steel**: 0.75 Steel/s (45 a minute) from 11.25 Advanced foundries, which
+  need **3.75 Coke/s** and 3.75 Limestone/s (9.4 Soil extractors, 187.5 Water/s).
+- So one full Raw coal belt's Coke covers 0.54 Steel/s, the Steel from **10.8 Iron ore/s**; a
+  full Iron ore belt needs about 20.8 Raw coal/s through the columns (1.4 belts).
+- Power, every machine working: columns 2.2 MW, foundries 13.5 MW, Soil extractors 3.75 MW —
+  **19.4 MW**, that is 5.2 Steam engines on 10.5 Boilers burning 13 Raw coal/s.
+
 ## Power
 
 Every machine of this stage is electric:
@@ -115,6 +127,24 @@ second Boiler, and soon a second engine pair, comes with this stage. Crushing is
 grade-1 iron costs 2 MJ of crusher time per plate (one Jaw crusher, 1 MW, makes enough Processed
 iron ore for 0.5 plates/s), so crushing the 13.5 Iron ore/s of chapter 1's base would take 5.4
 Jaw crushers and 5.4 MW.
+
+## Later sources of Coke
+
+Searched by product (every recipe whose results contain Coke), the ones that come within reach:
+
+| Source | Technology (cost, needs) | Recipe |
+|---|---|---|
+| Tar | Tar processing (60 red; needs Internal combustion engine and Concrete) | In a Tar processing unit MK 01 (11×11, 500 kW, 20 Steel): 100 Tar + 100 Steam → 140 Pitch + 75 Anthracene oil + 30 Middle oil + 24 Creosote (5 s). In a distillation column: 100 Pitch + 100 Steam → 10 Coke + 30 Anthracene oil + 20 Light oil + 20 Naphthalene oil + 10 Hydrogen (5 s); 50 Anthracene oil → 5 Coke + 20 Gasoline (4 s) |
+| Raw coal | Coke processing - Stage 1 (50 × (pY science pack 1 + 2 red)) | In a High pressure furnace: 10 Raw coal → 4 Coke + 20 Coke oven gas (2 s) |
+
+From Steel processing on, the way to Tar processing costs only red: Mining with fluid (24),
+Internal combustion engine (60), Concrete (24, after Crusher) and Tar processing (60) — 228 red
+counting Steel processing, Soil washing and Crusher.
+
+Per 100 Tar the Tar route gives **25.7 Coke**, but it needs 240 Steam of at least 250 °C (both
+steps take Steam 1:1): 118 MJ of Boiler heat, the fuel value of 23.7 Coke or 39.5 Raw coal. The
+Tar of a full Raw coal belt (67.5/s) would give 17.4 Coke/s for 162 Steam/s, 21.6 Boilers. Every
+new liquid can be voided by a Sinkhole and every new gas by an Exhaust pipe.
 
 ## What the two goals give
 
