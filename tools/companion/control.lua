@@ -53,27 +53,27 @@ local function give_book(player)
   if result == -1 then player.print({ "py-tutorial-companion.import-warnings" }) end
 end
 
---- Each listed area twice, plain and with entity info ("-alt"), at noon without clouds or fog.
+--- Each listed area with entity info (alt view: recipes, filters, directions), at noon without
+--- clouds or fog. The tutorial uses alt-view pictures only.
 local function take_shots(player)
   if not shots then
     player.print({ "py-tutorial-companion.no-shots" })
     return
   end
+  helpers.remove_path("py-tutorial-companion/shots") -- only this run's pictures are pulled
   for _, s in ipairs(shots) do
     local zoom = s.zoom or 1
     local w, h = s.x2 - s.x1 + 1, s.y2 - s.y1 + 1
-    for _, info in ipairs({ false, true }) do
-      game.take_screenshot({
-        player = player, surface = s.surface or "nauvis",
-        position = { (s.x1 + s.x2 + 1) / 2, (s.y1 + s.y2 + 1) / 2 },
-        resolution = { math.floor(w * 32 * zoom), math.floor(h * 32 * zoom) }, zoom = zoom,
-        path = "py-tutorial-companion/shots/" .. s.name .. (info and "-alt" or "") .. ".jpg",
-        show_entity_info = info, daytime = 0, hide_clouds = true, hide_fog = true,
-        force_render = true, anti_alias = true, quality = 90,
-      })
-    end
+    game.take_screenshot({
+      player = player, surface = s.surface or "nauvis",
+      position = { (s.x1 + s.x2 + 1) / 2, (s.y1 + s.y2 + 1) / 2 },
+      resolution = { math.floor(w * 32 * zoom), math.floor(h * 32 * zoom) }, zoom = zoom,
+      path = "py-tutorial-companion/shots/" .. s.name .. ".jpg",
+      show_entity_info = true, daytime = 0, hide_clouds = true, hide_fog = true,
+      force_render = true, anti_alias = true, quality = 90,
+    })
   end
-  player.print({ "py-tutorial-companion.shots-taken", #shots * 2, shots.generated or "?" })
+  player.print({ "py-tutorial-companion.shots-taken", #shots, shots.generated or "?" })
 end
 
 local ACTIONS = { book = give_book, shots = take_shots }

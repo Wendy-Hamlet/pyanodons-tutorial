@@ -3,7 +3,7 @@
 //   node tools/shots.js plan name:x1,y1,x2,y2[,zoom] ...
 //     Writes tools/companion/shots.lua: the areas to shoot, in tile coordinates as
 //     tools/render-area.js prints them. In game, /pt-shots reloads the mod scripts (single
-//     player) and takes each area plain and with entity info ("-alt"), as JPGs.
+//     player) and takes each area with entity info (alt view), as JPGs.
 //
 //   node tools/shots.js pull
 //     Copies the JPGs from %APPDATA%\Factorio\script-output\py-tutorial-companion\shots into

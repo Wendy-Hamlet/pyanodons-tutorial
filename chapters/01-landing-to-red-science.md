@@ -209,7 +209,7 @@ field: the author wanted the edge mined out first, and there the full module did
 1:10. The four-drill
 pinwheel from the landing stayed as a hand-picked reserve.
 
-![The 7-drill Raw coal module at the edge of the field, with the landing pinwheel above it (entity info on)](../images/ch1-raw-coal-alt.jpg)
+![The 7-drill Raw coal module at the edge of the field, with the landing pinwheel above it](../images/ch1-raw-coal.jpg)
 
 ### One belt for the whole base
 
@@ -307,7 +307,7 @@ plates come from a chest refilled by hand for now (the mall uses little copper; 
 comes later); Small parts go into a chest. Next: two more machines for Transport
 belts and Mechanical inserters.
 
-![The first mall (entity info on): Iron stick, Bolts and Iron gear wheel on the top row, fed with Iron plates from the belt; Copper cable from the chest of Copper plates and Small parts on the bottom row](../images/ch1-mall-alt.jpg)
+![The first mall: Iron stick, Bolts and Iron gear wheel on the top row, fed with Iron plates from the belt; Copper cable from the chest of Copper plates and Small parts on the bottom row](../images/ch1-mall.jpg)
 
 Planning numbers, from data: 1 Small part/s takes 1.75 Iron plate/s and 0.75 Copper plate/s, and
 only 1.25 machines' worth of time (Iron stick 0.375, Copper cable 0.375, Iron gear wheel 0.25,
@@ -366,8 +366,8 @@ Coal processing 1 opens the better iron route and is the subject of the next cha
   production every 10 minutes, handcrafting); the final save (`Py-exploration`) read with
   `tools/inspect-save.ps1` (consistency check passed; structures drawn with
   `tools/render-area.js`, including inserter filter modes and the ore left under drills).
-- Pictures: in-game screenshots taken in the author's game with the companion's `/pt-shots`
-  (areas listed by `tools/shots.js plan`, collected by `tools/shots.js pull`).
+- Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
+  companion's `/pt-shots` (areas listed by `tools/shots.js plan`, collected by `tools/shots.js pull`).
 - Prototype values (sizes, power, recipes, technology costs and triggers, rock yields):
   `tools/dump-data.ps1` dumps `data.raw` for the exact mod set; `tools/recipe-tree.js` expands
   recipe trees; handcrafting recipe time is the sum of recipe times over the recorded crafts.

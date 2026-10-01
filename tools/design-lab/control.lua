@@ -417,22 +417,21 @@ script.on_event(defines.events.on_tick, function(event)
   if event.tick == T_WARM then
     for _, x in ipairs(storage.designs) do
       x.warm = snapshot(x)
-      -- Screenshots (no-op when headless): plain and with entity info, like holding Alt in game.
+      -- Screenshot (no-op when headless) with entity info, like holding Alt in game.
       if x.shot then
         local a = x.d.area
         local key, zoom = x.shot[1], x.shot[2]
         local w, h = a[3] - a[1] + 3, a[4] - a[2] + 3
         out("screenshot %s at tick %d", key, event.tick)
-        for _, info in ipairs({ false, true }) do
-          game.take_screenshot({
-            allow_in_replay = true, -- benchmark runs count as replays
-            surface = surface, position = { (a[1] + a[3] + 1) / 2, (a[2] + a[4] + 1) / 2 },
-            resolution = { math.floor(w * 32 * zoom), math.floor(h * 32 * zoom) }, zoom = zoom,
-            path = "cellforge/shots/" .. key .. (info and "-alt" or "") .. ".jpg",
-            show_entity_info = info, daytime = 0, hide_clouds = true, hide_fog = true,
-            force_render = true, anti_alias = true, quality = 90,
-          })
-        end
+        -- With entity info (alt view), like every picture in the tutorial.
+        game.take_screenshot({
+          allow_in_replay = true, -- benchmark runs count as replays
+          surface = surface, position = { (a[1] + a[3] + 1) / 2, (a[2] + a[4] + 1) / 2 },
+          resolution = { math.floor(w * 32 * zoom), math.floor(h * 32 * zoom) }, zoom = zoom,
+          path = "cellforge/shots/" .. key .. ".jpg",
+          show_entity_info = true, daytime = 0, hide_clouds = true, hide_fog = true,
+          force_render = true, anti_alias = true, quality = 90,
+        })
       end
     end
   elseif event.tick == T_END then
