@@ -68,6 +68,10 @@ parameters for yours.
 - `trace-layout.js x1 y1 x2 y2`: the logistics of an area of a snapshot: belt lines with what
   they carry and who loads and unloads them, fluid networks (connected segments and their fluid)
   and every machine's inputs and outputs. Snapshots record belt contents, fluids and filter modes.
+- `manual-links.js [x1 y1 x2 y2]`: what a save still moves by hand: chests only filled (collected
+  by hand) or only emptied (topped up by hand), machines stocked by hand, burners refuelled by hand,
+  and the items that go both ways (the links a bus should replace). Snapshots record chest and
+  machine contents; `logistics.js` is the belt and inserter reading it shares with `trace-layout.js`.
 - `extract-design.js <key> x1 y1 x2 y2` (or `<key> --blueprint <file>`): copies an area of a
   snapshot, or a whole blueprint file, into the design lab.
 - `design-lab/`: builds designs (own ones and ones copied from saves) next to infinite sources and

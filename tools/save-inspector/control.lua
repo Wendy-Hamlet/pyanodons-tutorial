@@ -70,6 +70,14 @@ local function item_count(inventory)
   return inventory and inventory.get_item_count() or nil
 end
 
+-- { item = count } of an inventory, nil when empty or absent.
+local function counts(inventory)
+  if not inventory then return nil end
+  local out = {}
+  for _, c in pairs(inventory.get_contents()) do out[c.name] = (out[c.name] or 0) + c.count end
+  return next(out) and out or nil
+end
+
 local function entities(surface)
   local list, box = {}, nil
   for _, e in pairs(surface.find_entities_filtered({ force = "player" })) do
@@ -85,6 +93,9 @@ local function entities(surface)
       if e.type == "assembling-machine" or e.type == "furnace" then
         local recipe = e.get_recipe()
         entry.recipe = recipe and recipe.name
+        -- What waits inside: shows machines stocked by hand and products nobody takes out.
+        entry.input = counts(e.get_inventory(defines.inventory.crafter_input))
+        entry.output = counts(e.get_inventory(defines.inventory.crafter_output))
         -- Machines with an output port (soil and sap extractors, wood processing units...) drop
         -- their products themselves, onto a belt or straight into the machine standing there.
         if e.prototype.vector_to_place_result then
@@ -107,6 +118,8 @@ local function entities(surface)
           entry.filter = f and (type(f) == "table" and f.name or f)
           entry.filter_mode = e.inserter_filter_mode -- "whitelist" or "blacklist"
         end
+      elseif e.type == "container" or e.type == "logistic-container" then
+        entry.items = counts(e.get_inventory(defines.inventory.chest))
       elseif e.type == "underground-belt" then
         entry.ug = e.belt_to_ground_type
       elseif e.type == "entity-ghost" then

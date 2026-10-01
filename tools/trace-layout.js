@@ -5,6 +5,7 @@
 // Usage: node tools/trace-layout.js x1 y1 x2 y2
 
 const paths = require('./paths');
+const { analyse } = require('./logistics');
 const [x1, y1, x2, y2] = process.argv.slice(2).map(Number);
 const all = Object.values(require(`${paths.save}/entities.json`));
 const load = (kind) => { try { return require(`${paths.dump}/${kind}-locale.json`).names; } catch { return {}; } };
@@ -12,78 +13,17 @@ const L = { item: load('item'), entity: load('entity'), fluid: load('fluid'), re
 const zh = (n) => L.entity[n] || L.item[n] || L.fluid[n] || L.recipe[n] || n;
 
 const inside = (e) => e.x >= x1 && e.x < x2 + 1 && e.y >= y1 && e.y < y2 + 1;
-const list = all.filter((e) => inside(e) && e.type !== 'entity-ghost');
-const key = (x, y) => `${Math.floor(x)},${Math.floor(y)}`;
-const at = new Map();
-for (const e of list) {
-  for (let x = Math.floor(e.x1 + 0.01); x < Math.ceil(e.x2 - 0.01); x++) {
-    for (let y = Math.floor(e.y1 + 0.01); y < Math.ceil(e.y2 - 0.01); y++) at.set(`${x},${y}`, e);
-  }
-}
-const VEC = { north: [0, -1], east: [1, 0], south: [0, 1], west: [-1, 0] };
+const { list, at, lines, lineOf, tileLine, loads: rawLoads, unloads: rawUnloads, key, VEC } = analyse(all.filter(inside));
 const pos = (e) => `(${Math.floor(e.x)},${Math.floor(e.y)})`;
 const name = (e) => (e ? zh(e.name) : '空地');
-
-// ---- belts --------------------------------------------------------------------------------------
 const belts = list.filter((e) => e.type === 'transport-belt' || e.type === 'underground-belt');
-const next = new Map();
-for (const b of belts) {
-  const v = VEC[b.dir] || [0, 0];
-  if (b.type === 'underground-belt' && b.ug === 'input') {
-    for (let d = 1; d <= 10; d++) {
-      const o = at.get(key(b.x + v[0] * d, b.y + v[1] * d));
-      if (o && o.type === 'underground-belt' && o.ug === 'output' && o.dir === b.dir) { next.set(b, o); break; }
-    }
-  } else {
-    const o = at.get(key(b.x + v[0], b.y + v[1]));
-    const ov = o && VEC[o.dir];
-    if (o && (o.type === 'transport-belt' || o.type === 'underground-belt') && !(ov[0] === -v[0] && ov[1] === -v[1])) next.set(b, o);
-  }
-}
-const incoming = new Map();
-for (const [a, b] of next) {
-  // A straight feed (same direction) continues a line; a perpendicular one side-loads into it.
-  if (a.dir === b.dir || b.type === 'underground-belt') incoming.set(b, a);
-}
-const lineOf = new Map();
-const lines = [];
-const starts = belts.filter((b) => !incoming.has(b));
-const rest = belts.filter((b) => incoming.has(b));
-for (const s of [...starts, ...rest]) {
-  if (lineOf.has(s)) continue;
-  const line = { id: lines.length + 1, tiles: [], items: {}, joins: null };
-  let b = s;
-  while (b && !lineOf.has(b)) {
-    lineOf.set(b, line);
-    line.tiles.push(b);
-    for (const [n, c] of Object.entries(b.items || {})) line.items[n] = (line.items[n] || 0) + c;
-    const n = next.get(b);
-    if (n && n.dir !== b.dir && n.type === 'transport-belt' && incoming.get(n) !== b) { line.sideloads = n; break; }
-    b = n;
-  }
-  if (b && lineOf.has(b) && lineOf.get(b) !== line) line.joins = b;
-  lines.push(line);
-}
-const tileLine = new Map();
-for (const l of lines) for (const t of l.tiles) tileLine.set(key(t.x, t.y), l);
 
-// ---- inserters and drills -----------------------------------------------------------------------
-const loads = new Map();
-const unloads = new Map();
-const add = (map, k, v) => { if (!map.has(k)) map.set(k, []); map.get(k).push(v); };
-for (const i of list.filter((e) => e.type === 'inserter' && e.pickup && e.drop)) {
-  const from = at.get(key(i.pickup.x, i.pickup.y));
-  const to = at.get(key(i.drop.x, i.drop.y));
-  const f = i.filter ? `${i.filter_mode === 'blacklist' ? '除' : ''}${zh(i.filter)}${i.filter_mode === 'blacklist' ? '外' : ''}` : '';
-  add(loads, to, { via: i, from, filter: f });
-  add(unloads, from, { via: i, to, filter: f });
-}
-// Drills and machines with an output port drop their products themselves (no inserter).
-for (const d of list.filter((e) => e.drop && (e.type === 'mining-drill' || e.type === 'assembling-machine' || e.type === 'furnace'))) {
-  const to = at.get(key(d.drop.x, d.drop.y));
-  add(loads, to, { via: d, from: d, filter: '' });
-  if (d.type !== 'mining-drill') add(unloads, d, { via: d, to, filter: '出货口' });
-}
+// ---- inserters, drills and output ports ---------------------------------------------------------
+// Filters shown as text; a blacklist filter reads "all but X".
+const label = (s) => (s.port ? (s.via.type === 'mining-drill' ? '' : '出货口') : s.filter ? `${s.mode === 'blacklist' ? '除' : ''}${zh(s.filter)}${s.mode === 'blacklist' ? '外' : ''}` : '');
+const relabel = (map) => new Map([...map].map(([k, v]) => [k, v.map((s) => ({ ...s, filter: label(s) }))]));
+const loads = relabel(rawLoads);
+const unloads = relabel(rawUnloads);
 
 const sum = (arr) => {
   const out = {};
