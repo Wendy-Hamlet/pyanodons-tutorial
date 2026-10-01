@@ -81,7 +81,7 @@ console.log(`运行 ${run.name}：游戏时间 ${clock(firstTick)} 到 ${clock(l
 console.log(`文件 ${run.files.length} 个，共 ${size(total)}；时间线 ${size(timelineSize)}，活动日志 ${segments.length} 段（有效 ${live.length} 段，${size(liveSize)}）`);
 // Rotation may have deleted the oldest segments, so the activity rate uses the span still on disk.
 const activityHours = activity.length ? (lastTick - activity[0].t) / 216000 : 0;
-if (hours > 0 && activityHours > 0) {
+if (hours >= 1 && activityHours >= 1) { // shorter spans are dominated by the start lines
   console.log(`增长：每游戏小时约 ${size(timelineSize / hours + liveSize / activityHours)}`);
 }
 
