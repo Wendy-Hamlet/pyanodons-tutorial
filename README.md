@@ -14,7 +14,8 @@ scripts used, so you can re-check them against your own mod versions.
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
 (the next stage's recipes, rates and byproducts) · [The red + pY1 factory](research/red-py1-factory.md)
-(bus, blocks, Simple circuit boards and the key intermediates before trains) · [Railways under Pyanodons](research/py-railway.md) ·
+(bus, blocks, Simple circuit boards and the key intermediates before trains) ·
+[The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) ·
 [Blueprints](blueprints/README.md) (measured designs, ready to import).
 
 ## Setup the chapters were written against
@@ -54,7 +55,8 @@ parameters for yours.
 - `rate-plan.js <plan.js> [--build]`: solves a production plan (per-minute targets, one chosen
   recipe per item, all rates solved together so byproducts and returned cages count): machines,
   item flows, raw inputs, power, flows between the plan's blocks (bus or direct link) and what
-  the machines cost to build. Plans live in `research/plans/`.
+  the machines cost to build; with `fuel` set, the fuel burnt and its Ash. Plans live in
+  `research/plans/`. `products.js` reads 2.1 product chances for it and the other recipe tools.
 - `building-inputs.js <tech,...>`: which items the buildings of a stage are made of, ranked by
   how many building recipes use them (finds the key intermediates a mall has to make).
 - `inspect-save.ps1 -Save <name|latest|file.zip> [-Ticks 3700]` + `summarize-save.js` +

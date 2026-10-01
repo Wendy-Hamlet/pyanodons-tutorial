@@ -10,6 +10,7 @@
 
 const path = require('path');
 const paths = require('./paths');
+const { expected } = require('./products');
 const raw = require(`${paths.dump}/data-raw-dump.json`);
 const arr = (x) => (Array.isArray(x) ? x : Object.values(x || {}));
 
@@ -34,7 +35,9 @@ const addTech = (t) => {
 for (const t of plan.techs || []) addTech(t);
 const unlockedBy = {};
 for (const [tn, t] of Object.entries(raw.technology)) for (const e of arr(t.effects)) if (e.type === 'unlock-recipe') (unlockedBy[e.recipe] = unlockedBy[e.recipe] || []).push(tn);
-const usable = (r) => raw.recipe[r].enabled !== false || (unlockedBy[r] || []).some((t) => techs.has(t));
+// Recipes a mod script enables (Py's T.U.R.D. upgrades) appear in no technology; plans list them.
+const scripted = new Set(plan.scriptRecipes || []);
+const usable = (r) => raw.recipe[r].enabled !== false || scripted.has(r) || (unlockedBy[r] || []).some((t) => techs.has(t));
 
 // ---- machines ------------------------------------------------------------------------------------
 const machinesFor = {};
@@ -61,7 +64,7 @@ const speedOf = (m) => {
 };
 
 // ---- the linear system -------------------------------------------------------------------------
-const amountOf = (p) => (p.amount ?? (p.amount_min + p.amount_max) / 2) * (p.probability ?? 1);
+const amountOf = expected;
 const io = (r) => {
   const out = {};
   for (const p of arr(raw.recipe[r].results)) out[p.name] = (out[p.name] || 0) + amountOf(p);
@@ -168,6 +171,8 @@ for (const [n, d] of Object.entries(raw['mining-drill'] || {})) {
   if (d.hidden || /-mk0[2-4]$/.test(n)) continue;
   for (const c of arr(d.resource_categories)) (drillsFor[c] = drillsFor[c] || []).push(d);
 }
+// "3MJ", "450kW" -> J or W.
+const watts = (s) => { const m = /^([\d.]+)\s*([kMG]?)[WJ]$/.exec(s || ''); return m ? Number(m[1]) * { '': 1, k: 1e3, M: 1e6, G: 1e9 }[m[2]] : 0; };
 const mining = {};
 for (const [n, res] of Object.entries(raw.resource)) {
   const m = res.minable || {};
@@ -179,11 +184,16 @@ for (const [n, res] of Object.entries(raw.resource)) {
 console.log('\n## 原料（计划外供应，每分钟）\n');
 console.log('| 原料 | 每分钟 | 各目标 | 来源 |');
 console.log('|---|---|---|---|');
+const drillPower = {}; // energy source type -> W of the drills mining the raw inputs
 for (const [i, f] of order) {
   const need = f.used - f.made;
   if (active[i] || need < 1e-9) continue;
   const split = lines.map((t) => { const g = perTarget[t][i]; return g ? `${nm(t)} ${fmt(pm(g.used - g.made))}` : null; }).filter(Boolean).join('；');
   const mine = mining[i];
+  if (mine && !(plan.sources || {})[i]) {
+    const d = raw['mining-drill'][mine.drill];
+    drillPower[d.energy_source.type] = (drillPower[d.energy_source.type] || 0) + (need / mine.perDrill) * watts(d.energy_usage);
+  }
   const src = (plan.sources || {})[i] || (mine ? `开采：${fmt(need / mine.perDrill)} 台${nm(mine.drill)}（每台每秒 ${fmt(mine.perDrill, 3)}）` : '');
   console.log(`| ${nm(i)}${isFluid(i) ? '（流体）' : ''} | ${fmt(pm(need))} | ${split} | ${src} |`);
 }
@@ -192,16 +202,54 @@ const surplus = order.concat(Object.entries(all).filter(([, f]) => f.used < 1e-9
   .filter(([i, f], k, a) => a.findIndex(([j]) => j === i) === k && f.made - f.used > 1e-9 && !targets[i]);
 console.log(surplus.map(([i, f]) => `${nm(i)} ${fmt(pm(f.made - f.used))}`).join('、') || '无');
 
-// Energy at full load, by what the machines run on (fractional machine counts).
-const watts = (s) => { const m = /^([\d.]+)\s*([kMG]?)W$/.exec(s || ''); return m ? Number(m[1]) * { '': 1, k: 1e3, M: 1e6, G: 1e9 }[m[2]] : 0; };
-const energy = {};
+// Energy at full load, by what the machines run on (fractional machine counts), plus the drills
+// mining the raw inputs.
+const energy = { ...drillPower };
 for (const [item, r] of Object.entries(active)) {
   const m = machineOf(r);
   const n = (rates[r] * (raw.recipe[r].energy_required ?? 0.5)) / speedOf(m);
   const kind = entity(m).energy_source.type;
   energy[kind] = (energy[kind] || 0) + n * watts(entity(m).energy_usage);
 }
-console.log(`\n## 能耗（满负荷）\n\n${Object.entries(energy).map(([k, w]) => `${{ electric: '电', burner: '燃料（热能）', fluid: '燃烧流体', heat: '热', void: '无' }[k] || k} ${fmt(w / 1e6, 1)} MW`).join('、')}`);
+console.log(`\n## 能耗（满负荷，含开采原料的采矿机）\n\n${Object.entries(energy).map(([k, w]) => `${{ electric: '电', burner: '燃料（热能）', fluid: '燃烧流体', heat: '热', void: '无' }[k] || k} ${fmt(w / 1e6, 1)} MW`).join('、')}`);
+
+// Fuel and its burnt result (Ash): with plan.fuel set, everything that burns uses that item:
+// burner machines and drills, boilers for the process steam, and with plan.electricity = 'steam'
+// the boilers behind the steam engines too.
+if (plan.fuel) {
+  const fuel = raw.item[plan.fuel];
+  const J = watts(fuel.fuel_value);
+  const boiler = raw.boiler.boiler;
+  const steamHC = watts(raw.fluid.steam.heat_capacity);
+  const waterT = raw.fluid.water.default_temperature;
+  const boilerW = watts(boiler.energy_consumption);
+  const steamPerBoiler = boilerW / (steamHC * (boiler.target_temperature - waterT));
+  const engine = raw.generator['steam-engine'];
+  const engineSteam = engine.fluid_usage_per_tick * 60;
+  const engineW = engineSteam * steamHC * (Math.min(engine.maximum_temperature, boiler.target_temperature) - waterT) * engine.effectivity;
+  const steamNeed = all.steam ? Math.max(0, all.steam.used - all.steam.made) : 0;
+  const processBoilers = steamNeed / steamPerBoiler;
+  const uses = [
+    ['热能机器和采矿机', (energy.burner || 0) / J, `${fmt((energy.burner || 0) / 1e6, 1)} MW`],
+    ['工艺蒸汽锅炉', (processBoilers * boilerW) / J, `${fmt(processBoilers, 1)} 台锅炉（每台每秒 ${fmt(steamPerBoiler, 2)} 蒸汽）`],
+  ];
+  if (plan.electricity === 'steam') {
+    const engines = (energy.electric || 0) / engineW;
+    const boilers = (engines * engineSteam) / steamPerBoiler;
+    uses.push(['发电', (boilers * boilerW) / J, `${fmt(engines, 1)} 台蒸汽机（每台 ${fmt(engineW / 1e6, 2)} MW）、${fmt(boilers, 1)} 台锅炉`]);
+  }
+  const burnt = fuel.burnt_result;
+  console.log(`\n## 燃料与${burnt ? nm(burnt) : '废料'}（燃料：${nm(plan.fuel)}，每个 ${fmt(J / 1e6, 2)} MJ）\n`);
+  console.log('| 用途 | 每秒燃料 | 说明 |');
+  console.log('|---|---|---|');
+  for (const [k, perS, text] of uses) console.log(`| ${k} | ${fmt(perS)} | ${text} |`);
+  const total = uses.reduce((a, u) => a + u[1], 0);
+  console.log(`| 合计 | ${fmt(total)} | 每分钟 ${fmt(pm(total))} |`);
+  if (burnt) {
+    const used = all[burnt] ? Math.max(0, all[burnt].used - all[burnt].made) : 0;
+    console.log(`\n每烧 1 个留下 1 个${nm(burnt)}：每分钟烧出 ${fmt(pm(total))}，计划消耗 ${fmt(pm(used))}，多出 ${fmt(pm(total - used))}。`);
+  }
+}
 
 // Blocks: the plan's groups of items made together. An item that leaves its block (or a raw
 // input) going to ONE other block is a direct link; going to several, it belongs on the bus.

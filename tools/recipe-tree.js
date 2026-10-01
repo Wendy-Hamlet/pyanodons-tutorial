@@ -4,6 +4,7 @@
 // Usage: node --max-old-space-size=4096 tools/recipe-tree.js <item> [--techs a,b,c] [--depth N]
 
 const dir = 'C:/tmp/cf-dump/data/script-output';
+const { expected, label } = require('./products');
 const raw = require(`${dir}/data-raw-dump.json`);
 const load = (kind) => { try { return require(`${dir}/${kind}-locale.json`).names; } catch { return {}; } };
 const L = { item: load('item'), entity: load('entity'), recipe: load('recipe'), fluid: load('fluid') };
@@ -85,7 +86,7 @@ const describeRecipe = (rn) => {
   const hand = cats.some((c) => handCats.has(c));
   const machines = [...new Set(cats.flatMap((c) => machinesFor[c] || []))].filter((m) => !/-mk0[2-4]$/.test(m));
   const usable = machines.filter(buildable).map((m) => L.entity[m] || m);
-  const out = arr(r.results).map((p) => `${name(p.type, p.name)}×${amount(p)}${p.probability && p.probability < 1 ? `(${p.probability * 100}%)` : ''}`).join('+');
+  const out = arr(r.results).map((p) => `${name(p.type, p.name)}${label(p)}`).join('+');
   return `【${L.recipe[rn] || rn}】${r.energy_required ?? 0.5}s → ${out}；${hand ? '可手搓；' : ''}机器：${usable.join('/') || '（暂无可建造的机器）'}`;
 };
 
@@ -117,7 +118,7 @@ const expand = (type, item, need, path) => {
   }
   const r = raw.recipe[options[0]];
   const product = arr(r.results).find((p) => p.name === item);
-  const perCraft = (product.amount ?? (product.amount_min + product.amount_max) / 2) * (product.probability ?? 1);
+  const perCraft = expected(product);
   const crafts = need / perCraft;
   const next = new Set(path).add(options[0]);
   for (const i of arr(r.ingredients)) expand(i.type, i.name, i.amount * crafts, next);

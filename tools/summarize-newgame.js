@@ -8,9 +8,10 @@ const load = (kind) => { try { return require(`${dir}/${kind}-locale.json`).name
 const L = { item: load('item'), entity: load('entity'), recipe: load('recipe'), technology: load('technology'), fluid: load('fluid') };
 const zh = (kind, name) => (L[kind] && L[kind][name]) || L.item[name] || L.fluid[name] || L.entity[name] || name;
 const arr = (x) => (Array.isArray(x) ? x : Object.values(x || {}));
+const { label } = require('./products');
 const fmt = (v) => (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? (v / 1e3).toFixed(1) + 'k' : String(Math.round(v)));
 const h = (title) => console.log(`\n## ${title}`);
-const items = (list) => arr(list).map((i) => `${zh(i.type === 'fluid' ? 'fluid' : 'item', i.name)}×${i.amount ?? `${i.amount_min}-${i.amount_max}`}${i.probability && i.probability < 1 ? `(${i.probability * 100}%)` : ''}`).join(' + ');
+const items = (list) => arr(list).map((i) => `${zh(i.type === 'fluid' ? 'fluid' : 'item', i.name)}${label(i)}`).join(' + ');
 
 // crafting category -> visible machines able to craft it
 const machinesFor = {};
