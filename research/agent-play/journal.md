@@ -72,6 +72,9 @@ from the round script.
 | 4:50–5:00 | Glass, fully automatic: a Borax mine on the Quartz patch 200 tiles east (Quartz is "borax" category), a 223-tile belt to a Glassworks (Quartz → Molten glass) burning Tar from the tailings pond, a second Glassworks right below it (Molten glass → Glass; its recipe uses its second input box, so it sits where that box meets the first one's output). ~12 Glass/min. |
 | 5:00–5:20 | Tin outpost 350 tiles west: Offshore pump → two chained Boilers → three Fluid drills side by side (Steam passes through them) → Stone furnaces (40 ore → 4 plates in 60 s). Copper pairs moved back to unmined ore. |
 | 5:20–5:40 | Power station on the Raw coal patch (`designs/power-station.js`): the author's Raw coal module from the blueprint book, its belt past four Boilers with two inserters each, a Steam engine under each. An Offshore pump cannot face west there; its collision box reaches one tile behind it. |
+| 5:40–6:20 | Fuel crisis: the Raw coal module only feeds the Boilers, so the old coal drills I had removed were missed by every other burner. Twelve inserters now tap the module belt into iron chests, and nine new drills drop Raw coal into chests (spots found by a script: all four tiles Raw coal, drop tile free). Tin outpost Boilers get iron chests with inserters (a Boiler slot lasts 40 s). |
+| 6:00–6:35 | Components workshop (x 0..40, y -60..-34): HPF (graphite, ceramic), Clay pit with its own Boiler (it drops clay through an output port), Vacuum pump right under an Electronics factory (vacuum tubes, then resistors and capacitors), Seaweed crop (needs Seaweed as modules: the first 10 hand-picked from 5 plants in the lake), agar HPF sharing the Clay pit's Steam, Botanical nursery with the Moondrop codex for a Moondrop sample. 90 vacuum tubes, 150 resistors. |
+| 6:40 | I switched the second Glassworks to Empty petri dishes and mirrored it to line up its other input: Molten glass got into the shared Tar fuel network just as the Tar ran out, the tailings pond filled with Molten glass, and both Distillation columns stopped (Tar could not leave). Fixed by removing and re-placing the pond, 20 pipes and both Glassworks. |
 
 ## Lessons
 
@@ -115,3 +118,8 @@ from the round script.
 17. Mining Tin with Steam is fuel-hungry: the Boilers, not the Fluid drills, set the rate.
 18. When a module takes over a resource (the Raw coal module feeding only Boilers), keep a supply
     for everything else: removing the old coal drills starved every other burner.
+19. Never switch the recipe of a machine on a shared fluid network (here a Glassworks on the Tar
+    fuel line): leftover fluid can end up in the shared boxes and lock every pipe, pond and
+    machine on it to the wrong fluid; then only removing and re-placing all of them clears it.
+20. Py farms need their own organisms as modules to run at all (Seaweed crop speed 0 without
+    Seaweed); the first ones come from the map (Seaweed plants in lakes, picked by hand).

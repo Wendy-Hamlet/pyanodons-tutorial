@@ -25,6 +25,15 @@ ops=(
   # moss block
   "feed item=soil count=100 names=washer x=26 y=-6 r=1" "feed item=coke count=20 names=hpf x=18.5 y=-5.5 r=1"
   "feed item=stone count=60 names=moss-farm-mk01 x=24 y=2 r=8" "feed item=moss count=15 names=moss-farm-mk01 x=24 y=2 r=8"
+  # components workshop (bootstrap)
+  "feed item=coke count=100 names=hpf x=5.5 y=-44.5 r=1" "feed item=raw-coal count=400 $W x=12.5 y=-48.5 r=0.6"
+  "feed item=graphite count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=glass count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1"
+  "feed item=copper-plate count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=iron-plate count=50 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1"
+  "feed item=tin-plate count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=coke count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1"
+  "feed item=ceramic count=10 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=clay count=50 names=hpf x=5.5 y=-44.5 r=1"
+  "feed item=seaweed count=10 names=seaweed-crop-mk01 x=32.5 y=-52.5 r=1" "feed item=seaweed count=50 names=hpf x=19.5 y=-55.5 r=1"
+  "feed item=agar count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1" "feed item=empty-petri-dish count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1"
+  "feed item=petri-dish count=4 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=planter-box count=2 names=botanical-nursery x=33.5 y=-38.5 r=1"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
   "status"
