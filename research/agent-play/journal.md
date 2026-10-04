@@ -35,6 +35,9 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 0:48–1:00 | Labs 5–6, south feeders on the red line, storage chests; red science 8–9 packs/min. Glass and Botany done. |
 | 1:00–1:12 | Coal block: a Destructive distillation column on the Raw coal patch fed directly by three drills (Raw coal → Coal + Coal gas + Tar), Coal gas to a gas vent, Tar to a Tailings pond; a second column makes Coke from that Coal. Second power unit. |
 | 1:10–1:15 | Steel: Advanced foundry MK 01 (Coke + Limestone + Iron ore), Limestone from a second Soil extractor with its own Offshore pump; one iron drill now drops into a chest for ore. A warehouse row of 10 iron chests and `stash_all`. |
+| 1:15–1:25 | Aluminium: a Fluid drill on the Aluminium patch, Coal gas from a third Distillation column right next to it (fed with stored Raw coal), its Tar into a second pond, the ore dropped into a Stone furnace. Power cut once: a Boiler holds only 50 Raw coal (40 s at full load), so each Boiler now has two chests and two inserters. |
+| 1:25–1:35 | Moss block: Washer (Muddy sludge) and High pressure furnace (CO2 from Coke) piped into the north inputs of a Moss farm (Moss-2, with Stone). Farms run on Moss as modules: one Moss gives speed 0.067, so its output goes back into its module slots. |
+| 1:35–1:40 | Third Flora collector, labs 7–8, three more feeders on the first red-line machine: red science 10/min. |
 
 ## Lessons
 
