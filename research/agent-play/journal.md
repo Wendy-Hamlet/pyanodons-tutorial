@@ -76,6 +76,11 @@ from the round script.
 | 6:00–6:35 | Components workshop (x 0..40, y -60..-34): HPF (graphite, ceramic), Clay pit with its own Boiler (it drops clay through an output port), Vacuum pump right under an Electronics factory (vacuum tubes, then resistors and capacitors), Seaweed crop (needs Seaweed as modules: the first 10 hand-picked from 5 plants in the lake), agar HPF sharing the Clay pit's Steam, Botanical nursery with the Moondrop codex for a Moondrop sample. 90 vacuum tubes, 150 resistors. |
 | 6:40 | I switched the second Glassworks to Empty petri dishes and mirrored it to line up its other input: Molten glass got into the shared Tar fuel network just as the Tar ran out, the tailings pond filled with Molten glass, and both Distillation columns stopped (Tar could not leave). Fixed by removing and re-placing the pond, 20 pipes and both Glassworks. |
 | 6:45–7:55 | Bootstrapping the circuit board chain. Components for 50 circuits done (capacitors 230, resistors 165, vacuum tubes 94). Saps multiply themselves: the nursery turns 5 Saps into 2 seeds and 5 seeds plus a Planter box into a Sap tree; four Sap extractors with two trees each make 12 Saps/min. Pre-crafted the PCB factory (it contains two Electronics factories and two Distillation columns: ~22 Steam engines in all), Tar processing unit, Pulp mill, Wood processing unit, Moondrop greenhouse, a third Glassworks and HPF. A copper outpost on the 824 k patch at (58,-316), visited with the iron outpost. |
+| 7:55–8:15 | Tar stopped reaching the glass: Distillation column 1 stood on "output full" (its Coal, 1.5/s, was only taken by my rounds). It now has two filtered inserters putting Coal on a belt to column 2 and one putting Iron oxide into a chest; columns 2 and 3 got output chests. |
+| 8:15–8:40 | Tar refinery at tailings pond 2 (`designs/tar-refinery.js`): Tar processing unit 1 (Tar + Steam from its own Boiler) → Middle oil, Anthracene oil and Pitch into three new ponds, Creosote straight into unit 2, which makes Treated wood from Wood. |
+| 8:40–9:10 | Moondrop: Empty petri dishes from the second Glassworks (back on the shared Tar line, unmirrored, nothing contaminated this time), Petri dishes by hand and in an assembler, two Moondrop samples (8 Moondrop). |
+| 9:10–9:40 | Methane block (`designs/methane-block.js`), all built by robots from one ghost list: greenhouse 1 grows Moondrop from seeds, a nursery turns Moondrop into seeds (seeds go back to greenhouse 1 and on to greenhouse 2; the Moondrop it returns ride a two-tile belt back into it), greenhouse 2 makes Methane from seeds, Water and CO2 (an HPF burning Coke right under it), an HPF makes Methanal, then Pulp mill (Formica, with Raw fiber from a Wood processing unit), PCB factory with its own Vacuum pump. |
+| 9:40–10:30 | Both outposts had run out of fuel: their upkeep used Kerogen, which was gone, and Raw coal could not enter slots still holding a little Kerogen. Upkeep now swaps such fuel out. Greenhouse 1 has its 16 Moondrop modules, greenhouse 2 gets the surplus (7 so far). |
 
 ## Lessons
 
@@ -130,3 +135,21 @@ from the round script.
 22. Only Moondrop makes Methane, and only a Moondrop sample (2 Petri dishes, a Planter box and a
     Codex in a nursery) starts Moondrop: the Petri dish chain (Seaweed → Agar, Glassworks →
     Empty petri dish) comes before Formica and therefore before circuits.
+23. **Every by-product needs its own exit.** A Distillation column makes 1.5 Coal/s besides its
+    Tar; left to the rounds it fills up and the Tar stops with it. Two burner inserters per
+    1.5 items/s.
+24. **Glass is a fuel problem.** A Glassworks burns 10 MW, 50 Tar/s at 0.2 MJ, while one
+    Distillation column gives 15 Tar/s; an Empty petri dish (50 Molten glass = 25 s of Quartz →
+    Molten glass) costs about 1 400 Tar.
+25. Moondrop numbers: greenhouse speed 0.0625 × (1 + Moondrop modules); 4 seeds → 4 Moondrop in
+    140 s; 5 Moondrop → 7 seeds (+1–3 at 25 %) and 2 Moondrop back (+1–3 at 10 %); seed + 100 Water
+    + 100 CO2 → 40 Methane in 15 s. Feeding the returned Moondrop back makes the loop gain ~6.7
+    seeds per greenhouse craft instead of 2. One full Moondrop greenhouse can only keep a Methane
+    greenhouse at ~70 %.
+26. A recipe's k-th fluid ingredient goes into the machine's k-th input box (greenhouse:
+    Water west, CO2 south), checked by piping Water to box 1 first.
+27. **A fuel slot holding another fuel refuses yours.** The outposts ran on Kerogen until it ran
+    out, then starved with Raw coal in my hand; upkeep now swaps the old fuel out.
+28. Ash piles up: after ten hours the warehouse held 343 000 of it. Voiding it needs a py-burner
+    (titanium); until then, plan chests for waste. And `take all=true` on a burner machine also
+    takes its fuel.

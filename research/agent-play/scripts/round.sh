@@ -30,8 +30,14 @@ ops=(
   "feed item=ceramic count=10 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=clay count=50 names=hpf x=5.5 y=-44.5 r=1"
   "feed item=seaweed count=10 names=seaweed-crop-mk01 x=32.5 y=-52.5 r=1" "feed item=seaweed count=50 names=hpf x=19.5 y=-55.5 r=1"
   "feed item=agar count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1" "feed item=empty-petri-dish count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1"
-  "feed item=sap-seeds count=20 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=planter-box count=4 names=botanical-nursery x=33.5 y=-38.5 r=1"
+  "feed item=moondrop-codex count=2 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=petri-dish count=4 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=planter-box count=2 names=botanical-nursery x=33.5 y=-38.5 r=1"
+  "take x=52.5 y=-55.5 item=moondrop count=3 all=true" "feed item=moondrop count=16 names=moondrop-greenhouse-mk01 x=52.5 y=-55.5 r=12"
   "feed item=sap-tree count=2 names=sap-extractor-mk01 x=5 y=-34.5 r=10"
+  # tar refinery (pond 2): wood for treated wood, Raw coal for its Boiler
+  "feed item=wood count=100 names=tar-processing-unit x=-17.5 y=71.5 r=1" "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
+  # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
+  "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" "feed item=copper-plate count=150 $W x=61.5 y=-51.5 r=0.6" "feed item=copper-plate count=150 $W x=73.5 y=-40.5 r=0.6"
+  "feed item=wood count=200 $W x=75.5 y=-52.5 r=0.6" "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
   "status"

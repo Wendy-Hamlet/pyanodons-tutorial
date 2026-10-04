@@ -281,6 +281,28 @@ function act.collect(a)
 end
 
 -- Top up every burner in range to `count` of fuel `item`.
+-- Tops a burner up to `target` fuel items (any fuel counts). When its slots hold another fuel
+-- that blocks ours, that fuel goes back to the character first, as a player would swap it.
+local function top_up(c, b, fuel, target)
+  local inv = b.inventory
+  local want = target - inv.get_item_count()
+  if want <= 0 then return 0, false end
+  local have = c.get_item_count(fuel)
+  if have <= 0 then return 0, true end
+  local moved = inv.insert { name = fuel, count = math.min(want, have) }
+  if moved == 0 then
+    for _, it in pairs(inv.get_contents()) do
+      if it.name ~= fuel then
+        local back = c.insert { name = it.name, count = it.count, quality = it.quality }
+        if back > 0 then inv.remove { name = it.name, count = back, quality = it.quality } end
+      end
+    end
+    moved = inv.insert { name = fuel, count = math.min(target, have) }
+  end
+  if moved > 0 then c.remove_item { name = fuel, count = moved } end
+  return moved, moved < want
+end
+
 function act.fuel(a)
   local c = need_char()
   local item = a.item or error("give item")
@@ -289,16 +311,9 @@ function act.fuel(a)
   for _, e in pairs(around(a, c)) do
     local b = e.burner
     if b and e.type ~= "character" then
-      local have = c.get_item_count(item)
-      if have <= 0 then break end
-      local inside = b.inventory.get_item_count(item)
-      if inside < per then
-        local moved = b.inventory.insert { name = item, count = math.min(per - inside, have) }
-        if moved > 0 then
-          c.remove_item { name = item, count = moved }
-          given, n = given + moved, n + 1
-        end
-      end
+      if c.get_item_count(item) <= 0 then break end
+      local moved = top_up(c, b, item, per)
+      if moved > 0 then given, n = given + moved, n + 1 end
     end
   end
   return { fuelled = n, gave = given, left = c.get_item_count(item) }
@@ -437,13 +452,9 @@ function act.upkeep(a)
   for _, e in pairs(list) do
     local b = e.type ~= "character" and e.burner
     if b then
-      local want = (e.type == "mining-drill" and (a.drills or 10) or (a.others or 5)) - b.inventory.get_item_count(fuel)
-      if want > 0 then
-        local have = c.get_item_count(fuel)
-        local moved = have > 0 and b.inventory.insert { name = fuel, count = math.min(want, have) } or 0
-        if moved > 0 then c.remove_item { name = fuel, count = moved }; gave = gave + moved end
-        if moved < want then short = short + 1 end
-      end
+      local moved, is_short = top_up(c, b, fuel, e.type == "mining-drill" and (a.drills or 10) or (a.others or 5))
+      gave = gave + moved
+      if is_short then short = short + 1 end
     end
   end
   return { got = got, fuel_given = gave, burners_short = short, fuel_left = c.get_item_count(fuel) }
