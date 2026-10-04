@@ -75,14 +75,6 @@ from the round script.
 
 ## Lessons
 
-(Numbered in the order they were learned.)
-
-13. **A warehouse must work both ways**: `stash_all` keeps the inventory free, `restock` brings
-    kept items back when they run low. Without the second, a full chest of Logs did not stop the
-    Wood shortage.
-14. Do not switch a whole factory to a fuel that is produced slower than it is burned; and keep
-    the research queue full (a check for "research: none" belongs in every round).
-
 1. **Taking all fuel out of a pinwheel would stop it for good** (a drill without fuel cannot feed
    the next one). Refill right away; better, never take from a pinwheel's fuel slots.
 2. **Fuel logistics come first.** Every burner drill burns 0.17 Raw coal/s; 15 of them plus
@@ -99,12 +91,27 @@ from the round script.
    takes 12 items in its last step (10 Native flora + 2 Small parts), so one input inserter caps
    the line at 4 packs/min. A 3×3 machine takes three inserters per side.
 8. A drill on Stone cannot drop into a furnace: Stone comes with Kerogen, which the furnace
-   refuses, and the drill stops. Drop into a chest.
-10. Fluid outputs of a multi-box machine: read which box holds which fluid after it runs
-   (`get_fluid` + `get_fluid_box_prototype`), then pipe; the Distillation column puts Coal gas in
-   box 2 (north) and Tar in box 8 (east). Gas vents void Coal gas 20 000 at a time.
-11. An assembler created without a recipe ignores the direction it is given; create it with
-    the recipe or rotate it afterwards.
-12. Aluminium ore needs a Fluid drill (Coal gas); Glassworks burn fluid fuel (10 MW).
+   refuses, and the drill stops. Drop into a chest. Likewise a drill whose ore runs out over a
+   Raw coal tile starts mining coal, which the full fuel slot refuses: check mixed patches.
 9. Upkeep must never empty an assembler's output: the next machine's inserter takes it from
    there. Only furnaces and chests are emptied; input chests are marked so they are left alone.
+10. Fluid outputs of a multi-box machine: read which box holds which fluid after it runs
+    (`get_fluid` + `get_fluid_box_prototype`), then pipe; the Distillation column puts Coal gas in
+    box 2 (north) and Tar in box 8 (east). Gas vents void Coal gas 20 000 at a time. Recipes take
+    their fluid input from a fixed box too: the Glassworks' Molten glass → Glass uses box 2.
+11. An assembler created without a recipe ignores the direction it is given; create it with
+    the recipe or rotate it afterwards.
+12. Aluminium ore needs a Fluid drill (Coal gas); Glassworks burn fluid fuel (10 MW), and Tar
+    (0.2 MJ) from the tailings ponds is a fine fuel for them.
+13. **A warehouse must work both ways**: `stash_all` keeps the inventory free, `restock` brings
+    kept items back when they run low. Without the second, a full chest of Logs did not stop the
+    Wood shortage.
+14. Do not switch a whole factory to a fuel that is produced slower than it is burned; and keep
+    the research queue full (a check for "research: none" belongs in every round).
+15. **Belts make black boxes; chests make chores.** (The author's advice.) A module fed by belts
+    from its producers needs no round at all; every chest port is a recurring task.
+16. A Boiler at full load burns 1.23 Raw coal/s: its single fuel slot (50) lasts 40 s. Boilers
+    need a belt (Raw coal module) or a chest with an inserter, never hand refills.
+17. Mining Tin with Steam is fuel-hungry: the Boilers, not the Fluid drills, set the rate.
+18. When a module takes over a resource (the Raw coal module feeding only Boilers), keep a supply
+    for everything else: removing the old coal drills starved every other burner.
