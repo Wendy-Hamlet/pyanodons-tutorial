@@ -103,6 +103,12 @@ function act.ghost(a)
         if e then
           made = made + 1
           if g.recipe then pcall(e.set_recipe, g.recipe) end
+          -- Inserter filters: filters = {"ash", ...}, filter_mode = "whitelist" | "blacklist"
+          if g.filters then
+            pcall(function() e.use_filters = true end)
+            for i, f in ipairs(g.filters) do pcall(e.set_filter, i, f) end
+            if g.filter_mode then pcall(function() e.inserter_filter_mode = g.filter_mode end) end
+          end
         else
           table.insert(failed, g.name .. "@" .. p.x .. "," .. p.y)
         end

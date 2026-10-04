@@ -50,3 +50,20 @@ class Layout {
 }
 
 module.exports = { Layout, STEP };
+
+// Entities of a blueprint string as layout entries, moved so the blueprint's top-left tile is
+// at (left, top). Keeps directions, recipes, underground types and inserter filters.
+Layout.prototype.blueprint = function (str, left, top) {
+  const zlib = require('zlib');
+  const bp = JSON.parse(zlib.inflateSync(Buffer.from(str.trim().slice(1), 'base64')).toString()).blueprint;
+  const D = { 0: 'N', 4: 'E', 8: 'S', 12: 'W' };
+  const x0 = Math.min(...bp.entities.map((e) => e.position.x - (e.name.includes('drill') ? 1 : 0.5)));
+  const y0 = Math.min(...bp.entities.map((e) => e.position.y - (e.name.includes('drill') ? 1 : 0.5)));
+  for (const e of bp.entities) {
+    const extra = {};
+    if (e.type) extra.ug = e.type;
+    if (e.filters) { extra.filters = e.filters.map((f) => f.name); if (e.filter_mode) extra.filter_mode = e.filter_mode; }
+    this.add(e.name, e.position.x - x0 + left, e.position.y - y0 + top, D[e.direction || 0], e.recipe, extra);
+  }
+  return this;
+};
