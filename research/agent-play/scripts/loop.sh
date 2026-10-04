@@ -1,0 +1,10 @@
+#!/bin/bash
+# Runs round.sh N times (default 4), waiting W game seconds (default 60) between rounds.
+cd /d/factorio-explore/py-tutorial/tools/agent
+for i in $(seq 1 ${1:-4}); do
+  out=$(bash /c/tmp/cf-agent/round.sh ${3:-50} 2>&1)
+  if echo "$out" | grep -q "^5h used"; then echo "$out"; exit 2; fi
+  echo "$out" | grep -E "error|time:|research:|finished|free_slots" | tr -s ' ' | tr '\n' ' '; echo
+  [ $i -lt ${1:-4} ] && node a.js wait seconds=${2:-60} max=$(( ${2:-60} + 20 )) > /dev/null
+done
+node a.js prod window=ten_minutes 2>&1 | grep -E "automation-science|iron-plate|copper-plate|native-flora" | tr -s ' ' | tr '\n' ' '; echo

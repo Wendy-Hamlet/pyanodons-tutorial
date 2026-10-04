@@ -38,8 +38,13 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 1:15–1:25 | Aluminium: a Fluid drill on the Aluminium patch, Coal gas from a third Distillation column right next to it (fed with stored Raw coal), its Tar into a second pond, the ore dropped into a Stone furnace. Power cut once: a Boiler holds only 50 Raw coal (40 s at full load), so each Boiler now has two chests and two inserters. |
 | 1:25–1:35 | Moss block: Washer (Muddy sludge) and High pressure furnace (CO2 from Coke) piped into the north inputs of a Moss farm (Moss-2, with Stone). Farms run on Moss as modules: one Moss gives speed 0.067, so its output goes back into its module slots. |
 | 1:35–1:40 | Third Flora collector, labs 7–8, three more feeders on the first red-line machine: red science 10/min. |
+| 1:40–1:45 | A second red science line (three more assemblers, 18 feeders), its packs collected and spread over all eight labs; a third Soil extractor; four Raw coal drills back (coal use had overtaken production). |
+| 1:45–2:00 | Wood ran out: the forests near spawn were cut. A survey of the charted map found 300–400 trees per 64×64 cell 400–500 tiles west and south-west; one trip there gave 980 Logs. |
+| 2:00–2:18 | Kerogen (2 MJ, a Stone byproduct) now fuels the Boilers through their chests; a second warehouse row. **Red science 15/min**; research reached Electronics. |
 
 ## Lessons
+
+(Numbered in the order they were learned.)
 
 1. **Taking all fuel out of a pinwheel would stop it for good** (a drill without fuel cannot feed
    the next one). Refill right away; better, never take from a pinwheel's fuel slots.
