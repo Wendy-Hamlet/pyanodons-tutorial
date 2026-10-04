@@ -56,7 +56,12 @@ ox= oy=`, `blueprint string= x= y=`, `build_ghosts r=`, `clear x= y= w= h=`, `re
 `collect r= [chests=true] [ground=true]`, `fuel item= count= r=`, `feed item= count= r=
 [names=]`, `craft recipe= count=`, `craft_cancel`, `walk x= y=`, `mine name=|type= count= [x= y=]
 [r=]`, `stop`, `research add=a,b | set=a,b | cancel=true`, `speed value=`, `pause [value=false]`,
-`note text=`, `respawn`.
+`note text=`, `respawn`, `upkeep` (one round of chores: empty every output, Ash slot and chest in
+range except `keep=` items and input chests, top up every burner: `drills=`, `others=`),
+`input_chest at=[[x,y],...]` (chests upkeep never empties).
+
+Client-side: `wait seconds= jobs=true crafting=true max=` waits on the game (Bash may not start
+with `sleep`). Git Bash rewrites a leading `/` in arguments, so `raw` takes commands without it.
 
 Events (research finished, jobs done, entities destroyed) also go to
 `C:\tmp\cf-agent\data\script-output\pt-agent\events.txt`; notes to `notes.txt` there.

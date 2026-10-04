@@ -45,9 +45,16 @@ switch ($Action) {
         $password = (Get-Content $pw -Raw).Trim()
         $log = "$Work\server.log"
         if (Test-Path $log) { Move-Item $log "$Work\server.previous.log" -Force }
-        Start-Process -FilePath $Factorio -WindowStyle Hidden -RedirectStandardOutput $log -RedirectStandardError "$Work\server.err.log" `
-            -ArgumentList ($common + @('--start-server', $save, '--server-settings', "$Work\server-settings.json",
-                '--port', '34297', '--rcon-bind', '127.0.0.1:27115', '--rcon-password', $password)) | Out-Null
+        # Created through WMI so the server is no child of this shell and inherits none of its
+        # handles: a caller that pipes this script's output would otherwise wait for the server.
+        $argline = ($common + @('--start-server', $save, '--server-settings', "$Work\server-settings.json",
+                '--port', '34297', '--rcon-bind', '127.0.0.1:27115', '--rcon-password', $password)) -join ' '
+        $line = "cmd.exe /c `"`"$Factorio`" $argline > `"$log`" 2> `"$Work\server.err.log`"`""
+        # ShowWindow 0 (SW_HIDE): no console window popping up in front of the user.
+        $startup = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{ ShowWindow = [uint16]0 }
+        $r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{
+            CommandLine = $line; CurrentDirectory = $Work; ProcessStartupInformation = $startup }
+        if ($r.ReturnValue -ne 0) { throw "could not start the server ($($r.ReturnValue))" }
         $deadline = (Get-Date).AddMinutes(4)
         while ((Get-Date) -lt $deadline) {
             Start-Sleep -Seconds 3

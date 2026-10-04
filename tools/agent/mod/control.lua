@@ -10,6 +10,7 @@
 local util = require("lib.util")
 local observe = require("lib.observe")
 local act = require("lib.act")
+local crash_site = require("crash-site")
 
 local function surface() return game.surfaces.nauvis end
 
@@ -76,6 +77,17 @@ local function init_storage()
   storage.events = storage.events or {}
 end
 
+-- Freeplay creates the crashed ship (its wreckage holds plates and chests) when the first player
+-- arrives, which never happens on a server without players: create it the same way.
+local function create_crash_site()
+  if storage.crash_site_created then return end
+  local fp = remote.interfaces.freeplay
+  if not (fp and fp.get_ship_items and fp.get_debris_items and fp.get_ship_parts) then return end
+  crash_site.create_crash_site(surface(), { -5, -6 }, remote.call("freeplay", "get_ship_items"),
+    remote.call("freeplay", "get_debris_items"), remote.call("freeplay", "get_ship_parts"))
+  storage.crash_site_created = true
+end
+
 -- The advanced settings of Py's "py-recommended" map preset (data.raw["map-gen-presets"]).
 -- Maps are created with the player's own map generation settings (that preset with cliffs
 -- turned off), because `--preset` on the command line overrides `--map-gen-settings`.
@@ -94,12 +106,16 @@ end
 script.on_init(function()
   init_storage()
   apply_py_recommended()
+  surface().request_to_generate_chunks({ 0, 0 }, 3)
+  surface().force_generate_chunk_requests()
+  create_crash_site()
   spawn_character(true)
   event("agent character created at " .. serpent.line(util.pos(storage.char.position)))
 end)
 
 script.on_configuration_changed(function()
   init_storage()
+  if game.tick < 60 * 60 * 10 then create_crash_site() end
   if not (storage.char and storage.char.valid) then spawn_character(true) end
   apply_reach(storage.char)
 end)

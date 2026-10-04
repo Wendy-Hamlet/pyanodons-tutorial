@@ -206,18 +206,15 @@ function act.insert(a)
   return { inserted = n, into = e.name }
 end
 
-local output_inventories = {
-  [defines.inventory.crafter_output] = true, [defines.inventory.chest] = true,
-  [defines.inventory.burnt_result] = true,
-}
+-- Inventories that hold what a machine or chest gives out. By name: the numeric ids overlap
+-- (defines.inventory.chest and .fuel are both 1).
+local output_inventories = { crafter_output = true, chest = true, burnt_result = true }
 
 local function take_from(c, e, item, count, all_inventories)
   local got = {}
   for i = 1, e.get_max_inventory_index() do
     local inv = e.get_inventory(i)
-    local wanted = all_inventories or output_inventories[i]
-    -- A furnace's result slot and a chest share index numbers with other inventories; judge by name.
-    if inv and inv.valid and (wanted or (inv.name and (inv.name:find("output") or inv.name:find("result") or inv.name == "chest"))) then
+    if inv and inv.valid and (all_inventories or output_inventories[inv.name]) then
       for _, it in pairs(inv.get_contents()) do
         if (not item or it.name == item) and (count == nil or count > 0) then
           local n = math.min(it.count, count or it.count)
@@ -245,7 +242,8 @@ local function around(a, c)
   local p = util.xy(a) or util.pos(c.position)
   local r = math.min(a.r or 30, c.reach_distance)
   check_reach(c, p, c.reach_distance + r, "area")
-  return surface().find_entities_filtered { area = util.area_around(p, r), force = "player", name = a.names, type = a.types }
+  -- any=true also reaches entities of other forces (the crashed ship's wreckage).
+  return surface().find_entities_filtered { area = util.area_around(p, r), force = (not a.any) and "player" or nil, name = a.names, type = a.types }
 end
 
 -- Collect outputs (and chest contents with chests=true, items on the ground with ground=true).
@@ -253,7 +251,7 @@ function act.collect(a)
   local c = need_char()
   local total = {}
   for _, e in pairs(around(a, c)) do
-    if e.type ~= "character" and (a.chests or (e.type ~= "container" and e.type ~= "logistic-container")) then
+    if e.type ~= "character" and (a.chests or a.any or (e.type ~= "container" and e.type ~= "logistic-container")) then
       for k, v in pairs(take_from(c, e, a.item, nil, false)) do total[k] = (total[k] or 0) + v end
     end
   end
@@ -296,6 +294,65 @@ function act.fuel(a)
     end
   end
   return { fuelled = n, gave = given, left = c.get_item_count(item) }
+end
+
+-- Mark chests (list of {x, y} in `at`, or x/y) as input chests: upkeep never empties them.
+-- off=true unmarks.
+function act.input_chest(a)
+  storage.input_chests = storage.input_chests or {}
+  local c = need_char()
+  local out = {}
+  for _, p in pairs(a.at or { { a.x, a.y } }) do
+    local e = target({ x = p[1] or p.x, y = p[2] or p.y }, c)
+    storage.input_chests[e.unit_number] = (not a.off) or nil
+    table.insert(out, e.name .. "@" .. e.position.x .. "," .. e.position.y)
+  end
+  return { marked = out, off = a.off }
+end
+
+-- One round of chores: take every output, Ash and chest content in range (keep=a,b leaves those
+-- items in chests), then top up every burner with `fuel` (default raw-coal): mining drills to
+-- `drills` (default 10), everything else to `others` (default 5).
+function act.upkeep(a)
+  local c = need_char()
+  local keep = {}
+  for _, k in pairs(a.keep or {}) do keep[k] = true end
+  local got = {}
+  local list = around({ x = a.x, y = a.y, r = a.r or 160 }, c)
+  local inputs = storage.input_chests or {}
+  for _, e in pairs(list) do
+    if e.type ~= "character" and not inputs[e.unit_number] then
+      for i = 1, e.get_max_inventory_index() do
+        local inv = e.get_inventory(i)
+        if inv and inv.valid and output_inventories[inv.name] then
+          for _, it in pairs(inv.get_contents()) do
+            if not (inv.name == "chest" and keep[it.name]) then
+              local moved = c.insert { name = it.name, count = it.count, quality = it.quality }
+              if moved > 0 then
+                inv.remove { name = it.name, count = moved, quality = it.quality }
+                got[it.name] = (got[it.name] or 0) + moved
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  local fuel = a.fuel or "raw-coal"
+  local gave, short = 0, 0
+  for _, e in pairs(list) do
+    local b = e.type ~= "character" and e.burner
+    if b then
+      local want = (e.type == "mining-drill" and (a.drills or 10) or (a.others or 5)) - b.inventory.get_item_count(fuel)
+      if want > 0 then
+        local have = c.get_item_count(fuel)
+        local moved = have > 0 and b.inventory.insert { name = fuel, count = math.min(want, have) } or 0
+        if moved > 0 then c.remove_item { name = fuel, count = moved }; gave = gave + moved end
+        if moved < want then short = short + 1 end
+      end
+    end
+  end
+  return { got = got, fuel_given = gave, burners_short = short, fuel_left = c.get_item_count(fuel) }
 end
 
 -- Put `count` of an ingredient into every machine in range (names/types filter) that takes it.

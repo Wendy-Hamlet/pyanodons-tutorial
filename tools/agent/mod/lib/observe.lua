@@ -446,22 +446,23 @@ end
 
 -- Prototype facts: entity (size, speed, power, fuel) or item (stack, fuel value, places).
 function observe.proto(a)
+  -- Prototype attributes differ by type and some error when absent: read them safely.
+  local function get(p, k) local ok, v = pcall(function() return p[k] end); if ok then return v end end
   local out = {}
   local e = prototypes.entity[a.name]
   if e then
+    local usage = get(e, "energy_usage")
     out.entity = {
-      type = e.type, size = { e.tile_width, e.tile_height }, crafting_speed = e.get_crafting_speed and e.get_crafting_speed() or nil,
-      mining_speed = e.mining_speed, energy_usage_kw = e.energy_usage and e.energy_usage * 60 / 1000 or nil,
-      max_energy_usage_kw = e.max_energy_usage and e.max_energy_usage * 60 / 1000 or nil,
-      burner = e.burner_prototype and e.burner_prototype.fuel_categories or nil,
-      electric = e.electric_energy_source_prototype ~= nil, modules = e.module_inventory_size,
-      categories = e.crafting_categories, resource_categories = e.resource_categories,
-      inserter_rotation = e.inserter_rotation_speed,
+      type = e.type, size = { e.tile_width, e.tile_height }, crafting_speed = get(e, "crafting_speed"),
+      mining_speed = get(e, "mining_speed"), energy_usage_kw = usage and usage * 60 / 1000 or nil,
+      burner = get(e, "burner_prototype") and e.burner_prototype.fuel_categories or nil,
+      electric = get(e, "electric_energy_source_prototype") ~= nil, modules = get(e, "module_inventory_size"),
+      categories = get(e, "crafting_categories"), resource_categories = get(e, "resource_categories"),
     }
   end
   local i = prototypes.item[a.name]
   if i then
-    out.item = { stack = i.stack_size, fuel_mj = i.fuel_value > 0 and i.fuel_value / 1e6 or nil, fuel_category = i.fuel_category, places = i.place_result and i.place_result.name or nil }
+    out.item = { stack = i.stack_size, fuel_mj = i.fuel_value > 0 and i.fuel_value / 1e6 or nil, places = i.place_result and i.place_result.name or nil }
   end
   if not e and not i then return { error = "no entity or item " .. tostring(a.name) } end
   return out

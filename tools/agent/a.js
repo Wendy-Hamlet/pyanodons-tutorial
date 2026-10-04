@@ -4,7 +4,7 @@
 //   node a.js <op> [key=value ...] [+ <op> key=value ...]   several ops in one connection
 //   node a.js <op> '{"json": "arguments"}'
 //   node a.js <op> @file.json [key=value ...]               arguments from a file (merged)
-//   node a.js raw "/server-save"                             any console command
+//   node a.js raw server-save                                any console command (slash optional)
 //
 // Values: numbers and true/false are converted, [..] and {..} are JSON, `names`, `types`, `add`
 // and `set` split on commas. Long arguments are uploaded in parts (the `_buf` op).
@@ -42,7 +42,8 @@ function parseOp(words) {
 
 // Commands for one op; long JSON goes through the buffer.
 function commandsFor({ op, args }) {
-  if (op === 'raw') return [args._ || ''];
+  // Git Bash rewrites a leading slash into a path, so raw commands may leave it out.
+  if (op === 'raw') return [(args._ || '').replace(/^(?!\/)/, '/')];
   const json = Object.keys(args).length ? JSON.stringify(args) : '';
   if (json.length < 3000) return [`/agent ${op} ${json}`];
   const parts = [];
@@ -59,12 +60,49 @@ function fmt(v, indent = '') {
   return '{\n' + Object.entries(v).map(([k, x]) => `${inner}${k}: ${fmt(x, inner)}`).join(',\n') + '\n' + indent + '}';
 }
 
+// Client-side op: wait until the game has advanced `seconds` (game time), the job queue is
+// empty (jobs=true) and/or the crafting queue is empty (crafting=true); at most `max` real
+// seconds (default 120).
+async function wait(args) {
+  const status = async () => JSON.parse((await send(['/agent status {"events":false}']))[0]);
+  const start = await status();
+  const until = start.tick + Math.round((args.seconds || 0) * 60);
+  const deadline = Date.now() + (args.max || 120) * 1000;
+  for (;;) {
+    const s = await status();
+    const done = s.tick >= until && (!args.jobs || !(s.jobs || []).length)
+      && (!args.crafting || !(s.crafting || []).length);
+    if (done || Date.now() > deadline || (s.paused && s.tick < until)) {
+      return { waited_game_s: Math.round((s.tick - start.tick) / 60), done, paused: s.paused, jobs: s.jobs, crafting: s.crafting };
+    }
+    await new Promise((r) => setTimeout(r, 1000));
+  }
+}
+
 async function main() {
   const argv = process.argv.slice(2);
   if (!argv.length) { console.log('usage: node a.js <op> [key=value ...] [+ <op> ...]'); process.exit(1); }
   const groups = [[]];
   for (const w of argv) { if (w === '+') groups.push([]); else groups[groups.length - 1].push(w); }
   const ops = groups.filter((g) => g.length).map((g) => (g[0] === 'raw' ? { op: 'raw', args: { _: g.slice(1).join(' ') } } : parseOp(g)));
+  let failed = false;
+  // Ops run in order; a client-side `wait` splits them into batches.
+  for (let i = 0; i < ops.length;) {
+    if (ops[i].op === 'wait') {
+      if (ops.length > 1) console.log('== wait');
+      console.log(fmt(await wait(ops[i].args)));
+      i += 1;
+      continue;
+    }
+    let j = i;
+    while (j < ops.length && ops[j].op !== 'wait') j += 1;
+    failed = (await runBatch(ops.slice(i, j), ops.length > 1)) || failed;
+    i = j;
+  }
+  process.exit(failed ? 1 : 0);
+}
+
+async function runBatch(ops, label) {
   const plan = ops.map((o) => ({ o, cmds: commandsFor(o) }));
   const answers = await send(plan.flatMap((p) => p.cmds));
   let k = 0;
@@ -72,14 +110,14 @@ async function main() {
   for (const p of plan) {
     k += p.cmds.length;
     const text = answers[k - 1];
-    if (ops.length > 1) console.log(`== ${p.o.op}`);
+    if (label) console.log(`== ${p.o.op}`);
     let res;
     try { res = JSON.parse(text); } catch { console.log(text); continue; }
     if (res && res.error) failed = true;
     if (res && typeof res.text === 'string') console.log(res.text);
     else console.log(fmt(res));
   }
-  process.exit(failed ? 1 : 0);
+  return failed;
 }
 
 main().catch((e) => { console.error(String(e.message || e)); process.exit(2); });
