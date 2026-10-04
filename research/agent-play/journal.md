@@ -41,6 +41,24 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 1:40–1:45 | A second red science line (three more assemblers, 18 feeders), its packs collected and spread over all eight labs; a third Soil extractor; four Raw coal drills back (coal use had overtaken production). |
 | 1:45–2:00 | Wood ran out: the forests near spawn were cut. A survey of the charted map found 300–400 trees per 64×64 cell 400–500 tiles west and south-west; one trip there gave 980 Logs. |
 | 2:00–2:18 | Kerogen (2 MJ, a Stone byproduct) now fuels the Boilers through their chests; a second warehouse row. **Red science 15/min**; research reached Electronics. |
+| 2:25–2:48 | Iron ran short (red science alone takes ~82 Iron plate/min). Moved 10 copper pairs to the 4.1 M Iron patch 470 tiles north-east as an outpost; every 4th round the character runs there (10 s), collects ~250 plates and refuels with Kerogen. Iron 127/min. Warehouse rows 2–3. |
+
+## Plan from 2:48: belts and black boxes
+
+The author pointed out that I hardly use belts and move everything between chests by hand: every
+round is ~60 commands, and any missed item starves something (wood, a full inventory stopping
+research). Linked chests would teleport items, so instead each module becomes a black box with
+belts in and out: built, left alone for 10 minutes, checked with `factory`/`prod`, then removed
+from the round script.
+
+1. Fuel backbone: move tailings pond 1 off the coal patch, place the author's Raw coal module
+   (15/s), run a Raw coal belt past the Boilers, brick furnaces, Small parts block and red lines,
+   one fuel inserter per burner.
+2. Bricks: Stone drills onto a belt into the author's smelting column; Kerogen filtered onto the
+   fuel lane.
+3. Red science: Soil, Ash, Native flora, bricks, Wood (Wood processing unit from a chest of Logs),
+   Iron plate and Small parts arrive by belt; packs go to the labs by belt.
+4. Smelting: iron outpost and home patches as smelting columns.
 
 ## Lessons
 
