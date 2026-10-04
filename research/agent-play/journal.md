@@ -42,6 +42,7 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 1:45–2:00 | Wood ran out: the forests near spawn were cut. A survey of the charted map found 300–400 trees per 64×64 cell 400–500 tiles west and south-west; one trip there gave 980 Logs. |
 | 2:00–2:18 | Kerogen (2 MJ, a Stone byproduct) now fuels the Boilers through their chests; a second warehouse row. **Red science 15/min**; research reached Electronics. |
 | 2:25–2:48 | Iron ran short (red science alone takes ~82 Iron plate/min). Moved 10 copper pairs to the 4.1 M Iron patch 470 tiles north-east as an outpost; every 4th round the character runs there (10 s), collects ~250 plates and refuels with Kerogen. Iron 127/min. Warehouse rows 2–3. |
+| 2:48–3:33 | Two self-made outages. Research queue ran empty (7 min lost). Then I switched all burners to Kerogen to use up the stock: Kerogen comes far slower than the burners need, so the red lines ran dry (1.3 packs/min) while their inputs piled up in my inventory. Also the warehouse only took items in: once the Logs in hand were used up, Wood stopped although 1,346 Logs sat in a chest. Fixed with `restock` (takes kept items back) and Raw coal as the fuel again. |
 
 ## Plan from 2:48: belts and black boxes
 
@@ -63,6 +64,12 @@ from the round script.
 ## Lessons
 
 (Numbered in the order they were learned.)
+
+13. **A warehouse must work both ways**: `stash_all` keeps the inventory free, `restock` brings
+    kept items back when they run low. Without the second, a full chest of Logs did not stop the
+    Wood shortage.
+14. Do not switch a whole factory to a fuel that is produced slower than it is burned; and keep
+    the research queue full (a check for "research: none" belongs in every round).
 
 1. **Taking all fuel out of a pinwheel would stop it for good** (a drill without fuel cannot feed
    the next one). Refill right away; better, never take from a pinwheel's fuel slots.

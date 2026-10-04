@@ -349,6 +349,38 @@ function act.stash_all(a)
   return { stored = stored, free_slots = c.get_main_inventory().count_empty_stacks() }
 end
 
+-- The other direction: every item of `keep` that is below half its amount in the inventory is
+-- taken back from the `chests` up to that amount.
+function act.restock(a)
+  local c = need_char()
+  local chests = {}
+  for _, p in pairs(a.chests or error("give chests")) do
+    table.insert(chests, target({ x = p[1], y = p[2] }, c))
+  end
+  local got = {}
+  for item, amount in pairs(a.keep or {}) do
+    if prototypes.item[item] then
+      local want = amount - c.get_item_count(item)
+      if want > amount / 2 then
+        for _, ch in pairs(chests) do
+          if want <= 0 then break end
+          local inv = ch.get_inventory(defines.inventory.chest)
+          local have = inv.get_item_count(item)
+          if have > 0 then
+            local n = c.insert { name = item, count = math.min(have, want) }
+            if n > 0 then
+              inv.remove { name = item, count = n }
+              want = want - n
+              got[item] = (got[item] or 0) + n
+            end
+          end
+        end
+      end
+    end
+  end
+  return { restocked = got }
+end
+
 -- Mark chests (list of {x, y} in `at`, or x/y) as input chests: upkeep never empties them.
 -- off=true unmarks.
 function act.input_chest(a)
