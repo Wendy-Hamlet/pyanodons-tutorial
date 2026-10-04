@@ -1,0 +1,792 @@
+{
+ "default_enable_all_autoplace_controls": false,
+ "autoplace_controls": {
+  "aluminium-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "antimonium": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "bitumen-seep": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 1
+  },
+  "borax": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "chromium-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "coal-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "copper-ore": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "copper-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "enemy-base": {
+   "frequency": 0.1666666716337204,
+   "size": 0,
+   "richness": 1
+  },
+  "geothermal-crack": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "iron-ore": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "iron-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "lead-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "molybdenum-ore": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "nauvis_cliff": {
+   "frequency": 0.3333333432674408,
+   "size": 0,
+   "richness": 1
+  },
+  "nickel-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "niobium": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "oil-sand": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-aluminium": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-bioreserve": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-chromium": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-lead": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-nexelit": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-nickel": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-quartz": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-tin": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-titanium": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ore-zinc": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "phosphate-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "phosphate-rock-02": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "quartz-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "rare-earth-bolide": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "raw-coal": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "ree": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "regolites": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "rocks": {
+   "frequency": 1.3333333730697632,
+   "size": 0.75,
+   "richness": 1
+  },
+  "salt-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "starting_area_moisture": {
+   "frequency": 1,
+   "size": 0.75,
+   "richness": 1
+  },
+  "stone": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "sulfur-patch": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "tin-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "titanium-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "trees": {
+   "frequency": 1.3333333730697632,
+   "size": 0.75,
+   "richness": 1
+  },
+  "uranium-ore": {
+   "frequency": 0.3333333432674408,
+   "size": 0.75,
+   "richness": 4
+  },
+  "uranium-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "volcanic-pipe": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  },
+  "water": {
+   "frequency": 0.75,
+   "size": 0,
+   "richness": 1
+  },
+  "zinc-rock": {
+   "frequency": 0.3333333432674408,
+   "size": 1,
+   "richness": 4
+  }
+ },
+ "autoplace_settings": {
+  "decorative": {
+   "treat_missing_as_default": true,
+   "settings": {
+    "brown-asterisk": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "brown-asterisk-mini": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "brown-carpet-grass": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "brown-fluff": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "brown-fluff-dry": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "brown-hairy-grass": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "cracked-mud-decal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dark-mud-decal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "garballo": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "garballo-mini-dry": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-asterisk": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-asterisk-mini": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-bush-mini": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-carpet-grass": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-croton": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-desert-bush": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-hairy-grass": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-pita": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-pita-mini": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "green-small-grass": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "light-mud-decal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "medium-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "medium-sand-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-asterisk": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-croton": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-desert-bush": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-desert-decal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-pita": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "sand-decal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "sand-dune-decal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "small-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "small-sand-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "tiny-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "white-desert-bush": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    }
+   }
+  },
+  "entity": {
+   "treat_missing_as_default": true,
+   "settings": {
+    "aluminium-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "antimonium": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "big-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "big-sand-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "bitumen-seep": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "borax": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "chromium-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "coal-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "copper-ore": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "copper-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "fish": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "geothermal-crack": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "huge-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "iron-ore": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "iron-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "lead-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "molybdenum-ore": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "nickel-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "niobium": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "oil-sand": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-aluminium": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-bioreserve": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-chromium": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-lead": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-nexelit": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-nickel": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-quartz": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-tin": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-titanium": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ore-zinc": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "phosphate-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "phosphate-rock-02": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "quartz-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "rare-earth-bolide": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "raw-coal": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "ree": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "regolites": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "salt-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "seaweed": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "stone": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "sulfur-patch": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "tin-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "titanium-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "uranium-ore": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "uranium-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "volcanic-pipe": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "zinc-rock": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    }
+   }
+  },
+  "tile": {
+   "treat_missing_as_default": true,
+   "settings": {
+    "deepwater": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-1": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-2": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-3": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-4": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-5": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-6": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dirt-7": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "dry-dirt": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "grass-1": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "grass-2": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "grass-3": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "grass-4": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-desert-0": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-desert-1": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-desert-2": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "red-desert-3": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "sand-1": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "sand-2": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "sand-3": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    },
+    "water": {
+     "frequency": 1,
+     "size": 1,
+     "richness": 1
+    }
+   }
+  }
+ },
+ "property_expression_names": {},
+ "starting_points": [
+  {
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "width": 2000000,
+ "height": 2000000,
+ "starting_area": 4,
+ "peaceful_mode": false,
+ "no_enemies_mode": false,
+ "cliff_settings": {
+  "name": "cliff",
+  "control": "nauvis_cliff",
+  "cliff_elevation_0": 10,
+  "cliff_elevation_interval": 80,
+  "cliff_smoothing": 0,
+  "richness": 3
+ }
+}

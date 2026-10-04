@@ -1,0 +1,9 @@
+{
+  "name": "pt-agent",
+  "version": "0.1.0",
+  "title": "Py tutorial agent",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "description": "Lets an AI agent play through RCON: a character without a player, commands to look at the world and act through the character's inventory.",
+  "dependencies": ["base >= 2.1.0", "? pymodpack", "? py_quick_start", "? far-reach"]
+}

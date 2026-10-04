@@ -1,0 +1,415 @@
+-- What the agent can do. Everything goes through the character: items come from and go to its
+-- inventory, actions need reach (the player's Far Reach bonuses apply), hand mining and walking
+-- take the time they would take (jobs, run one at a time by control.lua), crafting uses the
+-- character's crafting queue, and ghosts are built by the construction robots of its armor.
+local util = require("lib.util")
+local observe = require("lib.observe")
+local act = {}
+
+local function surface() return game.surfaces.nauvis end
+local function force() return game.forces.player end
+
+local function need_char()
+  local c = storage.char
+  if not (c and c.valid) then error("the character is dead; respawn with `respawn`") end
+  return c
+end
+
+local function need_xy(a)
+  local p = util.xy(a)
+  if not p then error("give x and y") end
+  return p
+end
+
+local function check_reach(c, p, limit, what)
+  local d = util.dist(c.position, p)
+  if d > limit then
+    error(string.format("%s at %.1f,%.1f is %.0f tiles away, reach is %.0f: walk closer first", what or "target", p.x, p.y, d, limit))
+  end
+end
+
+local function target(a, c)
+  local p = need_xy(a)
+  local e = util.entity_at(surface(), p, a.name)
+  if not e then error(string.format("no entity%s at %s,%s", a.name and (" " .. a.name) or "", p.x, p.y)) end
+  check_reach(c, e.position, c.reach_distance, e.name)
+  return e
+end
+
+local function direction(a)
+  if a.dir == nil then return defines.direction.north end
+  return util.dirs[a.dir] or tonumber(a.dir) or error("dir is N, E, S or W")
+end
+
+local function blockers(name, p, dir)
+  local proto = prototypes.entity[name]
+  local box = proto.collision_box
+  local w = math.max(box.right_bottom.x - box.left_top.x, box.right_bottom.y - box.left_top.y) / 2
+  local found = {}
+  for _, e in pairs(surface().find_entities_filtered { area = { { p.x - w, p.y - w }, { p.x + w, p.y + w } } }) do
+    if e.type ~= "resource" then table.insert(found, e.name .. "@" .. util.pos(e.position).x .. "," .. util.pos(e.position).y) end
+  end
+  local tile = surface().get_tile(p.x, p.y)
+  return table.concat(found, " ") .. " tile=" .. tile.name
+end
+
+-- Place one entity from the inventory.
+function act.place(a)
+  local c = need_char()
+  local name = a.name or error("give name")
+  if not prototypes.entity[name] then error("unknown entity " .. name) end
+  local item = util.place_item(name) or error("no item places " .. name)
+  if c.get_item_count(item) < 1 then error("no " .. item .. " in the inventory") end
+  local p = need_xy(a)
+  check_reach(c, p, c.build_distance, name)
+  local dir = direction(a)
+  local s = surface()
+  if not s.can_place_entity { name = name, position = p, direction = dir, force = "player", build_check_type = defines.build_check_type.manual } then
+    error("cannot place " .. name .. " at " .. p.x .. "," .. p.y .. ": " .. blockers(name, p, dir))
+  end
+  local e = s.create_entity {
+    name = name, position = p, direction = dir, force = "player", raise_built = true,
+    create_build_effect_smoke = false, move_stuck_players = true, type = a.ug,
+  }
+  if not e then error("create_entity failed") end
+  c.remove_item { name = item, count = 1 }
+  if a.recipe then e.set_recipe(a.recipe) end
+  return observe.entity_summary(e, false)
+end
+
+-- Ghosts for the robots: one entity (name, x, y, dir, recipe) or a list in `list`, offset by
+-- ox, oy. Trees and rocks in the way are marked for deconstruction.
+function act.ghost(a)
+  local s = surface()
+  local list = a.list or { a }
+  local ox, oy = a.ox or 0, a.oy or 0
+  local made, failed = 0, {}
+  for _, g in pairs(list) do
+    local p = { x = g.x + ox, y = g.y + oy }
+    local dir = direction(g)
+    local proto = prototypes.entity[g.name]
+    if not proto then
+      table.insert(failed, "unknown " .. tostring(g.name))
+    else
+      local box = proto.collision_box
+      local w = math.max(box.right_bottom.x - box.left_top.x, box.right_bottom.y - box.left_top.y) / 2
+      for _, o in pairs(s.find_entities_filtered { area = { { p.x - w, p.y - w }, { p.x + w, p.y + w } }, type = { "tree", "simple-entity", "item-entity" } }) do
+        o.order_deconstruction("player")
+      end
+      if s.can_place_entity { name = g.name, position = p, direction = dir, force = "player", build_check_type = defines.build_check_type.manual_ghost } then
+        local e = s.create_entity { name = "entity-ghost", inner_name = g.name, position = p, direction = dir, force = "player", type = g.ug }
+        if e then
+          made = made + 1
+          if g.recipe then pcall(e.set_recipe, g.recipe) end
+        else
+          table.insert(failed, g.name .. "@" .. p.x .. "," .. p.y)
+        end
+      else
+        table.insert(failed, g.name .. "@" .. p.x .. "," .. p.y .. " blocked: " .. blockers(g.name, p, dir))
+      end
+    end
+  end
+  return { ghosts = made, failed = failed }
+end
+
+-- Ghosts from a blueprint string (from the client, possibly uploaded in parts).
+function act.blueprint(a)
+  local inv = game.create_inventory(1)
+  local stack = inv[1]
+  local ok = stack.import_stack(a.string or error("give string"))
+  if ok == 1 then inv.destroy(); error("blueprint import failed") end
+  local ghosts = stack.build_blueprint {
+    surface = surface(), force = "player", position = need_xy(a), direction = direction(a),
+    build_mode = defines.build_mode.superforced, skip_fog_of_war = false,
+  }
+  inv.destroy()
+  return { ghosts = #ghosts }
+end
+
+-- Build ghosts in reach straight from the inventory (when robots cannot).
+function act.build_ghosts(a)
+  local c = need_char()
+  local r = math.min(a.r or 30, c.build_distance)
+  local built, missing = 0, {}
+  for _, g in pairs(surface().find_entities_filtered { area = util.area_around(c.position, r), type = "entity-ghost", force = "player" }) do
+    local item = util.place_item(g.ghost_name)
+    if item and c.get_item_count(item) > 0 then
+      local _, e = g.revive { raise_revive = true }
+      if e then
+        c.remove_item { name = item, count = 1 }
+        built = built + 1
+      end
+    else
+      missing[item or g.ghost_name] = (missing[item or g.ghost_name] or 0) + 1
+    end
+  end
+  return { built = built, missing = missing }
+end
+
+-- Mark trees, rocks or own entities in a box for the robots to deconstruct.
+function act.clear(a)
+  local p = need_xy(a)
+  local w, h = a.w or 10, a.h or a.w or 10
+  local area = { { p.x, p.y }, { p.x + w, p.y + h } }
+  local types = a.own and nil or { "tree", "simple-entity", "item-entity" }
+  local n = 0
+  for _, e in pairs(surface().find_entities_filtered { area = area, type = types, name = a.name }) do
+    if (a.own and e.force.name == "player" and e.type ~= "character") or (not a.own) then
+      if e.order_deconstruction("player") then n = n + 1 end
+    end
+  end
+  return { marked = n }
+end
+
+function act.cancel_clear(a)
+  local n = 0
+  for _, e in pairs(surface().find_entities_filtered { to_be_deconstructed = true }) do
+    e.cancel_deconstruction("player"); n = n + 1
+  end
+  return { cancelled = n }
+end
+
+-- Pick up an own entity into the inventory.
+function act.remove(a)
+  local c = need_char()
+  local e = target(a, c)
+  local name = e.name
+  if not c.mine_entity(e, true) then error("could not mine " .. name) end
+  return { removed = name }
+end
+
+function act.rotate(a)
+  local c = need_char()
+  local e = target(a, c)
+  e.rotate { reverse = a.reverse }
+  return observe.entity_summary(e, false)
+end
+
+function act.set_recipe(a)
+  local c = need_char()
+  local e = target(a, c)
+  local removed = e.set_recipe(a.recipe)
+  for _, it in pairs(removed or {}) do c.insert { name = it.name, count = it.count, quality = it.quality } end
+  return observe.entity_summary(e, false)
+end
+
+-- Move items into an entity.
+function act.insert(a)
+  local c = need_char()
+  local e = target(a, c)
+  local item = a.item or error("give item")
+  local have = c.get_item_count(item)
+  local want = math.min(a.count or have, have)
+  if want <= 0 then error("no " .. item .. " in the inventory") end
+  local n = e.insert { name = item, count = want }
+  if n > 0 then c.remove_item { name = item, count = n } end
+  return { inserted = n, into = e.name }
+end
+
+local output_inventories = {
+  [defines.inventory.crafter_output] = true, [defines.inventory.chest] = true,
+  [defines.inventory.burnt_result] = true,
+}
+
+local function take_from(c, e, item, count, all_inventories)
+  local got = {}
+  for i = 1, e.get_max_inventory_index() do
+    local inv = e.get_inventory(i)
+    local wanted = all_inventories or output_inventories[i]
+    -- A furnace's result slot and a chest share index numbers with other inventories; judge by name.
+    if inv and inv.valid and (wanted or (inv.name and (inv.name:find("output") or inv.name:find("result") or inv.name == "chest"))) then
+      for _, it in pairs(inv.get_contents()) do
+        if (not item or it.name == item) and (count == nil or count > 0) then
+          local n = math.min(it.count, count or it.count)
+          local moved = c.insert { name = it.name, count = n, quality = it.quality }
+          if moved > 0 then
+            inv.remove { name = it.name, count = moved, quality = it.quality }
+            got[it.name] = (got[it.name] or 0) + moved
+            if count then count = count - moved end
+          end
+        end
+      end
+    end
+  end
+  return got
+end
+
+-- Take items out of an entity (outputs and chests; all=true includes inputs and fuel).
+function act.take(a)
+  local c = need_char()
+  local e = target(a, c)
+  return { took = take_from(c, e, a.item, a.count, a.all) }
+end
+
+local function around(a, c)
+  local p = util.xy(a) or util.pos(c.position)
+  local r = math.min(a.r or 30, c.reach_distance)
+  check_reach(c, p, c.reach_distance + r, "area")
+  return surface().find_entities_filtered { area = util.area_around(p, r), force = "player", name = a.names, type = a.types }
+end
+
+-- Collect outputs (and chest contents with chests=true, items on the ground with ground=true).
+function act.collect(a)
+  local c = need_char()
+  local total = {}
+  for _, e in pairs(around(a, c)) do
+    if e.type ~= "character" and (a.chests or (e.type ~= "container" and e.type ~= "logistic-container")) then
+      for k, v in pairs(take_from(c, e, a.item, nil, false)) do total[k] = (total[k] or 0) + v end
+    end
+  end
+  if a.ground then
+    local p = util.xy(a) or c.position
+    for _, it in pairs(surface().find_entities_filtered { area = util.area_around(p, math.min(a.r or 30, c.reach_distance)), type = "item-entity" }) do
+      local st = it.stack
+      if st and st.valid_for_read and (not a.item or st.name == a.item) then
+        local name = st.name
+        local moved = c.insert(st)
+        if moved > 0 then
+          total[name] = (total[name] or 0) + moved
+          if moved >= st.count then it.destroy() else st.count = st.count - moved end
+        end
+      end
+    end
+  end
+  return { collected = total }
+end
+
+-- Top up every burner in range to `count` of fuel `item`.
+function act.fuel(a)
+  local c = need_char()
+  local item = a.item or error("give item")
+  local per = a.count or 5
+  local given, n = 0, 0
+  for _, e in pairs(around(a, c)) do
+    local b = e.burner
+    if b and e.type ~= "character" then
+      local have = c.get_item_count(item)
+      if have <= 0 then break end
+      local inside = b.inventory.get_item_count(item)
+      if inside < per then
+        local moved = b.inventory.insert { name = item, count = math.min(per - inside, have) }
+        if moved > 0 then
+          c.remove_item { name = item, count = moved }
+          given, n = given + moved, n + 1
+        end
+      end
+    end
+  end
+  return { fuelled = n, gave = given, left = c.get_item_count(item) }
+end
+
+-- Put `count` of an ingredient into every machine in range (names/types filter) that takes it.
+function act.feed(a)
+  local c = need_char()
+  local item = a.item or error("give item")
+  local per = a.count or 10
+  local given, n = 0, 0
+  for _, e in pairs(around(a, c)) do
+    if e.type == "assembling-machine" or e.type == "furnace" or e.type == "lab" or e.type == "container" or e.type == "boiler" then
+      local have = c.get_item_count(item)
+      if have <= 0 then break end
+      local inside = e.get_item_count(item)
+      if inside < per then
+        local ok, moved = pcall(e.insert, { name = item, count = math.min(per - inside, have) })
+        if ok and moved > 0 then
+          c.remove_item { name = item, count = moved }
+          given, n = given + moved, n + 1
+        end
+      end
+    end
+  end
+  return { fed = n, gave = given, left = c.get_item_count(item) }
+end
+
+function act.craft(a)
+  local c = need_char()
+  local recipe = a.recipe or a.name or error("give recipe")
+  local r = prototypes.recipe[recipe] or error("unknown recipe " .. recipe)
+  local started = c.begin_crafting { recipe = recipe, count = a.count or 1, silent = true }
+  local out = { started = started }
+  if started < (a.count or 1) then
+    out.need = {}
+    for _, i in pairs(r.ingredients) do
+      out.need[i.name] = i.amount .. " each, have " .. c.get_item_count(i.name)
+    end
+    if not force().recipes[recipe].enabled then out.reason = "recipe not researched" end
+  end
+  return out
+end
+
+function act.craft_cancel(a)
+  local c = need_char()
+  local q = c.crafting_queue or {}
+  local idx = a.index or #q
+  if not q[idx] then return { cancelled = 0 } end
+  c.cancel_crafting { index = idx, count = a.count or q[idx].count }
+  return { cancelled = q[idx].recipe }
+end
+
+-- Timed jobs: walk and hand-mine. They queue behind each other.
+function act.walk(a)
+  local c = need_char()
+  local p = need_xy(a)
+  table.insert(storage.jobs, { kind = "walk", to = p, desc = "walk to " .. p.x .. "," .. p.y })
+  return { queued = #storage.jobs }
+end
+
+function act.mine(a)
+  need_char()
+  local job = {
+    kind = "mine", name = a.name, type = a.type, count = a.count or 1, done = 0, got = {},
+    at = util.xy(a), r = a.r,
+  }
+  job.desc = "mine " .. (a.name or a.type or "?") .. " x" .. job.count
+  table.insert(storage.jobs, job)
+  return { queued = #storage.jobs }
+end
+
+function act.stop(a)
+  storage.jobs = {}
+  return { jobs = 0 }
+end
+
+function act.research(a)
+  local f = force()
+  local out = {}
+  if a.set then
+    f.research_queue = a.set
+  end
+  for _, name in pairs(type(a.add) == "table" and a.add or (a.add and { a.add } or {})) do
+    out[name] = f.add_research(name)
+  end
+  if a.cancel then f.research_queue = {} end
+  local q = {}
+  for _, t in pairs(f.research_queue or {}) do table.insert(q, t.name) end
+  out.queue = q
+  return out
+end
+
+function act.speed(a)
+  game.speed = math.max(0.1, math.min(a.value or 1, 8))
+  return { speed = game.speed }
+end
+
+function act.pause(a)
+  game.tick_paused = a.value ~= false
+  return { paused = game.tick_paused, tick = game.tick }
+end
+
+function act.note(a)
+  local line = string.format("[%s] %s", util.fmt_time(game.tick), a.text or "")
+  helpers.write_file("pt-agent/notes.txt", line .. "\n", true)
+  return { noted = line }
+end
+
+-- Diagnostics only: run a Lua expression and return its value (read the world, never cheat).
+function act.eval(a)
+  local fn, err = load("return " .. (a.code or "nil"), "eval", "t", setmetatable({ c = storage.char, s = surface(), f = force() }, { __index = _G }))
+  if not fn then fn, err = load(a.code, "eval", "t", setmetatable({ c = storage.char, s = surface(), f = force() }, { __index = _G })) end
+  if not fn then error(err) end
+  local v = fn()
+  if type(v) == "userdata" then v = tostring(v) end
+  return { value = v }
+end
+
+return act

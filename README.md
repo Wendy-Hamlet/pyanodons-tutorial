@@ -102,5 +102,8 @@ parameters for yours.
 - `belt-lab/`, `ch1-probe/`, `drill-probe/`, `inserter-probe/`, `train-probe/`, `station-probe/`:
   engine measurements behind the chapters and research notes. `run-probe.ps1 <probe>` runs one
   (copies it into the fixed setup, creates a map, runs it, prints its results, removes it).
+- `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
+  `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see
+  [its README](tools/agent/README.md). Its play journal is [research/agent-play](research/agent-play/journal.md).
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.
