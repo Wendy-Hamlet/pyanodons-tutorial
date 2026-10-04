@@ -43,6 +43,7 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 2:00–2:18 | Kerogen (2 MJ, a Stone byproduct) now fuels the Boilers through their chests; a second warehouse row. **Red science 15/min**; research reached Electronics. |
 | 2:25–2:48 | Iron ran short (red science alone takes ~82 Iron plate/min). Moved 10 copper pairs to the 4.1 M Iron patch 470 tiles north-east as an outpost; every 4th round the character runs there (10 s), collects ~250 plates and refuels with Kerogen. Iron 127/min. Warehouse rows 2–3. |
 | 2:48–3:33 | Two self-made outages. Research queue ran empty (7 min lost). Then I switched all burners to Kerogen to use up the stock: Kerogen comes far slower than the burners need, so the red lines ran dry (1.3 packs/min) while their inputs piled up in my inventory. Also the warehouse only took items in: once the Logs in hand were used up, Wood stopped although 1,346 Logs sat in a chest. Fixed with `restock` (takes kept items back) and Raw coal as the fuel again. |
+| 3:56 | **pY science pack 1 researched.** Then the red-only technologies that help (Logistics, Ash separation, Copper processing 1, Fluid handling, Kerogen...). |
 
 ## Plan from 2:48: belts and black boxes
 
@@ -60,6 +61,14 @@ from the round script.
 3. Red science: Soil, Ash, Native flora, bricks, Wood (Wood processing unit from a chest of Logs),
    Iron plate and Small parts arrive by belt; packs go to the labs by belt.
 4. Smelting: iron outpost and home patches as smelting columns.
+
+## Belts from 4:20
+
+| Game time | What I did |
+|---|---|
+| 4:20–4:35 | Red science cell v1 (`tools/agent/designs/red-science-cell.js`, built from ghosts by the robots): Empty planter box → Planter box → pack, each machine on one belt segment above and one below; neighbouring segments flow in opposite directions so they never touch; each segment starts at a port (a belt tile with an inserter behind it, items on the right lane, and one on its right side, items on the left lane). Packs go by belt past eight labs. Only burner inserters exist (long-handed and electric inserters and splitters need circuits). |
+| 4:35–4:45 | The three Flora collectors now drop straight onto a belt (78 tiles) into the cell; a Soil extractor of its own, south of the cell, puts Soil on the south belt of the Planter box machine. Old red lines removed. Ports widened where one inserter (0.83 items/s) was the limit: bricks and Ash three inserters each. ~10 packs/min, no chores for Flora and half the Soil. |
+| 4:45 | Home iron is running out (13 drills on empty ore): those drills and furnaces moved to the iron outpost, now 29 pairs. |
 
 ## Lessons
 
