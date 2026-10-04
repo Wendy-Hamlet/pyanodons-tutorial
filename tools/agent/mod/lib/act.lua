@@ -296,6 +296,18 @@ function act.fuel(a)
   return { fuelled = n, gave = given, left = c.get_item_count(item) }
 end
 
+-- Store an item in a chest, keeping `keep` (default 0) in the inventory.
+function act.stash(a)
+  local c = need_char()
+  local e = target(a, c)
+  local item = a.item or error("give item")
+  local extra = c.get_item_count(item) - (a.keep or 0)
+  if extra <= 0 then return { stored = 0 } end
+  local n = e.insert { name = item, count = extra }
+  if n > 0 then c.remove_item { name = item, count = n } end
+  return { stored = n, item = item }
+end
+
 -- Mark chests (list of {x, y} in `at`, or x/y) as input chests: upkeep never empties them.
 -- off=true unmarks.
 function act.input_chest(a)
@@ -324,7 +336,9 @@ function act.upkeep(a)
     if e.type ~= "character" and not inputs[e.unit_number] then
       for i = 1, e.get_max_inventory_index() do
         local inv = e.get_inventory(i)
-        if inv and inv.valid and output_inventories[inv.name] then
+        -- An assembler's output is left to the inserter that takes it to the next machine.
+        local skip = e.type == "assembling-machine" and inv and inv.name == "crafter_output" and not a.assemblers
+        if inv and inv.valid and output_inventories[inv.name] and not skip then
           for _, it in pairs(inv.get_contents()) do
             if not (inv.name == "chest" and keep[it.name]) then
               local moved = c.insert { name = it.name, count = it.count, quality = it.quality }

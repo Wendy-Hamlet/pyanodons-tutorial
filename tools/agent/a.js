@@ -4,6 +4,7 @@
 //   node a.js <op> [key=value ...] [+ <op> key=value ...]   several ops in one connection
 //   node a.js <op> '{"json": "arguments"}'
 //   node a.js <op> @file.json [key=value ...]               arguments from a file (merged)
+//   node a.js --json <op> ...                               answers as one-line JSON
 //   node a.js raw server-save                                any console command (slash optional)
 //
 // Values: numbers and true/false are converted, [..] and {..} are JSON, `names`, `types`, `add`
@@ -51,7 +52,9 @@ function commandsFor({ op, args }) {
   return [...parts, `/agent ${op} @buf`];
 }
 
+let RAW = false;
 function fmt(v, indent = '') {
+  if (RAW && !indent) return JSON.stringify(v);
   if (v === null || typeof v !== 'object') return JSON.stringify(v);
   const one = JSON.stringify(v);
   if (one.length <= 110) return one;
@@ -80,7 +83,8 @@ async function wait(args) {
 }
 
 async function main() {
-  const argv = process.argv.slice(2);
+  let argv = process.argv.slice(2);
+  if (argv[0] === "--json") { RAW = true; argv = argv.slice(1); }
   if (!argv.length) { console.log('usage: node a.js <op> [key=value ...] [+ <op> ...]'); process.exit(1); }
   const groups = [[]];
   for (const w of argv) { if (w === '+') groups.push([]); else groups[groups.length - 1].push(w); }

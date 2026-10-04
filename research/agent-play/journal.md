@@ -27,6 +27,11 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 0:11–0:12 | Power: Offshore pump (facing south: its output is on the opposite side), pipe, Boiler, Steam engine above it, three small poles; worked at the first try. |
 | 0:13–0:14 | Logs: only 34 trees within 100 tiles of spawn; ran 230 tiles south (exoskeletons: 45 tiles/s) and let the 100 robots clear two forest cells: 392 Logs in 90 s. |
 | 0:14–0:16 | Two labs, Soil extractor (water passes through the Boiler into it), four Stone furnaces making bricks. |
+| 0:16–0:22 | Flora collector MK 01 on the Bioreserve (it drops into a chest like a drill); first red packs by hand. |
+| 0:26–0:30 | Automation done. A Small parts block: five burner assemblers (Iron stick → Bolts, Iron gear wheel, Copper cable → Small parts) joined by inserters, fed from three chests I fill, output into a chest. |
+| 0:30–0:35 | A red science line: Empty planter box → Planter box → Automation science pack, the last inserter feeding a lab, labs passing packs on; I fill the input chests each round. |
+| 0:35–0:45 | Coal processing 1, Soil washing, Steel processing done. Explored a 350-tile ring: the near Iron patch is only 257 k (big ones 450+ tiles away). 14 more iron pairs, 6 copper, 6 more Raw coal drills, second Flora collector, labs 3–4. |
+| 0:45–0:48 | Raised fuel buffers (drills 30 Raw coal, others 15): plates per round doubled. Three input chests and inserters per red-line machine. |
 
 ## Lessons
 
@@ -39,3 +44,13 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 4. Air-core inductors are the item `inductor1`, made by the recipe `inductor1-2` (Iron stick +
    8 Copper cable); the recipe named `inductor1` needs Ceramic.
 5. Trees are scarce near this spawn; forests are 200+ tiles away and robots clear them fast.
+6. **Fuel buffers must outlast the round.** A Burner mining drill burns 0.167 Raw coal/s, a Stone
+   furnace 0.067/s: 6 and 8 pieces lasted 36 s and 120 s, while my rounds took 60–120 s, so half
+   the machines stood idle. With 30 and 15 the plates per round doubled.
+7. **One inserter is a hard limit**: a burner inserter moves about 0.8 items/s and a red pack
+   takes 12 items in its last step (10 Native flora + 2 Small parts), so one input inserter caps
+   the line at 4 packs/min. A 3×3 machine takes three inserters per side.
+8. A drill on Stone cannot drop into a furnace: Stone comes with Kerogen, which the furnace
+   refuses, and the drill stops. Drop into a chest.
+9. Upkeep must never empty an assembler's output: the next machine's inserter takes it from
+   there. Only furnaces and chests are emptied; input chests are marked so they are left alone.
