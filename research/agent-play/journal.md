@@ -75,6 +75,7 @@ from the round script.
 | 5:40–6:20 | Fuel crisis: the Raw coal module only feeds the Boilers, so the old coal drills I had removed were missed by every other burner. Twelve inserters now tap the module belt into iron chests, and nine new drills drop Raw coal into chests (spots found by a script: all four tiles Raw coal, drop tile free). Tin outpost Boilers get iron chests with inserters (a Boiler slot lasts 40 s). |
 | 6:00–6:35 | Components workshop (x 0..40, y -60..-34): HPF (graphite, ceramic), Clay pit with its own Boiler (it drops clay through an output port), Vacuum pump right under an Electronics factory (vacuum tubes, then resistors and capacitors), Seaweed crop (needs Seaweed as modules: the first 10 hand-picked from 5 plants in the lake), agar HPF sharing the Clay pit's Steam, Botanical nursery with the Moondrop codex for a Moondrop sample. 90 vacuum tubes, 150 resistors. |
 | 6:40 | I switched the second Glassworks to Empty petri dishes and mirrored it to line up its other input: Molten glass got into the shared Tar fuel network just as the Tar ran out, the tailings pond filled with Molten glass, and both Distillation columns stopped (Tar could not leave). Fixed by removing and re-placing the pond, 20 pipes and both Glassworks. |
+| 6:45–7:55 | Bootstrapping the circuit board chain. Components for 50 circuits done (capacitors 230, resistors 165, vacuum tubes 94). Saps multiply themselves: the nursery turns 5 Saps into 2 seeds and 5 seeds plus a Planter box into a Sap tree; four Sap extractors with two trees each make 12 Saps/min. Pre-crafted the PCB factory (it contains two Electronics factories and two Distillation columns: ~22 Steam engines in all), Tar processing unit, Pulp mill, Wood processing unit, Moondrop greenhouse, a third Glassworks and HPF. A copper outpost on the 824 k patch at (58,-316), visited with the iron outpost. |
 
 ## Lessons
 
@@ -123,3 +124,9 @@ from the round script.
     machine on it to the wrong fluid; then only removing and re-placing all of them clears it.
 20. Py farms need their own organisms as modules to run at all (Seaweed crop speed 0 without
     Seaweed); the first ones come from the map (Seaweed plants in lakes, picked by hand).
+21. **The character is a poor hub.** Everything the rounds move passes through one inventory;
+    when it is nearly full, upkeep collects whatever comes first and the rest (here Stone) stays
+    behind, so machines downstream starve. Another reason for belts.
+22. Only Moondrop makes Methane, and only a Moondrop sample (2 Petri dishes, a Planter box and a
+    Codex in a nursery) starts Moondrop: the Petri dish chain (Seaweed → Agar, Glassworks →
+    Empty petri dish) comes before Formica and therefore before circuits.
