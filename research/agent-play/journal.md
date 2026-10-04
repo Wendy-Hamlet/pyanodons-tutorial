@@ -32,6 +32,9 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
 | 0:30–0:35 | A red science line: Empty planter box → Planter box → Automation science pack, the last inserter feeding a lab, labs passing packs on; I fill the input chests each round. |
 | 0:35–0:45 | Coal processing 1, Soil washing, Steel processing done. Explored a 350-tile ring: the near Iron patch is only 257 k (big ones 450+ tiles away). 14 more iron pairs, 6 copper, 6 more Raw coal drills, second Flora collector, labs 3–4. |
 | 0:45–0:48 | Raised fuel buffers (drills 30 Raw coal, others 15): plates per round doubled. Three input chests and inserters per red-line machine. |
+| 0:48–1:00 | Labs 5–6, south feeders on the red line, storage chests; red science 8–9 packs/min. Glass and Botany done. |
+| 1:00–1:12 | Coal block: a Destructive distillation column on the Raw coal patch fed directly by three drills (Raw coal → Coal + Coal gas + Tar), Coal gas to a gas vent, Tar to a Tailings pond; a second column makes Coke from that Coal. Second power unit. |
+| 1:10–1:15 | Steel: Advanced foundry MK 01 (Coke + Limestone + Iron ore), Limestone from a second Soil extractor with its own Offshore pump; one iron drill now drops into a chest for ore. A warehouse row of 10 iron chests and `stash_all`. |
 
 ## Lessons
 
@@ -52,5 +55,11 @@ Times are game time (h:mm:ss) unless marked as wall-clock time.
    the line at 4 packs/min. A 3×3 machine takes three inserters per side.
 8. A drill on Stone cannot drop into a furnace: Stone comes with Kerogen, which the furnace
    refuses, and the drill stops. Drop into a chest.
+10. Fluid outputs of a multi-box machine: read which box holds which fluid after it runs
+   (`get_fluid` + `get_fluid_box_prototype`), then pipe; the Distillation column puts Coal gas in
+   box 2 (north) and Tar in box 8 (east). Gas vents void Coal gas 20 000 at a time.
+11. An assembler created without a recipe ignores the direction it is given; create it with
+    the recipe or rotate it afterwards.
+12. Aluminium ore needs a Fluid drill (Coal gas); Glassworks burn fluid fuel (10 MW).
 9. Upkeep must never empty an assembler's output: the next machine's inserter takes it from
    there. Only furnaces and chests are emptied; input chests are marked so they are left alone.

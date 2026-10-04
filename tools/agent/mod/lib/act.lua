@@ -67,9 +67,11 @@ function act.place(a)
   if not s.can_place_entity { name = name, position = p, direction = dir, force = "player", build_check_type = defines.build_check_type.manual } then
     error("cannot place " .. name .. " at " .. p.x .. "," .. p.y .. ": " .. blockers(name, p, dir))
   end
+  -- An assembler only keeps its direction when created with a recipe (fluid boxes).
   local e = s.create_entity {
     name = name, position = p, direction = dir, force = "player", raise_built = true,
     create_build_effect_smoke = false, move_stuck_players = true, type = a.ug,
+    recipe = prototypes.entity[name].type == "assembling-machine" and a.recipe or nil,
   }
   if not e then error("create_entity failed") end
   c.remove_item { name = item, count = 1 }
@@ -296,6 +298,17 @@ function act.fuel(a)
   return { fuelled = n, gave = given, left = c.get_item_count(item) }
 end
 
+-- Does an inserter take items out of this entity?
+local function taken_by_inserter(e)
+  local b = e.bounding_box
+  for _, ins in pairs(e.surface.find_entities_filtered {
+    type = "inserter", area = { { b.left_top.x - 1.5, b.left_top.y - 1.5 }, { b.right_bottom.x + 1.5, b.right_bottom.y + 1.5 } },
+  }) do
+    if ins.pickup_target == e then return true end
+  end
+  return false
+end
+
 -- Store an item in a chest, keeping `keep` (default 0) in the inventory.
 function act.stash(a)
   local c = need_char()
@@ -306,6 +319,34 @@ function act.stash(a)
   local n = e.insert { name = item, count = extra }
   if n > 0 then c.remove_item { name = item, count = n } end
   return { stored = n, item = item }
+end
+
+-- Store everything but buildings in the chests listed in `chests` ([[x, y], ...]), keeping up to
+-- `keep[item]` of each item in the inventory.
+function act.stash_all(a)
+  local c = need_char()
+  local keep = a.keep or {}
+  local chests = {}
+  for _, p in pairs(a.chests or error("give chests")) do
+    table.insert(chests, target({ x = p[1], y = p[2] }, c))
+  end
+  local stored = {}
+  for _, it in pairs(c.get_main_inventory().get_contents()) do
+    local proto = prototypes.item[it.name]
+    if not proto.place_result and not keep[it.name .. "!"] then
+      local extra = c.get_item_count(it.name) - (keep[it.name] or 0)
+      for _, ch in pairs(chests) do
+        if extra <= 0 then break end
+        local n = ch.insert { name = it.name, count = extra }
+        if n > 0 then
+          c.remove_item { name = it.name, count = n }
+          extra = extra - n
+          stored[it.name] = (stored[it.name] or 0) + n
+        end
+      end
+    end
+  end
+  return { stored = stored, free_slots = c.get_main_inventory().count_empty_stacks() }
 end
 
 -- Mark chests (list of {x, y} in `at`, or x/y) as input chests: upkeep never empties them.
@@ -338,6 +379,7 @@ function act.upkeep(a)
         local inv = e.get_inventory(i)
         -- An assembler's output is left to the inserter that takes it to the next machine.
         local skip = e.type == "assembling-machine" and inv and inv.name == "crafter_output" and not a.assemblers
+          and taken_by_inserter(e)
         if inv and inv.valid and output_inventories[inv.name] and not skip then
           for _, it in pairs(inv.get_contents()) do
             if not (inv.name == "chest" and keep[it.name]) then
