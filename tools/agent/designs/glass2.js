@@ -12,7 +12,7 @@ const g = new Layout();
 const ins = 'burner-inserter';
 g.add('glassworks-mk01', 156.5, -40.5, 'N', 'glass-1');                    // G3
 g.add(ins, 160.5, -40.5, 'E');                                             // Quartz from the belt
-g.add('glassworks-mk01', 155.5, -33.5, 'N', 'molten-glass');               // G4
+g.add('glassworks-mk01', 155.5, -33.5, 'N', 'empty-petri-dish');           // G4 (Glass until 19:10, then removed and re-placed for Petri dishes)
 g.add(ins, 156.5, -29.5, 'N'); g.add('wooden-chest', 156.5, -28.5);       // Glass out
 // The Gasifier, turned west, has its inputs on the north side (Coal gas at x 146.5/144.5, Water
 // at 149.5) and its outputs on the south side (Syngas at 146.5/144.5, Tar at 149.5). Syngas also
