@@ -13,8 +13,8 @@ ops=(
   # power
   "fuel item=raw-coal count=50 names=boiler r=160" "fuel item=raw-coal count=10 r=160"
   "feed item=kerogen count=800 $W x=-30 y=12.5 r=1" "feed item=kerogen count=800 $W x=-47 y=3.5 r=1"
-  # bricks, wood
-  "feed item=stone count=50 names=stone-furnace x=-35 y=-8 r=6" "craft recipe=log-wood count=5" "craft recipe=inductor1-2 count=20"
+  # wood (brick furnaces no longer fed: 27 000 bricks in stock)
+  "craft recipe=log-wood count=5" "craft recipe=inductor1-2 count=20"
   # red science cell ports (Native flora and half the Soil arrive by belt)
   "feed item=stone-brick count=500 $W x=12.5 y=12 r=2.6" "feed item=wood count=400 $W x=9.5 y=12.5 r=0.6"
   "feed item=soil count=800 $W x=17.5 y=10.5 r=0.6" "feed item=ash count=2000 $W x=15.5 y=13.5 r=1.1"
@@ -60,6 +60,7 @@ ops=(
   # far east stop: glass line 2 (Raw coal for D6, Glass), power station 2 (Ash), creature block
   "walk x=150 y=-10" "wait jobs=true max=40"
   "upkeep x=150 y=-42 r=14 drills=10 others=10 fuel=raw-coal" "feed item=raw-coal count=500 $W x=145 y=-52.5 r=2"
+  "feed item=petri-dish count=10 $W x=103.5 y=5.5 r=0.6" "feed item=moss count=60 $W x=103.5 y=5.5 r=0.6"
   "upkeep x=240 y=0 r=16 drills=30 others=30 fuel=raw-coal" "upkeep x=110 y=5 r=14 drills=10 others=10 fuel=raw-coal"
   "walk x=40 y=-40" "wait jobs=true max=40"
   "feed item=barrel count=20 $W x=106.5 y=-44.5 r=0.6"
@@ -76,7 +77,7 @@ ops=(
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # science block: Petri dishes to the micro mine, substrate by hand, Flasks + substrate to the
   # research center (Cellulose is taken from the battery cell's HPF during the east stop)
-  "feed item=petri-dish count=10 $W x=45.5 y=-20.5 r=0.6" "craft recipe=fawogae-substrate count=2"
+  # (micro mine and substrate paused at game 17:40: 384 substrate in stock, Petri dishes go to the genlab)
   "feed item=flask count=30 $W x=55.5 y=-21.5 r=0.6" "feed item=fawogae-substrate count=180 $W x=55.5 y=-21.5 r=0.6"
   # electronics block: Resistors (Coke, Glass, Tin) and Capacitors (Ceramic, Tin)
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
