@@ -5,6 +5,7 @@ node quota.js guard >/dev/null || { node quota.js; exit 2; }
 P=${1:-50}
 W="names=wooden-chest"
 ops=(
+  "walk x=-30 y=-10" "wait jobs=true max=60"
   "stash_all @C:/tmp/cf-agent/stash.json" "upkeep @C:/tmp/cf-agent/upkeep.json" "restock @C:/tmp/cf-agent/stash.json"
   # power
   "fuel item=raw-coal count=50 names=boiler r=160" "fuel item=raw-coal count=10 r=160"
@@ -37,7 +38,6 @@ ops=(
   "feed item=wood count=100 names=tar-processing-unit x=-17.5 y=71.5 r=1" "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
   "take x=-48.5 y=39.5 item=stone count=150"
   # concrete (one-off for rc-mk01): Stone into the Jaw crusher
-  "feed item=stone count=200 names=jaw-crusher x=-52.5 y=30.5 r=1"
   # east side (methane block, battery cell) is out of reach from home: walk there and back
   "walk x=40 y=-40" "wait jobs=true max=40"
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
@@ -52,6 +52,12 @@ ops=(
   "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
   "feed item=inductor1 count=30 $W x=81.5 y=-44.5 r=0.6"
   "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal"
+  # vrauk area: empty Barrels back to the Barrel machine, Water barrels, Flora, Saps and Moss to
+  # rc-mk01 and the paddock; the rc's Barrels are taken by hand (its output inserter only takes Cocoons)
+  "upkeep x=120 y=-60 r=22 drills=10 others=10 fuel=raw-coal" "take x=113 y=-62 item=barrel"
+  "feed item=barrel count=20 $W x=106.5 y=-44.5 r=0.6"
+  "feed item=water-barrel count=12 $W x=113.5 y=-74.5 r=0.6" "feed item=native-flora count=30 $W x=113.5 y=-74.5 r=0.6" "feed item=saps count=20 $W x=113.5 y=-74.5 r=0.6" "feed item=moss count=40 $W x=113.5 y=-74.5 r=0.6"
+  "feed item=water-barrel count=9 $W x=133.5 y=-70.5 r=0.6" "feed item=native-flora count=45 $W x=133.5 y=-70.5 r=0.6" "feed item=moss count=15 $W x=133.5 y=-70.5 r=0.6"
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # creosote: Wood for TPU 4 (pond A)
   "feed item=wood count=200 $W x=-11.5 y=40.5 r=0.6"

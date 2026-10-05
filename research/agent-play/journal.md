@@ -87,6 +87,10 @@ from the round script.
 | 11:20–11:35 | Zinc, second try (`designs/zinc-local.js`): two columns at the patch, Raw coal → Tar → Aromatics, every pipe a few tiles long; Raw coal is carried there. Zinc plates from the first visit on. |
 | 11:35–11:55 | Battery cell (`designs/battery-cell.js`): a Washer turned south feeds Saline water straight into a burner Assembling machine 1, an HPF hands it Cellulose. Treated wood was the next limit (Creosote): TPU 3 turns pond A's Anthracene oil into Creosote and TPU 4 above it makes Treated wood (`designs/creosote.js`). 7 batteries, 13 PCBs, 24 solder. |
 | 12:00 | The copper outpost had 1 432 plates waiting in full furnaces: every visit came with 5 000 Raw coal (100 slots) and no room to collect. Outposts now carry what they burn. |
+| 12:00–12:30 | Chipshooter (`designs/chip.js`, 20 PCBs + 2 Distillation columns): all seven circuit ingredients from one chest. **First electronic circuits.** Research center MK01 crafted (50 circuits, a micro mine, a column). |
+| 12:30–13:00 | Inventory crises: rounds ran upkeep with a full inventory (Raw coal for outposts), so ore chests and coal taps were never emptied and outposts went unfuelled. Rounds now stash first, keep amounts are smaller, and restock refills below three quarters. The Methane greenhouse at 16 modules took every seed and the Moondrop loop died; a second seed greenhouse (`designs/methane-gh3.js`) and 12 modules fixed it. |
+| 13:00–13:30 | Titanium outpost (`designs/titanium-outpost.js`, the lead layout moved; four drills). Steel ran out: Iron ore now comes from three home drills and four iron-outpost drills into chests, and a second Advanced foundry. Three output inserters on the Calcium carbide HPF (one moved only a third of its output). |
+| 13:30–14:10 | rc-mk01 needs 100 Concrete: Jaw crusher (Stone → Gravel → Sand) and a burner assembler with Water (`designs/concrete.js`), Lime taken from the lime HPF. Poles from Treated wood (no Logs left nearby; the next forests are 600–700 tiles west). rc-mk01 and the Vrauks paddock placed with a Barrel machine (`designs/vrauks.js`): Cocoons are breeding. |
 
 ## Lessons
 
@@ -172,3 +176,13 @@ from the round script.
     outpost's plates (1 432 copper) stayed in full furnaces for an hour.
 33. Reach is 161 tiles: a round standing at home cannot feed machines 165 tiles east. Walking is
     cheap (a few seconds), so rounds walk.
+34. **The inventory is the round's working memory.** Start every round and every trip by
+    stashing; carry only what the trip needs; a nearly full inventory silently skips collections
+    and refuelling, and the damage shows up an hour later somewhere else.
+35. A loop that feeds itself (Moondrop → seeds → Moondrop) dies when a consumer on the same
+    output can take more than the surplus: burner inserters have no priority. Keep the consumer
+    below the surplus (fewer modules) or add producers.
+36. One burner inserter moves 0.83 items/s: check it against every machine's output, not only
+    its inputs (the carbide HPF made 2.5/s).
+37. Wood runs out near the base: Logs only come from trees; Treated wood makes poles too
+    (`small-electric-pole-2`).

@@ -8,7 +8,8 @@ const g = new Layout();
 const ins = 'burner-inserter';
 g.add('rc-mk01', 113, -62, 'N', 'vrauks-cocoon-1');
 g.add(ins, 113.5, -73.5, 'N'); g.add('wooden-chest', 113.5, -74.5);       // rc inputs
-g.add(ins, 124.5, -62.5, 'W'); g.add('wooden-chest', 125.5, -62.5); g.add(ins, 126.5, -62.5, 'W'); // Cocoons
+g.add(ins, 124.5, -62.5, 'W', null, { filters: ['cocoon'] });                // only Cocoons leave the rc here
+g.add('wooden-chest', 125.5, -62.5); g.add(ins, 126.5, -62.5, 'W');
 g.add('vrauks-paddock-mk01', 133.5, -62.5, 'N', 'vrauks-1');
 g.add(ins, 133.5, -69.5, 'N'); g.add('wooden-chest', 133.5, -70.5);      // paddock inputs
 g.add(ins, 133.5, -55.5, 'N'); g.add('wooden-chest', 133.5, -54.5);      // Vrauks + Barrels out
