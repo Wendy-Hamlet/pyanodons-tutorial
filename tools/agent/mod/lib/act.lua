@@ -416,8 +416,8 @@ function act.input_chest(a)
   return { marked = out, off = a.off }
 end
 
--- One round of chores: take every output, Ash and chest content in range (keep=a,b leaves those
--- items in chests), then top up every burner with `fuel` (default raw-coal): mining drills to
+-- One round of chores: take every output, Ash (only from slots holding 600 or more) and chest
+-- content in range (keep=a,b leaves those items in chests), then top up every burner with `fuel` (default raw-coal): mining drills to
 -- `drills` (default 10), everything else to `others` (default 5).
 function act.upkeep(a)
   local c = need_char()
@@ -435,7 +435,11 @@ function act.upkeep(a)
           and taken_by_inserter(e)
         if inv and inv.valid and output_inventories[inv.name] and not skip then
           for _, it in pairs(inv.get_contents()) do
-            if not (inv.name == "chest" and keep[it.name]) then
+            -- Ash and other burnt results are only taken once the slot is filling up: taking a
+            -- few hundred from every burner each round filled the inventory before the outputs
+            -- that matter were reached.
+            local burnt_low = inv.name == "burnt_result" and it.count < 600
+            if not (inv.name == "chest" and keep[it.name]) and not burnt_low then
               local moved = c.insert { name = it.name, count = it.count, quality = it.quality }
               if moved > 0 then
                 inv.remove { name = it.name, count = moved, quality = it.quality }
