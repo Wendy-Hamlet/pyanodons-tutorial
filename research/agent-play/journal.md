@@ -106,7 +106,7 @@ from the round script.
 | 21:00–21:12 | The rounds now carry the whole pY1 chain: paddock Vrauks → caged → slaughterhouse → Latex → Stoppers → flask Glassworks → Research center → labs. Copper had run out unnoticed (3 800/h used, 360 made; the 7 500 "in stock" sat in feed chests): duralumin, inductor, battery and PCB copper feeds paused. pY1 research (py-burner) running. |
 | 21:12–22:10 | Wood ran out (4 000/h) and so did limestone: the circuit chains (fiber, treated wood, cellulose for batteries) and the steel foundries, lime and carbide were paused, along with the tin, lead, zinc and titanium outposts. Substrate production resumed (micro mine, cellulose, hand crafting). Raw coal was 16 000/h short: twelve more burner drills on the eastern patch (`designs/coal-drills-east.js`). A one-line `status.sh` for the loop. |
 | 22:10 | **py-burner researched**, the first pY1 technology. Three py-burners now void Ash (3.4/s each) east of the warehouse. |
-| 22:10–23:00 | The pY1 chain runs on rounds alone: about 84 packs made so far; electric mining drill research at two thirds. Remaining tweaks were all about stocks: cellulose sitting in a paused battery cell's chest, coke still fed to idle HPFs. |
+| 22:10–22:52 | The pY1 chain runs on rounds alone: about 84 packs made so far; electric mining drill research at two thirds. Remaining tweaks were all about stocks: cellulose sitting in a paused battery cell's chest, coke still fed to idle HPFs. |
 
 ## Lessons
 
