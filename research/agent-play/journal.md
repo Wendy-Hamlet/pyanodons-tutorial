@@ -107,6 +107,7 @@ from the round script.
 | 21:12–22:10 | Wood ran out (4 000/h) and so did limestone: the circuit chains (fiber, treated wood, cellulose for batteries) and the steel foundries, lime and carbide were paused, along with the tin, lead, zinc and titanium outposts. Substrate production resumed (micro mine, cellulose, hand crafting). Raw coal was 16 000/h short: twelve more burner drills on the eastern patch (`designs/coal-drills-east.js`). A one-line `status.sh` for the loop. |
 | 22:10 | **py-burner researched**, the first pY1 technology. Three py-burners now void Ash (3.4/s each) east of the warehouse. |
 | 22:10–22:52 | The pY1 chain runs on rounds alone: about 84 packs made so far; electric mining drill research at two thirds. Remaining tweaks were all about stocks: cellulose sitting in a paused battery cell's chest, coke still fed to idle HPFs. |
+| 22:52–23:02 | Last rounds; the user ended the game at real time 2026-10-05 20:06. The game is paused and saved (`agent.zip`). Compared with the author's first save in [save-comparison](save-comparison.md). |
 
 ## Lessons
 

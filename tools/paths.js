@@ -4,5 +4,6 @@ module.exports = {
   // (tools/dump-data.ps1).
   dump: 'C:/tmp/cf-dump/data/script-output',
   // Latest save snapshot (tools/inspect-save.ps1, run in tools/save-env.ps1's setup).
-  save: 'C:/tmp/cf-save/data/script-output/cellforge',
+  // PT_SAVE_SNAPSHOT points the tools at another snapshot folder (for comparing two saves).
+  save: process.env.PT_SAVE_SNAPSHOT || 'C:/tmp/cf-save/data/script-output/cellforge',
 };
