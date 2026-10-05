@@ -15,6 +15,9 @@ for (const x of [-288.5, -293.5, -298.5, -303.5]) {
   list.push({ name: 'fluid-drill-mk01', x, y: 51.5, dir: 'N' }, { name: 'stone-furnace', x: x + 0.5, y: 48 },
     { name: 'burner-inserter', x: x - 1, y: 54.5, dir: 'S' }, { name: 'wooden-chest', x: x - 1, y: 55.5 });
 }
+// A second Calcium carbide inserter: six drills need 12 Acetylene/s, 1.2 carbide/s, more than one
+// burner inserter moves.
+list.push({ name: 'burner-inserter', x: -271.5, y: 47.5, dir: 'N' }, { name: 'wooden-chest', x: -271.5, y: 46.5 });
 fs.writeFileSync(process.argv[2] || 'C:/tmp/cf-agent/titanium-outpost.json', JSON.stringify({ list }));
 const count = {}; for (const e of list) count[e.name] = (count[e.name] || 0) + 1;
 console.log(JSON.stringify(count));
