@@ -73,6 +73,8 @@ ops=(
   # (genlab feed stopped at game 20:10: it had made 49 Moss-gen, 2 Petri dishes each)
   # Vrauks from the chamber become the paddock's modules (up to 10)
   "take x=116.5 y=19.5 item=vrauks" "feed item=vrauks count=10 names=vrauks-paddock-mk01 x=133.5 y=-62.5 r=1"
+  # Vrauks beyond the paddock's ten go caged into the slaughterhouse (Formic acid -> Latex)
+  "craft recipe=caged-vrauks count=2" "feed item=caged-vrauks count=2 $W x=136.5 y=-45.5 r=0.6" "craft recipe=stopper count=2"
   "walk x=40 y=-40" "wait jobs=true max=40"
   "feed item=barrel count=20 $W x=106.5 y=-44.5 r=0.6"
   "feed item=water-barrel count=12 $W x=113.5 y=-74.5 r=0.6" "feed item=native-flora count=30 $W x=113.5 y=-74.5 r=0.6" "feed item=saps count=20 $W x=113.5 y=-74.5 r=0.6" "feed item=moss count=40 $W x=113.5 y=-74.5 r=0.6"
@@ -86,6 +88,8 @@ ops=(
   "feed item=stone count=50 $W x=105.5 y=-43.5 r=0.6" "feed item=limestone count=40 $W x=105.5 y=-43.5 r=0.6" "feed item=seaweed count=50 $W x=105.5 y=-43.5 r=0.6"
   "feed item=raw-coal count=300 $W x=126.5 y=-41.5 r=0.6"
   "walk x=-30 y=-10" "wait jobs=true max=40"
+  # flasks and pY1: Stoppers into the flask Glassworks, pY1 packs into the labs
+  "feed item=stopper count=8 names=glassworks-mk01 x=0.5 y=-15.5 r=1" "feed item=py-science-pack-1 count=10 names=lab x=35 y=18 r=12"
   # science block: Petri dishes to the micro mine, substrate by hand, Flasks + substrate to the
   # research center (Cellulose is taken from the battery cell's HPF during the east stop)
   # (micro mine and substrate paused at game 17:40: 384 substrate in stock, Petri dishes go to the genlab)
