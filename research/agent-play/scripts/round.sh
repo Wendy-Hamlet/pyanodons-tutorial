@@ -73,8 +73,11 @@ ops=(
   "feed item=petri-dish count=10 $W x=45.5 y=-20.5 r=0.6" "craft recipe=fawogae-substrate count=2"
   "feed item=flask count=30 $W x=55.5 y=-21.5 r=0.6" "feed item=fawogae-substrate count=180 $W x=55.5 y=-21.5 r=0.6"
   # electronics block: Resistors (Coke, Glass, Tin) and Capacitors (Ceramic, Tin)
-  "feed item=coke count=60 $W x=65.5 y=-19.5 r=0.6" "feed item=glass count=30 $W x=65.5 y=-19.5 r=0.6" "feed item=tin-plate count=30 $W x=65.5 y=-19.5 r=0.6"
-  "feed item=ceramic count=30 $W x=72.5 y=-19.5 r=0.6" "feed item=tin-plate count=60 $W x=72.5 y=-19.5 r=0.6" "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
+  # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
+  "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
+  # duralumin plant: Aluminium + Copper into the smelter, Raw coal for D7, upkeep collects Duralumin
+  "feed item=aluminium-plate count=200 $W x=90.5 y=-22.5 r=0.6" "feed item=copper-plate count=100 $W x=90.5 y=-22.5 r=0.6"
+  "feed item=raw-coal count=400 $W x=74.5 y=7 r=2" "upkeep x=85 y=-6 r=17 drills=10 others=10 fuel=raw-coal"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
   "status"

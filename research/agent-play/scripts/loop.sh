@@ -9,7 +9,7 @@ for i in $(seq 1 ${1:-4}); do
   [ $((i % 8)) -eq 4 ] && bash /c/tmp/cf-agent/outpost.sh 130 -437 20 3000
   [ $((i % 4)) -eq 0 ] && bash /c/tmp/cf-agent/outpost.sh 58 -316 12 1500
   [ $((i % 4)) -eq 2 ] && bash /c/tmp/cf-agent/outpost.sh -347 -126 12 800
-  [ $((i % 4)) -eq 2 ] && bash /c/tmp/cf-agent/lead.sh
+  [ $((i % 8)) -eq 6 ] && bash /c/tmp/cf-agent/lead.sh
   [ $((i % 4)) -eq 1 ] && bash /c/tmp/cf-agent/zinc.sh
   [ $((i % 4)) -eq 3 ] && bash /c/tmp/cf-agent/titanium.sh
   [ $i -lt ${1:-4} ] && node a.js wait seconds=${2:-60} max=$(( ${2:-60} + 20 )) > /dev/null
