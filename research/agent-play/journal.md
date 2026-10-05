@@ -104,6 +104,9 @@ from the round script.
 | 19:06–20:00 | quota.js: right after a reset the status line reports seven_day only; that is now read as a fresh window. G4 removed and re-placed for Petri dishes (line 2), G3 got its quartz inserter back. Third Vrauks into the reproduction complex as its module (speed 0.5): Cocoons. Warehouse full again (stone 995 stacks, ash 805, kerogen 716, iron ore 560): drill chests for stone, ore and raw coal marked as input chests (no longer collected), home burners on surplus Coal, 86 more iron chests. |
 | 20:00–21:00 | Rounds keep the creature chamber fed (Bio containers, samples, Petri dishes, codex) and move its Vrauks into the paddock as modules. The genlab had eaten 98 Petri dishes making 49 Moss-gen: its feed stopped. Titanium ran short (20 Bio containers per Vrauks): titanium gets the Calcium carbide before lead, and a second carbide inserter at its Gasifier. The lab belt had stalled the red science cell: its end inserter now takes everything but Iron plate (blacklist, one filter slot). **Paddock at ten Vrauks modules** (2 Vrauks per 320 s). |
 | 21:00–21:12 | The rounds now carry the whole pY1 chain: paddock Vrauks → caged → slaughterhouse → Latex → Stoppers → flask Glassworks → Research center → labs. Copper had run out unnoticed (3 800/h used, 360 made; the 7 500 "in stock" sat in feed chests): duralumin, inductor, battery and PCB copper feeds paused. pY1 research (py-burner) running. |
+| 21:12–22:10 | Wood ran out (4 000/h) and so did limestone: the circuit chains (fiber, treated wood, cellulose for batteries) and the steel foundries, lime and carbide were paused, along with the tin, lead, zinc and titanium outposts. Substrate production resumed (micro mine, cellulose, hand crafting). Raw coal was 16 000/h short: twelve more burner drills on the eastern patch (`designs/coal-drills-east.js`). A one-line `status.sh` for the loop. |
+| 22:10 | **py-burner researched**, the first pY1 technology. Three py-burners now void Ash (3.4/s each) east of the warehouse. |
+| 22:10–23:00 | The pY1 chain runs on rounds alone: about 84 packs made so far; electric mining drill research at two thirds. Remaining tweaks were all about stocks: cellulose sitting in a paused battery cell's chest, coke still fed to idle HPFs. |
 
 ## Lessons
 
@@ -241,3 +244,6 @@ from the round script.
 51. Bootstrapping Vrauks: the chamber's Vrauks went one into the reproduction complex (it then
     runs at 0.5) and the rest into the paddock (0.05 speed per module) until it had ten; after
     that the paddock alone makes 2 Vrauks per 320 s, about 45 pY1 packs an hour downstream.
+52. When a goal is reached, switch off the chains that only served it: paused circuits still ate
+    wood, idle HPFs still ate coke, the chamber's suppliers still ate titanium and carbide. Each
+    feed line in a round is a standing order.

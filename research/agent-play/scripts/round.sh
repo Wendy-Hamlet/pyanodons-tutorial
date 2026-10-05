@@ -29,7 +29,7 @@ ops=(
   "feed item=soil count=100 names=washer x=26 y=-6 r=1" "feed item=coke count=20 names=hpf x=18.5 y=-5.5 r=1"
   "feed item=stone count=60 names=moss-farm-mk01 x=24 y=2 r=8" "feed item=moss count=15 names=moss-farm-mk01 x=24 y=2 r=8"
   # components workshop (bootstrap)
-  "feed item=coke count=100 names=hpf x=5.5 y=-44.5 r=1" "feed item=raw-coal count=400 $W x=12.5 y=-48.5 r=0.6"
+  "feed item=raw-coal count=400 $W x=12.5 y=-48.5 r=0.6"
   "feed item=graphite count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=glass count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=copper-plate count=20 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=iron-plate count=50 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1"
   "feed item=seaweed count=10 names=seaweed-crop-mk01 x=32.5 y=-52.5 r=1" "feed item=seaweed count=20 names=hpf x=19.5 y=-55.5 r=1"
   "feed item=agar count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1" "feed item=empty-petri-dish count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1"
@@ -42,7 +42,7 @@ ops=(
   # east side (methane block, battery cell) is out of reach from home: walk there and back
   "walk x=40 y=-40" "wait jobs=true max=40"
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
-  "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" 
+  
   "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=raw-fiber count=40 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
   # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
   "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
@@ -81,6 +81,7 @@ ops=(
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # ash disposal: three py-burners (3.3 Ash/s each) east of the warehouse
   "feed item=ash count=1000 names=py-burner x=62.5 y=10.5 r=6"
+  # (coke for graphite, CO2 and carbide paused at game 23:00: those chains are idle)
   # flasks and pY1: Stoppers into the flask Glassworks, pY1 packs into the labs
   "feed item=stopper count=8 names=glassworks-mk01 x=0.5 y=-15.5 r=1" "feed item=py-science-pack-1 count=10 names=lab x=35 y=18 r=12" "feed item=automation-science-pack count=10 names=lab x=35 y=18 r=12"
   # science block: Petri dishes to the micro mine, substrate by hand, Flasks + substrate to the
@@ -90,7 +91,7 @@ ops=(
   "feed item=flask count=30 $W x=55.5 y=-21.5 r=0.6" "feed item=fawogae-substrate count=180 $W x=55.5 y=-21.5 r=0.6"
   # electronics block: Resistors (Coke, Glass, Tin) and Capacitors (Ceramic, Tin)
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
-  "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
+  
   # battery cell 2: Stone, Zinc + Copper + Cellulose (taken from cell 1's HPF on the east stop)
   "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6"
   # (wood for fiber, treated wood and cellulose paused at game 21:20: wood ran out, those chains
