@@ -77,7 +77,7 @@ ops=(
   "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
   # duralumin plant: Aluminium + Copper into the smelter, Raw coal for D7, upkeep collects Duralumin
   "feed item=aluminium-plate count=200 $W x=90.5 y=-22.5 r=0.6" "feed item=copper-plate count=100 $W x=90.5 y=-22.5 r=0.6"
-  "feed item=raw-coal count=400 $W x=74.5 y=7 r=2" "upkeep x=85 y=-6 r=17 drills=10 others=10 fuel=raw-coal"
+  "feed item=raw-coal count=400 $W x=74.5 y=7 r=2" "upkeep x=85 y=2 r=22 drills=10 others=10 fuel=raw-coal"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
   "status"
