@@ -101,6 +101,9 @@ from the round script.
 | 18:00–18:40 | Upkeep now leaves Ash below 600 in burner slots (it filled the inventory before the outputs that matter: 79 Aluminium plates sat in a furnace). Biofactory 3 → genlab 2 → **Creature chamber**; Vrauks codex; 10 Petri dishes. The chamber is breeding the first Vrauks; a second one's ingredients are on their way (20 Bio containers, 30 red packs, 6 Petri dishes for Moss-gen). |
 | 18:40–19:00 | **First Vrauks** from the Creature chamber (400 s). Caged it by hand, the slaughterhouse rendered it into 200 Formic acid, Brain, Chitin, Guts, Meat and the Cage back. The Formic acid pipe had been laid to the latex column's south side, which belongs to its Creamy latex box (`boxes` showed the Formic acid box on the east and west only): rerouted. 2 Latex slabs → 2 Latex → 4 Stoppers. G2 removed and re-placed as the Flask glassworks; G3's quartz inserter removed so the quartz reaches line 1 again: 2 Flasks. Ten red-only techs had been available for hours (cellulose, fluid processing machines, scrude, automobilism, lamp, radar...): queued; an ash filter inserter at the end of the lab belt. |
 | 19:00–19:06 | Second Vrauks → 2 more Latex → 4 Stoppers → 2 more Flasks. **First pY1 science packs** (3 Flasks + 18 Fawogae substrate in the Research center → 3 packs). |
+| 19:06–20:00 | quota.js: right after a reset the status line reports seven_day only; that is now read as a fresh window. G4 removed and re-placed for Petri dishes (line 2), G3 got its quartz inserter back. Third Vrauks into the reproduction complex as its module (speed 0.5): Cocoons. Warehouse full again (stone 995 stacks, ash 805, kerogen 716, iron ore 560): drill chests for stone, ore and raw coal marked as input chests (no longer collected), home burners on surplus Coal, 86 more iron chests. |
+| 20:00–21:00 | Rounds keep the creature chamber fed (Bio containers, samples, Petri dishes, codex) and move its Vrauks into the paddock as modules. The genlab had eaten 98 Petri dishes making 49 Moss-gen: its feed stopped. Titanium ran short (20 Bio containers per Vrauks): titanium gets the Calcium carbide before lead, and a second carbide inserter at its Gasifier. The lab belt had stalled the red science cell: its end inserter now takes everything but Iron plate (blacklist, one filter slot). **Paddock at ten Vrauks modules** (2 Vrauks per 320 s). |
+| 21:00–21:20 | The rounds now carry the whole pY1 chain: paddock Vrauks → caged → slaughterhouse → Latex → Stoppers → flask Glassworks → Research center → labs. Copper had run out unnoticed (3 800/h used, 360 made; the 7 500 "in stock" sat in feed chests): duralumin, inductor, battery and PCB copper feeds paused. pY1 research (py-burner) running. |
 
 ## Lessons
 
@@ -233,3 +236,8 @@ from the round script.
 49. Three pY1 packs cost two Vrauks from the chamber here (200 Formic acid each, 100 per Latex
     slab, 2 Latex per 4 Stoppers, 4 Stoppers per 2 Flasks, 3 Flasks per craft). A pY1 tech takes
     50 packs, so the next step is breeding Vrauks (rc-mk01 + paddock with Vrauks as modules).
+50. Count stocks without the feed chests: an item "in stock" that sits in input chests is already
+    spoken for. Copper read 7 500 while the warehouse had none.
+51. Bootstrapping Vrauks: the chamber's Vrauks went one into the reproduction complex (it then
+    runs at 0.5) and the rest into the paddock (0.05 speed per module) until it had ten; after
+    that the paddock alone makes 2 Vrauks per 320 s, about 45 pY1 packs an hour downstream.
