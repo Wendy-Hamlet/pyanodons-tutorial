@@ -468,4 +468,33 @@ function observe.proto(a)
   return out
 end
 
+
+-- The fluid boxes of the entity at x/y as the engine sees them: for each storage its recipe
+-- filter, what it holds, and every pipe connection (the tile it faces and what is there).
+-- Read this before piping a machine: box numbers in the prototype do not say which fluid of a
+-- recipe goes where, the filters do (a machine needs its recipe set first).
+function observe.boxes(a)
+  local e = surface().find_entities_filtered { position = { a.x, a.y }, force = "player", limit = 1 }[1]
+    or error("no entity at " .. a.x .. "," .. a.y)
+  local out = { name = e.name, direction = e.direction, recipe = e.get_recipe and e.type ~= "pipe" and e.get_recipe() and e.get_recipe().name or nil, boxes = {} }
+  for i = 1, e.fluids_count do
+    local box = { }
+    local ok, filt = pcall(e.get_fluid_filter, i)
+    box.filter = ok and filt and filt.fluid and (type(filt.fluid) == "string" and filt.fluid or filt.fluid.name) or nil
+    local fl = e.get_fluid(i)
+    box.holds = fl and (fl.name .. " " .. math.floor(fl.amount)) or nil
+    local ok2, cons = pcall(e.get_fluid_box_pipe_connections, i)
+    if ok2 then
+      box.connections = {}
+      for _, c in pairs(cons) do
+        local t = c.target
+        table.insert(box.connections, string.format("%s %.1f,%.1f -> %.1f,%.1f %s", c.flow_direction, c.position.x, c.position.y,
+          c.target_position.x, c.target_position.y, t and t.valid and t.name or "-"))
+      end
+    end
+    out.boxes[i] = box
+  end
+  return out
+end
+
 return observe

@@ -48,7 +48,9 @@ Reading: `status` (time, position, inventory, crafting queue, research, jobs, ev
 last status), `inv`, `look x= y= w= h=` (ASCII map with legend), `scan r=` (resource patches,
 rocks, trees), `entities x= y= r= name= type=`, `factory` (every machine by status, problem
 positions), `prod window=ten_minutes fluids=true`, `recipe name=|product=|ingredient=`,
-`tech [name=]`, `proto name=`.
+`tech [name=]`, `proto name=`, `boxes x= y=` (each fluid box of a machine: the recipe's filter,
+what it holds, every pipe connection and what it faces; read it before piping a machine, box
+numbers alone do not say which fluid goes where).
 
 Acting: `place name= x= y= dir=N|E|S|W recipe=`, `ghost name= x= y= ...` or `ghost list=[...]
 ox= oy=`, `blueprint string= x= y=`, `build_ghosts r=`, `clear x= y= w= h=`, `remove x= y=`,
