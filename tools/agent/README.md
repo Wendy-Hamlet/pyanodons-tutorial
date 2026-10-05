@@ -70,8 +70,10 @@ Events (research finished, jobs done, entities destroyed) also go to
 
 ## Rate limits
 
-`D:\factorio-explore\.claude\settings.local.json` sets `statusline.js` as Claude Code's status line
-(refreshed every 60 s). Claude Code passes it the plan's `rate_limits` (5-hour and 7-day
+`statusline.js` is Claude Code's status line in every session: a copy at
+`C:\tools\claude-statusline\statusline.js` is set in `%USERPROFILE%\.claude\settings.json` (refreshed
+every 60 s; copy the file there again after editing it). It shows the 5-hour and 7-day use and the
+context fill. Claude Code passes it the plan's `rate_limits` (5-hour and 7-day
 `used_percentage` and `resets_at`, refreshed after every API response); it writes them to
 `C:\tmp\cf-agent\quota.json`.
 

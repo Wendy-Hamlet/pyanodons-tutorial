@@ -177,9 +177,11 @@ from the round script.
     Water west, CO2 south), checked by piping Water to box 1 first.
 27. **A fuel slot holding another fuel refuses yours.** The outposts ran on Kerogen until it ran
     out, then starved with Raw coal in my hand; upkeep now swaps the old fuel out.
-28. Ash piles up: after ten hours the warehouse held 343 000 of it. Voiding it needs a py-burner
-    (titanium); until then, plan chests for waste. And `take all=true` on a burner machine also
-    takes its fuel.
+28. Ash piles up: after ten hours the warehouse held 343 000 of it. I thought voiding it needed a
+    py-burner (a pY1 technology) and kept it in chests for eighteen hours. **Wrong** (pointed out
+    by the author): Ash separation, a red technology I had researched at 3:56, lets a Solid
+    separator MK 01 turn 10 Ash/s into Coal dust, Soot and Iron oxide. And `take all=true` on a
+    burner machine also takes its fuel.
 29. Check every product's form before building: the Gasifier's Slacked lime is a liquid, the
     Tar distillation's Rich clay an item that fills its output after 51 runs. Each needs its exit
     (sinkhole, gas vent, inserter).
@@ -248,3 +250,9 @@ from the round script.
 52. When a goal is reached, switch off the chains that only served it: paused circuits still ate
     wood, idle HPFs still ate coke, the chamber's suppliers still ate titanium and carbide. Each
     feed line in a round is a standing order.
+53. **The author's advice for the next game** (2026-10-05, after the
+    [comparison](save-comparison.md)): play with a long-term goal and short-term goals; the early
+    long-term goals are red science, Simple circuit boards and pY1. Do not rush research: turn each
+    unlocked technology into one finished black box before chasing the next; labs standing idle
+    for a long time are normal. This replaces the "keep the research queue full" parts of lessons
+    14 and 48. Get rid of Ash with Ash separation (see lesson 28).

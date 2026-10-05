@@ -60,10 +60,10 @@ statistics (Wood, belts and buildings read 0 there); those rows cannot be compar
 **The author built wide.** Many machines per product (35 iron furnaces, 20 Soil extractors, 20
 Sap extractors, 38 Moondrop greenhouses, 8 Fastwood forestries), a four-belt spine and 10,800
 belts. Raw material throughput is 1.8 to 3.5 times mine, and most drills stand on "waiting for
-space": mining is ahead of use, so a busy chain does not starve the others. The weak spots, from
-the first-save review: the inventory was the mall's supply line, 350,000 Ash sat in 68 chests,
-the labs had nothing queued when the game was saved, and the creature line had not started
-(Biotech, Genetics and Land animals were available, not researched).
+space": mining is ahead of use, so a busy chain does not starve the others. Ash goes through 11
+Solid separators (Ash separation). Its weak spot, from the first-save review: the inventory was
+the mall's supply line. The creature line had not started yet (Biotech, Genetics and Land animals
+were available).
 
 **I built a path.** One machine per step, chosen backwards from pY1: circuits at 12:20, the
 Creature chamber at 18:40, the first Vrauks at 18:50, pY1 packs at 19:06. Everything not on a
@@ -75,8 +75,8 @@ game had not reached at 27, but:
   38 %, Aluminium 28 %, Moondrop 21 %); only red science, Native flora and titanium are ahead;
 - every shortage cascaded: copper, Wood, limestone, titanium, Raw coal each stopped something
   far away, and most fixes paused feeds in the round instead of adding producers;
-- eight labs stood idle for twelve hours because I did not re-check which technologies had
-  become available;
+- I researched technologies faster than I used them: Ash separation was done at 3:56, yet Ash
+  went into chests for eighteen hours, waiting for py-burner;
 - the factory is not a black box: it stops the moment the rounds stop.
 
 ## 4. What each game shows the other
@@ -89,7 +89,6 @@ For the author's next game, from mine:
   duralumin smelter come early.
 - **Glass is fuel.** About 56 MJ of fluid fuel per Glass; Coal gas through a Gasifier becomes
   Syngas at twice the energy per unit (and some Tar).
-- **py-burner**, the first pY1 technology, voids Ash: 3.4 per second each.
 - The red science cell fed by Flora collectors on a belt made three times the packs per hour.
 
 For me, from the author's game:
@@ -101,10 +100,20 @@ For me, from the author's game:
   700 tiles away.
 - **Overbuild the basics**: 20 Soil extractors kept the author in limestone; my three ran short at
   21:40 and stalled the latex step, the narrowest part of the pY1 chain.
+- **Ash separation** disposes of Ash from the red-science age on: a Solid separator MK 01 takes
+  10 Ash per second (three py-burners together take 10).
 
-## 5. My techniques and lessons
+## 5. The author's advice for the next game
 
-The 52 numbered lessons are in the [journal](journal.md#lessons); grouped:
+- Play with a long-term goal and short-term goals. The early long-term goals are three: red
+  science, Simple circuit boards, pY1.
+- Do not rush research. Each unlocked technology becomes one finished black box before the next
+  is chased; labs standing idle for a long time are normal.
+- Get rid of Ash with Ash separation.
+
+## 6. My techniques and lessons
+
+The 53 numbered lessons are in the [journal](journal.md#lessons); grouped:
 
 1. **How the agent played.** One RCON batch per round worked well: walk, `stash_all`, `upkeep`
    (empty outputs, top up fuel, swap a blocking fuel out), `restock`, feeds. Designs as ghost lists
@@ -125,8 +134,8 @@ The 52 numbered lessons are in the [journal](journal.md#lessons); grouped:
    first Vrauks only comes from the Creature chamber; three pY1 packs cost two Vrauks at first, a
    paddock with ten Vrauks makes about 45 packs an hour downstream. Moondrop farms keep a loop only
    when no consumer takes more than the surplus.
-5. **Management.** Keep the research queue full and re-check available technologies whenever a
-   building unlocks recipes; count stocks without feed chests; carry to an outpost what it burns;
+5. **Management.** Use what is researched before researching more (see section 5); count stocks
+   without feed chests; carry to an outpost what it burns;
    switch off chains that served a finished goal (paused circuits still ate Wood, idle HPFs still
    ate Coke).
 

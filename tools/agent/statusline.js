@@ -1,7 +1,8 @@
 // Claude Code status line command: keeps the plan's rate limits where tools can read them.
 // Claude Code pipes session data (JSON) to this script after each update; the script saves
 // rate_limits, prompt_cache and context_window to quota.json and prints a short status line.
-// Configured in D:\factorio-explore\.claude\settings.local.json ("statusLine").
+// Installed for every Claude Code session: a copy at C:\tools\claude-statusline\statusline.js is
+// the "statusLine" of %USERPROFILE%\.claude\settings.json. After editing this file, copy it there.
 const fs = require('fs');
 const path = require('path');
 
