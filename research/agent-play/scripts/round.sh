@@ -47,7 +47,7 @@ ops=(
   # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
   "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
   "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" 
-  "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
+  # (cellulose HPF limestone paused at game 21:50: 300 cellulose in stock, limestone short)
   # chipshooter: all seven circuit ingredients into one chest; solder and inductors crafted by hand
   "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
   "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
@@ -76,7 +76,7 @@ ops=(
   # latex block (reachable from the east stop): washer, alginate HPF, Boiler fuel
   "walk x=40 y=-40" "wait jobs=true max=40"
   "feed item=limestone count=60 $W x=117.5 y=-47.5 r=0.6" "feed item=saps count=60 $W x=117.5 y=-47.5 r=0.6"
-  "feed item=stone count=50 $W x=105.5 y=-43.5 r=0.6" "feed item=limestone count=40 $W x=105.5 y=-43.5 r=0.6" "feed item=seaweed count=50 $W x=105.5 y=-43.5 r=0.6"
+  "feed item=stone count=50 $W x=105.5 y=-43.5 r=0.6" "feed item=limestone count=80 $W x=105.5 y=-43.5 r=0.6" "feed item=seaweed count=50 $W x=105.5 y=-43.5 r=0.6"
   "feed item=raw-coal count=300 $W x=126.5 y=-41.5 r=0.6"
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # flasks and pY1: Stoppers into the flask Glassworks, pY1 packs into the labs
@@ -90,7 +90,7 @@ ops=(
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
   "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
   # battery cell 2: Stone, Zinc + Copper + Cellulose (taken from cell 1's HPF on the east stop)
-  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=limestone count=120 $W x=108.5 y=-22.5 r=0.6"
+  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6"
   # (wood for fiber, treated wood and cellulose paused at game 21:20: wood ran out, those chains
   # only fed circuits, which wait for copper anyway)
   # (copper-hungry feeds paused at game 21:10, copper ran out: duralumin, inductors, batteries,
