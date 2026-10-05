@@ -47,7 +47,7 @@ ops=(
   # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
   "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
   "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" 
-  # (cellulose HPF limestone paused at game 21:50: 300 cellulose in stock, limestone short)
+  "feed item=limestone count=80 $W x=99.5 y=-53.5 r=0.6"  # cellulose for substrate (resumed at game 22:15)
   # chipshooter: all seven circuit ingredients into one chest; solder and inductors crafted by hand
   "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
   "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
