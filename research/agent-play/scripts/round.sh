@@ -79,6 +79,8 @@ ops=(
   "feed item=stone count=50 $W x=105.5 y=-43.5 r=0.6" "feed item=limestone count=80 $W x=105.5 y=-43.5 r=0.6" "feed item=seaweed count=50 $W x=105.5 y=-43.5 r=0.6"
   "feed item=raw-coal count=300 $W x=126.5 y=-41.5 r=0.6"
   "walk x=-30 y=-10" "wait jobs=true max=40"
+  # ash disposal: three py-burners (3.3 Ash/s each) east of the warehouse
+  "feed item=ash count=1000 names=py-burner x=62.5 y=10.5 r=6"
   # flasks and pY1: Stoppers into the flask Glassworks, pY1 packs into the labs
   "feed item=stopper count=8 names=glassworks-mk01 x=0.5 y=-15.5 r=1" "feed item=py-science-pack-1 count=10 names=lab x=35 y=18 r=12" "feed item=automation-science-pack count=10 names=lab x=35 y=18 r=12"
   # science block: Petri dishes to the micro mine, substrate by hand, Flasks + substrate to the
