@@ -5,5 +5,6 @@
 const { Layout } = require('../layout');
 const g = new Layout();
 for (const y of [5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5]) for (let x = 30.5; x <= 41.5; x++) g.add('iron-chest', x, y);  // rows 7.5/8.5 added at game 18:00, 9.5-12.5 at 19:20
+for (const y of [5.5, 6.5, 7.5, 8.5]) for (let x = 44.5; x <= 55.5; x++) g.add('iron-chest', x, y);  // added at game 20:30
 // py-burners for Ash need research (recipe locked), so for now the chests take the Ash too.
 console.log(JSON.stringify(g.write(process.argv[2] || 'C:/tmp/cf-agent/storage2.json')));
