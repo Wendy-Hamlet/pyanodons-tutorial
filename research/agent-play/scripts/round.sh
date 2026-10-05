@@ -97,7 +97,7 @@ ops=(
   # methanal and PCB copper)
   # duralumin plant: Aluminium + Copper into the smelter, Raw coal for D7, upkeep collects Duralumin
   
-  "feed item=raw-coal count=400 $W x=74.5 y=7 r=2" "upkeep x=85 y=2 r=22 drills=10 others=10 fuel=raw-coal"
+  "upkeep x=85 y=2 r=22 drills=10 others=10 fuel=raw-coal"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
   "status"
