@@ -7,7 +7,7 @@
 //   HPF-M (methanal, Copper plate) east of GH2, Pulp mill (formica), WPU (raw fiber), PCB factory
 //   with its own Vacuum pump.
 // Item loop: GH1 -> A -> N2; N2 -> B -> GH1 (seeds), N2 -> C -> GH2 (seeds); returned Moondrop
-// N2 -> D (filter) -> 2-tile belt -> E -> N2. Greenhouses need Moondrop modules (speed +1 each).
+// N2 -> D (filter) -> chest. Greenhouses need Moondrop modules (speed +1 each).
 const { Layout } = require('../layout');
 const g = new Layout();
 const ins = 'burner-inserter';
@@ -18,9 +18,11 @@ g.add('pipe', 47.5, -64.5); g.add('offshore-pump', 47.5, -63.5, 'S');
 g.add(ins, 52.5, -59.5, 'N');                       // A: GH1 -> N2
 g.add(ins, 50.5, -59.5, 'S');                       // B: N2 -> GH1
 g.add('botanical-nursery', 52.5, -55.5, 'N', 'moondrop-seeds');
-g.add(ins, 56.5, -57.5, 'W', null, { filters: ['moondrop'] }); // D: N2 -> belt
-g.path(57.5, -57.5, 'S2');
-g.add(ins, 56.5, -56.5, 'E');                       // E: belt -> N2
+// D takes the returned Moondrop into a chest. (It used to put them on a two-tile belt with an
+// inserter E feeding them back into N2: that deadlocked at game 16:50, N2 "output full" with 4
+// Moondrop D could not place, the belt full because N2 refused input while its output was full.)
+g.add(ins, 56.5, -57.5, 'W', null, { filters: ['moondrop'] }); // D: N2 -> chest
+g.add('wooden-chest', 57.5, -57.5);
 g.add(ins, 52.5, -51.5, 'N');                       // C: N2 -> GH2
 g.add(GH, 52.5, -46.5, 'N', 'methane-co2');
 g.add('pipe', 47.5, -46.5); g.add('offshore-pump', 47.5, -45.5, 'S');
@@ -34,7 +36,9 @@ g.add('pulp-mill-mk01', 68.5, -47.5, 'E', 'formica'); // input #1 faces west
 g.add(ins, 68.5, -50.5, 'N'); g.add('wooden-chest', 68.5, -51.5);      // treated wood, saps
 g.add('wpu-mk01', 75, -48, 'N', 'fiber-01');
 g.add(ins, 75.5, -51.5, 'N'); g.add('wooden-chest', 75.5, -52.5);      // wood
-g.add(ins, 71.5, -47.5, 'E');                       // raw fiber WPU -> pulp mill
+// The WPU puts its Raw fiber out through a drop position below its south edge (74.5,-44.7), not
+// into its output slot: a chest there catches it and the rounds carry it to the pulp mill chest.
+g.add('wooden-chest', 74.5, -44.5);
 g.add(ins, 68.5, -44.5, 'N');                       // formica pulp mill -> PCB
 g.add('pcb-factory-mk01', 68.5, -40.5, 'N', 'pcb1');
 g.add(ins, 72.5, -40.5, 'E'); g.add('wooden-chest', 73.5, -40.5);      // copper
