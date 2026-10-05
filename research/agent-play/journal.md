@@ -186,3 +186,12 @@ from the round script.
     its inputs (the carbide HPF made 2.5/s).
 37. Wood runs out near the base: Logs only come from trees; Treated wood makes poles too
     (`small-electric-pole-2`).
+38. **Never switch the recipe of a machine whose spare input box touches a shared network.** It
+    happened twice with the Glassworks: on a recipe change the engine moves the old recipe's
+    leftover fluid into another unfiltered box of the same machine, here the one connected to
+    the Tar fuel pipes, and one pond plus 20 pipes were locked to Molten glass. The only cure is
+    to remove and re-place every pipe, pond and machine on that network
+    (`designs/glass-fuel-rebuild.js`). Give each recipe its own machine.
+39. Py creature buildings (reproduction complex, Vrauks paddock) have a base speed effect of
+    -100 %: they do nothing until a creature module is inserted, and the first Vrauks can only
+    come from the Creature chamber (genlab, plastic, duralumin, data array, bio samples).
