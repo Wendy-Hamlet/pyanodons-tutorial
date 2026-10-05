@@ -52,7 +52,7 @@ ops=(
   "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
   "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
   "feed item=inductor1 count=30 $W x=81.5 y=-44.5 r=0.6"
-  "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal" "take x=94.5 y=-53.5 item=cellulose count=15" "feed item=wood count=150 $W x=99.5 y=-53.5 r=0.6"
+  "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal" "take x=94.5 y=-53.5 item=cellulose count=50" "feed item=wood count=150 $W x=99.5 y=-53.5 r=0.6"
   # vrauk area: empty Barrels back to the Barrel machine, Water barrels, Flora, Saps and Moss to
   # rc-mk01 and the paddock; the rc's Barrels are taken by hand (its output inserter only takes Cocoons)
   "upkeep x=120 y=-55 r=26 drills=10 others=10 fuel=raw-coal" "take x=113 y=-62 item=barrel"
@@ -86,7 +86,7 @@ ops=(
   # science block: Petri dishes to the micro mine, substrate by hand, Flasks + substrate to the
   # research center (Cellulose is taken from the battery cell's HPF during the east stop)
   # substrate (resumed at game 21:30): Petri dishes to the micro mine, substrate crafted by hand
-  "feed item=petri-dish count=10 $W x=45.5 y=-20.5 r=0.6" "craft recipe=fawogae-substrate count=3"
+  "feed item=petri-dish count=10 $W x=45.5 y=-20.5 r=0.6" "craft recipe=fawogae-substrate count=6"
   "feed item=flask count=30 $W x=55.5 y=-21.5 r=0.6" "feed item=fawogae-substrate count=180 $W x=55.5 y=-21.5 r=0.6"
   # electronics block: Resistors (Coke, Glass, Tin) and Capacitors (Ceramic, Tin)
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
