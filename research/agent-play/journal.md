@@ -97,6 +97,8 @@ from the round script.
 | 16:10–16:40 | Duralumin smelter: it burns fluid fuel too (10 MW through one box), so it got its own Syngas plant (a Distillation column + Gasifier, `designs/duralumin.js`). New `boxes` op: each fluid box's recipe filter and connections, read before piping. Tar distiller D8 under D7 and a plastic Biofactory (`designs/plastic.js`): Aromatics + Syngas, 56 Plastic. |
 | 16:40–17:00 | Creature block (`designs/creature.js`): Incubator → Data array made two Earth samples (Bio containers, Native flora, red packs taken off the lab belt into a new chest). Slaughterhouse placed. Power: 16 machines on low power, so power station 2 on the eastern Raw coal patch (`designs/power-station-2.js`, a shifted copy of the first, with a 20-pole line). |
 | 17:00–17:15 | Jams everywhere: the Moondrop return belt deadlocked the seed nursery (now a chest); the WPU drops Raw fiber through an output position, not its output slot (now a chest); every round crafted 24 Lead into Solder that was not needed; the warehouse was full again (48 iron chests now); three of four Distillation columns stood on full outputs (D2's single input and output inserters, D3's chest left behind by full-inventory upkeeps). |
+| 17:15–18:00 | Stone for the battery Washer went into brick furnaces (27 000 bricks in stock): stopped. Second battery cell with its own Cellulose HPF (`designs/battery-cell-2.js`): one Washer gives one Battery per 100 s. D3 got three output inserters. Glassworks G2 removed and re-placed as an Empty petri dish maker (removing a machine empties it, so no recipe switch). Genlab 1 made three Moss-gen. |
+| 18:00–18:40 | Upkeep now leaves Ash below 600 in burner slots (it filled the inventory before the outputs that matter: 79 Aluminium plates sat in a furnace). Biofactory 3 → genlab 2 → **Creature chamber**; Vrauks codex; 10 Petri dishes. The chamber is breeding the first Vrauks; a second one's ingredients are on their way (20 Bio containers, 30 red packs, 6 Petri dishes for Moss-gen). |
 
 ## Lessons
 
@@ -219,3 +221,8 @@ from the round script.
     "output full": it stops accepting input, so the returned items have nowhere to go.
 46. Every machine with more than one solid output needs one output inserter per 0.8 items/s it
     makes, counted over all products (D2: 6 Coke + 1 Iron oxide per 3 s needs three).
+47. Py's chain to the first Vrauks, as built here: Creature chamber = genlab (2 py-tank-3000 +
+    a Biofactory + plastic + duralumin) + 30 circuits + plastic + duralumin + titanium; each
+    Vrauks = 2 Earth samples (Data array: 15 red packs + 10 Bio samples from the Incubator, each
+    a Bio container with 2 Titanium) + 3 Moss-gen (genlab) + a codex + 10 Petri dishes, 400 s.
+    Every building in it burns or eats something that another chain was already short of.
