@@ -54,8 +54,11 @@ ops=(
   # vrauk area: empty Barrels back to the Barrel machine, Water barrels, Flora, Saps and Moss to
   # rc-mk01 and the paddock; the rc's Barrels are taken by hand (its output inserter only takes Cocoons)
   "upkeep x=120 y=-55 r=26 drills=10 others=10 fuel=raw-coal" "take x=113 y=-62 item=barrel"
-  # glass line 2: Raw coal for D6, upkeep collects the Glass
+  # far east stop: glass line 2 (Raw coal for D6, Glass), power station 2 (Ash), creature block
+  "walk x=150 y=-10" "wait jobs=true max=40"
   "upkeep x=150 y=-42 r=14 drills=10 others=10 fuel=raw-coal" "feed item=raw-coal count=500 $W x=145 y=-52.5 r=2"
+  "upkeep x=240 y=0 r=16 drills=30 others=30 fuel=raw-coal" "upkeep x=110 y=5 r=14 drills=10 others=10 fuel=raw-coal"
+  "walk x=40 y=-40" "wait jobs=true max=40"
   "feed item=barrel count=20 $W x=106.5 y=-44.5 r=0.6"
   "feed item=water-barrel count=12 $W x=113.5 y=-74.5 r=0.6" "feed item=native-flora count=30 $W x=113.5 y=-74.5 r=0.6" "feed item=saps count=20 $W x=113.5 y=-74.5 r=0.6" "feed item=moss count=40 $W x=113.5 y=-74.5 r=0.6"
   "feed item=water-barrel count=9 $W x=133.5 y=-70.5 r=0.6" "feed item=native-flora count=45 $W x=133.5 y=-70.5 r=0.6" "feed item=moss count=15 $W x=133.5 y=-70.5 r=0.6"
