@@ -8,7 +8,7 @@ for i in $(seq 1 ${1:-4}); do
   echo "$out" | grep -E "error|time:|research:|finished|free_slots" | tr -s ' ' | tr '\n' ' '; echo
   # iron outpost paused at game 19:30: 30 000 iron plates in stock
   # [ $((i % 8)) -eq 4 ] && bash /c/tmp/cf-agent/outpost.sh 130 -437 20 3000
-  [ $((i % 8)) -eq 0 ] && bash /c/tmp/cf-agent/outpost.sh 58 -316 12 1500
+  [ $((i % 4)) -eq 0 ] && bash /c/tmp/cf-agent/outpost.sh 58 -316 12 1500
   [ $((i % 8)) -eq 2 ] && bash /c/tmp/cf-agent/outpost.sh -347 -126 12 800
   [ $((i % 8)) -eq 6 ] && bash /c/tmp/cf-agent/lead.sh
   [ $((i % 4)) -eq 1 ] && bash /c/tmp/cf-agent/zinc.sh

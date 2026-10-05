@@ -14,7 +14,7 @@ ops=(
   "fuel item=raw-coal count=50 names=boiler r=160" "fuel item=raw-coal count=10 r=160"
   "feed item=kerogen count=800 $W x=-30 y=12.5 r=1" "feed item=kerogen count=800 $W x=-47 y=3.5 r=1"
   # wood (brick furnaces no longer fed: 27 000 bricks in stock)
-  "craft recipe=log-wood count=20" "craft recipe=inductor1-2 count=20"
+  "craft recipe=log-wood count=20"
   # red science cell ports (Native flora and half the Soil arrive by belt)
   "feed item=stone-brick count=500 $W x=12.5 y=12 r=2.6" "feed item=wood count=400 $W x=9.5 y=12.5 r=0.6"
   "feed item=soil count=800 $W x=17.5 y=10.5 r=0.6" "feed item=ash count=2000 $W x=15.5 y=13.5 r=1.1"
@@ -43,11 +43,11 @@ ops=(
   # east side (methane block, battery cell) is out of reach from home: walk there and back
   "walk x=40 y=-40" "wait jobs=true max=40"
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
-  "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" "feed item=copper-plate count=150 $W x=61.5 y=-51.5 r=0.6" "feed item=copper-plate count=150 $W x=73.5 y=-40.5 r=0.6"
+  "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" 
   "feed item=wood count=200 $W x=75.5 y=-52.5 r=0.6" "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=raw-fiber count=40 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
   # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
   "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
-  "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" "feed item=copper-plate count=100 $W x=85.5 y=-55.5 r=0.6"
+  "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" 
   "feed item=wood count=200 $W x=99.5 y=-53.5 r=0.6" "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
   # chipshooter: all seven circuit ingredients into one chest; solder and inductors crafted by hand
   "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
@@ -91,9 +91,11 @@ ops=(
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
   "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
   # battery cell 2: Stone, Zinc + Copper + Cellulose (taken from cell 1's HPF on the east stop)
-  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=copper-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=wood count=200 $W x=108.5 y=-22.5 r=0.6" "feed item=limestone count=120 $W x=108.5 y=-22.5 r=0.6"
+  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=wood count=200 $W x=108.5 y=-22.5 r=0.6" "feed item=limestone count=120 $W x=108.5 y=-22.5 r=0.6"
+  # (copper-hungry feeds paused at game 21:10, copper ran out: duralumin, inductors, batteries,
+  # methanal and PCB copper)
   # duralumin plant: Aluminium + Copper into the smelter, Raw coal for D7, upkeep collects Duralumin
-  "feed item=aluminium-plate count=200 $W x=90.5 y=-22.5 r=0.6" "feed item=copper-plate count=100 $W x=90.5 y=-22.5 r=0.6"
+  
   "feed item=raw-coal count=400 $W x=74.5 y=7 r=2" "upkeep x=85 y=2 r=22 drills=10 others=10 fuel=raw-coal"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
