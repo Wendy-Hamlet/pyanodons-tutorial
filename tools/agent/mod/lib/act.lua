@@ -370,8 +370,8 @@ function act.stash_all(a)
   return { stored = stored, free_slots = c.get_main_inventory().count_empty_stacks() }
 end
 
--- The other direction: every item of `keep` that is below half its amount in the inventory is
--- taken back from the `chests` up to that amount.
+-- The other direction: every item of `keep` that is below three quarters of its amount in the
+-- inventory is taken back from the `chests` up to that amount.
 function act.restock(a)
   local c = need_char()
   local chests = {}
@@ -382,7 +382,7 @@ function act.restock(a)
   for item, amount in pairs(a.keep or {}) do
     if prototypes.item[item] then
       local want = amount - c.get_item_count(item)
-      if want > amount / 2 then
+      if want > amount / 4 then
         for _, ch in pairs(chests) do
           if want <= 0 then break end
           local inv = ch.get_inventory(defines.inventory.chest)

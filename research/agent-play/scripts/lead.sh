@@ -1,6 +1,6 @@
 #!/bin/bash
-# Lead outpost visit: bring Calcium carbide and Raw coal, collect plates and Slaked lime,
-# refuel, top up the carbide, drill fuel and Boiler chests, come back.
+# Lead outpost visit: bring Calcium carbide and Raw coal, collect plates, refuel, top up the
+# carbide, drill fuel and Boiler chests, come back.
 cd /d/factorio-explore/py-tutorial/tools/agent
 node a.js stash_all @C:/tmp/cf-agent/stash.json + restock @C:/tmp/cf-agent/stash.json keep='{"raw-coal":1500,"calcium-carbide":800}' \
   + walk x=-452 y=-410 + wait jobs=true max=120 \

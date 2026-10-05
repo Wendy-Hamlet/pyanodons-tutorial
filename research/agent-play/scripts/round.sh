@@ -5,12 +5,12 @@ node quota.js guard >/dev/null || { node quota.js; exit 2; }
 P=${1:-50}
 W="names=wooden-chest"
 ops=(
-  "upkeep @C:/tmp/cf-agent/upkeep.json" "restock @C:/tmp/cf-agent/stash.json"
+  "stash_all @C:/tmp/cf-agent/stash.json" "upkeep @C:/tmp/cf-agent/upkeep.json" "restock @C:/tmp/cf-agent/stash.json"
   # power
   "fuel item=raw-coal count=50 names=boiler r=160" "fuel item=raw-coal count=10 r=160"
   "feed item=kerogen count=800 $W x=-30 y=12.5 r=1" "feed item=kerogen count=800 $W x=-47 y=3.5 r=1"
   # bricks, wood
-  "feed item=stone count=50 names=stone-furnace x=-35 y=-8 r=6" "craft recipe=log-wood count=5"
+  "feed item=stone count=50 names=stone-furnace x=-35 y=-8 r=6" "craft recipe=log-wood count=5" "craft recipe=solder-0 count=6" "craft recipe=inductor1-2 count=20"
   # red science cell ports (Native flora and half the Soil arrive by belt)
   "feed item=stone-brick count=500 $W x=12.5 y=12 r=2.6" "feed item=wood count=400 $W x=9.5 y=12.5 r=0.6"
   "feed item=soil count=800 $W x=17.5 y=10.5 r=0.6" "feed item=ash count=2000 $W x=15.5 y=13.5 r=1.1"
@@ -20,8 +20,8 @@ ops=(
   "insert x=-0.5 y=-4.5 item=iron-plate count=$P" "insert x=10.5 y=-11.5 item=iron-plate count=$P" "insert x=10.5 y=2.5 item=copper-plate count=$P"
   # coal block, steel, aluminium
   "feed item=coal count=100 names=distilator x=-18 y=-11 r=1" "feed item=raw-coal count=100 names=distilator x=-46 y=56 r=1"
-  "feed item=coke count=30 names=advanced-foundry-mk01 x=-48 y=-8 r=1" "feed item=limestone count=30 names=advanced-foundry-mk01 x=-48 y=-8 r=1"
-  "feed item=iron-ore count=100 names=advanced-foundry-mk01 x=-48 y=-8 r=1"
+  "feed item=coke count=50 names=advanced-foundry-mk01 x=-48 y=-8 r=1" "feed item=limestone count=50 names=advanced-foundry-mk01 x=-48 y=-8 r=1"
+  "feed item=iron-ore count=200 names=advanced-foundry-mk01 x=-48 y=-8 r=1"
   # moss block
   "feed item=soil count=100 names=washer x=26 y=-6 r=1" "feed item=coke count=20 names=hpf x=18.5 y=-5.5 r=1"
   "feed item=stone count=60 names=moss-farm-mk01 x=24 y=2 r=8" "feed item=moss count=15 names=moss-farm-mk01 x=24 y=2 r=8"
@@ -31,7 +31,7 @@ ops=(
   "feed item=seaweed count=10 names=seaweed-crop-mk01 x=32.5 y=-52.5 r=1" "feed item=seaweed count=50 names=hpf x=19.5 y=-55.5 r=1"
   "feed item=agar count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1" "feed item=empty-petri-dish count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1"
   "feed item=moondrop-codex count=2 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=petri-dish count=4 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=planter-box count=2 names=botanical-nursery x=33.5 y=-38.5 r=1"
-  "take x=52.5 y=-55.5 item=moondrop count=3 all=true" "feed item=moondrop count=16 names=moondrop-greenhouse-mk01 x=52.5 y=-55.5 r=12"
+  "feed item=moondrop count=16 names=moondrop-greenhouse-mk01 x=52.5 y=-64.5 r=1"
   "feed item=sap-tree count=2 names=sap-extractor-mk01 x=5 y=-34.5 r=10"
   # tar refinery (pond 2): wood for treated wood, Raw coal for its Boiler
   "feed item=wood count=100 names=tar-processing-unit x=-17.5 y=71.5 r=1" "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
@@ -45,6 +45,10 @@ ops=(
   "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
   "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" "feed item=copper-plate count=100 $W x=85.5 y=-55.5 r=0.6"
   "feed item=wood count=200 $W x=99.5 y=-53.5 r=0.6" "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
+  # chipshooter: all seven circuit ingredients into one chest; solder and inductors crafted by hand
+  "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
+  "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
+  "feed item=inductor1 count=30 $W x=81.5 y=-44.5 r=0.6"
   "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal"
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # creosote: Wood for TPU 4 (pond A)

@@ -8,4 +8,5 @@ g.add('py-gas-vent', 1.5, -52.5, 'N');
 g.add('burner-inserter', 5.5, -48.5, 'N');                // Lime HPF-L -> HPF2
 g.add('burner-inserter', 5.5, -56.5, 'N'); g.add('wooden-chest', 5.5, -57.5);
 g.add('small-electric-pole', 1.5, -49.5);
+g.add('burner-inserter', 9.5, -43.5, 'W'); g.add('wooden-chest', 10.5, -43.5);  // carbide out of HPF2
 console.log(JSON.stringify(g.write(process.argv[2] || 'C:/tmp/cf-agent/carbide.json')));
