@@ -49,7 +49,7 @@ for (const x of [26.5, 32.5, 38.5, 44.5]) {
 }
 // Ash also reaches this belt and would block its end: a filter inserter takes it, and the packs
 // the labs leave, into a chest (the data array needs red packs too).
-g.add(ins, 47.5, 18.5, 'W', null, { filters: ['ash', 'automation-science-pack'] }); g.add('wooden-chest', 48.5, 18.5);
+g.add(ins, 47.5, 18.5, 'W', null, { filters: ['iron-plate'], filter_mode: 'blacklist' });  // one filter slot: blacklist g.add('wooden-chest', 48.5, 18.5);
 for (const [x, y] of [[24.5, 10.5], [29.5, 14.5], [29.5, 17.5], [29.5, 22.5], [35.5, 14.5], [35.5, 22.5], [41.5, 14.5], [41.5, 22.5]]) {
   g.add('small-electric-pole', x, y);
 }
