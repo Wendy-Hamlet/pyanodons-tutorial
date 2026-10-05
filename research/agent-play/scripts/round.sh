@@ -6,12 +6,15 @@ P=${1:-50}
 W="names=wooden-chest"
 ops=(
   "walk x=-30 y=-10" "wait jobs=true max=60"
-  "stash_all @C:/tmp/cf-agent/stash.json" "upkeep @C:/tmp/cf-agent/upkeep.json" "restock @C:/tmp/cf-agent/stash.json"
+  "stash_all @C:/tmp/cf-agent/stash.json" "upkeep @C:/tmp/cf-agent/upkeep.json"
+  # second pass for the south (pond 2, D3, stone drills): the first one often ends with a full inventory
+  "stash_all @C:/tmp/cf-agent/stash.json" "upkeep x=-40 y=55 r=40 drills=30 others=15 fuel=raw-coal"
+  "stash_all @C:/tmp/cf-agent/stash.json" "restock @C:/tmp/cf-agent/stash.json"
   # power
   "fuel item=raw-coal count=50 names=boiler r=160" "fuel item=raw-coal count=10 r=160"
   "feed item=kerogen count=800 $W x=-30 y=12.5 r=1" "feed item=kerogen count=800 $W x=-47 y=3.5 r=1"
   # bricks, wood
-  "feed item=stone count=50 names=stone-furnace x=-35 y=-8 r=6" "craft recipe=log-wood count=5" "craft recipe=solder-0 count=6" "craft recipe=inductor1-2 count=20"
+  "feed item=stone count=50 names=stone-furnace x=-35 y=-8 r=6" "craft recipe=log-wood count=5" "craft recipe=inductor1-2 count=20"
   # red science cell ports (Native flora and half the Soil arrive by belt)
   "feed item=stone-brick count=500 $W x=12.5 y=12 r=2.6" "feed item=wood count=400 $W x=9.5 y=12.5 r=0.6"
   "feed item=soil count=800 $W x=17.5 y=10.5 r=0.6" "feed item=ash count=2000 $W x=15.5 y=13.5 r=1.1"

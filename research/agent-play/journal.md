@@ -94,6 +94,9 @@ from the round script.
 | 14:10–15:10 | Latex block (`designs/latex.js`: Creamy latex washer → latex-slab column, alginate HPF, latex HPF with its own Boiler) and science block (`designs/science.js`: micro mine for Petri dish bacteria, Research center) placed; the slaughterhouse waits for circuits. rc-mk01 and the paddock turned out to need a creature module to run at all. Electronics block (`designs/electronics.js`): Resistor and Capacitor factories and a graphite HPF. |
 | 15:10–15:40 | Switching the second Glassworks back from Petri dishes to Glass contaminated the Tar fuel network with Molten glass again; rebuilt pond, pipes and both Glassworks (`designs/glass-fuel-rebuild.js`). Raw coal ran short (52 k/h made, 56 k/h used): nine more burner drills on Raw coal (each nets 0.8/s), iron outpost visited half as often. The warehouse was full (Ash: 558 stacks): 24 iron chests added (`designs/storage2.js`); py-burners for Ash need research. |
 | 15:40–16:10 | Glass line 2 (`designs/glass2.js`) by the quartz belt: a Distillation column's Coal gas goes through a Gasifier (Syngas, 0.4 MJ) into two new Glassworks; the Gasifier's Tar into a sinkhole. The first line made 40 Glass an hour. |
+| 16:10–16:40 | Duralumin smelter: it burns fluid fuel too (10 MW through one box), so it got its own Syngas plant (a Distillation column + Gasifier, `designs/duralumin.js`). New `boxes` op: each fluid box's recipe filter and connections, read before piping. Tar distiller D8 under D7 and a plastic Biofactory (`designs/plastic.js`): Aromatics + Syngas, 56 Plastic. |
+| 16:40–17:00 | Creature block (`designs/creature.js`): Incubator → Data array made two Earth samples (Bio containers, Native flora, red packs taken off the lab belt into a new chest). Slaughterhouse placed. Power: 16 machines on low power, so power station 2 on the eastern Raw coal patch (`designs/power-station-2.js`, a shifted copy of the first, with a 20-pole line). |
+| 17:00–17:15 | Jams everywhere: the Moondrop return belt deadlocked the seed nursery (now a chest); the WPU drops Raw fiber through an output position, not its output slot (now a chest); every round crafted 24 Lead into Solder that was not needed; the warehouse was full again (48 iron chests now); three of four Distillation columns stood on full outputs (D2's single input and output inserters, D3's chest left behind by full-inventory upkeeps). |
 
 ## Lessons
 
@@ -207,3 +210,12 @@ from the round script.
     recipe also makes Tar. The Glassworks' fuel box shares its positions with a recipe box.
 42. A full warehouse hides behind other symptoms: stash_all silently keeps the items, the next
     upkeep stops halfway, and fuel runs out somewhere far away.
+43. Machines can have an item drop position like a drill's: the WPU drops Raw fiber on the ground
+    below it and stops when that tile is taken. Check `drop_position` / `drop_target` on new
+    machine types.
+44. Rounds that also craft (Solder, Inductors) quietly eat the inputs another chain is waiting
+    for. Craft one-offs by hand and stop.
+45. A self-feeding loop with a return path deadlocks when the machine at its centre reports
+    "output full": it stops accepting input, so the returned items have nowhere to go.
+46. Every machine with more than one solid output needs one output inserter per 0.8 items/s it
+    makes, counted over all products (D2: 6 Coke + 1 Iron oxide per 3 s needs three).

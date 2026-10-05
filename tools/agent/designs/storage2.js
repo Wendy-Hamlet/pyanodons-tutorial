@@ -4,6 +4,6 @@
 // (Ash comes in at ~11/s from all the burners: 40 stacks an hour.)
 const { Layout } = require('../layout');
 const g = new Layout();
-for (const y of [5.5, 6.5]) for (let x = 30.5; x <= 41.5; x++) g.add('iron-chest', x, y);
+for (const y of [5.5, 6.5, 7.5, 8.5]) for (let x = 30.5; x <= 41.5; x++) g.add('iron-chest', x, y);  // rows 7.5/8.5 added at game 18:00
 // py-burners for Ash need research (recipe locked), so for now the chests take the Ash too.
 console.log(JSON.stringify(g.write(process.argv[2] || 'C:/tmp/cf-agent/storage2.json')));
