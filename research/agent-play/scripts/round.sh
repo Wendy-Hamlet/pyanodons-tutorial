@@ -35,14 +35,18 @@ ops=(
   "feed item=sap-tree count=2 names=sap-extractor-mk01 x=5 y=-34.5 r=10"
   # tar refinery (pond 2): wood for treated wood, Raw coal for its Boiler
   "feed item=wood count=100 names=tar-processing-unit x=-17.5 y=71.5 r=1" "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
+  "take x=-48.5 y=39.5 item=stone count=150"
+  # east side (methane block, battery cell) is out of reach from home: walk there and back
+  "walk x=40 y=-40" "wait jobs=true max=40"
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
   "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" "feed item=copper-plate count=150 $W x=61.5 y=-51.5 r=0.6" "feed item=copper-plate count=150 $W x=73.5 y=-40.5 r=0.6"
   "feed item=wood count=200 $W x=75.5 y=-52.5 r=0.6" "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
   # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
-  "take x=-48.5 y=39.5 item=stone count=150" "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
+  "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
   "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" "feed item=copper-plate count=100 $W x=85.5 y=-55.5 r=0.6"
   "feed item=wood count=200 $W x=99.5 y=-53.5 r=0.6" "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
   "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal"
+  "walk x=-30 y=-10" "wait jobs=true max=40"
   # creosote: Wood for TPU 4 (pond A)
   "feed item=wood count=200 $W x=-11.5 y=40.5 r=0.6"
   # storage and report

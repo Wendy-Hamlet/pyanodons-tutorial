@@ -81,6 +81,12 @@ from the round script.
 | 8:40–9:10 | Moondrop: Empty petri dishes from the second Glassworks (back on the shared Tar line, unmirrored, nothing contaminated this time), Petri dishes by hand and in an assembler, two Moondrop samples (8 Moondrop). |
 | 9:10–9:40 | Methane block (`designs/methane-block.js`), all built by robots from one ghost list: greenhouse 1 grows Moondrop from seeds, a nursery turns Moondrop into seeds (seeds go back to greenhouse 1 and on to greenhouse 2; the Moondrop it returns ride a two-tile belt back into it), greenhouse 2 makes Methane from seeds, Water and CO2 (an HPF burning Coke right under it), an HPF makes Methanal, then Pulp mill (Formica, with Raw fiber from a Wood processing unit), PCB factory with its own Vacuum pump. |
 | 9:40–10:30 | Both outposts had run out of fuel: their upkeep used Kerogen, which was gone, and Raw coal could not enter slots still holding a little Kerogen. Upkeep now swaps such fuel out. Greenhouse 1 has its 16 Moondrop modules, greenhouse 2 gets the surplus (7 so far). |
+| 10:30–10:45 | Calcium carbide for Acetylene (`designs/carbide.js`): an HPF makes Lime (its CO2 into a gas vent) and hands it by inserter to the HPF below, which makes Calcium carbide. |
+| 10:45–11:00 | Lead outpost 600 tiles north-west (`designs/lead-outpost.js`): a Gasifier turns carried Calcium carbide and Water into Acetylene, straight into two Fluid drills → Stone furnaces; a Boiler + Steam engine powers it. It stopped after two crafts: its Slacked lime is a liquid, now drained into a sinkhole. |
+| 11:00–11:20 | Zinc, first try: a Distillation column at pond 2 (Tar → Aromatics, Flue gas and CO2 vented) and a 723-tile pipe to the zinc patch 580 tiles south-east, laid by robots in 100-pipe chunks. 5 100 Aromatics filled it to 7 %, the drills got 7 % of their box and never started, a pump in front of them did not help, and the column had drained pond 2. |
+| 11:20–11:35 | Zinc, second try (`designs/zinc-local.js`): two columns at the patch, Raw coal → Tar → Aromatics, every pipe a few tiles long; Raw coal is carried there. Zinc plates from the first visit on. |
+| 11:35–11:55 | Battery cell (`designs/battery-cell.js`): a Washer turned south feeds Saline water straight into a burner Assembling machine 1, an HPF hands it Cellulose. Treated wood was the next limit (Creosote): TPU 3 turns pond A's Anthracene oil into Creosote and TPU 4 above it makes Treated wood (`designs/creosote.js`). 7 batteries, 13 PCBs, 24 solder. |
+| 12:00 | The copper outpost had 1 432 plates waiting in full furnaces: every visit came with 5 000 Raw coal (100 slots) and no room to collect. Outposts now carry what they burn. |
 
 ## Lessons
 
@@ -153,3 +159,16 @@ from the round script.
 28. Ash piles up: after ten hours the warehouse held 343 000 of it. Voiding it needs a py-burner
     (titanium); until then, plan chests for waste. And `take all=true` on a burner machine also
     takes its fuel.
+29. Check every product's form before building: the Gasifier's Slacked lime is a liquid, the
+    Tar distillation's Rich clay an item that fills its output after 51 runs. Each needs its exit
+    (sinkhole, gas vent, inserter).
+30. **Long pipes do not carry small flows in 2.x.** A pipe segment shares its fluid evenly over
+    all its boxes, so machines on it fill only to its level, and a pump slows down with the
+    fullness of its input segment. A 723-tile pipe holds 72 700: it needs tens of thousands of
+    units before anything arrives. Make fluids where they are used, or barrel them.
+31. A Py gas vent's connection faces 90° clockwise from its direction (direction north connects
+    to the east); check `fluidbox_neighbours` after placing one.
+32. **Carry what an outpost burns, not more.** 5 000 Raw coal took 100 of 180 slots; the next
+    outpost's plates (1 432 copper) stayed in full furnaces for an hour.
+33. Reach is 161 tiles: a round standing at home cannot feed machines 165 tiles east. Walking is
+    cheap (a few seconds), so rounds walk.
