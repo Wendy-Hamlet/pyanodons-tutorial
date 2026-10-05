@@ -99,6 +99,8 @@ from the round script.
 | 17:00–17:15 | Jams everywhere: the Moondrop return belt deadlocked the seed nursery (now a chest); the WPU drops Raw fiber through an output position, not its output slot (now a chest); every round crafted 24 Lead into Solder that was not needed; the warehouse was full again (48 iron chests now); three of four Distillation columns stood on full outputs (D2's single input and output inserters, D3's chest left behind by full-inventory upkeeps). |
 | 17:15–18:00 | Stone for the battery Washer went into brick furnaces (27 000 bricks in stock): stopped. Second battery cell with its own Cellulose HPF (`designs/battery-cell-2.js`): one Washer gives one Battery per 100 s. D3 got three output inserters. Glassworks G2 removed and re-placed as an Empty petri dish maker (removing a machine empties it, so no recipe switch). Genlab 1 made three Moss-gen. |
 | 18:00–18:40 | Upkeep now leaves Ash below 600 in burner slots (it filled the inventory before the outputs that matter: 79 Aluminium plates sat in a furnace). Biofactory 3 → genlab 2 → **Creature chamber**; Vrauks codex; 10 Petri dishes. The chamber is breeding the first Vrauks; a second one's ingredients are on their way (20 Bio containers, 30 red packs, 6 Petri dishes for Moss-gen). |
+| 18:40–19:25 | **First Vrauks** from the Creature chamber (400 s). Caged it by hand, the slaughterhouse rendered it into 200 Formic acid, Brain, Chitin, Guts, Meat and the Cage back. The Formic acid pipe had been laid to the latex column's south side, which belongs to its Creamy latex box (`boxes` showed the Formic acid box on the east and west only): rerouted. 2 Latex slabs → 2 Latex → 4 Stoppers. G2 removed and re-placed as the Flask glassworks; G3's quartz inserter removed so the quartz reaches line 1 again: 2 Flasks. Ten red-only techs had been available for hours (cellulose, fluid processing machines, scrude, automobilism, lamp, radar...): queued; an ash filter inserter at the end of the lab belt. |
+| 19:25–19:40 | Second Vrauks → 2 more Latex → 4 Stoppers → 2 more Flasks. **First pY1 science packs** (3 Flasks + 18 Fawogae substrate in the Research center → 3 packs). |
 
 ## Lessons
 
@@ -226,3 +228,8 @@ from the round script.
     Vrauks = 2 Earth samples (Data array: 15 red packs + 10 Bio samples from the Incubator, each
     a Bio container with 2 Titanium) + 3 Moss-gen (genlab) + a codex + 10 Petri dishes, 400 s.
     Every building in it burns or eats something that another chain was already short of.
+48. Check what research is available whenever a building unlocks new recipes: "red techs done"
+    was true at 6:15 but not at 19:00, and eight labs stood idle for twelve hours.
+49. Three pY1 packs cost two Vrauks from the chamber here (200 Formic acid each, 100 per Latex
+    slab, 2 Latex per 4 Stoppers, 4 Stoppers per 2 Flasks, 3 Flasks per craft). A pY1 tech takes
+    50 packs, so the next step is breeding Vrauks (rc-mk01 + paddock with Vrauks as modules).
