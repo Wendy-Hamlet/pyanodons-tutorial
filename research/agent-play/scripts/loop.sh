@@ -9,6 +9,8 @@ for i in $(seq 1 ${1:-4}); do
   [ $((i % 4)) -eq 0 ] && bash /c/tmp/cf-agent/outpost.sh 130 -437 20
   [ $((i % 4)) -eq 0 ] && bash /c/tmp/cf-agent/outpost.sh 58 -316 12
   [ $((i % 4)) -eq 2 ] && bash /c/tmp/cf-agent/outpost.sh -347 -126 12
+  [ $((i % 4)) -eq 2 ] && bash /c/tmp/cf-agent/lead.sh
+  [ $((i % 4)) -eq 0 ] && bash /c/tmp/cf-agent/zinc.sh
   [ $i -lt ${1:-4} ] && node a.js wait seconds=${2:-60} max=$(( ${2:-60} + 20 )) > /dev/null
 done
 node a.js prod window=ten_minutes 2>&1 | grep -E "automation-science|iron-plate|copper-plate|tin-plate|glass\"" | tr -s ' ' | tr '\n' ' '; echo

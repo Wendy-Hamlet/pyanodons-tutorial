@@ -1,0 +1,11 @@
+// Calcium carbide for the lead outpost's Acetylene: HPF-L (lime: 15 Coke + 10 Limestone ->
+// 10 Lime + 100 CO2, the CO2 into a gas vent) hands Lime straight to HPF2 below it (calcium-
+// carbide: 7 Coke + 2 Lime -> 10 Calcium carbide). Coke and Limestone come from one chest.
+const { Layout } = require('../layout');
+const g = new Layout();
+g.add('hpf', 5.5, -52.5, 'N', 'lime');
+g.add('py-gas-vent', 1.5, -52.5, 'N');
+g.add('burner-inserter', 5.5, -48.5, 'N');                // Lime HPF-L -> HPF2
+g.add('burner-inserter', 5.5, -56.5, 'N'); g.add('wooden-chest', 5.5, -57.5);
+g.add('small-electric-pole', 1.5, -49.5);
+console.log(JSON.stringify(g.write(process.argv[2] || 'C:/tmp/cf-agent/carbide.json')));

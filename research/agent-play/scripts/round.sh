@@ -27,7 +27,7 @@ ops=(
   "feed item=stone count=60 names=moss-farm-mk01 x=24 y=2 r=8" "feed item=moss count=15 names=moss-farm-mk01 x=24 y=2 r=8"
   # components workshop (bootstrap)
   "feed item=coke count=100 names=hpf x=5.5 y=-44.5 r=1" "feed item=raw-coal count=400 $W x=12.5 y=-48.5 r=0.6"
-  "feed item=ceramic count=10 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=clay count=50 names=hpf x=5.5 y=-44.5 r=1"
+  "feed item=ceramic count=10 names=electronics-factory-mk01 x=20.5 y=-44.5 r=1" "feed item=coke count=200 $W x=5.5 y=-57.5 r=0.6" "feed item=limestone count=150 $W x=5.5 y=-57.5 r=0.6"
   "feed item=seaweed count=10 names=seaweed-crop-mk01 x=32.5 y=-52.5 r=1" "feed item=seaweed count=50 names=hpf x=19.5 y=-55.5 r=1"
   "feed item=agar count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1" "feed item=empty-petri-dish count=10 names=assembling-machine-1 x=12.5 y=-38.5 r=1"
   "feed item=moondrop-codex count=2 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=petri-dish count=4 names=botanical-nursery x=33.5 y=-38.5 r=1" "feed item=planter-box count=2 names=botanical-nursery x=33.5 y=-38.5 r=1"
@@ -38,6 +38,13 @@ ops=(
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
   "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" "feed item=copper-plate count=150 $W x=61.5 y=-51.5 r=0.6" "feed item=copper-plate count=150 $W x=73.5 y=-40.5 r=0.6"
   "feed item=wood count=200 $W x=75.5 y=-52.5 r=0.6" "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
+  # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
+  "take x=-48.5 y=39.5 item=stone count=150" "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
+  "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" "feed item=copper-plate count=100 $W x=85.5 y=-55.5 r=0.6"
+  "feed item=wood count=200 $W x=99.5 y=-53.5 r=0.6" "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
+  "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal"
+  # creosote: Wood for TPU 4 (pond A)
+  "feed item=wood count=200 $W x=-11.5 y=40.5 r=0.6"
   # storage and report
   "stash_all @C:/tmp/cf-agent/stash.json"
   "status"
