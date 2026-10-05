@@ -26,6 +26,6 @@ g.add(ins, 126.5, -40.5, 'N'); g.add('wooden-chest', 126.5, -41.5);       // Boi
 g.add('slaughterhouse-mk01', 134.5, -38.5, 'S', 'full-render-vrauks');
 g.path(134.5, -32.5, 'W22 N2', 'pipe');                                    // Formic acid -> D5
 g.add(ins, 136.5, -44.5, 'N'); g.add('wooden-chest', 136.5, -45.5);       // caged Vrauks in (north side)
-g.add(ins, 140.5, -38.5, 'W'); g.add('wooden-chest', 141.5, -38.5);       // meat, cages... out
+g.add(ins, 132.5, -44.5, 'S'); g.add('wooden-chest', 132.5, -45.5);       // meat, cages... out (north side)
 for (const [x, y] of [[109.5, -45.5], [109.5, -41.5], [117.5, -43.5], [124.5, -43.5], [131.5, -45.5]]) g.add('small-electric-pole', x, y);
 console.log(JSON.stringify(g.write(process.argv[2] || 'C:/tmp/cf-agent/latex.json')));

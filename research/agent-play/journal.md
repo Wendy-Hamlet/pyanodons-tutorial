@@ -91,6 +91,9 @@ from the round script.
 | 12:30–13:00 | Inventory crises: rounds ran upkeep with a full inventory (Raw coal for outposts), so ore chests and coal taps were never emptied and outposts went unfuelled. Rounds now stash first, keep amounts are smaller, and restock refills below three quarters. The Methane greenhouse at 16 modules took every seed and the Moondrop loop died; a second seed greenhouse (`designs/methane-gh3.js`) and 12 modules fixed it. |
 | 13:00–13:30 | Titanium outpost (`designs/titanium-outpost.js`, the lead layout moved; four drills). Steel ran out: Iron ore now comes from three home drills and four iron-outpost drills into chests, and a second Advanced foundry. Three output inserters on the Calcium carbide HPF (one moved only a third of its output). |
 | 13:30–14:10 | rc-mk01 needs 100 Concrete: Jaw crusher (Stone → Gravel → Sand) and a burner assembler with Water (`designs/concrete.js`), Lime taken from the lime HPF. Poles from Treated wood (no Logs left nearby; the next forests are 600–700 tiles west). rc-mk01 and the Vrauks paddock placed with a Barrel machine (`designs/vrauks.js`): Cocoons are breeding. |
+| 14:10–15:10 | Latex block (`designs/latex.js`: Creamy latex washer → latex-slab column, alginate HPF, latex HPF with its own Boiler) and science block (`designs/science.js`: micro mine for Petri dish bacteria, Research center) placed; the slaughterhouse waits for circuits. rc-mk01 and the paddock turned out to need a creature module to run at all. Electronics block (`designs/electronics.js`): Resistor and Capacitor factories and a graphite HPF. |
+| 15:10–15:40 | Switching the second Glassworks back from Petri dishes to Glass contaminated the Tar fuel network with Molten glass again; rebuilt pond, pipes and both Glassworks (`designs/glass-fuel-rebuild.js`). Raw coal ran short (52 k/h made, 56 k/h used): nine more burner drills on Raw coal (each nets 0.8/s), iron outpost visited half as often. The warehouse was full (Ash: 558 stacks): 24 iron chests added (`designs/storage2.js`); py-burners for Ash need research. |
+| 15:40–16:10 | Glass line 2 (`designs/glass2.js`) by the quartz belt: a Distillation column's Coal gas goes through a Gasifier (Syngas, 0.4 MJ) into two new Glassworks; the Gasifier's Tar into a sinkhole. The first line made 40 Glass an hour. |
 
 ## Lessons
 
@@ -195,3 +198,12 @@ from the round script.
 39. Py creature buildings (reproduction complex, Vrauks paddock) have a base speed effect of
     -100 %: they do nothing until a creature module is inserted, and the first Vrauks can only
     come from the Creature chamber (genlab, plastic, duralumin, data array, bio samples).
+40. **Glass is energy.** Glass-1 makes 10 Molten glass in 5 s at 10 MW and 50 Molten glass make
+    5 Glass in another 3 s at 10 MW: about 56 MJ of fluid fuel per Glass, 280 Tar. A circuit
+    needs about 1.7 Glass. Coal gas (0.2 MJ) was being vented at 29/s; through a Gasifier it
+    becomes Syngas (0.4 MJ per unit, 70 per 50 Coal gas).
+41. Read a machine's real fluid boxes before piping it: this Gasifier has two inputs and two
+    outputs, one of each with two connections (`get_fluid_box_pipe_connections`), and its Syngas
+    recipe also makes Tar. The Glassworks' fuel box shares its positions with a recipe box.
+42. A full warehouse hides behind other symptoms: stash_all silently keeps the items, the next
+    upkeep stops halfway, and fuel runs out somewhere far away.
