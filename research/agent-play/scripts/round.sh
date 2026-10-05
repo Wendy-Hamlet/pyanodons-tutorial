@@ -37,18 +37,18 @@ ops=(
   "feed item=moondrop count=16 names=moondrop-greenhouse-mk01 x=52.5 y=-64.5 r=1"
   "feed item=sap-tree count=2 names=sap-extractor-mk01 x=5 y=-34.5 r=10"
   # tar refinery (pond 2): wood for treated wood, Raw coal for its Boiler
-  "feed item=wood count=100 names=tar-processing-unit x=-17.5 y=71.5 r=1" "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
+  "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
   "take x=-48.5 y=39.5 item=stone count=150"
   # concrete (one-off for rc-mk01): Stone into the Jaw crusher
   # east side (methane block, battery cell) is out of reach from home: walk there and back
   "walk x=40 y=-40" "wait jobs=true max=40"
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
   "feed item=coke count=100 $W x=57.5 y=-38.5 r=0.6" 
-  "feed item=wood count=200 $W x=75.5 y=-52.5 r=0.6" "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=raw-fiber count=40 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
+  "feed item=treated-wood count=60 $W x=68.5 y=-51.5 r=0.6" "feed item=raw-fiber count=40 $W x=68.5 y=-51.5 r=0.6" "feed item=saps count=150 $W x=68.5 y=-51.5 r=0.6"
   # battery cell: Stone (from the stone drills chest), Zinc + Copper, Wood + Limestone; east upkeep
   "feed item=stone count=300 $W x=84.5 y=-60.5 r=0.6"
   "feed item=zinc-plate count=100 $W x=85.5 y=-55.5 r=0.6" 
-  "feed item=wood count=200 $W x=99.5 y=-53.5 r=0.6" "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
+  "feed item=limestone count=120 $W x=99.5 y=-53.5 r=0.6"
   # chipshooter: all seven circuit ingredients into one chest; solder and inductors crafted by hand
   "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
   "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
@@ -74,7 +74,6 @@ ops=(
   "feed item=water-barrel count=9 $W x=133.5 y=-70.5 r=0.6" "feed item=native-flora count=45 $W x=133.5 y=-70.5 r=0.6" "feed item=moss count=15 $W x=133.5 y=-70.5 r=0.6"
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # creosote: Wood for TPU 4 (pond A)
-  "feed item=wood count=200 $W x=-11.5 y=40.5 r=0.6"
   # latex block (reachable from the east stop): washer, alginate HPF, Boiler fuel
   "walk x=40 y=-40" "wait jobs=true max=40"
   "feed item=limestone count=60 $W x=117.5 y=-47.5 r=0.6" "feed item=saps count=60 $W x=117.5 y=-47.5 r=0.6"
@@ -82,7 +81,7 @@ ops=(
   "feed item=raw-coal count=300 $W x=126.5 y=-41.5 r=0.6"
   "walk x=-30 y=-10" "wait jobs=true max=40"
   # flasks and pY1: Stoppers into the flask Glassworks, pY1 packs into the labs
-  "feed item=stopper count=8 names=glassworks-mk01 x=0.5 y=-15.5 r=1" "feed item=py-science-pack-1 count=10 names=lab x=35 y=18 r=12"
+  "feed item=stopper count=8 names=glassworks-mk01 x=0.5 y=-15.5 r=1" "feed item=py-science-pack-1 count=10 names=lab x=35 y=18 r=12" "feed item=automation-science-pack count=10 names=lab x=35 y=18 r=12"
   # science block: Petri dishes to the micro mine, substrate by hand, Flasks + substrate to the
   # research center (Cellulose is taken from the battery cell's HPF during the east stop)
   # (micro mine and substrate paused at game 17:40: 384 substrate in stock, Petri dishes go to the genlab)
@@ -91,7 +90,9 @@ ops=(
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
   "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
   # battery cell 2: Stone, Zinc + Copper + Cellulose (taken from cell 1's HPF on the east stop)
-  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=wood count=200 $W x=108.5 y=-22.5 r=0.6" "feed item=limestone count=120 $W x=108.5 y=-22.5 r=0.6"
+  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=limestone count=120 $W x=108.5 y=-22.5 r=0.6"
+  # (wood for fiber, treated wood and cellulose paused at game 21:20: wood ran out, those chains
+  # only fed circuits, which wait for copper anyway)
   # (copper-hungry feeds paused at game 21:10, copper ran out: duralumin, inductors, batteries,
   # methanal and PCB copper)
   # duralumin plant: Aluminium + Copper into the smelter, Raw coal for D7, upkeep collects Duralumin
