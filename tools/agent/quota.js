@@ -21,8 +21,10 @@ function read() {
 
 function verdict(now = Date.now() / 1000) {
   const q = read();
-  const five = q && q.rate_limits && q.rate_limits.five_hour;
-  if (!five) return { state: 'unknown', reason: `no rate limit data in ${FILE}` };
+  if (!q || !q.rate_limits) return { state: 'unknown', reason: `no rate limit data in ${FILE}` };
+  // Right after a reset the status line reports seven_day only: no five-hour window has started,
+  // which is 0 % used.
+  const five = q.rate_limits.five_hour || { used_percentage: 0, resets_at: now + 5 * 3600 };
   const reset = five.resets_at;
   const used = reset <= now ? 0 : five.used_percentage;
   return {
