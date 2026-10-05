@@ -9,6 +9,12 @@ const DX = 183, DY = 471;
 const list = JSON.parse(fs.readFileSync(lead, 'utf8')).list
   .filter((e) => !(e.x === -453.5 && (e.y === -423.5 || e.y === -424.5)))
   .map((e) => ({ ...e, x: e.x + DX, y: e.y + DY }));
+// Two more drills to the west (Acetylene passes through the drills from the east): titanium is
+// the slowest input of the vrauk chain.
+for (const x of [-288.5, -293.5]) {
+  list.push({ name: 'fluid-drill-mk01', x, y: 51.5, dir: 'N' }, { name: 'stone-furnace', x: x + 0.5, y: 48 },
+    { name: 'burner-inserter', x: x - 1, y: 54.5, dir: 'S' }, { name: 'wooden-chest', x: x - 1, y: 55.5 });
+}
 fs.writeFileSync(process.argv[2] || 'C:/tmp/cf-agent/titanium-outpost.json', JSON.stringify({ list }));
 const count = {}; for (const e of list) count[e.name] = (count[e.name] || 0) + 1;
 console.log(JSON.stringify(count));

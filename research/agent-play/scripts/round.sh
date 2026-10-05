@@ -20,8 +20,8 @@ ops=(
   "insert x=-0.5 y=-4.5 item=iron-plate count=$P" "insert x=10.5 y=-11.5 item=iron-plate count=$P" "insert x=10.5 y=2.5 item=copper-plate count=$P"
   # coal block, steel, aluminium
   "feed item=coal count=100 names=distilator x=-18 y=-11 r=1" "feed item=raw-coal count=100 names=distilator x=-46 y=56 r=1"
-  "feed item=coke count=50 names=advanced-foundry-mk01 x=-48 y=-8 r=1" "feed item=limestone count=50 names=advanced-foundry-mk01 x=-48 y=-8 r=1"
-  "feed item=iron-ore count=200 names=advanced-foundry-mk01 x=-48 y=-8 r=1"
+  "feed item=coke count=50 names=advanced-foundry-mk01 x=-48 y=-11.5 r=4" "feed item=limestone count=50 names=advanced-foundry-mk01 x=-48 y=-11.5 r=4"
+  "feed item=iron-ore count=200 names=advanced-foundry-mk01 x=-48 y=-11.5 r=4"
   # moss block
   "feed item=soil count=100 names=washer x=26 y=-6 r=1" "feed item=coke count=20 names=hpf x=18.5 y=-5.5 r=1"
   "feed item=stone count=60 names=moss-farm-mk01 x=24 y=2 r=8" "feed item=moss count=15 names=moss-farm-mk01 x=24 y=2 r=8"
@@ -36,6 +36,8 @@ ops=(
   # tar refinery (pond 2): wood for treated wood, Raw coal for its Boiler
   "feed item=wood count=100 names=tar-processing-unit x=-17.5 y=71.5 r=1" "feed item=raw-coal count=400 $W x=-39.5 y=82.5 r=0.6"
   "take x=-48.5 y=39.5 item=stone count=150"
+  # concrete (one-off for rc-mk01): Stone into the Jaw crusher
+  "feed item=stone count=200 names=jaw-crusher x=-52.5 y=30.5 r=1"
   # east side (methane block, battery cell) is out of reach from home: walk there and back
   "walk x=40 y=-40" "wait jobs=true max=40"
   # methane block: coke (CO2), copper (methanal, PCB), wood (raw fiber), treated wood + saps (formica)
