@@ -14,7 +14,7 @@ ops=(
   "fuel item=raw-coal count=50 names=boiler r=160" "fuel item=raw-coal count=10 r=160"
   "feed item=kerogen count=800 $W x=-30 y=12.5 r=1" "feed item=kerogen count=800 $W x=-47 y=3.5 r=1"
   # wood (brick furnaces no longer fed: 27 000 bricks in stock)
-  "craft recipe=log-wood count=5" "craft recipe=inductor1-2 count=20"
+  "craft recipe=log-wood count=20" "craft recipe=inductor1-2 count=20"
   # red science cell ports (Native flora and half the Soil arrive by belt)
   "feed item=stone-brick count=500 $W x=12.5 y=12 r=2.6" "feed item=wood count=400 $W x=9.5 y=12.5 r=0.6"
   "feed item=soil count=800 $W x=17.5 y=10.5 r=0.6" "feed item=ash count=2000 $W x=15.5 y=13.5 r=1.1"
@@ -53,7 +53,7 @@ ops=(
   "feed item=battery-mk00 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=pcb1 count=10 $W x=81.5 y=-44.5 r=0.6" "feed item=solder count=20 $W x=81.5 y=-44.5 r=0.6"
   "feed item=capacitor1 count=50 $W x=81.5 y=-44.5 r=0.6" "feed item=resistor1 count=60 $W x=81.5 y=-44.5 r=0.6" "feed item=vacuum-tube count=30 $W x=81.5 y=-44.5 r=0.6"
   "feed item=inductor1 count=30 $W x=81.5 y=-44.5 r=0.6"
-  "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal" "take x=94.5 y=-53.5 item=cellulose count=10"
+  "upkeep x=75 y=-50 r=30 drills=10 others=10 fuel=raw-coal"
   # vrauk area: empty Barrels back to the Barrel machine, Water barrels, Flora, Saps and Moss to
   # rc-mk01 and the paddock; the rc's Barrels are taken by hand (its output inserter only takes Cocoons)
   "upkeep x=120 y=-55 r=26 drills=10 others=10 fuel=raw-coal" "take x=113 y=-62 item=barrel"
@@ -82,6 +82,8 @@ ops=(
   # electronics block: Resistors (Coke, Glass, Tin) and Capacitors (Ceramic, Tin)
   # (Resistor and Capacitor feeds paused at game 16:40: 760 and 1600 in stock)
   "feed item=coke count=150 $W x=79.5 y=-20.5 r=0.6"
+  # battery cell 2: Stone, Zinc + Copper + Cellulose (taken from cell 1's HPF on the east stop)
+  "feed item=stone count=300 $W x=105.5 y=-22.5 r=0.6" "feed item=zinc-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=copper-plate count=60 $W x=103.5 y=-17.5 r=0.6" "feed item=wood count=200 $W x=108.5 y=-22.5 r=0.6" "feed item=limestone count=120 $W x=108.5 y=-22.5 r=0.6"
   # duralumin plant: Aluminium + Copper into the smelter, Raw coal for D7, upkeep collects Duralumin
   "feed item=aluminium-plate count=200 $W x=90.5 y=-22.5 r=0.6" "feed item=copper-plate count=100 $W x=90.5 y=-22.5 r=0.6"
   "feed item=raw-coal count=400 $W x=74.5 y=7 r=2" "upkeep x=85 y=2 r=22 drills=10 others=10 fuel=raw-coal"
