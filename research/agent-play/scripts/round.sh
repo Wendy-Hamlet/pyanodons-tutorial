@@ -62,14 +62,7 @@ ops=(
   "upkeep x=150 y=-42 r=14 drills=10 others=10 fuel=raw-coal" "feed item=raw-coal count=500 $W x=145 y=-52.5 r=2"
 
   "upkeep x=240 y=0 r=16 drills=30 others=30 fuel=raw-coal" "upkeep x=110 y=5 r=14 drills=10 others=10 fuel=raw-coal"
-  "feed item=native-flora count=300 $W x=103.5 y=-7.5 r=0.6" "feed item=automation-science-pack count=30 $W x=115.5 y=-8.5 r=0.6"
-  # creature chamber kept going: Bio containers and Iron chests made by hand, samples moved from
-  # the data array and genlab chests into the chamber's chest with Petri dishes and Native flora
-  "craft recipe=bio-container count=10" "craft recipe=iron-chest count=1" "craft recipe=petri-dish count=10"
-  "feed item=bio-container count=20 $W x=103.5 y=-7.5 r=0.6" "feed item=iron-chest count=2 $W x=115.5 y=-8.5 r=0.6"
-  "take x=115.5 y=4.5 item=earth-generic-sample" "take x=103.5 y=15.5 item=moss-gen"
-  "feed item=earth-generic-sample count=2 $W x=116.5 y=5.5 r=0.6" "feed item=moss-gen count=3 $W x=116.5 y=5.5 r=0.6"
-  "feed item=vrauks-codex count=1 $W x=116.5 y=5.5 r=0.6" "feed item=native-flora count=10 $W x=116.5 y=5.5 r=0.6" "feed item=petri-dish count=10 $W x=116.5 y=5.5 r=0.6"
+  # (creature chamber no longer fed since game 21:00: the paddock has its ten Vrauks modules)
   # (genlab feed stopped at game 20:10: it had made 49 Moss-gen, 2 Petri dishes each)
   # Vrauks from the chamber become the paddock's modules (up to 10)
   "take x=116.5 y=19.5 item=vrauks" "feed item=vrauks count=10 names=vrauks-paddock-mk01 x=133.5 y=-62.5 r=1"
