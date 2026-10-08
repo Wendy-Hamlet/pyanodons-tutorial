@@ -209,6 +209,8 @@ Every Stone comes with a Kerogen, so the author's stone corner (0:10–0:15) dro
 drills into three Wooden chests, and two inserters filtered to Stone take Stone from two of them
 into two Stone furnaces making bricks. The Kerogen stays in the chests; it is a fuel (2 MJ).
 
+![The stone corner, rebuilt by the author for this picture two tiles west of the original: the three drills at the bottom drop into chests; Stone-filtered inserters take Stone from two of them into the two brick furnaces](../images/ch1-stone-corner.jpg)
+
 ## 4. Power, lab and red science (0:20–0:58)
 
 ### Steam
@@ -231,7 +233,7 @@ Boiler and ran a line of 16 Small electric poles to it (0:20–0:30):
   ([techniques](../research/techniques.md), "Some machines drop their products themselves").
 - **One lab** next to them.
 
-![The red science corner: the lab at the top, the Soil extractor with its Offshore pump and its chest, and at the bottom left the Native flora patch with the Flora collector's chest; the collector, moved a few tiles south by the time of the picture, shows only its top edge](../images/ch1-red-science-corner.jpg)
+![The red science corner, photographed after 3:00: the two labs at the top (the second came at 2:10); below them the Soil extractor's chest, the Soil extractor and, on its right, its Offshore pump; at the bottom left the Flora collector (the four posts with the green grid) on the Native flora patch, with its chest above it (it was moved 6 tiles south at 2:06)](../images/ch1-red-science-corner.jpg)
 
 ### Red science by hand
 
@@ -544,8 +546,9 @@ Belts first (the first run):
   1:17 read with `tools/inspect-save.ps1`.
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` (areas listed by `tools/shots.js plan`, collected by `tools/shots.js pull`).
-  The second run's pictures were taken after its 2:01 save, when the iron pairs and the stone
-  corner had already been taken down, so those two have none.
+  The second run's pictures were taken after its 2:01 save, when the iron pairs had already been
+  taken down, so they have none; the author rebuilt the stone corner for its picture, two tiles
+  west of the original.
 - Prototype values (sizes, power, recipes, stack and slot sizes, technology costs and triggers,
   mining results, rock yields): `data.raw` of the second run's exact mod set, dumped with
   `--dump-data` in the save setup (`tools/save-env.ps1`); the first run's values came from
