@@ -163,11 +163,34 @@ Steel plate: 5 Coke + 20 Iron ore + 5 Limestone → 1 in 15 s, in an Advanced fo
   backs up into the columns, and the extractors stop too: the whole chain idles until Steel is
   taken out. That is what happened from 2:40 (the author's account).
 - **From data:** 0.533 Steel/s for 10.7 Iron ore, 2.67 Coke and 2.67 Limestone per second.
-- **Measured:** 0.43–0.44 Steel/s from 2:00 to 2:30, 83 % of that. Coke was not short (see
-  above); in the save of 2:01 the last foundry on the ore belt stood short of ingredients, so most
-  likely the Iron ore was.
+- **Measured:** 0.43–0.44 Steel/s from 2:00 to 2:30, 83 % of that.
 - The author's note on the blueprint: "留有空间把钢接入总线（似乎没必要）" — room is left to put
   the Steel on the bus, which seems unnecessary.
+
+**What holds it at 83 %: the circuit starts the extractor too late.** The extractor only starts
+once the foundry holds fewer than 5 Limestone, that is, when the foundry has just taken its last
+full batch. A foundry craft takes 15 s, the extractor's takes 20 s, so the foundry finishes and
+then waits about 5 s for the next 8 Limestone, on most crafts. Measured in the engine on a copy of
+the save of 3:37 (the steel chest and the Steel on the belts emptied, the Boilers' Ash cleared,
+then ten minutes after a two-minute warm-up):
+
+| Circuit condition on the Soil extractors | Steel per second | Each foundry |
+|---|---|---|
+| Limestone < 5 (as built) | **0.440** | 3.30 a minute, short of Limestone in 17 % of the samples |
+| Limestone < 10 | **0.533** | 4.00 a minute, never short |
+| None (the extractor always runs) | **0.533** | 4.00 a minute, never short |
+
+So the block itself is right except for one number: **set the condition to Limestone < 10**. Then
+the extractor starts while the foundry still holds a full batch for its next craft, so its 20 s
+craft ends before the foundry needs more; it still idles 17 % of the time (no Limestone piles
+up), and the eight foundries make their 0.533 Steel/s. Iron ore and Coke were never short in these runs.
+
+One more thing the runs showed: when the chest is full, the Steel lane of the shared belt fills
+too (about 270 plates here), and after the chest is emptied that backlog leaves through the one
+inserter into the chest, at most 0.82 a second. Until it has drained, the foundries nearest the
+chest find no gap for their Steel: with the backlog left on the belt, ten minutes gave 0.355
+Steel/s as built and 0.418 with < 10. A second inserter into the chest (or two chests) would halve
+that recovery (not measured).
 
 The first 50 Steel plates completed Steel axe at 2:01; six Jaw crushers took 180 of them.
 
@@ -249,7 +272,8 @@ and Iron oxide one time in twenty ([coke and steel](../research/coke-and-steel.m
   everything runs at once (21.9 MW of 22.2).
 - Distillation 3 : 2 (Coal : Coke columns); the Coal gas to an Exhaust pipe and the Tar to a
   Tailings pond from the first minute, or the columns stop.
-- One Soil extractor above each Advanced foundry; no Limestone belt.
+- One Soil extractor above each Advanced foundry; no Limestone belt. If a circuit switches the
+  extractor, start it below 10 Limestone, not 5 (0.533 against 0.440 Steel/s, measured).
 - A limited chest at the end of the steel line stops the whole chain when enough Steel is made.
 - Crushed iron: 6 Jaw crushers per full belt of Iron ore, 3 furnaces per crusher, one brick
   furnace per crusher's Stone. Copper stays in direct-smelting columns.
@@ -260,6 +284,10 @@ and Iron oxide one time in twenty ([coke and steel](../research/coke-and-steel.m
 - The run: the companion mod's recorder (run `2652821414-0`), read with
   `tools/recorder-phases.js` (timeline in 10-minute slices) and `tools/recorder-log.js`
   (production per 10-minute window, items and fluids). The author confirmed why steel stopped.
+- The steel site in the engine: `tools/save-probe.ps1` runs a measurement mod inside a copy of
+  the save; `tools/steel-probe` empties the steel chest, the Steel on the belts and the Boilers'
+  Ash, sets the extractors' condition per variant, then samples every foundry each second for ten
+  minutes after a two-minute warm-up (Steel made, status, the short ingredient).
 - The save of 3:37 (`Py-Exploration`, consistency check passed): `tools/inspect-save.ps1`, then
   `tools/summarize-save.js`, `tools/render-save-map.js`, `tools/render-area.js` and
   `tools/trace-layout.js` (belt contents, what feeds what, machine states, Boiler Ash, the steel

@@ -112,6 +112,11 @@ parameters for yours.
 - `belt-lab/`, `ch1-probe/`, `drill-probe/`, `inserter-probe/`, `train-probe/`, `station-probe/`:
   engine measurements behind the chapters and research notes. `run-probe.ps1 <probe>` runs one
   (copies it into the fixed setup, creates a map, runs it, prints its results, removes it).
+- `save-probe.ps1 -Save <save> -Probe <probe> [-Variant <name>]`: runs a measurement mod inside a
+  copy of one of the author's saves (save-reading setup; the save itself is only copied), e.g.
+  `steel-probe/`: the chapter 2 steel site (empties the steel chest and the Boilers' Ash, sets the
+  Soil extractors' circuit condition per variant, records every foundry's output, status and
+  missing ingredient).
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see
   [its README](tools/agent/README.md). Its play journal is [research/agent-play](research/agent-play/journal.md).

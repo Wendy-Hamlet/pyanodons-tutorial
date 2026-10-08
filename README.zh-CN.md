@@ -49,5 +49,6 @@
 - `shots.js` + `/pt-shots`（助手模组）：从作者真实的游戏里截图。`shots.js plan` 列出要截的区域，游戏里输入 `/pt-shots` 截图，`shots.js pull` 把图片取回 `images/`。（用 `--benchmark-graphics` 载入真实存档会让游戏崩溃，所以改为在运行中的游戏里截。）
 - `newgame-observer/` + `summarize-newgame.js`：观察新开一局有什么（包括出生点周围的资源、树木、岩石和地面，可用来比较地图设置）；用从存档读出的 `--map-gen-settings` 建图，可以复现同一个世界。
 - `belt-lab/`、`ch1-probe/`、`drill-probe/`、`inserter-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。`run-probe.ps1 <探针>` 运行其中一个（复制进固定环境、建图、运行、输出结果，再删掉）。
+- `save-probe.ps1 -Save <存档> -Probe <探针> [-Variant <版本>]`：在作者存档的副本里运行一个测量模组（读档环境，存档本身只复制），例如 `steel-probe/`：第二章炼钢区的实测（清空钢材箱和锅炉灰烬，按版本设置土壤挖掘机的电路条件，逐台记录铸造厂的产量、状态和缺料）。
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。
 - 本地化名称：在配置里设 `locale=zh-CN`（或 `en`），运行 `factorio --dump-prototype-locale`，会在脚本输出目录生成 `*-locale.json`。

@@ -22,7 +22,7 @@ the design lab.
 | `raw-coal-module.txt` | 15 [Raw coal] | The author's raw coal module: 9 Burner mining drills filling one belt | Earlier version: 15.00 Raw coal/s, 1.40 Ash/s into chests |
 | `raw-coal-power.txt` | 初期满带原煤发电（不清灰） | 12 Boilers and 6 Steam engines on one belt of Raw coal, no Ash inserters | 49–52 Steam/s (12.1–12.8 MW) at the load of 2:00–2:30; full output 22.2 MW from data |
 | `coke-distillation.txt` | 2.7 [Coke] | 3 + 2 Destructive distillation columns, Raw coal to Coal to Coke, Exhaust pipe for the Coal gas | 2.71 Coke/s (2:00–2:10), about 88 Coal gas/s vented |
-| `steel-foundries.txt` | 0.53 [Steel plate] | 8 Advanced foundries, each under its own Soil extractor; Steel into a chest limited to 500 | 0.43–0.44 Steel/s (2:00–2:30) |
+| `steel-foundries.txt` | 0.53 [Steel plate] | 8 Advanced foundries, each under its own Soil extractor; Steel into a chest limited to 500 | 0.43–0.44 Steel/s (2:00–2:30). Engine test on a copy of the save: 0.440 as built, 0.533 with the extractors' condition at Limestone < 10 ([chapter 2](../chapters/02-coke-steel-crushed-iron.md#5-steel-eight-foundries-under-eight-soil-extractors)) |
 | `crushed-iron.txt` | 3 [Iron plate] | 6 Jaw crushers, 18 iron furnaces and 5 brick furnaces on a full belt of Iron ore | 3.02 Iron plate/s and 1.52 Stone brick/s |
 
 ## How the blueprints are labelled
