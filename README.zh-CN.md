@@ -41,7 +41,7 @@
 - `manual-links.js [x1 y1 x2 y2]`：存档里还靠手搬的环节：只进不出的箱子（要手取）、只出不进的箱子（要手补）、手放原料的机器、手加燃料的热能设备，以及两头都靠手的物品（总线该替代的环节）。存档快照会记录箱子和机器里的物品；`logistics.js` 是它和 `trace-layout.js` 共用的传送带与机械臂解读。
 - `extract-design.js <名称> x1 y1 x2 y2`（或 `<名称> --blueprint <文件>`）：把存档里的一块区域，或一整个蓝图文件，复制进实验场。
 - `design-lab/`：实验场。把设计（自己的，或从存档复制来的）建在无限供料箱和计数终点旁边，测量产量、断料后残留的物品和采矿机状态，并导出蓝图。
-- `companion/`：配合游玩的小模组（[说明](tools/companion/README.zh-CN.md)）：下面的蓝图书功能，以及游戏记录器（研究、聊天、建造活动、产量；日志自动轮转），由 `recorder-summary.js`（最新状态）和 `recorder-phases.js`（把整局按固定时长分段成时间线，用于根据真实游玩写章节）读取，由 `check-recorder.ps1` 检查。
+- `companion/`：配合游玩的小模组（[说明](tools/companion/README.zh-CN.md)）：下面的蓝图书功能，以及游戏记录器（研究、聊天、建造活动、产量；日志自动轮转），由 `recorder-summary.js`（最新状态）和 `recorder-phases.js`（把整局按固定时长分段成时间线，用于根据真实游玩写章节）读取，由 `check-recorder.ps1` 检查；它还会写出 Factory Planner 里打开的工厂（`/pt-fp`），由 `planner-summary.js` 读取（目标、输入、副产物、耗电，以及每条产线的机器数和速率）。
 - `bp-sync.js` + `companion/` + `check-companion.ps1`：把 `blueprints/` 作为一本蓝图书放进运行中的游戏，并把改过的蓝图导回，见[蓝图](blueprints/README.zh-CN.md#与运行中的游戏同步)。
 - `take-screenshots.ps1`：用图形模式运行实验场来截取游戏内画面。Steam 版游戏会让 Steam 重新启动它，请在 Steam 关于启动参数的弹窗中点确认。实验场会关掉自由模式的坠毁现场和开场动画，否则残骸会压在设计上，开场还会让游戏停住直到按 Tab。
 - `shots.js` + `/pt-shots`（助手模组）：从作者真实的游戏里截图。`shots.js plan` 列出要截的区域，游戏里输入 `/pt-shots` 截图，`shots.js pull` 把图片取回 `images/`。（用 `--benchmark-graphics` 载入真实存档会让游戏崩溃，所以改为在运行中的游戏里截。）

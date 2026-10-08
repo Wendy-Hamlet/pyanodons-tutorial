@@ -86,7 +86,8 @@ parameters for yours.
   blueprint book below, and a play recorder (research, chat, building activity, production;
   rotated logs) read by `recorder-summary.js` (latest state) and `recorder-phases.js` (the
   whole game as a timeline in fixed slices, used to write chapters from real play), checked by
-  `check-recorder.ps1`.
+  `check-recorder.ps1`; it also writes the factory open in Factory Planner (`/pt-fp`), read by
+  `planner-summary.js` (targets, inputs, byproducts, power, every line's machines and rates).
 - `bp-sync.js` + `companion/` + `check-companion.ps1`: moves `blueprints/` into a running
   game as one blueprint book and pulls edited blueprints back; see
   [blueprints](blueprints/README.md#syncing-with-a-running-game).

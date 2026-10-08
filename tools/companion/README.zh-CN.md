@@ -2,11 +2,15 @@
 
 [English](README.md)
 
-配合教程游玩的小模组。它不添加任何游戏内容，只有两个快捷按钮、两条控制台命令、三项地图设置和一段脚本。把本文件夹复制（或链接）到模组目录并命名为 `py-tutorial-companion` 即可安装；可以随时加入或移出存档。
+配合教程游玩的小模组。它不添加任何游戏内容，只有两个快捷按钮、四条控制台命令、三项地图设置和一段脚本。把本文件夹复制（或链接）到模组目录并命名为 `py-tutorial-companion` 即可安装；可以随时加入或移出存档。
 
 ## 蓝图书
 
 "教程蓝图书"（`/pt-book`）把教程的全部蓝图作为一本书放到你手上；"导出手持蓝图"（`/pt-export`）把你手上的蓝图书或蓝图写到 `script-output/py-tutorial-companion/export.txt`。两个方向都由 `tools/bp-sync.js` 配合完成，见[蓝图](../../blueprints/README.zh-CN.md#与运行中的游戏同步)。
+
+## Factory Planner 工厂
+
+装了 [Factory Planner](https://mods.factorio.com/mod/factoryplanner) 时，你在其中打开的工厂每 30 秒检查一次，有变化就写到 `script-output/py-tutorial-companion/planner/<名称>-<哈希>.json`（需开启“记录游戏过程”）；`/pt-fp` 立即写出。FP 的远程接口只提供当前打开的工厂，所以想保留哪个工厂就打开哪个；每个工厂名一个文件，保存最新版本，记录器的时间线会记下每次写出。FP 的暂停按钮开着时（在它的窗口里按 Ctrl + P；作者就是这样设置的），窗口打开期间游戏停住不动，定时写出要等关掉窗口之后；`/pt-fp` 立即写出。`node tools/planner-summary.js` 会把它们列出来：目标、整个工厂的输入、副产物和耗电，以及每条产线的机器数和每分钟速率。
 
 ## 游戏记录器
 

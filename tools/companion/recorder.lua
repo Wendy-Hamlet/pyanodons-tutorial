@@ -1,7 +1,8 @@
 -- Play recorder. Writes what happens in a game to
 -- script-output/py-tutorial-companion/recorder/<map seed>-<tick the recorder started>/:
 --   timeline.jsonl       research started/finished/cancelled, chat, console commands, mod and
---                        game version changes. Small, never rotated.
+--                        game version changes, Factory Planner factories written by planner.lua.
+--                        Small, never rotated.
 --   activity-NNNN.jsonl  a "minute" line every minute (player positions; per surface what was
 --                        built by hand or by robots, ghosts placed, mined, died, tiles; machines
 --                        with positions; items crafted by hand) and a "production" line every 10
@@ -201,6 +202,15 @@ function recorder.on_minute(event)
     if next(surfaces) then activity({ t = event.tick, k = "production", surfaces = surfaces }) end
   end
 end
+
+recorder.enabled = enabled
+
+--- A timeline line from another part of the mod (planner.lua); nil run before on_init.
+function recorder.note(kind, fields)
+  if storage.recorder then timeline(kind, fields) end
+end
+
+function recorder.run() return storage.recorder and storage.recorder.run end
 
 --- For tools/check-recorder.ps1: tiny segments, so rotation happens within minutes.
 function recorder.set_test_limits(segment_bytes, keep)

@@ -9,9 +9,14 @@
 --   /pt-shots:           takes the screenshots listed in shots.lua (written by
 --                        `node tools/shots.js plan`, picked up the same way as the book) into
 --                        script-output/py-tutorial-companion/shots/, for `node tools/shots.js pull`.
--- It also records the game as it is played (recorder.lua).
+--   /pt-fp:              writes the Factory Planner factory you have open to
+--                        script-output/py-tutorial-companion/planner/ (planner.lua), for
+--                        `node tools/planner-summary.js`.
+-- It also records the game as it is played (recorder.lua), including the factory each player has
+-- open in Factory Planner, every 30 seconds when it changed.
 
 local recorder = require("recorder")
+local planner = require("planner")
 
 local EXPORT_FILE = "py-tutorial-companion/export.txt"
 
@@ -125,10 +130,21 @@ local function export_held(player)
   player.print({ "py-tutorial-companion.exported", label or "?", EXPORT_FILE })
 end
 
+--- Writes the player's open FP factory; a timeline line when it was written.
+local function capture_plan(player, force)
+  local name, lines, file, wrote = planner.capture(player, force, recorder.run())
+  if wrote then recorder.note("planner", { player = player.name, factory = name, lines = lines, file = file }) end
+  return name, lines, file
+end
+
 script.on_init(recorder.on_init)
 script.on_configuration_changed(recorder.on_configuration_changed)
 script.on_load(watch_pending)
 recorder.register()
+script.on_nth_tick(planner.EVERY, function()
+  if not recorder.enabled() then return end
+  for _, player in pairs(game.players) do capture_plan(player, false) end
+end)
 
 script.on_event(defines.events.on_lua_shortcut, function(event)
   local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
@@ -153,6 +169,26 @@ commands.add_command("pt-shots", { "py-tutorial-companion.command-shots" }, func
   local player = command.player_index and game.get_player(command.player_index)
   if player then request(player, "shots") end
 end)
+
+-- Its messages fall back to English text in a game started before they were added (locale files
+-- are read at startup, scripts on every load).
+commands.add_command("pt-fp", { "?", { "py-tutorial-companion.command-fp" },
+  "Writes the Factory Planner factory you have open to script-output for tools/planner-summary.js." },
+  function(command)
+    local player = command.player_index and game.get_player(command.player_index)
+    if not player then return end
+    if not planner.available() then
+      player.print({ "?", { "py-tutorial-companion.fp-missing" }, "Factory Planner is not loaded." })
+      return
+    end
+    local name, lines, file = capture_plan(player, true)
+    if not name then
+      player.print({ "?", { "py-tutorial-companion.fp-none" }, "Open a factory in Factory Planner first." })
+    else
+      player.print({ "?", { "py-tutorial-companion.fp-written", name, lines, file },
+        "Factory \"" .. name .. "\" (" .. lines .. " lines) written to script-output/" .. file })
+    end
+  end)
 
 -- For the check scripts (tools/check-companion.ps1, check-recorder.ps1), which have no player.
 remote.add_interface("py-tutorial-companion", {

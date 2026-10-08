@@ -3,7 +3,7 @@
 [中文版](README.zh-CN.md)
 
 A small mod for playing alongside the tutorial. It adds no game content: two shortcut buttons,
-two console commands, three map settings and a script. Install it by copying (or linking) this
+four console commands, three map settings and a script. Install it by copying (or linking) this
 folder into your mods folder as `py-tutorial-companion`; it can be added to or removed from a
 save at any time.
 
@@ -13,6 +13,18 @@ save at any time.
 book; "Export held blueprint" (`/pt-export`) writes the book or blueprint you hold to
 `script-output/py-tutorial-companion/export.txt`. Both directions are driven by
 `tools/bp-sync.js`; see [blueprints](../../blueprints/README.md#syncing-with-a-running-game).
+
+## Factory Planner factories
+
+With [Factory Planner](https://mods.factorio.com/mod/factoryplanner) loaded, the factory you have
+open in it is written to `script-output/py-tutorial-companion/planner/<name>-<hash>.json` every
+30 seconds when it changed (while "Record the game" is on), and at once with `/pt-fp`. FP's remote
+interface only hands out the open factory, so open each factory you want kept; one file per
+factory name holds its latest version, and the recorder's timeline notes each write. With FP's
+pause button on (Ctrl + P in its window; the author's setting) the game stands still while the
+window is open, so the timed write happens after it is closed; `/pt-fp` writes at once.
+`node tools/planner-summary.js` prints them: targets, the factory's inputs, byproducts and power,
+and every line with its machines and rates per minute.
 
 ## Play recorder
 
