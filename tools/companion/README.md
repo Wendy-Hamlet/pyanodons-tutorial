@@ -31,6 +31,12 @@ rewinds the tick; the log simply continues, and readers drop the lines of the ab
 (those with a tick at or after the rewound one) and any segment written before the segment in
 front of it. `tools/recorder-summary.js` does both.
 
+The mod can be added to a save already in progress: recording starts at the tick the save is
+first loaded with it (the run folder is named after that tick), and the first production line
+covers only the minutes up to the next 10-minute mark; the readers average it over those
+minutes. Checked on Factorio 2.1.21 with a 44-minute Py save: start and configuration lines,
+minute lines and the first production line (6.3 minutes) were written.
+
 Map settings ("Mod settings" → "Map"):
 
 - Record the game (on by default).

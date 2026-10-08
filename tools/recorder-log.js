@@ -70,6 +70,10 @@ const clock = (t) => {
   return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
 };
 
+// Game minutes a production line covers: 10, except the first one after a recorder that started
+// mid-game (the mod added to an existing save), which counts from the start line.
+const productionMinutes = (line, firstTick) => Math.min(10, (line.t - firstTick) / 3600);
+
 // Counts merged by display name: several prototypes can share one Chinese name (wreck variants).
 function list(counts, n = 15) {
   const named = {};
@@ -80,4 +84,4 @@ function list(counts, n = 15) {
   return Object.entries(named).sort((a, b) => b[1] - a[1]).slice(0, n).map(([k, v]) => `${k}×${v}`).join('，');
 }
 
-module.exports = { defaultRoot, option, loadRun, zh, tech, clock, list };
+module.exports = { defaultRoot, option, loadRun, zh, tech, clock, list, productionMinutes };

@@ -4,12 +4,12 @@
 // chapters from the author's actual play.
 // Usage: node tools/recorder-phases.js [--slice 5] [--run <id>] [recorder dir]
 
-const { defaultRoot, option, loadRun, tech, clock, list, zh } = require('./recorder-log');
+const { defaultRoot, option, loadRun, tech, clock, list, zh, productionMinutes } = require('./recorder-log');
 
 const args = process.argv.slice(2);
 const slice = Number(option(args, '--slice', 5)) * 3600;
 const runId = option(args, '--run');
-const { run, timeline, activity, lastTick } = loadRun(args[0] || defaultRoot, runId);
+const { run, timeline, activity, firstTick, lastTick } = loadRun(args[0] || defaultRoot, runId);
 
 const GROUPS = [['built', '手动建造'], ['robot_built', '机器人建造'], ['ghosts', '放置虚影'],
   ['mined', '手动拆除/采集'], ['robot_mined', '机器人拆除'], ['ghosts_removed', '移除虚影'],
@@ -32,7 +32,8 @@ function spots(machines) {
 }
 
 console.log(`运行 ${run.name}，按每 ${slice / 3600} 分钟游戏时间分段`);
-for (let start = 0; start <= lastTick; start += slice) {
+// A recorder added to an existing save starts mid-game: begin at the slice holding its start.
+for (let start = Math.floor(firstTick / slice) * slice; start <= lastTick; start += slice) {
   const end = start + slice;
   const inSlice = (l) => l.t >= start && l.t < end;
   const events = timeline.filter(inSlice);
@@ -80,7 +81,7 @@ for (let start = 0; start <= lastTick; start += slice) {
   for (const p of production) {
     for (const [surface, entry] of Object.entries(p.surfaces)) {
       const perMinute = (counts) => Object.fromEntries(Object.entries(counts || {}).map(([n, v]) => [n, Math.round(v)]));
-      console.log(`产量 ${clock(p.t)} ${surface}（前 10 分钟合计）：产出 ${list(perMinute(entry.items_produced), 10)}`);
+      console.log(`产量 ${clock(p.t)} ${surface}（前 ${Number(productionMinutes(p, firstTick).toFixed(1))} 分钟合计）：产出 ${list(perMinute(entry.items_produced), 10)}`);
       if (entry.items_consumed) console.log(`  消耗 ${list(perMinute(entry.items_consumed), 10)}`);
     }
   }

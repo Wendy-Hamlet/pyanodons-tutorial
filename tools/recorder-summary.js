@@ -5,7 +5,7 @@
 //   default dir: %APPDATA%\Factorio\script-output\py-tutorial-companion\recorder; the run whose
 //   files changed last is used unless --run is given.
 
-const { defaultRoot, option, loadRun, tech, clock, list } = require('./recorder-log');
+const { defaultRoot, option, loadRun, tech, clock, list, productionMinutes } = require('./recorder-log');
 
 const args = process.argv.slice(2);
 const minutes = Number(option(args, '--minutes', 30));
@@ -91,14 +91,15 @@ for (const [key, value] of Object.entries(sums)) {
 if (Object.keys(crafted).length) console.log(`手搓：${list(crafted)}`);
 if (!Object.keys(sums).length && !Object.keys(crafted).length) console.log('无建造、拆除或手搓');
 
-h('最近一次产量（10 分钟内，每分钟）');
 const production = [...activity].reverse().find((l) => l.k === 'production');
+const span = production ? productionMinutes(production, firstTick) : 10;
+h(`最近一次产量（${Number(span.toFixed(1))} 分钟内，每分钟）`);
 if (!production) console.log('还没有');
 else {
   for (const [surface, entry] of Object.entries(production.surfaces)) {
     for (const [key, label] of [['items_produced', '物品产出'], ['items_consumed', '物品消耗'], ['fluids_produced', '流体产出'], ['fluids_consumed', '流体消耗']]) {
       if (!entry[key]) continue;
-      const perMinute = Object.fromEntries(Object.entries(entry[key]).map(([n, v]) => [n, Math.round(v / 10 * 10) / 10]));
+      const perMinute = Object.fromEntries(Object.entries(entry[key]).map(([n, v]) => [n, Math.round(v / span * 10) / 10]));
       console.log(`${surface} ${label}（${clock(production.t)}，共 ${Object.keys(entry[key]).length} 种）：${list(perMinute)}`);
     }
   }
