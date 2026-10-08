@@ -14,6 +14,12 @@ maps created with the second game's seed (2652821414) and `--map-gen-settings`, 
 counting water tiles out to 960 tiles. Consumption figures are the first game's cumulative
 production (27.1 game hours).
 
+To play the second game's map, paste [map-exchange-string.txt](map-exchange-string.txt) into
+the new-game screen's map exchange string import (it carries the seed and every map and advanced
+setting; mods are separate). It was read from the save with `game.get_map_exchange_string()`
+and parsed back with `helpers.parse_map_exchange_string`: same seed, same autoplace controls,
+same moisture bias.
+
 ## 1. The preset
 
 - Starting area 4. Every ore: frequency 0.33, size 0.75, richness 4. Py's single deposits

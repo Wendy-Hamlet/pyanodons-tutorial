@@ -6,6 +6,8 @@ Py 推荐地图预设设了什么，作者在第一局（“Pyanodons”，2026-
 
 来源：预设在 `pycoalprocessing/prototypes/map-gen-presets.lua`（pycoalprocessing 3.1.5 与 3.1.7 完全相同）；两个存档都用 `tools/inspect-save.ps1` 读取，它会记下完整的地图生成设置和高级设置；影响是**实测**的：用第二局的种子（2652821414）和 `--map-gen-settings` 生成三张地图，由 `tools/newgame-observer` 统计出生点 320 格内的资源和地形，另用一个一次性探针统计 960 格内的水面格数。消耗量取自第一局的累计产量（游戏时间 27.1 小时）。
 
+想玩第二局的地图，把 [map-exchange-string.txt](map-exchange-string.txt) 粘贴到新游戏地图设置界面的“导入地图共享代码”里（它包含种子和所有地图设置、高级设置；模组另外配置）。这个字符串用 `game.get_map_exchange_string()` 从存档里读出，再用 `helpers.parse_map_exchange_string` 解析回来核对过：种子、资源与地形控制、湿度偏移都一致。
+
 ## 1. 预设
 
 - 起始区域 4。所有矿石：频率 0.33、大小 0.75、丰度 4。Py 的单体矿床（各种“岩”、火山管、硫磺矿脉、地热裂隙等）：频率 0.33、丰度 5。水域：频率 0.75、大小 0.75。悬崖：间隔 80、丰度 3。虫族部落：频率 0。树木保持默认。
