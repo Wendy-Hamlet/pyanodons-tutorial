@@ -111,7 +111,12 @@ a moving belt.
    inserter moves 0.83/s from a passing Raw coal belt onto the start of the fuel belt, dropping
    onto its inner lane. A full Raw coal belt fuels about 22 columns.
 7. **Opening order.** Handcraft all red science until Wood is mass-produced; automate Iron plates
-   (and Raw coal) first.
+   (and Raw coal) first. In their second game the author puts drills before belts: early belts
+   and inserters are dear, so the first plates become Burner mining drills dropping straight into
+   Stone furnaces. From data: a Basic transport belt costs 11 Iron ore + 3 Copper ore per tile
+   (1.375 Iron plates + 0.375 Copper plates); a Burner inserter 68 Iron ore + 12 Copper ore, more
+   than a Burner mining drill (66 Iron ore + 18 Copper ore + 5 Stone), which mines its iron back
+   in 66 seconds on an iron patch.
 8. **Smelting unit.** Ore drill rows and a 10-furnace column on one fuel loop; the drill rows cover
    the whole ore strip and hold more drills than needed, because downstream drills take over when
    upstream ones mine out and blocked drills burn nothing. Uneven rows are mined-out spots. A unit
