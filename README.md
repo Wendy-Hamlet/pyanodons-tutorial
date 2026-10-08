@@ -21,16 +21,21 @@ and design principle in one place) · [Coke, steel, crushing and Ash separation]
 
 ## Setup the chapters were written against
 
-- Factorio 2.1.20. Space Age and Quality disabled; Elevated rails enabled.
-- Pyanodons 3.1.x: pyalienlife 3.1.7, pyalternativeenergy 3.2.8, pycoalprocessing 3.1.5,
-  pyfusionenergy 3.1.4, pyhightech 3.1.4, pyindustry 3.1.5, pypetroleumhandling 3.1.3,
-  pypostprocessing 3.1.5, pyrawores 3.1.4.
+- Factorio 2.1.21 (chapter 1's run). Space Age and Quality disabled; Elevated rails enabled.
+- Pyanodons 3.1.x: pyalienlife 3.1.8, pyalternativeenergy 3.2.9, pycoalprocessing 3.1.7,
+  pyfusionenergy 3.1.5, pyhightech 3.1.5, pyindustry 3.1.6, pypetroleumhandling 3.1.3,
+  pypostprocessing 3.1.6, pyrawores 3.1.4.
+- Earlier: chapter 1's belts-first route (its section 7), the engine measurements and the
+  research notes were made on Factorio 2.1.20 with pyalienlife 3.1.7, pyalternativeenergy 3.2.8,
+  pycoalprocessing 3.1.5, pyfusionenergy 3.1.4, pyhightech 3.1.4, pyindustry 3.1.5 and
+  pypostprocessing 3.1.5. The recipes and buildings chapter 1 uses are the same in both.
 - Non-Py mods that change the early game, called out where they matter:
   - `py_quick_start` gives a starting kit (construction robots and power armor).
   - `pump-anywhere-fork` lets offshore pumps stand on dry land.
   - `DoingThingsByHand` speeds up handcrafting with practice (not covered).
-- The author's map: starting area 400%, ore frequency 33% and richness 400%, no cliffs, no
-  enemy bases, no lakes (hence `pump-anywhere-fork`). Ore positions differ on your map; rates and
+- The author's map (Py-Exploration, seed 2652821414; see [map settings](research/map-settings.md)):
+  starting area 400%, ore frequency 33% and richness 400%, no cliffs, no enemy bases, no lakes
+  (hence `pump-anywhere-fork`). Ore positions differ on your map; rates and
   recipes do not.
 
 ## Conventions

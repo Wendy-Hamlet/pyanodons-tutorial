@@ -128,7 +128,7 @@ One Boiler makes 7.5 Steam/s, enough for 1.85 MW (verified: a Steam engine turns
 since the columns idle), on top of chapter 1's labs, Soil extractor and Flora collector: the
 second Boiler, and soon a second engine pair, comes with this stage. Crushing is power-hungry:
 grade-1 iron costs 2 MJ of crusher time per plate (one Jaw crusher, 1 MW, makes enough Processed
-iron ore for 0.5 plates/s), so crushing the 13.5 Iron ore/s of chapter 1's base would take 5.4
+iron ore for 0.5 plates/s), so crushing the 13.5 Iron ore/s of chapter 1's first-run base would take 5.4
 Jaw crushers and 5.4 MW.
 
 ## Later sources of Coke
@@ -157,11 +157,11 @@ new liquid can be voided by a Sinkhole and every new gas by an Exhaust pipe.
   furnace), 2 Raw coal; a crushed plate burns 3.7 MJ in drills and furnace plus 2 MJ of
   electricity, which costs 4 MJ of Boiler fuel (Steam engines turn half the steam's heat into
   power), so 7.7 MJ, 2.57 Raw coal.
-- **Ash separation** gets rid of Ash; it is no source of metal. Chapter 1's base made about
-  6 Ash/s (see its production table). One Solid separator (10 Ash/s) turns that into 0.3 Coal
+- **Ash separation** gets rid of Ash; it is no source of metal. The base of chapter 1's first run
+  made about 6 Ash/s at 1:10. One Solid separator (10 Ash/s) turns that into 0.3 Coal
   dust/s to store, 0.12 Soot/s and 0.03 Iron oxide/s (0.015 Iron plate/s); the Soot separates
   into 0.012/s each of Iron and Copper ore, 0.006/s each of Aluminium, Zinc and Lead ore, and
-  0.018 Ash/s back. The 5,668 Ash the author carried at the end of chapter 1 is about ten minutes
+  0.018 Ash/s back. The 5,668 Ash the author carried at the end of that run is about ten minutes
   of one separator.
 
 ## To verify in the engine

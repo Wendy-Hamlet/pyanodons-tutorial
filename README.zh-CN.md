@@ -13,13 +13,14 @@
 
 ## 编写时使用的环境
 
-- Factorio 2.1.20。未启用太空时代与品质；启用了高架铁路。
-- Pyanodons 3.1.x：pyalienlife 3.1.7、pyalternativeenergy 3.2.8、pycoalprocessing 3.1.5、pyfusionenergy 3.1.4、pyhightech 3.1.4、pyindustry 3.1.5、pypetroleumhandling 3.1.3、pypostprocessing 3.1.5、pyrawores 3.1.4。
+- Factorio 2.1.21（第一章那局）。未启用太空时代与品质；启用了高架铁路。
+- Pyanodons 3.1.x：pyalienlife 3.1.8、pyalternativeenergy 3.2.9、pycoalprocessing 3.1.7、pyfusionenergy 3.1.5、pyhightech 3.1.5、pyindustry 3.1.6、pypetroleumhandling 3.1.3、pypostprocessing 3.1.6、pyrawores 3.1.4。
+- 更早的部分：第一章里先上传送带的路线（第 7 节）、引擎实测和各篇研究笔记，是在 Factorio 2.1.20 上做的，当时是 pyalienlife 3.1.7、pyalternativeenergy 3.2.8、pycoalprocessing 3.1.5、pyfusionenergy 3.1.4、pyhightech 3.1.4、pyindustry 3.1.5、pypostprocessing 3.1.5。第一章用到的配方和建筑在两者中完全相同。
 - 会影响前期的非 Py mod，在相关处会单独说明：
   - `py_quick_start`：给一套开局物资（建设机器人和能量装甲）。
   - `pump-anywhere-fork`：抽取泵可以放在陆地上。
   - `DoingThingsByHand`：手搓越多越快（本教程不涉及）。
-- 作者的地图：起始区域 400%，矿物频率 33%、丰度 400%，无悬崖、无虫巢、无湖泊（所以需要 `pump-anywhere-fork`）。你的地图上矿的位置会不同，但速率和配方不变。
+- 作者的地图（Py-Exploration，种子 2652821414；见[地图设置](research/map-settings.zh-CN.md)）：起始区域 400%，矿物频率 33%、丰度 400%，无悬崖、无虫巢、无湖泊（所以需要 `pump-anywhere-fork`）。你的地图上矿的位置会不同，但速率和配方不变。
 
 ## 约定
 
