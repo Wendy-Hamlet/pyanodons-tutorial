@@ -188,9 +188,7 @@ plates went into drills and furnaces only, and every new pair started paying bac
   0:50 (2.7 and 1.0 plates/s). The whole base burnt 7.5–8.7 Raw coal/s then (it made that much
   Ash).
 
-![Eight iron pairs at 2:01: each drill drops its ore into the furnace in front of it](../images/ch1-iron-pairs.jpg)
-
-![A row of five copper pairs, drills below and furnaces above](../images/ch1-copper-pairs.jpg)
+![A row of five copper pairs, each drill dropping into the furnace above it](../images/ch1-copper-pairs.jpg)
 
 ### Raw coal without belts
 
@@ -210,8 +208,6 @@ fill.
 Every Stone comes with a Kerogen, so the author's stone corner (0:10–0:15) drops into chests: three
 drills into three Wooden chests, and two inserters filtered to Stone take Stone from two of them
 into two Stone furnaces making bricks. The Kerogen stays in the chests; it is a fuel (2 MJ).
-
-![The stone corner: drills at the bottom drop into chests; Stone-filtered inserters feed the two brick furnaces](../images/ch1-stone-corner.jpg)
 
 ## 4. Power, lab and red science (0:20–0:58)
 
@@ -235,7 +231,7 @@ Boiler and ran a line of 16 Small electric poles to it (0:20–0:30):
   ([techniques](../research/techniques.md), "Some machines drop their products themselves").
 - **One lab** next to them.
 
-![The red science corner: Flora collector on the Native flora patch (left), Soil extractor with its Offshore pump (right), their chests above them, and the lab](../images/ch1-red-science-corner.jpg)
+![The red science corner: the lab at the top, the Soil extractor with its Offshore pump and its chest, and at the bottom left the Native flora patch with the Flora collector's chest; the collector, moved a few tiles south by the time of the picture, shows only its top edge](../images/ch1-red-science-corner.jpg)
 
 ### Red science by hand
 
@@ -548,6 +544,8 @@ Belts first (the first run):
   1:17 read with `tools/inspect-save.ps1`.
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` (areas listed by `tools/shots.js plan`, collected by `tools/shots.js pull`).
+  The second run's pictures were taken after its 2:01 save, when the iron pairs and the stone
+  corner had already been taken down, so those two have none.
 - Prototype values (sizes, power, recipes, stack and slot sizes, technology costs and triggers,
   mining results, rock yields): `data.raw` of the second run's exact mod set, dumped with
   `--dump-data` in the save setup (`tools/save-env.ps1`); the first run's values came from
