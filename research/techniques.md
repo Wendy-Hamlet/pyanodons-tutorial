@@ -82,6 +82,14 @@ a moving belt.
 | Steam engine: 15 Steam/s → 3.7 MW. **Two boilers per engine.** | Data, engine |
 | Offshore pump needs no power; with `pump-anywhere-fork` it works on land. | Data, engine |
 
+## Distillation byproducts
+
+| Fact | Source |
+|---|---|
+| Exhaust pipe: no power; its venting recipe takes 20,000 Coal gas per craft at speed 2. One pipe vented about 88 Coal gas/s, the whole output of five distillation columns. | Data; the author's game ([chapter 2](../chapters/02-coke-steel-crushed-iron.md)) |
+| Tailings pond: 18×18, holds 1,000,000 of one fluid. The author's held 160,300 Tar after about 75 minutes of coke making. | Data; the author's save |
+| Distillation gives Iron oxide by chance, 20 % of the Coal crafts and 30 % of the Coal gas crafts: the author's 1,338 Coal and 690 Coke came with 119 Iron oxide, 124 expected. | Data; the author's save |
+
 ## Research
 
 | Fact | Source |

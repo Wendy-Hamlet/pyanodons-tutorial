@@ -1,6 +1,7 @@
 # Chapter 1 — Landing to red science
 
-[中文版](01-landing-to-red-science.zh-CN.md) · [Index](../README.md)
+[中文版](01-landing-to-red-science.zh-CN.md) · [Index](../README.md) · Next:
+[chapter 2](02-coke-steel-crushed-iron.md)
 
 This chapter follows the author's second recorded run, on the Py-Exploration map (seed
 2652821414, [map settings](../research/map-settings.md)) in Factorio 2.1.21, from an empty map to
@@ -305,7 +306,8 @@ two items behind most buildings of this stage: **Small parts** (in almost everyt
 machine). A mall (Chinese players say 超市; English players also say *hub*) is not balanced: every
 machine just produces, and the slowest step sets the pace.
 
-This one uses no belts at all. Inserters pass the items from machine to machine:
+Blueprint: [`burner-mall.txt`](../blueprints/burner-mall.txt), the author's "初期超市" (early mall).
+It uses no belts at all. Inserters pass the items from machine to machine:
 
 - Top row: Iron gear wheel, Small parts, Bolts, Iron stick. Bottom row: Copper cable, Air-core
   inductors.
@@ -345,9 +347,8 @@ you keep walking the rounds.
 ### Next: coke, steel and crushing
 
 The run went on to steel: distillation columns for Coke, Advanced foundries with Limestone,
-more power and a Raw coal belt, and the first Steel plates between 1:50 and 2:00. That is the
-next chapter; until it is written, see
-[Coke, steel, crushing and Ash separation](../research/coke-and-steel.md).
+more power and a Raw coal belt, and the first Steel plates between 1:50 and 2:00. That is
+[chapter 2](02-coke-steel-crushed-iron.md).
 
 For smelting the author's plan is to keep the pairs until Crusher is researched and the first
 Jaw crushers stand, then automate iron straight away with the crushed recipe, skipping the
@@ -439,14 +440,17 @@ about 8 minutes, and at 0:25 all 62 inserters of the unit stood waiting for item
 coal module.
 
 Blueprint: [`smelting-column.txt`](../blueprints/smelting-column.txt), the author's column for
-iron or copper (in game "0.94" with the two plate icons). The drill rows depend on your ore
-patch, so they are not part of it.
+iron or copper (in game "0.9375" with the two plate icons). The file holds the author's current
+version, which the second run uses for copper ([chapter 2](02-coke-steel-crushed-iron.md)): the
+measured one rotated half a turn, flowing right to left, with two chests at each end instead of
+three. The drill rows depend on your ore patch, so they are not part of it.
 
 ### The Raw coal module
 
 Blueprint: [`blueprints/raw-coal-module.txt`](../blueprints/raw-coal-module.txt) (the author's
 design, also used in the second run from 1:40 on). Measured: **15.0 Raw coal/s, a full belt**,
-plus 1.40 Ash/s collected in chests.
+plus 1.40 Ash/s collected in chests. The file holds the author's current version: the measured
+one mirrored top to bottom, with one belt tile fewer.
 
 - Two rows of Burner mining drills face one output belt; each row fills one lane (8 drills, 16/s
   capacity for 15/s).

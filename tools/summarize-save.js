@@ -98,6 +98,17 @@ console.log(top(items.produced, 30).map(([n, c]) => `${zh('item', n)} ${fmt(c)}`
 h('累计流体产量（前 15）');
 console.log(top((report.fluids || {}).produced, 15).map(([n, c]) => `${zh('fluid', n)} ${fmt(c)}`).join('、'));
 
+// Written only by a run with -Ticks 3700 or more.
+let measured = null;
+try { measured = require(`${dir}/production-measure.json`); } catch { /* no measured run */ }
+if (measured) {
+  h(`实测产量（读档后运行 ${measured.seconds} 秒，每秒）`);
+  const rate = (v) => (v >= 10 ? v.toFixed(1) : v.toFixed(2));
+  const list = (obj, kind, n) => top(obj, n).map(([k, v]) => `${zh(kind, k)} ${rate(v)}`).join('、') || '无';
+  console.log(`产出：${list(measured.items.produced, 'item', 30)}`);
+  console.log(`消耗：${list(measured.items.consumed, 'item', 30)}`);
+  console.log(`流体产出：${list(measured.fluids.produced, 'fluid', 10)}；流体消耗：${list(measured.fluids.consumed, 'fluid', 10)}`);
+}
 h('全地图资源（已生成区域内的矿格数）');
 const tiles = Object.entries(report.resource_tiles || {}).sort((a, b) => b[1] - a[1]);
 console.log(tiles.length ? tiles.map(([n, c]) => `${zh('entity', n)} ${c}`).join('、') : '（报告里没有这项）');

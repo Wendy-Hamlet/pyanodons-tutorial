@@ -303,7 +303,25 @@ local function sample(surface)
       }
     end
     helpers.write_file("cellforge/outpost-measure.json", helpers.table_to_json(result))
-    log("CF-INSPECT wrote outpost measurement over " .. MEASURE_TICKS .. " ticks")
+    -- Production of the whole base over the same minute, per second (items and fluids).
+    local seconds = MEASURE_TICKS / 60
+    local function rates(now, before)
+      local out = {}
+      for name, count in pairs(now) do
+        local d = (count - (before[name] or 0)) / seconds
+        if d > 0 then out[name] = d end
+      end
+      return out
+    end
+    local force = game.forces.player
+    local items = flow(force.get_item_production_statistics(surface))
+    local fluids = flow(force.get_fluid_production_statistics(surface))
+    helpers.write_file("cellforge/production-measure.json", helpers.table_to_json({
+      seconds = seconds,
+      items = { produced = rates(items.produced, m.items0.produced), consumed = rates(items.consumed, m.items0.consumed) },
+      fluids = { produced = rates(fluids.produced, m.fluids0.produced), consumed = rates(fluids.consumed, m.fluids0.consumed) },
+    }))
+    log("CF-INSPECT wrote outpost and production measurement over " .. MEASURE_TICKS .. " ticks")
     storage.measure = nil
   end
 end
@@ -331,7 +349,9 @@ script.on_event(defines.events.on_tick, function()
   storage.done = true
   local groups = outposts(surface)
   helpers.write_file("cellforge/outposts.json", helpers.table_to_json(export_outposts(surface, groups)))
-  storage.measure = { start = game.tick, groups = {} }
+  storage.measure = { start = game.tick, groups = {},
+    items0 = flow(game.forces.player.get_item_production_statistics(surface)),
+    fluids0 = flow(game.forces.player.get_fluid_production_statistics(surface)) }
   for _, g in ipairs(groups) do
     storage.measure.groups[#storage.measure.groups + 1] = {
       resource = g.resource, drills = g.drills, x1 = g.x1, y1 = g.y1, x2 = g.x2, y2 = g.y2,

@@ -2,10 +2,10 @@
 
 [中文版](coke-and-steel.zh-CN.md) · [Index](../README.md)
 
-Reference for the stage after [chapter 1](../chapters/01-landing-to-red-science.md); the chapter
-itself will follow the author's recorded play. Everything here is **from data** (`tools/dump-data.ps1`,
-`tools/recipe-tree.js`) unless it says *verified*; the stage's machines have not been measured in
-the engine yet.
+Reference for the stage of [chapter 2](../chapters/02-coke-steel-crushed-iron.md), which follows
+the author's recorded play of it. Everything here is **from data** (`tools/dump-data.ps1`,
+`tools/recipe-tree.js`) unless it says *verified*; chapter 2 has what the author's blocks measured
+in their game.
 
 ## The main line
 
@@ -164,8 +164,9 @@ new liquid can be voided by a Sinkhole and every new gas by an Exhaust pipe.
   0.018 Ash/s back. The 5,668 Ash the author carried at the end of that run is about ten minutes
   of one separator.
 
-## To verify in the engine
+## Verified since
 
-Distillation, foundry, crusher and separator rates; the Exhaust pipe venting Coal gas without
-limit; a full steel line with its byproducts handled — with `tools/design-lab` once the stage is
-played.
+In the author's game ([chapter 2](../chapters/02-coke-steel-crushed-iron.md)): five columns made
+2.71 Coke/s; one Exhaust pipe vented about 88 Coal gas/s; eight foundries made 0.43–0.44
+Steel/s; six Jaw crushers and 18 furnaces made 3.02 Iron plate/s and their Stone 1.52 Stone
+brick/s. Still open: the Solid separator, and the designs in the design lab.

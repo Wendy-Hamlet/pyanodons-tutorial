@@ -2,7 +2,12 @@
   "label": "Py tutorial",
   "description": "Measured designs from the Pyanodons step-by-step tutorial.",
   "blueprints": [
+    "burner-mall",
+    "smelting-column",
     "raw-coal-module",
-    "smelting-column"
+    "raw-coal-power",
+    "coke-distillation",
+    "steel-foundries",
+    "crushed-iron"
   ]
 }

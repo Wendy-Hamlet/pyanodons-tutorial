@@ -8,8 +8,9 @@
 ## 章节
 
 1. [开局到红瓶](chapters/01-landing-to-red-science.zh-CN.md)
+2. [焦炭、钢材与碎矿炼铁](chapters/02-coke-steel-crushed-iron.zh-CN.md)
 
-参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [焦炭、炼钢、碎矿与灰烬分离](research/coke-and-steel.zh-CN.md)（下一阶段的配方、产率和副产物）· [红瓶 + pY1 工厂](research/red-py1-factory.zh-CN.md)（总线、区块、简易电路板和火车前的关键中间体）· [作者的第一个存档](research/first-save-review.zh-CN.md)（哪些靠手搬，以及取代它们的总线）· [Py 下的铁路](research/py-railway.md)（英文）· [地图设置](research/map-settings.zh-CN.md)（Py 推荐预设、作者的改动及其对地图的影响）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
+参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [焦炭、炼钢、碎矿与灰烬分离](research/coke-and-steel.zh-CN.md)（第二章背后的配方、产率和副产物，以及灰烬分离）· [红瓶 + pY1 工厂](research/red-py1-factory.zh-CN.md)（总线、区块、简易电路板和火车前的关键中间体）· [作者的第一个存档](research/first-save-review.zh-CN.md)（哪些靠手搬，以及取代它们的总线）· [Py 下的铁路](research/py-railway.md)（英文）· [地图设置](research/map-settings.zh-CN.md)（Py 推荐预设、作者的改动及其对地图的影响）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
 
 ## 编写时使用的环境
 
@@ -36,7 +37,7 @@
 - `recipe-tree.js <物品> --techs a,b`：只用某个时间点已解锁的配方展开生产树并汇总原料（中文名）。
 - `rate-plan.js <计划.js> [--build]`：求解一份生产计划（每分钟目标，每种物品指定一个配方，所有速率联立求解，所以副产物和还回来的笼子都算在内）：机器、物品流量、原料、能耗、计划中各区块之间的物流（上总线还是直连），以及建造这些机器的材料；计划里写明燃料时，还会算出烧掉的燃料和留下的灰烬；`local: 'free'` 让只靠水就能做的物品在用它的区块里就地生产，`carry` 让物品以打包形式在区块间运输（石矿以石砖运输），每个区块还会列出需要缓存的副产物。计划文件放在 `research/plans/`。`products.js` 负责读取 2.1 的产物概率，供它和其他配方工具使用。
 - `building-inputs.js <科技,...>`：某个阶段的建筑由哪些物品构成，按用到它的建筑配方数排序（找出超市要做的关键中间体）。
-- `inspect-save.ps1 -Save <存档名|latest|文件.zip> [-Ticks 3700]` + `summarize-save.js` + `render-save-map.js`：先检查存档是否以游玩时完全相同的模组和启动设置载入（不一致就停止，除非加 `-AllowModChanges`），然后只读地读取存档（研究、背包、带朝向和过滤设置的建筑、产量、附近矿物），并画出基地地图；还会找出各个矿区，把每个矿区导出成蓝图字符串，加上 `-Ticks` 时再实测一分钟内的真实开采速度。
+- `inspect-save.ps1 -Save <存档名|latest|文件.zip> [-Ticks 3700]` + `summarize-save.js` + `render-save-map.js`：先检查存档是否以游玩时完全相同的模组和启动设置载入（不一致就停止，除非加 `-AllowModChanges`），然后只读地读取存档（研究、背包、带朝向和过滤设置的建筑、产量、附近矿物），并画出基地地图；还会找出各个矿区，把每个矿区导出成蓝图字符串，加上 `-Ticks` 时再运行一分钟，实测真实开采速度和全基地每秒的产出与消耗。
 - `render-area.js x1 y1 x2 y2 out.png`：把存档里的一块区域画成放大图并输出字符网格，便于逐格读懂结构。
 - `trace-layout.js x1 y1 x2 y2`：一块区域的物流：每条带线运什么、谁往上放、谁从上取，流体网络（连通的管段及其流体），以及每台机器的进出。存档快照会记录传送带上的物品、流体和过滤模式。
 - `manual-links.js [x1 y1 x2 y2]`：存档里还靠手搬的环节：只进不出的箱子（要手取）、只出不进的箱子（要手补）、手放原料的机器、手加燃料的热能设备，以及两头都靠手的物品（总线该替代的环节）。存档快照会记录箱子和机器里的物品；`logistics.js` 是它和 `trace-layout.js` 共用的传送带与机械臂解读。

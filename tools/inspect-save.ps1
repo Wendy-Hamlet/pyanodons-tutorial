@@ -3,7 +3,7 @@
 # runs it headlessly and leaves save-report.json, entities.json and outposts.json (mining outposts
 # with blueprint strings) in C:\tmp\cf-save\data\script-output\cellforge. With -Ticks 3700 or more
 # it also runs the save for a minute and writes outpost-measure.json (real mining rates, drill
-# status samples).
+# status samples) and production-measure.json (what the whole base made and used per second).
 #
 # Consistency check: the inspector records what the game reports as changed when the save is
 # loaded (mods added, removed or updated, startup settings, game version). Any mod or settings

@@ -10,10 +10,11 @@ scripts used, so you can re-check them against your own mod versions.
 ## Chapters
 
 1. [Landing to red science](chapters/01-landing-to-red-science.md)
+2. [Coke, steel and crushed iron](chapters/02-coke-steel-crushed-iron.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
-(the next stage's recipes, rates and byproducts) · [The red + pY1 factory](research/red-py1-factory.md)
+(the recipes, rates and byproducts behind chapter 2, and Ash separation) · [The red + pY1 factory](research/red-py1-factory.md)
 (bus, blocks, Simple circuit boards and the key intermediates before trains) ·
 [The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) ·
 [Map settings](research/map-settings.md) (Py's preset, the author's edits and what they do to the map) ·
@@ -72,7 +73,8 @@ parameters for yours.
   settings it was played with (it stops otherwise, unless `-AllowModChanges`); then a
   read-only snapshot of the save (research, inventory, buildings with directions and filters,
   production, nearby ore) and a PNG map; also finds mining outposts, exports each as a blueprint
-  string and, with `-Ticks`, measures their real mining rates for a minute.
+  string and, with `-Ticks`, runs the save one more minute to measure real mining rates and
+  everything the base makes and uses per second.
 - `render-area.js x1 y1 x2 y2 out.png`: close-up PNG plus a character grid of one area of a
   snapshot, for reading a structure tile by tile.
 - `trace-layout.js x1 y1 x2 y2`: the logistics of an area of a snapshot: belt lines with what
