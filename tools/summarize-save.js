@@ -13,8 +13,11 @@ const top = (obj, n) => Object.entries(obj || {}).sort((a, b) => b[1] - a[1]).sl
 const fmt = (v) => (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? (v / 1e3).toFixed(1) + 'k' : String(Math.round(v)));
 const h = (title) => console.log(`\n## ${title}`);
 
-const hours = report.ticks_played / 60 / 3600;
-console.log(`游戏时长 ${hours.toFixed(1)} 小时（tick ${report.tick}）`);
+// game.tick stands still while the game is tick-paused (Factory Planner's pause option, for one);
+// ticks_played keeps counting, so the difference is the time spent paused.
+const hours = report.tick / 60 / 3600;
+const paused = (report.ticks_played - report.tick) / 60 / 3600;
+console.log(`游戏时长 ${hours.toFixed(1)} 小时（tick ${report.tick}）${paused >= 0.05 ? `，另有 ${paused.toFixed(1)} 小时游戏停住（如 Factory Planner 的暂停）` : ''}`);
 const changed = Object.entries((report.config && report.config.mod_changes) || {});
 if (changed.length || (report.config && report.config.startup_settings_changed)) {
   console.log(`注意：读档环境与存档不一致（${changed.map(([n, c]) => `${n} ${c.old || '无'}→${c.new || '无'}`).join('，')}${report.config.startup_settings_changed ? ' 启动设置不同' : ''}）`);
