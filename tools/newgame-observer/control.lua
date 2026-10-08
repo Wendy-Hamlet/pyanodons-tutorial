@@ -1,6 +1,7 @@
 -- Records what a brand-new game offers, during map creation (--create): starting items from the
 -- freeplay scenario, recipes and technologies available at tick 0, crash-site entities and the
--- resource patches around spawn. Writes script-output/cellforge/newgame-report.json.
+-- resource patches and the terrain (trees, rocks, water, tiles) around spawn. Writes
+-- script-output/cellforge/newgame-report.json.
 
 local RADIUS = 320 -- tiles around spawn to scan for resources
 
@@ -53,6 +54,31 @@ local function resources(surface, spawn)
   return out
 end
 
+--- What else the map settings change within RADIUS: trees, rocks (simple entities by name),
+--- fish, cliffs, enemies, and the tile mix (autoplaced tiles only; water is a tile).
+local function terrain(surface, spawn)
+  local area = { { spawn.x - RADIUS, spawn.y - RADIUS }, { spawn.x + RADIUS, spawn.y + RADIUS } }
+  local count = function(filter)
+    filter.area = area
+    return surface.count_entities_filtered(filter)
+  end
+  local rocks = {}
+  for _, e in pairs(surface.find_entities_filtered({ area = area, type = "simple-entity" })) do
+    rocks[e.name] = (rocks[e.name] or 0) + 1
+  end
+  local tiles = {}
+  for name, tile in pairs(prototypes.tile) do
+    if tile.autoplace_specification then
+      local n = surface.count_tiles_filtered({ area = area, name = name })
+      if n > 0 then tiles[name] = n end
+    end
+  end
+  return {
+    trees = count({ type = "tree" }), fish = count({ type = "fish" }), cliffs = count({ type = "cliff" }),
+    enemies = count({ force = "enemy" }), rocks = rocks, tiles = tiles,
+  }
+end
+
 script.on_init(function()
   local surface = game.surfaces.nauvis
   local force = game.forces.player
@@ -77,6 +103,7 @@ script.on_init(function()
     character_crafting_categories = prototypes.entity.character.crafting_categories,
     crash_site = site,
     resources = resources(surface, spawn),
+    terrain = terrain(surface, spawn),
     radius = RADIUS,
   }
   helpers.write_file("cellforge/newgame-report.json", helpers.table_to_json(report))

@@ -9,8 +9,10 @@ summaries, so the numbers below compare like with like.
 
 ## 1. Same start, different maps
 
-Both games use the Py quick start, starting area 4, cliffs off, enemies with expansion, tech price
-1; I copied the author's map settings. The seeds differ (1247658814 and 943562787), so the maps do
+Both games use the Py quick start and the author's edit of Py's map preset: starting area 4, no
+cliffs, no enemy bases (enemy base size set to none; expansion is switched on but has nothing to
+expand), no lakes besides the starting lake (water coverage none), tech price 1; I copied the
+author's map settings (see [map settings](../map-settings.md)). The seeds differ (1247658814 and 943562787), so the maps do
 too: my base sat on a 27 M Raw coal patch 34 tiles from its centre, the author's nearest patches
 were Iron (6 M, 72 tiles) and Raw coal (34 M, 176 tiles).
 

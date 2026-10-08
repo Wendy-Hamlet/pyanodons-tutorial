@@ -16,6 +16,7 @@ and design principle in one place) · [Coke, steel, crushing and Ash separation]
 (the next stage's recipes, rates and byproducts) · [The red + pY1 factory](research/red-py1-factory.md)
 (bus, blocks, Simple circuit boards and the key intermediates before trains) ·
 [The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) ·
+[Map settings](research/map-settings.md) (Py's preset, the author's edits and what they do to the map) ·
 [Blueprints](blueprints/README.md) (measured designs, ready to import).
 
 ## Setup the chapters were written against
@@ -97,7 +98,8 @@ parameters for yours.
   lists areas, `/pt-shots` in game takes them, `shots.js pull` copies them into `images/`.
   (Loading a real save with `--benchmark-graphics` crashed the game, so this goes through the
   running game instead.)
-- `newgame-observer/` + `summarize-newgame.js`: what a fresh game offers; create the map with
+- `newgame-observer/` + `summarize-newgame.js`: what a fresh game offers (also the resources,
+  trees, rocks and tiles around spawn, to compare map settings); create the map with
   `--map-gen-settings` taken from a snapshot to reproduce a world.
 - `belt-lab/`, `ch1-probe/`, `drill-probe/`, `inserter-probe/`, `train-probe/`, `station-probe/`:
   engine measurements behind the chapters and research notes. `run-probe.ps1 <probe>` runs one

@@ -44,6 +44,35 @@ local function technologies(force)
   }
 end
 
+-- The advanced map settings a map preset can set (MapSettings and DifficultySettings are
+-- LuaStructs, which table_to_json cannot write, so the fields are copied by name).
+local ADVANCED = {
+  pollution = { "enabled", "diffusion_ratio", "min_to_diffuse", "ageing", "expected_max_per_chunk",
+    "min_to_show_per_chunk", "min_pollution_to_damage_trees", "pollution_with_max_forest_damage",
+    "pollution_per_tree_damage", "pollution_restored_per_tree_damage",
+    "enemy_attack_pollution_consumption_modifier" },
+  enemy_evolution = { "enabled", "time_factor", "destroy_factor", "pollution_factor" },
+  enemy_expansion = { "enabled", "max_expansion_distance", "friendly_base_influence_radius",
+    "enemy_building_influence_radius", "building_coefficient", "other_base_coefficient",
+    "neighbouring_chunk_coefficient", "neighbouring_base_chunk_coefficient",
+    "max_colliding_tiles_coefficient", "settler_group_min_size", "settler_group_max_size",
+    "min_expansion_cooldown", "max_expansion_cooldown", "min_expansion_distance",
+    "build_base_unit_dispatch_cooldown" },
+}
+
+local function advanced_settings()
+  local out = {}
+  for group, keys in pairs(ADVANCED) do
+    out[group] = {}
+    for _, key in ipairs(keys) do out[group][key] = game.map_settings[group][key] end
+  end
+  local d = game.difficulty_settings
+  out.difficulty_settings = {
+    technology_price_multiplier = d.technology_price_multiplier, spoil_time_modifier = d.spoil_time_modifier,
+  }
+  return out
+end
+
 local function players()
   local out = {}
   for _, player in pairs(game.players) do
@@ -324,6 +353,7 @@ script.on_event(defines.events.on_tick, function()
     end),
     -- Complete settings, usable as --map-gen-settings to recreate this world.
     map_gen_settings = safe(function() return surface.map_gen_settings end),
+    advanced_settings = safe(advanced_settings),
     enemy_expansion = safe(function() return game.map_settings.enemy_expansion.enabled end),
     technology_price_multiplier = safe(function() return game.difficulty_settings.technology_price_multiplier end),
     pollution = safe(function() return surface.get_total_pollution() end),

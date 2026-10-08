@@ -25,7 +25,17 @@ const map = report.map || {};
 console.log(`种子 ${map.seed}，起始区域 ${map.starting_area}，无敌人模式 ${map.no_enemies}，和平模式 ${map.peaceful}，虫巢扩张 ${report.enemy_expansion}，科技价格倍率 ${report.technology_price_multiplier}`);
 const controls = map.autoplace_controls || {};
 const unusual = Object.entries(controls).filter(([, c]) => c.frequency !== 1 || c.size !== 1 || c.richness !== 1);
-console.log(unusual.length ? '非默认资源设置：' + unusual.map(([n, c]) => `${n}(频率${c.frequency} 大小${c.size} 丰度${c.richness})`).join('，') : '资源生成全部为默认值');
+const r3 = (x) => Math.round(x * 1000) / 1000;
+console.log(unusual.length ? '非默认资源设置：' + unusual.map(([n, c]) => `${n}(频率${r3(c.frequency)} 大小${r3(c.size)} 丰度${r3(c.richness)})`).join('，') : '资源生成全部为默认值');
+const expressions = Object.entries((report.map_gen_settings || {}).property_expression_names || {});
+if (expressions.length) console.log('地形表达式：' + expressions.map(([k, v]) => `${k} = ${v}`).join('，'));
+const adv = report.advanced_settings; // inspectors from 2026-10-08 on
+if (adv && !adv.error) {
+  const ex = adv.enemy_expansion;
+  console.log(`污染 ${adv.pollution.enabled ? '开' : '关'}；进化系数 时间 ${adv.enemy_evolution.time_factor}、摧毁 ${adv.enemy_evolution.destroy_factor}、污染 ${adv.enemy_evolution.pollution_factor}；` +
+    `扩张 ${ex.enabled ? `开（最远 ${ex.max_expansion_distance} 区块，冷却 ${ex.min_expansion_cooldown / 3600}–${ex.max_expansion_cooldown / 3600} 分钟）` : '关'}；` +
+    `腐坏时间倍率 ${adv.difficulty_settings.spoil_time_modifier}`);
+}
 
 h('研究');
 const r = report.research;
