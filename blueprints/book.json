@@ -8,6 +8,12 @@
     "raw-coal-power",
     "coke-distillation",
     "steel-foundries",
-    "crushed-iron"
+    "crushed-iron",
+    "burner-belt-mall",
+    "raw-coal-power-two-belts",
+    "ash-separation",
+    "soot-separation",
+    "iron-oxide-smelting",
+    "coal-dust-power"
   ]
 }

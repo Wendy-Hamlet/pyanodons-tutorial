@@ -1,6 +1,6 @@
 # 第二章：焦炭、钢材与碎矿炼铁
 
-[English](02-coke-steel-crushed-iron.md) · [目录](../README.zh-CN.md) · 上一章：[第一章](01-landing-to-red-science.zh-CN.md)
+[English](02-coke-steel-crushed-iron.md) · [目录](../README.zh-CN.md) · 上一章：[第一章](01-landing-to-red-science.zh-CN.md) · 下一章：[第三章](03-ash-separation-raw-coal-power.zh-CN.md)
 
 本章接着第一章那局有记录的游戏，从 0:40 放下第一台蒸馏塔，到 3:37 为止：用原煤做焦炭、炼钢、为两者供电、碎矿技术，以及终于实现的冶炼自动化——铁走颚式破碎机，铜用烧燃料的冶炼列。这一阶段的每个区块都由作者自己的蓝图建成，现在都放在[蓝图](../blueprints/README.zh-CN.md)里。文中时间是游戏时间（作者另有 1.2 小时把游戏停在 Factory Planner 里，不计入游戏时间）。数字来自游戏数据、记录器按每 10 分钟统计的产量，以及把 3:37 的存档再运行一分钟的实测（`tools/inspect-save.ps1 -Ticks 3700`）。
 

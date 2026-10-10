@@ -11,6 +11,7 @@ scripts used, so you can re-check them against your own mod versions.
 
 1. [Landing to red science](chapters/01-landing-to-red-science.md)
 2. [Coke, steel and crushed iron](chapters/02-coke-steel-crushed-iron.md)
+3. [Ash separation and Raw coal power](chapters/03-ash-separation-raw-coal-power.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -114,8 +115,9 @@ parameters for yours.
   (copies it into the fixed setup, creates a map, runs it, prints its results, removes it).
 - `save-probe.ps1 -Save <save> -Probe <probe> [-Variant <name>]`: runs a measurement mod inside a
   copy of one of the author's saves (save-reading setup; the save itself is only copied), e.g.
-  `steel-probe/`: the chapter 2 steel site (empties the steel chest and the Boilers' Ash, sets the
-  Soil extractors' circuit condition per variant, records every foundry's output, status and
+  `steel-probe/`: the steel site of chapters 2 and 3 (empties the steel chest and the Boilers' Ash,
+  sets the Soil extractors' circuit condition per variant, `ltN` for Limestone < N, `,coke` to top
+  the foundries up with Coke; records every foundry's output, status and
   missing ingredient).
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see

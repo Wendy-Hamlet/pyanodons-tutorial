@@ -4,10 +4,13 @@
 -- not the limit) and sets the Soil extractors' circuit condition
 -- by variant; then, after a two-minute warm-up, it samples every steel foundry for ten minutes:
 -- Steel made, status, and which ingredient is short whenever one waits.
--- Variants: "as-built" (Limestone < 5, the author's), "lt10" (Limestone < 10), "off" (no
--- condition: the extractor always runs).
+-- Variants: "as-built" (the condition the save has), "ltN" (Limestone < N), "off" (no
+-- condition: the extractor always runs). A ",coke" suffix tops every foundry up to 10 Coke each
+-- second, for saves whose Coke supply has stopped (the question here is Limestone only).
 
 local variant = require("variant")
+local threshold = tonumber(variant:match("^lt(%d+)"))
+local top_up_coke = variant:find(",coke", 1, true) ~= nil
 local WARM, MEASURE, EVERY = 7200, 36000, 60
 local NEED = { ["iron-ore"] = 20, coke = 5, limestone = 5 }
 
@@ -64,8 +67,8 @@ script.on_init(function()
       if cb then
         local c = cb.circuit_condition
         condition = condition or string.format("%s %s %s", c.first_signal and c.first_signal.name or "?", c.comparator, tostring(c.constant))
-        if variant == "off" then cb.circuit_enable_disable = false
-        elseif variant == "lt10" then c.constant = 10; cb.circuit_condition = c end
+        if variant:match("^off") then cb.circuit_enable_disable = false
+        elseif threshold then c.constant = threshold; cb.circuit_condition = c end
       end
     end
   end
@@ -81,6 +84,13 @@ script.on_nth_tick(EVERY, function()
   local p = storage.probe
   if not p then return end
   local t = game.tick - p.start
+  if top_up_coke then
+    for _, r in ipairs(p.rows) do
+      local inv = r.e.get_inventory(defines.inventory.crafter_input)
+      local n = inv.get_item_count("coke")
+      if n < 10 then p.coke = (p.coke or 0) + inv.insert({ name = "coke", count = 10 - n }) end
+    end
+  end
   if t < WARM then return end
   if not p.finished0 then
     p.finished0 = true
@@ -110,8 +120,8 @@ script.on_nth_tick(EVERY, function()
       out("foundry %d at x %.0f: %d Steel = %.2f/min; status samples: %s; short of: %s",
         i, r.e.position.x, made, made / (MEASURE / 3600), list(r.status), list(r.short))
     end
-    out("total %.3f Steel/s over %d s (data: 0.533 for 8 foundries); extractor status samples: %s",
-      total / (MEASURE / 60), MEASURE / 60, list(p.ext_status))
+    out("total %.3f Steel/s over %d s (data: 0.533 for 8 foundries); extractor status samples: %s%s",
+      total / (MEASURE / 60), MEASURE / 60, list(p.ext_status), top_up_coke and string.format("; topped up %d Coke", p.coke or 0) or "")
     -- Which lane carries what on the belts below the foundries (Coke and Steel share one belt).
     local f1, f8 = p.rows[1].e.position, p.rows[#p.rows].e.position
     local belts = game.surfaces.nauvis.find_entities_filtered({

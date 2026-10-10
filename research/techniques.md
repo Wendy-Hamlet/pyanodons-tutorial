@@ -56,6 +56,7 @@ a moving belt.
 | Fact | Source |
 |---|---|
 | Some machines drop their products themselves, like a mining drill, so they need no output inserter (inserters can add throughput): Soil extractor, Sap extractor, Wood processing unit, Sand extractor, Classifier, Ground borer, Clay pit, Casting unit (prototype field `vector_to_place_result`). | Data |
+| A circuit that starts a supplier below a threshold must cover two batches when the supplier is slower than the consumer: a Soil extractor (8 Limestone per 20 s) feeding an Advanced foundry (5 per 15 s) gives 0.435 Steel/s for 8 pairs at < 5, 0.493 at < 8 and the full 0.533 from < 10 up. | Engine, `tools/save-probe.ps1` + `tools/steel-probe`; a tick model agrees (chapter 3) |
 | A Soil extractor facing north drops 3.8 tiles below its centre, on the tile just past its bottom edge. A Foundry standing there gets the Limestone directly (24 Limestone in 60 s, all inside the Foundry); a belt there gets it on one lane only, the lane nearer the extractor. | Engine, `tools/inserter-probe` |
 | The author's steel site stacks one Soil extractor on each Foundry this way. According to the author, a splitter can spread a port's output evenly over both lanes of a belt (not measured yet). | Author's save, author |
 | Taking from a Stone furnace or Boiler, an inserter takes the product **and** the Ash, never the fuel. | Engine, `tools/ch1-probe` |
@@ -73,6 +74,9 @@ a moving belt.
 | A Burner mining drill that cannot drop its ore ("waiting for space") burns nothing: 0.01 MJ in a minute, against 14.5 MJ for a working one. | Engine, `tools/drill-probe` |
 | An inserter never takes fuel out of a furnace, so one filtered to everything *but* Ash (blacklist) takes only the product. | Engine (`tools/ch1-probe`), seen in the author's run |
 | Ash separation (a red technology) is the early way to get rid of Ash: a Solid separator MK 01 (electric, 1.5 MW) turns 10 Ash per second into Coal dust (50 %), Soot (20 %) and Iron oxide (5 %). | Data (`data-raw-dump.json`) |
+| Ash separation returns half the fuel it costs: 10 Ash take 1.5 MJ of electricity (3 MJ of Boiler fuel) and give 0.5 Coal dust (1.5 MJ). Separating all Ash costs about 5 % more Raw coal. Coal dust is a 3 MJ fuel like Raw coal, stacks to 100 and burns to Ash again. | Data ([chapter 3](../chapters/03-ash-separation-raw-coal-power.md)) |
+| Soot separation: 2 Soot → Iron ore and Copper ore 20 % each, Ash 30 %, Aluminium, Zinc and Lead ore 10 % each, 1 s. Iron oxide smelts 20 → 10 Iron plates in 3.5 s in a Stone furnace (5.7 Iron oxide/s per furnace). | Data; the author's game (chapter 3) |
+| A Solid separator at full speed needs 13 Mechanical inserters on Ash (13 × 0.83 = 10.8/s from a moving belt). | Data, inserter measurement; the author's design |
 
 ## Steam power
 
@@ -81,6 +85,8 @@ a moving belt.
 | Boiler: 3.7 MW, 7.5 Steam/s at 250 °C, 1.23 Raw coal/s at full load. | Data, engine |
 | Steam engine: 15 Steam/s → 3.7 MW. **Two boilers per engine.** | Data, engine |
 | Offshore pump needs no power; with `pump-anywhere-fork` it works on land. | Data, engine |
+| The electric network loads every Steam engine that has steam by the same share of what it can deliver. Two engines behind two Coal dust Boilers (one engine's steam) take two shares, so those Boilers run twice as hard as the rest and burn the Coal dust first (the author's trick). In the author's save the computed share, 2.0 Coal dust/s, matched the 2.03/s burnt. | Data; the author's save (chapter 3) |
+| A Boiler with no water does nothing: the author's 24-Boiler station had its Offshore pump at one end and a gap between its halves, so only 12 Boilers worked (22.2 of 44.4 MW). | The author's save (chapter 3) |
 
 ## Distillation byproducts
 
@@ -88,6 +94,8 @@ a moving belt.
 |---|---|
 | Exhaust pipe: no power; its venting recipe takes 20,000 Coal gas per craft at speed 2. One pipe vented about 88 Coal gas/s, the whole output of five distillation columns. | Data; the author's game ([chapter 2](../chapters/02-coke-steel-crushed-iron.md)) |
 | Tailings pond: 18×18, holds 1,000,000 of one fluid. The author's held 160,300 Tar after about 75 minutes of coke making. | Data; the author's save |
+| A column stops as soon as one output has no way out: with the Exhaust pipe removed, the author's five columns filled their Coal gas pipes within minutes and stopped Coke, and with it Steel. A Tailings pond takes any one fluid, so it can store Coal gas as well as Tar. | The author's save (chapter 3); data |
+| Aluminium ore can only be mined with Coal gas as the mining fluid (Fluid mining drill, Mining with fluid). | Data |
 | Distillation gives Iron oxide by chance, 20 % of the Coal crafts and 30 % of the Coal gas crafts: the author's 1,338 Coal and 690 Coke came with 119 Iron oxide, 124 expected. | Data; the author's save |
 
 ## Research
@@ -144,6 +152,12 @@ a moving belt.
    32,000 bricks, i.e. 64,000 Stone, against 1,600 Stone), and a Jaw crusher turns 4 bricks back
    into 8 Stone where Stone is needed, for some fuel (smelting) and power (crushing). The bus then
    carries half as many items. Plan option `carry` in `rate-plan.js`.
+13. **Ash on belts to Solid separators, not into chests.** Every fuel loop and furnace row passes its
+   Ash lane on to one Ash belt ending at the separators; their Coal dust goes back into Boilers and
+   furnaces, their Soot into Soot separation, their Iron oxide into furnaces, each through a buffer
+   chest. Size the separators for the Ash already piled up, not only for what the base makes.
+14. **Burn byproduct fuel first** by giving its Boilers one Steam engine more than their steam needs
+   (see Steam power).
 
 ## Trains
 
