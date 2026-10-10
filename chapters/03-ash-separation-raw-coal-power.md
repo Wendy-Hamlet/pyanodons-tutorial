@@ -140,16 +140,21 @@ Coal dust Boilers) comes back north on a second belt and joins it just before th
 
 Blueprint: [`ash-separation.txt`](../blueprints/ash-separation.txt), "灰烬分离".
 
-- **Three Solid separators in a row.** The Ash belt splits into two that pass above and below the
-  row. A separator at full speed eats 10 Ash/s, so it gets **13 inserters** (13 × 0.83 = 10.8/s):
-  20 inserters on the belt above, 19 on the belt below, for the three.
+- **Three Solid separators in a row** between two belts, one above the row and one below. A
+  separator at full speed eats 10 Ash/s, so it gets **13 inserters** (13 × 0.83 = 10.8/s): 20
+  inserters on the belt above, 19 on the belt below, for the three. **Only the belt above has a
+  source:** the Ash belt runs onto it, while the belt below starts at the block's west edge with
+  nothing feeding it, in the blueprint and in the author's base. (Corrected after chapter 4: this
+  section first said the Ash belt splits into both.)
 - **Outputs.** On the west side of each separator three inserters, filtered to Coal dust, Soot
   and Iron oxide, put them on three belts running west. Each belt passes a buffer chest (an
   inserter in, an inserter out; two chests for the Coal dust), then joins the long belts south.
-- **Capacity 30 Ash/s.** The base made 15.5 in the measured minute, so after the backlog one and a
-  half separators' worth would do; at 6:13 two of the three stood short of Ash.
+- **Capacity 30 Ash/s with both belts fed, 15 as built.** One belt carries 15 Ash/s. On the
+  bench of chapter 4 (section 7) the block runs at 50 % with only the belt above full and at
+  100 % (29.9 Ash/s) with both. The base made 15.5 in the measured minute, so after the backlog one
+  and a half separators' worth would do; at 6:13 two of the three stood short of Ash.
 
-![The Ash separation block: the Ash belt from the left splits above and below three Solid separators; Coal dust, Soot and Iron oxide leave to the left through their buffer chests](../images/ch3-ash-separation.jpg)
+![The Ash separation block: the Ash belt from the left runs above three Solid separators; the belt below them has no source and stays empty; Coal dust, Soot and Iron oxide leave to the left through their buffer chests](../images/ch3-ash-separation.jpg)
 
 ## 5. Power on two belts of Raw coal
 
@@ -328,7 +333,7 @@ the book.
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` after 6:13.
 
-Next: aluminium ore mining, glass making and logs (chapter 4, not written yet). The log chain needs
-both of the others: a Botanical nursery MK 01 takes 10 Glass and a Moss farm MK 01 10 Aluminium
-plates (from data).
+Next: [chapter 4](04-aluminium-glass-logs.md), aluminium mining, glass making and log production.
+The log chain needs both of the others: a Botanical nursery MK 01 takes 10 Glass and a Moss farm
+MK 01 10 Aluminium plates (from data).
 

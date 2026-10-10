@@ -12,6 +12,7 @@ scripts used, so you can re-check them against your own mod versions.
 1. [Landing to red science](chapters/01-landing-to-red-science.md)
 2. [Coke, steel and crushed iron](chapters/02-coke-steel-crushed-iron.md)
 3. [Ash separation and Raw coal power](chapters/03-ash-separation-raw-coal-power.md)
+4. [Aluminium mining, glass making and log production](chapters/04-aluminium-glass-logs.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -119,6 +120,14 @@ parameters for yours.
   sets the Soil extractors' circuit condition per variant, `ltN` for Limestone < N, `,coke` to top
   the foundries up with Coke; records every foundry's output, status and
   missing ingredient).
+- `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
+  blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
+  filled), powers every electric network from an energy interface, keeps the input belts full and
+  empties the output belts by script, lets labs research without end, and reports every machine's
+  crafts against its recipe at its actual speed, status samples, the ingredient a waiting machine
+  lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
+  sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
+  save-reading setup.
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see
   [its README](tools/agent/README.md). Its play journal is [research/agent-play](research/agent-play/journal.md).

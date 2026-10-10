@@ -2,9 +2,9 @@
 
 [English](README.md)
 
-到目前为止作者为教程准备的蓝图书。用游戏内的"导入字符串"按钮导入文件内容；`book.txt` 把全部蓝图装成一本蓝图书（顺序和书名见 `book.json`）。详细讲解见[第一章](../chapters/01-landing-to-red-science.zh-CN.md)、[第二章](../chapters/02-coke-steel-crushed-iron.zh-CN.md)和[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md)。
+到目前为止作者为教程准备的蓝图书。用游戏内的"导入字符串"按钮导入文件内容；`book.txt` 把全部蓝图装成一本蓝图书（顺序和书名见 `book.json`）。详细讲解见[第一章](../chapters/01-landing-to-red-science.zh-CN.md)、[第二章](../chapters/02-coke-steel-crushed-iron.zh-CN.md)、[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md)和[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md)。
 
-数字的来源：第一章的两个燃烧设计由 `tools/design-lab` 在引擎中建造并运行过（游戏时间 5 分钟，第一分钟之后开始计量），用的是下面实验场截图里的版本；文件里现在是作者当前的版本，只是转了方向，其余相同（各条目里有说明）。第二章的设计是在作者游戏里原地实测的：记录器的产量统计（每 10 分钟一段），以及 `tools/inspect-save.ps1 -Ticks 3700` 把 3:37 的存档再运行一分钟；它们没有在实验场里跑过。第三章的设计同样如此，用的是 6:13 的存档（再运行一分钟），炼钢区另外在该存档的副本上做了引擎测试（`tools/save-probe.ps1`）。
+数字的来源：第一章的两个燃烧设计由 `tools/design-lab` 在引擎中建造并运行过（游戏时间 5 分钟，第一分钟之后开始计量），用的是下面实验场截图里的版本；文件里现在是作者当前的版本，只是转了方向，其余相同（各条目里有说明）。第二章的设计是在作者游戏里原地实测的：记录器的产量统计（每 10 分钟一段），以及 `tools/inspect-save.ps1 -Ticks 3700` 把 3:37 的存档再运行一分钟；它们没有在实验场里跑过。第三章的设计同样如此，用的是 6:13 的存档（再运行一分钟），炼钢区另外在该存档的副本上做了引擎测试（`tools/save-probe.ps1`）。从第四章起，设计还会放到蓝图测试台上跑（`tools/bp-bench.ps1`）：空地图上只有这张蓝图，电力无限，输入带满载，输出带清空，每台机器的完成次数与它的满速相比。
 
 | 文件 | 游戏内名称 | 内容 | 实测 |
 |---|---|---|---|
@@ -17,10 +17,12 @@
 | `crushed-iron.txt` | 3 [铁板] | 一满带铁矿上的 6 台颚式破碎机、18 台炼铁石炉和 5 台石砖炉 | 每秒 3.02 块铁板、1.52 块石砖 |
 | `burner-belt-mall.txt` | 初期爪带超市 | 作者的第二个超市：7 台热能组装机用总线上的板做工业机械臂、基础传送带和小部件 | 未实测（箱子装满后停机） |
 | `raw-coal-power-two-belts.txt` | 两满带原煤发电 | 两条原煤带上的 24 台锅炉和 12 台蒸汽机，灰烬送上方 3 台固体分离机 | 数据推算 44.4 MW、每秒 29.6 个原煤。6:13 时只有东半边有水（最多 22.2 MW；之后那一分钟每秒 49.5 蒸汽，含煤粉锅炉共 12.2 MW）；作者随后接通了水管，6:14 时全部蒸汽机都在运转 |
-| `ash-separation.txt` | 灰烬分离 | 两条灰烬带上的 3 台固体分离机，每台 13 个机械臂；煤粉、烟煤、氧化铁经缓冲箱送出 | 数据推算每秒 30 个灰烬；两组分离机合计每秒分离 20–32 个（5:20–6:10） |
+| `ash-separation.txt` | 灰烬分离 | 夹在两条灰烬带之间的 3 台固体分离机，每台 13 个机械臂；煤粉、烟煤、氧化铁经缓冲箱送出。作者的基地里只有上方那条带有供给 | 测试台：只有上方带满载（每秒 15 个灰烬）时 50%，两条都满载（每秒 29.9 个）时 100%；游戏中两组分离机合计每秒分离 20–32 个（5:20–6:10） |
 | `soot-separation.txt` | 烟煤分离 | 1 台固体分离机处理烟煤；每种矿进各自的箱子和石炉（烧煤粉） | 每秒用掉 0.5–1.3 个烟煤（5:50–6:13）；锌矿和铅矿暂存箱中 |
 | `iron-oxide-smelting.txt` | 氧化铁处理 | 2 台石炉，氧化铁炼铁板（2 : 1） | 每秒 0.7–0.9 个氧化铁（6:00–6:13） |
 | `coal-dust-power.txt` | 煤粉处理 | 2 台烧煤粉的锅炉和 2 台蒸汽机（比蒸汽所需多一台，让煤粉优先烧掉） | 6:13 之后那一分钟每秒烧 2.03 个煤粉，与数据推算的两台份额相符 |
+| `log-production.txt` | 2.348 [原木] | 原木：10 台苔藓农场、8 台异星苗圃、16 台速成林场，一台木材工坊供树种子；输入灰烬、石砖、焦炭，输出原木 | 测试台：每秒 2.336 根原木（苗圃和林场 100%），每秒耗灰烬 12、石砖 1.25、焦炭 0.31（[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md#6-原木区块)） |
+| `red-science.txt` | 0.2 [机自科技包（红瓶）] | 供六个研究中心的红瓶：8 台热能组装机、一台土壤挖掘机和一台木材工坊；输入原生植被、铁铜板、灰烬、原木和石砖 | 测试台：每秒 0.200 个（作者 9:37 之后更新的版本；只有一个送木材的机械臂时为 0.196）（[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md#8-每秒-02-个红瓶)） |
 
 ## 蓝图的命名规则
 
@@ -45,9 +47,9 @@
 - 把矿侧向并入矿带靠近石炉的那一道（半带，每秒 7.5 个矿），原煤同样并入另一条带（每秒 0.67 个；从旁边经过的原煤带上用一个取燃料臂就够）。
 - 尽头每条带各有一对地下传送带，只放外道通过，进箱子（一个工业机械臂往箱子里每秒只能搬 0.82 个；当前版本每条带用两个）。
 
-## 第二、三章的区块
+## 第二、三、四章的区块
 
-图片和讲解在[第二章](../chapters/02-coke-steel-crushed-iron.zh-CN.md)：`raw-coal-power`（第 3 节）、`coke-distillation`（第 4 节）、`steel-foundries`（第 5 节，另见第三章第 9 节）、`crushed-iron`（第 6 节）；以及[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md)：`burner-belt-mall`（第 2 节）、`ash-separation`（第 4 节）、`raw-coal-power-two-belts`（第 5 节）、`coal-dust-power`（第 6 节）、`soot-separation` 和 `iron-oxide-smelting`（第 7 节）。热能组装机超市在[第一章](../chapters/01-landing-to-red-science.zh-CN.md#5-第一个超市035040)。
+图片和讲解在[第二章](../chapters/02-coke-steel-crushed-iron.zh-CN.md)：`raw-coal-power`（第 3 节）、`coke-distillation`（第 4 节）、`steel-foundries`（第 5 节，另见第三章第 9 节）、`crushed-iron`（第 6 节）；以及[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md)：`burner-belt-mall`（第 2 节）、`ash-separation`（第 4 节）、`raw-coal-power-two-belts`（第 5 节）、`coal-dust-power`（第 6 节）、`soot-separation` 和 `iron-oxide-smelting`（第 7 节）；以及[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md)：`log-production`（第 5、6 节）、`red-science`（第 8 节），以及 `ash-separation` 的测试台结果（第 7 节）。热能组装机超市在[第一章](../chapters/01-landing-to-red-science.zh-CN.md#5-第一个超市035040)。
 
 ## 与运行中的游戏同步
 

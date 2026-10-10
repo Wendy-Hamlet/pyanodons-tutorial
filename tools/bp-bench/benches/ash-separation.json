@@ -1,0 +1,9 @@
+{
+  "blueprint": "ash-separation",
+  "note": "Three Solid separators. As built only the belt above the row brings Ash; the belt below has no source.",
+  "sources": [{ "x": -61, "y": 205, "item": "ash" }],
+  "sinks": [{ "x": -61, "y": 208 }, { "x": -61, "y": 210 }, { "x": -61, "y": 212 }],
+  "research": ["ash-separation", "automation", "automation-science-pack", "botany-mk01", "coal-processing-1", "concrete", "crusher", "enable-logistics-tab", "engine", "fast-wood-forestry-upgrade", "glass", "hidden-mining-fluid-autounlock", "mining-with-fluid", "moss-mk01", "soil-washing", "steam-power", "steel-axe", "steel-processing", "wood-processing"],
+  "warm": 120, "measure": 600, "window": 300,
+  "variants": { "both-belts": { "sources": [{ "x": -61, "y": 215, "item": "ash" }] } }
+}

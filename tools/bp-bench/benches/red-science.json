@@ -1,0 +1,16 @@
+{
+  "blueprint": "red-science",
+  "note": "0.2 Automation science packs per second into six labs. Six belts come in from the west. Watched (entity centres): the two inserters with Wood for the Empty planter box assembler, the one from it into the Planter box assembler, and the one from there into the science assembler.",
+  "sources": [
+    { "x": -61, "y": -180, "item": "native-flora" }, { "x": -61, "y": -179, "item": "copper-plate" },
+    { "x": -61, "y": -176, "item": "ash" }, { "x": -61, "y": -171, "item": "log" },
+    { "x": -61, "y": -167, "item": "stone-brick" }, { "x": -61, "y": -166, "item": "iron-plate" }
+  ],
+  "sinks": [],
+  "watch": [
+    { "x": -43.5, "y": -170.5 }, { "x": -42.5, "y": -170.5 }, { "x": -41.5, "y": -170.5 }, { "x": -41.5, "y": -174.5 }
+  ],
+  "research": ["ash-separation", "automation", "automation-science-pack", "botany-mk01", "coal-processing-1", "concrete", "crusher", "enable-logistics-tab", "engine", "fast-wood-forestry-upgrade", "glass", "hidden-mining-fluid-autounlock", "mining-with-fluid", "moss-mk01", "soil-washing", "steam-power", "steel-axe", "steel-processing", "wood-processing"],
+  "lab_research": "tar-processing",
+  "warm": 600, "measure": 1200, "window": 600
+}

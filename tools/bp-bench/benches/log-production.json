@@ -1,0 +1,12 @@
+{
+  "blueprint": "log-production",
+  "note": "Logs from Moss, Wood seedlings and sixteen Fast wood forestries. Ash, Stone bricks and Coke come in from the west, Logs leave to the west. The Wood processing unit is primed with Logs once, as the author did by hand: the chain needs Wood to start.",
+  "sources": [
+    { "x": -61, "y": -131, "item": "ash" }, { "x": -61, "y": -121, "item": "stone-brick" },
+    { "x": -61, "y": -120, "item": "coke" }
+  ],
+  "sinks": [{ "x": -61, "y": -148 }],
+  "prime": [{ "x": 42, "y": -128, "item": "log", "count": 20 }],
+  "research": ["ash-separation", "automation", "automation-science-pack", "botany-mk01", "coal-processing-1", "concrete", "crusher", "enable-logistics-tab", "engine", "fast-wood-forestry-upgrade", "glass", "hidden-mining-fluid-autounlock", "mining-with-fluid", "moss-mk01", "soil-washing", "steam-power", "steel-axe", "steel-processing", "wood-processing"],
+  "warm": 1800, "measure": 1800, "window": 600
+}
