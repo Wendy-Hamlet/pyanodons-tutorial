@@ -86,7 +86,7 @@ a moving belt.
 | Steam engine: 15 Steam/s → 3.7 MW. **Two boilers per engine.** | Data, engine |
 | Offshore pump needs no power; with `pump-anywhere-fork` it works on land. | Data, engine |
 | The electric network loads every Steam engine that has steam by the same share of what it can deliver. Two engines behind two Coal dust Boilers (one engine's steam) take two shares, so those Boilers run twice as hard as the rest and burn the Coal dust first (the author's trick). In the author's save the computed share, 2.0 Coal dust/s, matched the 2.03/s burnt. | Data; the author's save (chapter 3) |
-| A Boiler with no water does nothing: the author's 24-Boiler station had its Offshore pump at one end and a gap between its halves, so only 12 Boilers worked (22.2 of 44.4 MW). | The author's save (chapter 3) |
+| Boilers pass water along their row. The author's 24-Boiler station had its Offshore pump at one end and a three-tile gap between its halves, so only 12 Boilers had water (22.2 of 44.4 MW); three pipes per row closed it (all engines running afterwards). | The author's saves (chapter 3) |
 
 ## Distillation byproducts
 
@@ -94,7 +94,7 @@ a moving belt.
 |---|---|
 | Exhaust pipe: no power; its venting recipe takes 20,000 Coal gas per craft at speed 2. One pipe vented about 88 Coal gas/s, the whole output of five distillation columns. | Data; the author's game ([chapter 2](../chapters/02-coke-steel-crushed-iron.md)) |
 | Tailings pond: 18×18, holds 1,000,000 of one fluid. The author's held 160,300 Tar after about 75 minutes of coke making. | Data; the author's save |
-| A column stops as soon as one output has no way out: with the Exhaust pipe removed, the author's five columns filled their Coal gas pipes within minutes and stopped Coke, and with it Steel. A Tailings pond takes any one fluid, so it can store Coal gas as well as Tar. | The author's save (chapter 3); data |
+| A column stops as soon as one output has no way out: with the Exhaust pipe removed, the author's five columns filled their Coal gas pipes within minutes and stopped Coke, and with it Steel. A Tailings pond is no store for gas: pycoalprocessing's script empties every gas that enters a pond (counting 15 % of it as pollution), so on the Coal gas pipe it is just another vent. Tanks (Storage tanks: 10,000–30,000) hold minutes of it. | The author's save, the author; `pycoalprocessing/scripts/tailings-pond.lua`; data (chapter 3) |
 | Aluminium ore can only be mined with Coal gas as the mining fluid (Fluid mining drill, Mining with fluid). | Data |
 | Distillation gives Iron oxide by chance, 20 % of the Coal crafts and 30 % of the Coal gas crafts: the author's 1,338 Coal and 690 Coke came with 119 Iron oxide, 124 expected. | Data; the author's save |
 

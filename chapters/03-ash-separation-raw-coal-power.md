@@ -169,12 +169,12 @@ twelve-Boiler block of chapter 2, which came down at 5:15–5:20.
   leave west through buffer chests, as in the separator block.
 - **From data.** 24 Boilers make 180 Steam/s, what 12 Steam engines use: **44.4 MW**, burning
   **29.6 Raw coal/s** at full load, two full belts.
-- **As built, only half of it has water.** The Offshore pump stands at the east end, and nothing
-  carries the water across the three free tiles between the east and the west half. In the save of
-  6:13 the twelve western Boilers and six western engines stood with no water, so the station gives
-  at most **22.2 MW**, no more than the block it replaced. Three pipes in each Boiler row close the
-  gap (Boilers pass water along; not tested), or a second Offshore pump at the west end
-  (`pump-anywhere-fork` lets it stand on land).
+- **At 6:13 only half of it had water.** The Offshore pump stands at the east end, and nothing
+  carried the water across the three free tiles between the east and the west half. In the save of
+  6:13 the twelve western Boilers and six western engines stood with no water, so the station gave
+  at most **22.2 MW**, no more than the block it replaced. Boilers pass water along, so three pipes
+  in each Boiler row close the gap: the author added them after reading this, in the game and in
+  the blueprint, and in their save of 6:14 all fourteen Steam engines were running.
 - **Measured.** 49.5 Steam/s (12.2 MW) in the minute after 6:13, with coke and steel standing; the
   six watered engines here ran at about 41 % (the rest came from Coal dust, section 6).
 - **Is 22.2 MW enough? Not with everything running** (from data): columns 2.5 MW, foundries 9.6,
@@ -182,8 +182,8 @@ twelve-Boiler block of chapter 2, which came down at 5:15–5:20.
   Solid separators: 1.5 MW each while busy, about 2.5 MW for the Ash the base makes, 10.5 MW while
   all seven work through a backlog. Against 22.2 MW and 1–3.7 MW from Coal dust. In the engine
   tests of section 9, with the steel site running and the separators still busy, the foundries
-  reported low power in 5–22 % of the samples. With water in the west half the station has twice
-  the power.
+  reported low power in 5–22 % of the samples. With water in both halves the station has twice
+  the power, 44.4 MW.
 
 ![The power station: the Raw coal belts along the outer edges, two rows of twelve Boilers, twelve Steam engines between them, the Offshore pump at the right; above, three Solid separators and the 20 Ash chests](../images/ch3-power.jpg)
 
@@ -239,11 +239,17 @@ pipes filled within minutes. At 6:13 all five columns stood with full outputs, n
 made for about 50 minutes, and all eight foundries waited for ingredients, although the steel
 chest held only 374 of its 500.
 
-A way to keep the gas without stopping the coke (a suggestion, not tried in the author's game):
-store it as the author stores the Tar. A second Tailings pond on the Coal gas pipe (kept apart
-from the Tar pipe) holds 1,000,000; it costs 10 Pipes, 10 Iron plates and 100 Stone bricks and
-needs no new research. At 108 Coal gas/s it takes 2.6 hours to fill, and the Fluid mining drills
-can draw from it.
+Storing the gas is not an option yet:
+
+- **A Tailings pond is no store for gas.** It keeps liquids like the Tar, but pycoalprocessing's
+  script empties every gas that runs into a pond, Coal gas included, and counts 15 % of it as
+  pollution (off on this map). A pond on the Coal gas pipe is just another vent. (The author
+  pointed this out; read in the mod's `scripts/tailings-pond.lua`.)
+- **Tanks are small.** They come with Storage tanks (70 red, after Alloy smelting - Stage 1) and
+  hold 10,000–30,000: under five minutes of the columns' 108 Coal gas/s.
+
+So until the Fluid mining drills draw the gas, the choice is between venting it and a stopped
+coke line, and with it a stopped steel line.
 
 ## 9. Steel: Limestone < 8
 
@@ -257,7 +263,7 @@ short; ten minutes after a two-minute warm-up):
 | Condition on the Soil extractors | Steel per second | Each foundry | Tick model |
 |---|---|---|---|
 | Limestone < 5 (chapter 2) | **0.435** | 3.2–3.3 a minute, short of Limestone in 17 % of the samples | 0.441 |
-| Limestone < 8 (the author's now) | **0.493** | 3.70 a minute, short of Limestone in 8 % | 0.492 |
+| Limestone < 8 (the author's after chapter 2) | **0.493** | 3.70 a minute, short of Limestone in 8 % | 0.492 |
 | Limestone < 10 | **0.533** | 4.00 a minute, never short | 0.533 |
 
 **Why 8 is not enough.** The amount is fine; the timing is not. While the extractor is stopped
@@ -276,8 +282,8 @@ gives the right column above for eight foundries, and 0.457, 0.474 and 0.512 Ste
 thresholds 6, 7 and 9; every threshold from 10 up gives 0.533. The low power these runs met
 (section 5) did not change the count: with < 10 every foundry finished exactly 40 plates.
 
-The book keeps the author's < 8; changing the constant to 10 on all eight extractors gives the
-full rate.
+After these tests the author set all eight extractors to **Limestone < 10**, in the game and in
+the book.
 
 ## 10. Checklist
 
@@ -291,8 +297,8 @@ full rate.
 - Two belts of Raw coal: 24 Boilers and 12 Steam engines, 44.4 MW. Check that every Boiler has
   water.
 - Coal dust Boilers with one Steam engine more than they need burn the Coal dust first.
-- Do not take away the Coal gas's way out without a store: full columns stop Coke, and with it
-  Steel. A Tailings pond holds 1,000,000.
+- A distillation column needs a way out for its Coal gas, or it stops Coke and with it Steel. A
+  Tailings pond vents gas instead of storing it; keep the Exhaust pipe until something uses the gas.
 - Steel: the Soil extractors' condition at Limestone < 10, not < 8 (0.533 against 0.493 Steel/s,
   measured).
 
@@ -305,7 +311,8 @@ full rate.
   3700`, then `tools/summarize-save.js` (research, machine states, the measured minute),
   `tools/render-save-map.js`, `tools/render-area.js` and `tools/trace-layout.js` (belt lines and
   their contents, what feeds what, fluid networks: the dry west half of the power station, chest
-  contents, the columns' state).
+  contents, the columns' state); the save of 6:14 for the author's fixes (both halves of the
+  station watered, the extractors at < 10).
 - The steel site in the engine: `tools/save-probe.ps1` with `tools/steel-probe`, variants
   `as-built,coke`, `lt5,coke` and `lt10,coke` (the probe now takes any `ltN` and can top up Coke).
   The tick model is a small script, not part of the tools; its results are in the table.
@@ -313,14 +320,15 @@ full rate.
   `blueprints/`; layouts, filters, chest limits and the circuit condition read from the blueprint
   data. The new blocks were measured where they stand in the author's game, not in the design lab.
 - Prototype values (recipes and chances, machine power and sizes, fuel values and stack sizes,
-  Boiler and Steam engine rates, the Tailings pond's capacity and recipe, Aluminium ore's mining
-  fluid, technology costs and unlocks): `data.raw` of the run's mod set (Factorio 2.1.21), dumped
-  in the save setup.
+  Boiler and Steam engine rates, tank sizes, Aluminium ore's mining fluid, technology costs and
+  unlocks): `data.raw` of the run's mod set (Factorio 2.1.21), dumped in the save setup. That a
+  Tailings pond vents gas: pycoalprocessing 3.1.7, `scripts/tailings-pond.lua`.
 - Computed from data, not measured: the energy balance of Ash separation, the station's 44.4 MW
-  and its power budget, the share of load on the Coal dust Boilers, the Tailings pond's filling
-  time.
+  and its power budget, the share of load on the Coal dust Boilers.
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` after 6:13.
 
-Next: aluminium ore and logs (chapter 4, not written yet).
+Next: aluminium ore mining, glass making and logs (chapter 4, not written yet). The log chain needs
+both of the others: a Botanical nursery MK 01 takes 10 Glass and a Moss farm MK 01 10 Aluminium
+plates (from data).
 

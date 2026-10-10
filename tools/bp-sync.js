@@ -10,7 +10,8 @@
 //     %APPDATA%\Factorio\script-output\py-tutorial-companion\export.txt). Blueprints are matched to
 //     files by label and compared after decoding, so only real changes are written; unknown labels
 //     become new files. Files missing from the export are reported, never deleted. A blueprint
-//     exported without a description keeps the file's. Then pushes.
+//     exported without a description, or with one the file's description quotes, keeps the
+//     file's. Then pushes.
 
 const fs = require('fs');
 const path = require('path');
@@ -103,8 +104,10 @@ function pull(file, dry) {
     if (name !== undefined) {
       byLabel.delete(label);
       const old = readPrint(name);
-      // A book built in game from the author's own copies carries no descriptions: keep ours.
-      if (!entry.blueprint.description && old.blueprint && old.blueprint.description) {
+      // A book built in game from the author's own copies carries no descriptions, or only the
+      // author's short note, which ours quotes: keep ours then.
+      const note = entry.blueprint.description;
+      if (old.blueprint && old.blueprint.description && (!note || old.blueprint.description.includes(note))) {
         entry.blueprint.description = old.blueprint.description;
       }
       const same = canonical(old) === canonical(entry);
