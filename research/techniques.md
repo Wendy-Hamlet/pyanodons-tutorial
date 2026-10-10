@@ -36,22 +36,41 @@ side it points to. (Engine, `tools/belt-lab`.)
 | The Mechanical inserter (Py's burner inserter) needs no fuel and no power at all. | Data (`void` energy), engine |
 | It has 1 filter slot. | Data |
 | Throughput: see the table below. Belt → belt: 0.83/s from a moving full belt, 0.86/s from a standing one. | Engine, `tools/inserter-probe`, `tools/design-lab` |
-| The Py encyclopedia's 0.78/s for the Mechanical inserter matches one full turn at its rotation speed (0.013 turn per tick = 77 ticks); the engine moves 0.80/s chest to chest and more from a belt, where the hand meets the items. | Data, engine |
+| The Py encyclopedia's 0.78/s for the Mechanical inserter matches one full turn at its rotation speed (0.013 turn per tick = 77 ticks); the engine moves 0.789/s (76 ticks a swing) from a chest and more from a belt, where the hand meets the items. | Data, engine (`tools/inserter-rate-probe`) |
 
 Items per second without inserter capacity bonus (Iron plates, basic belt, 60 s per case,
-`tools/inserter-probe`). A machine is reached like a chest (not measured separately).
+`tools/inserter-probe`; the Mechanical inserter row to three decimals from `tools/inserter-rate-probe`,
+10 minutes per case with every drop timed).
 
 | Inserter | Chest → chest | Chest → moving belt | Moving full belt → chest | Standing full belt → chest |
 |---|---|---|---|---|
-| Mechanical inserter | 0.80 | 0.80 | 0.83 | 0.85 |
+| Mechanical inserter | 0.789 | 0.789 | 0.833 | 0.857 |
 | Inserter (electric) | 1.25 | 1.25 | 1.25 | 1.27 |
 | Long-handed inserter | 1.25 | 1.25 | 1.20 | 1.20 |
 | Fast inserter | 2.50 | 2.50 | 2.82 | 2.73 |
 
-For planning: 0.80/s per Mechanical inserter into or out of a machine, 0.83/s when it takes from
-a moving belt. On the blueprint bench (chapter 4) a Mechanical inserter that never waited moved
-0.80 Wood/s from the end of a belt into an assembling machine, fuel included: an ingredient
-needed at 0.8/s plus the machine's fuel takes two inserters.
+The Mechanical inserter in detail (`tools/inserter-rate-probe`): every case takes a whole number of
+ticks per item, and the target does not matter (a chest, a belt, a Burner assembling machine and a
+Stone furnace took the same ticks); only the pick-up does:
+
+| Picks up from | Ticks per item | Items/s |
+|---|---|---|
+| A chest or a machine | 76 | 0.789 |
+| A moving full belt (both lanes, or only the near lane) | 72 | 0.833 |
+| A moving belt, only the far lane full | 73.6 | 0.815 |
+| A standing full belt (both lanes, or only the near lane) | 70 | 0.857 |
+| A standing belt, only the far lane full | 74 | 0.811 |
+| A thin belt: 1.95 items on the tile on average (blueprint bench, chapter 4) | 75 | 0.798 |
+
+For planning: 0.789/s from a chest or a machine, 0.833/s from a moving belt, 0.857/s from the end
+of a belt. An ingredient needed at 0.8/s plus the machine's fuel takes two inserters (chapter 4's
+red science ran at 98 % with one).
+
+**A machine is no faster than the inserters that fit around it** (the author). A Stone furnace with
+one input inserter: Iron or Copper plate (0.8 ore/s) runs at full speed, Aluminium plate (1.667
+ore/s) at 50 %, Iron oxide (5.714/s) at 15 %. Bench (chapter 4): the smelting column on a full
+Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron oxide pair takes
+1.717 Iron oxide/s.
 
 ## Machines with an output port
 
@@ -77,8 +96,8 @@ needed at 0.8/s plus the machine's fuel takes two inserters.
 | An inserter never takes fuel out of a furnace, so one filtered to everything *but* Ash (blacklist) takes only the product. | Engine (`tools/ch1-probe`), seen in the author's run |
 | Ash separation (a red technology) is the early way to get rid of Ash: a Solid separator MK 01 (electric, 1.5 MW) turns 10 Ash per second into Coal dust (50 %), Soot (20 %) and Iron oxide (5 %). | Data (`data-raw-dump.json`) |
 | Ash separation returns half the fuel it costs: 10 Ash take 1.5 MJ of electricity (3 MJ of Boiler fuel) and give 0.5 Coal dust (1.5 MJ). Separating all Ash costs about 5 % more Raw coal. Coal dust is a 3 MJ fuel like Raw coal, stacks to 100 and burns to Ash again. | Data ([chapter 3](../chapters/03-ash-separation-raw-coal-power.md)) |
-| Soot separation: 2 Soot → Iron ore and Copper ore 20 % each, Ash 30 %, Aluminium, Zinc and Lead ore 10 % each, 1 s. Iron oxide smelts 20 → 10 Iron plates in 3.5 s in a Stone furnace (5.7 Iron oxide/s per furnace). | Data; the author's game (chapter 3) |
-| A Solid separator at full speed needs 13 Mechanical inserters on Ash (13 × 0.83 = 10.8/s from a moving belt). | Data, inserter measurement; the author's design |
+| Soot separation: 2 Soot → Iron ore and Copper ore 20 % each, Ash 30 %, Aluminium, Zinc and Lead ore 10 % each, 1 s. Iron oxide smelts 20 → 10 Iron plates in 3.5 s in a Stone furnace (5.7 Iron oxide/s per furnace, but one input inserter brings 0.857: 15 %). | Data; the author's game (chapter 3); bench (chapter 4) |
+| A Solid separator at full speed needs 13 Mechanical inserters on Ash (13 × 0.833 = 10.8/s from a moving belt). | Data, inserter measurement; the author's design |
 
 ## Steam power
 
@@ -177,6 +196,9 @@ needed at 0.8/s plus the machine's fuel takes two inserters.
 16. **Priority by circuit.** Where one machine feeds two users, let the second user's inserter run
    only while the first holds enough: the author's forestry passes Logs to the belt only while the
    Wood processing unit next to it holds 2 or more.
+17. **A machine is no faster than its inserters.** Before choosing a fast recipe for a machine with
+   room for one input inserter, divide: a Stone furnace on Aluminium ore runs at 50 %, on Iron
+   oxide at 15 %. Plan the furnaces by inserters, not by recipe time.
 
 ## Trains
 

@@ -1,0 +1,9 @@
+{
+  "blueprint": "iron-oxide-smelting",
+  "note": "Two Stone furnaces on Iron oxide (20 -> 10 Iron plates in 3.5 s), one input inserter each. Iron oxide on the furnace-side lane of the belt above (plates come back on the other lane), Coal dust on the furnace-side lane of the belt below (Ash on the other).",
+  "sources": [{ "x": -61, "y": 372, "item": "iron-oxide", "lane": 2 }, { "x": -61, "y": 377, "item": "coal-dust", "lane": 1 }],
+  "sinks": [{ "x": -61, "y": 371 }, { "x": -61, "y": 378 }],
+  "watch": [{ "x": -60.5, "y": 373.5 }, { "x": -58.5, "y": 373.5 }],
+  "research": ["ash-separation","automation","automation-science-pack","botany-mk01","coal-processing-1","concrete","crusher","enable-logistics-tab","engine","fast-wood-forestry-upgrade","glass","hidden-mining-fluid-autounlock","mining-with-fluid","moss-mk01","soil-washing","steam-power","steel-axe","steel-processing","wood-processing"],
+  "warm": 120, "measure": 600, "window": 300
+}

@@ -1,7 +1,8 @@
 -- Blueprint bench: builds one blueprint from blueprints/ on an empty lab surface and measures
 -- whether it reaches full speed when nothing outside it is the limit: an energy interface on every
 -- electric network of the blueprint (unlimited power), a water tile in front of every Offshore
--- pump, script sources that keep both lanes of each input belt full, script sinks that empty each
+-- pump, script sources that keep both lanes of each input belt full (or the one lane named:
+-- 1 = left, 2 = right, looking the way the belt runs), script sinks that empty each
 -- output belt, and labs that research without end. After a warm-up it compares every machine's
 -- finished crafts with what its recipe allows at its speed (modules included), samples statuses
 -- and which ingredient a waiting machine lacks, and counts what the sources gave and the sinks
@@ -153,7 +154,7 @@ script.on_init(function()
   local sources, sinks = {}, {}
   for _, s in ipairs(concat(spec.sources, variant and variant.sources)) do
     local e = belt_at(surface, s.x, s.y, dx, dy)
-    if e then sources[#sources + 1] = { e = e, item = s.item, n = 0 }
+    if e then sources[#sources + 1] = { e = e, item = s.item, n = 0, lanes = s.lane and { s.lane } or { 1, 2 } }
     else out("no belt for the source at (%d, %d)", s.x, s.y) end
   end
   for _, s in ipairs(concat(spec.sinks, variant and variant.sinks)) do
@@ -173,17 +174,15 @@ script.on_init(function()
   if spec.lab_research and not f.add_research(spec.lab_research) then out("could not research %s", spec.lab_research) end
 
   local machines, labs = {}, {}
-  for _, e in pairs(surface.find_entities_filtered({ type = CRAFTERS })) do
-    local r = e.get_recipe()
-    if r then machines[#machines + 1] = { e = e, key = e.name .. " / " .. r.name, recipe = r } end
-  end
+  for _, e in pairs(surface.find_entities_filtered({ type = CRAFTERS })) do machines[#machines + 1] = { e = e } end
   for _, e in pairs(surface.find_entities_filtered({ type = "lab" })) do labs[#labs + 1] = e end
   -- Single entities to watch (say an inserter suspected of being the limit): status samples.
   local watch = {}
   for _, w in ipairs(concat(spec.watch, variant and variant.watch)) do
     local px, py = w.x + dx, w.y + dy
     local e = surface.find_entities_filtered({ area = { { px - 0.1, py - 0.1 }, { px + 0.1, py + 0.1 } } })[1]
-    if e then watch[#watch + 1] = { e = e, label = string.format("%s at (%g, %g)", e.name, w.x, w.y), status = {} }
+    if e then watch[#watch + 1] = { e = e, label = string.format("%s at (%g, %g)", e.name, w.x, w.y), status = {},
+      prev = 0, drops = 0, gaps = {}, belt = 0, samples = 0 }
     else out("nothing to watch at (%g, %g)", w.x, w.y) end
   end
 
@@ -264,6 +263,22 @@ local function report(b, seconds, final)
   end
 end
 
+-- Furnaces choose their recipe from what they are given, so machines get their recipe (or are
+-- dropped, if they never got one) when measuring starts.
+local function resolve(b)
+  local kept = {}
+  for _, m in ipairs(b.machines) do
+    local r = m.e.get_recipe()
+    local prev = not r and m.e.type == "furnace" and m.e.previous_recipe
+    if prev then r = prototypes.recipe[type(prev.name) == "string" and prev.name or prev.name.name] end
+    if r then
+      m.recipe, m.key = r, m.e.name .. " / " .. r.name
+      kept[#kept + 1] = m
+    end
+  end
+  b.machines = kept
+end
+
 local function mark(b)
   for _, m in ipairs(b.machines) do m.mark, m.status, m.short = m.e.products_finished, {}, {} end
   for _, s in ipairs(b.sources) do s.n = 0 end
@@ -275,7 +290,7 @@ script.on_event(defines.events.on_tick, function()
   local b = storage.bench
   if not b then return end
   for _, s in ipairs(b.sources) do
-    for line = 1, 2 do
+    for _, line in ipairs(s.lanes) do
       if s.e.get_transport_line(line).insert_at_back({ name = s.item, count = 1 }) then s.n = s.n + 1 end
     end
   end
@@ -289,9 +304,28 @@ script.on_event(defines.events.on_tick, function()
     end
   end
   local t = game.tick
+  -- Watched inserters: every drop (the held stack emptying) and the ticks between drops.
+  if t > b.warm and not b.done then
+    for _, w in ipairs(b.watch) do
+      if w.e.type == "inserter" then
+        local h = w.e.held_stack
+        local now = h.valid_for_read and h.count or 0
+        if now < w.prev then
+          w.drops = w.drops + (w.prev - now)
+          if w.last then
+            local gap = t - w.last
+            w.gaps[gap] = (w.gaps[gap] or 0) + 1
+          end
+          w.last = t
+        end
+        w.prev = now
+      end
+    end
+  end
   -- Labs research the same technology for ever.
   if t % 600 == 0 and game.forces.player.research_progress > 0.5 then game.forces.player.research_progress = 0.1 end
   if t == b.warm then
+    resolve(b)
     mark(b)
     b.stats, b.window_start, b.measure_start = stats(b), t, t
     b.total = { machines = {}, sources = {}, sinks = {}, labs = {} }
@@ -319,6 +353,12 @@ script.on_event(defines.events.on_tick, function()
     for _, w in ipairs(b.watch) do
       local s = STATUS[w.e.status] or "?"
       w.status[s] = (w.status[s] or 0) + 1
+      -- Items on the belt tile an inserter takes from (both lanes), averaged over the samples.
+      local src = w.e.type == "inserter" and w.e.pickup_target
+      if src and (src.type == "transport-belt" or src.type == "underground-belt") then
+        w.belt = w.belt + #src.get_transport_line(1) + #src.get_transport_line(2)
+        w.samples = w.samples + 1
+      end
     end
   end
   if (t - b.window_start) % b.window == 0 then
@@ -352,7 +392,16 @@ script.on_event(defines.events.on_tick, function()
       b.lab_status = b.total.labs
       out("total over %d s after %d s warm-up:", b.measure / 60, spec.warm)
       report(b, b.measure / 60, true)
-      for _, w in ipairs(b.watch) do out("  watched %s: status samples %s", w.label, list(w.status)) end
+      for _, w in ipairs(b.watch) do
+        out("  watched %s: status samples %s", w.label, list(w.status))
+        if w.e.type == "inserter" then
+          local gaps = {}
+          for gap, n in pairs(w.gaps) do gaps[tostring(gap) .. " ticks"] = n end
+          out("    %d drops = %.4f items/s; ticks between drops (how often): %s%s", w.drops,
+            w.drops / ((game.tick - b.warm) / 60), list(gaps, "%s ×%s"),
+            w.samples > 0 and string.format("; items on its pickup belt tile: %.2f on average", w.belt / w.samples) or "")
+        end
+      end
       b.done = true
     end
   end

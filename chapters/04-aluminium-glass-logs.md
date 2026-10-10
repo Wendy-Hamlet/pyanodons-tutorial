@@ -12,7 +12,7 @@ block that turns Moss, Tree seedlings and Ash into Logs. On top of that came a l
 hours paused in Factory Planner, which game time does not count). Numbers come from the game's
 data, from the recorder's 10-minute production windows, from one more minute of the saves of 9:36
 and 9:37 (`tools/inspect-save.ps1 -Ticks 3700`), and from a new bench that builds a blueprint on
-an empty map and runs it with unlimited inputs (`tools/bp-bench.ps1`, section 10).
+an empty map and runs it with unlimited inputs (`tools/bp-bench.ps1`, section 11).
 
 The plan in one sentence: a little aluminium from Coal gas, a little glass from Tar, and from
 then on Logs and red science made by machines instead of by hand.
@@ -112,9 +112,10 @@ why the author kept the gas in chapter 3. The mine is small:
 - **10 Coal gas per ore**, measured: 35.3 Coal gas/s for 3.52 ore/s. The gas comes through about
   300 tiles of pipe from the coke columns.
 - **Smelting: an ordinary smelting column** on the ore belt west of the drills (the chapter 1
-  design, ten Stone furnaces). Aluminium plate is 10 ore → 1 plate in 6 s; one furnace takes
-  1.67 ore/s, so the 3.5 ore/s need two of the ten. Measured: 0.35 plates/s. The plates end in
-  two chests, 1,276 at 9:37.
+  design, ten Stone furnaces). Aluminium plate is 10 ore → 1 plate in 6 s, so a furnace could
+  take 1.67 ore/s; but its one ore inserter brings at most 0.833 ore/s from the moving belt, and
+  each furnace runs at half speed (section 9). The 3.5 ore/s need five of the ten. Measured: 0.35
+  plates/s. The plates end in two chests, 1,276 at 9:37.
 
 **How much aluminium is needed.** Only two recipes unlocked so far use Aluminium plates: Engine unit
 (5) and Moss farm MK 01 (10) (from data, recipes against the 20 technologies researched). The
@@ -263,9 +264,9 @@ Its electricity: about **13 MW** at these shares (the machines' power from data,
 share of working time), the largest electric user in the base so far. In the author's game at 9:37
 it stands with full outputs: nothing uses Logs at this rate yet.
 
-![The log block: two rows of Fastwood forestries, the nurseries and Moss farms below them, the Wood processing unit on the right; the bus enters from the left](../images/ch4-logs.jpg)
+![The log block: two rows of Fastwood forestries, the nurseries and Moss farms below them, the Wood processing unit on the right; the input belts enter from the left](../images/ch4-logs.jpg)
 
-![The west end of the log block: Soil extractor, Washer, High pressure furnace and Jaw crushers, the Moss farms, and the Carbon dioxide and Muddy sludge pipes between them](../images/ch4-moss.jpg)
+![The west end of the log block: Soil extractor, Washer, High pressure furnace and Jaw crushers, the Moss farms, and the Carbon dioxide and Muddy sludge pipes between them; the steel site's Soil extractors along the bottom](../images/ch4-moss.jpg)
 
 ## 7. Ash: the loop, and why the separators starve
 
@@ -325,18 +326,56 @@ Tar processing for ever):
 
 | Version | Red science/s | What limits it |
 |---|---|---|
-| As exported at 9:36 | 0.196 (98 %) | The one inserter with Wood for the Empty planter box machine, busy in all 1,200 samples. It moved about 0.80 Wood/s; the machine needs 0.80 as ingredient plus about 0.015 as fuel |
+| As exported at 9:36 | 0.196 (98 %) | The one inserter with Wood for the Empty planter box machine, busy in all 1,200 samples. It moved 0.798 Wood/s; the machine needs 0.8 as ingredient plus 0.015 as fuel (section 9) |
 | The author's update | **0.200 (100 %)**, labs busy in every sample | Nothing; the Soil extractor now runs all the time (2.0 Soil/s, no margin) |
 
-The author's update: a second Wood inserter on that machine (with a short
-new belt branch for it) and a third for Stone bricks, which it needs at 1.6 a second, about what
-two inserters move. The lesson is in the numbers: **one Mechanical inserter moves about 0.8 items
-a second from a belt into a machine**, so an ingredient needed at 0.8 a second plus the machine's
-fuel needs two.
+The author's update: a second Wood inserter on that machine (with a short new belt branch for it)
+and a third for Stone bricks, which it needs at 1.6 a second, close to what two inserters move.
 
 ![The red science line: the six input belts from the left, the Wood processing unit and the eight Burner assembling machines, the Soil extractor, and the six labs on the right](../images/ch4-red-science.jpg)
 
-## 9. Checklist
+## 9. Inserters set the pace
+
+The 98 % above called for a closer look at the Mechanical inserter. Measured to three decimals
+(`tools/inserter-rate-probe`: one inserter per case, 10 minutes each, every drop timed to the
+tick; Iron plates, no inserter capacity bonus):
+
+| Picks up from | Ticks per item | Items/s |
+|---|---|---|
+| A chest or a machine | 76 | **0.789** |
+| A moving full belt (both lanes, or only the lane nearer the inserter) | 72 | **0.833** |
+| A moving belt with only the far lane full | 73.6 | 0.815 |
+| A standing full belt, such as the end of a belt (both lanes, or only the near lane) | 70 | **0.857** |
+| A standing belt with only the far lane full | 74 | 0.811 |
+
+Where it drops makes no difference: into a chest, onto a belt, into a Burner assembling machine or
+into a Stone furnace (on Aluminium ore and on Iron oxide) it took the same ticks. The 0.80 in the
+older notes was a one-minute count (48 plates); from a chest the inserter moves 0.789.
+
+The red science line's Wood inserter took from a belt tile that held only 1.95 Wood on average
+(the Wood joins that belt from the side), and needed 75 ticks a Wood: 0.798 a second, against the
+0.815 its machine needs (0.8 as ingredient, 0.015 burnt). Hence the 98 %.
+
+**A machine is no faster than the inserters that fit around it** (the author's rule). In a
+smelting column a Stone furnace has room for one input inserter (from data: Stone furnace speed
+1, recipes as listed):
+
+| Furnace recipe | The furnace could take | One inserter brings | The furnace's share of its speed |
+|---|---|---|---|
+| Iron or Copper plate: 8 ore → 1, 10 s | 0.800 ore/s | 0.833 (moving belt) | 100 % |
+| Aluminium plate: 10 ore → 1, 6 s | 1.667 ore/s | 0.833 (moving belt) | **50 %** |
+| Iron plate from Iron oxide: 20 → 10, 3.5 s | 5.714 Iron oxide/s | 0.857 (standing lane) | **15 %** |
+
+On the bench, with the book's blueprints:
+
+- **The smelting column on Aluminium ore,** one full ore lane (7.5 ore/s): nine furnaces take the
+  whole lane at 0.833 each and run at 50 %; the tenth gets nothing; 0.75 Aluminium plates/s. So
+  the column smelts at most 7.5 Aluminium ore/s, and the author's 3.5 need five furnaces.
+- **The Iron oxide pair** of chapter 3: both inserters at 70 ticks, 1.717 Iron oxide/s, both
+  furnaces at 15 %, 0.85 Iron plates/s. One furnace could take 5.7 Iron oxide/s, as chapter 3 said,
+  but its one inserter brings 0.857. The base makes 0.7–0.9 Iron oxide/s, so the pair is enough.
+
+## 10. Checklist
 
 - Aluminium ore: Fluid mining drills with Coal gas, 10 per ore; 10 ore → 1 plate. Until Duralumin
   only Engine units and Moss farms use the plates, so a few drills do.
@@ -347,12 +386,15 @@ fuel needs two.
 - Farms run only on their own modules: 15 Moss in a Moss farm, 10 Trees in a Fastwood forestry.
 - The log block: 10 Moss farms, 8 nurseries, 16 forestries, 2.35 Logs/s, 12 Ash/s, about 13 MW.
   Start it with a few Logs in the Wood processing unit.
-- One Mechanical inserter moves about 0.8 items/s from a belt into a machine: count the inserters
-  for the big ingredients, fuel included.
+- A Mechanical inserter moves 0.789 items/s from a chest or a machine, 0.833 from a moving full
+  belt and 0.857 from a standing one, less from a thin belt or only the far lane. Count the
+  inserters for the big ingredients, fuel included.
+- A machine is no faster than its input inserters: Stone furnaces with one inserter smelt
+  Aluminium ore at 50 % and Iron oxide at 15 % of their speed.
 - Ash is an input now: the Ash loop serves the log block first, the separators get what is left.
   The separator block needs both of its Ash belts fed to reach 30 Ash/s.
 
-## 10. How these facts were checked
+## 11. How these facts were checked
 
 - The run: the companion mod's recorder (run `2652821414-0`), read with
   `tools/recorder-phases.js` (timeline in 10-minute slices, chat notes) and `tools/recorder-log.js`
@@ -368,9 +410,14 @@ fuel needs two.
   gives every electric network an energy interface, keeps both lanes of each input belt full by
   script, empties the output belts, lets the labs research without end, and counts every machine's
   crafts against what its recipe allows at its actual speed, with status samples, the ingredient a
-  waiting machine lacks, and watched inserters. Benches here: `ash-separation` (variant
-  `both-belts`), `log-production`, `red-science` (both versions of the file). It runs in the save
-  setup (`C:\tmp\cf-save`, the author's current mods) with the 20 technologies of the save.
+  waiting machine lacks, and watched inserters (every drop timed, items on the belt tile they take
+  from). Benches here: `ash-separation` (variant `both-belts`), `log-production`, `red-science`
+  (both versions of the file), `iron-oxide-smelting` and `smelting-column-aluminium`; sources can
+  fill one lane only. It runs in the save setup (`C:\tmp\cf-save`, the author's current mods)
+  with the 20 technologies of the save.
+- **The Mechanical inserter's rate:** `tools/run-probe.ps1 -Probe inserter-rate-probe -Ticks 36700
+  -Work C:\tmp\cf-save` (15 cases on a new map: chest, moving and standing belt, one lane or
+  both, into a chest, a belt, a Burner assembling machine and a Stone furnace).
 - The blueprints: exported by the author with the companion mod (2026-10-11; red science again
   after the update) and pulled into `blueprints/`; layouts, filters and circuit conditions read
   from the blueprint data.

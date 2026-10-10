@@ -228,7 +228,9 @@ end next to the Coal dust power.
   ore too since Mining with fluid (9 Aluminium plates by 6:13); Zinc and Lead ore cannot be
   smelted yet and wait in their chests (103 and 94 at 6:13), with a furnace ready for each.
 - **Iron oxide: two Stone furnaces.** 20 Iron oxide → 10 Iron plates in 3.5 s: one furnace could
-  take 5.7 Iron oxide/s, far more than the base makes. The Iron oxide belt starts at the
+  take 5.7 Iron oxide/s, but its one input inserter brings 0.857 a second, so the pair smelts at
+  most 1.717 Iron oxide/s at 15 % of its speed (measured on the bench in chapter 4, section 9);
+  still more than the base makes. The Iron oxide belt starts at the
   distillation columns, about 450 tiles north, and picks up the separators' Iron oxide on the way;
   the furnaces burn Coal dust; the plates go north to the bus on a long Iron plate belt. From 6:00
   they smelted 0.7–0.9 Iron oxide/s, the stock that had piled up since chapter 2.

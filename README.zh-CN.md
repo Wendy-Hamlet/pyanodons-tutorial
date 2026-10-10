@@ -50,7 +50,7 @@
 - `take-screenshots.ps1`：用图形模式运行实验场来截取游戏内画面。Steam 版游戏会让 Steam 重新启动它，请在 Steam 关于启动参数的弹窗中点确认。实验场会关掉自由模式的坠毁现场和开场动画，否则残骸会压在设计上，开场还会让游戏停住直到按 Tab。
 - `shots.js` + `/pt-shots`（助手模组）：从作者真实的游戏里截图。`shots.js plan` 列出要截的区域，游戏里输入 `/pt-shots` 截图，`shots.js pull` 把图片取回 `images/`。（用 `--benchmark-graphics` 载入真实存档会让游戏崩溃，所以改为在运行中的游戏里截。）
 - `newgame-observer/` + `summarize-newgame.js`：观察新开一局有什么（包括出生点周围的资源、树木、岩石和地面，可用来比较地图设置）；用从存档读出的 `--map-gen-settings` 建图，可以复现同一个世界。
-- `belt-lab/`、`ch1-probe/`、`drill-probe/`、`inserter-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。`run-probe.ps1 <探针>` 运行其中一个（复制进固定环境、建图、运行、输出结果，再删掉）。
+- `belt-lab/`、`ch1-probe/`、`drill-probe/`、`inserter-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。`run-probe.ps1 <探针>` 运行其中一个（复制进固定环境、建图、运行、输出结果，再删掉；加 `-Work C:\tmp\cf-save` 则用当前的模组运行）。`inserter-rate-probe/`：工业机械臂的速度，精确到小数点后三位，每次放下都计时（`-Ticks 36700 -Work C:\tmp\cf-save`）。
 - `save-probe.ps1 -Save <存档> -Probe <探针> [-Variant <版本>]`：在作者存档的副本里运行一个测量模组（读档环境，存档本身只复制），例如 `steel-probe/`：第二、三章炼钢区的实测（清空钢材箱和锅炉灰烬，按版本设置土壤挖掘机的电路条件，`ltN` 表示石灰石 < N，加 `,coke` 给铸造厂补焦炭；逐台记录铸造厂的产量、状态和缺料）。
 - `bp-bench.ps1 -Bench <名称> [-Variant <方案>]` + `bp-bench/`：蓝图测试台。把 `blueprints/` 里的一张蓝图放到空地图上（用游戏自己的蓝图建造，补齐插件请求），用电力接口给每个电网供电，用脚本保持输入带满载、清空输出带，让研究中心一直研究，并报告每台机器完成的次数与它实际速度下配方允许的次数之比、状态采样、等待中的机器缺哪种原料，以及指定观察的实体。每个测试在 `bp-bench/benches/` 里有一个 JSON 文件（蓝图、输入、输出、启动时预放的物品、科技、预热和测量时间、方案）。在读档环境里运行。
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。

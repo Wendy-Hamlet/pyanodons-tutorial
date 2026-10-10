@@ -113,7 +113,9 @@ parameters for yours.
   `--map-gen-settings` taken from a snapshot to reproduce a world.
 - `belt-lab/`, `ch1-probe/`, `drill-probe/`, `inserter-probe/`, `train-probe/`, `station-probe/`:
   engine measurements behind the chapters and research notes. `run-probe.ps1 <probe>` runs one
-  (copies it into the fixed setup, creates a map, runs it, prints its results, removes it).
+  (copies it into the fixed setup, creates a map, runs it, prints its results, removes it; add
+  `-Work C:\tmp\cf-save` to run it with the current mods). `inserter-rate-probe/`: the Mechanical
+  inserter to three decimals, every drop timed (`-Ticks 36700 -Work C:\tmp\cf-save`).
 - `save-probe.ps1 -Save <save> -Probe <probe> [-Variant <name>]`: runs a measurement mod inside a
   copy of one of the author's saves (save-reading setup; the save itself is only copied), e.g.
   `steel-probe/`: the steel site of chapters 2 and 3 (empties the steel chest and the Boilers' Ash,

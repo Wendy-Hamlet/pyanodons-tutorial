@@ -427,8 +427,8 @@ loop. This is the copper unit as it stood at the end of the first run:
   - The plate-side inserters are filtered to **everything but Ash** (blacklist). An inserter never
     takes fuel out of a furnace (verified), so this leaves only the plate — and the same blueprint
     smelts iron or copper.
-  - Plates leave into chests through two or more inserters, because one moves only 0.82 items/s
-    into a chest.
+  - Plates leave into chests through two or more inserters, because one moves at most 0.81–0.86
+    items/s from the end of a belt (to three decimals in chapter 4, section 9).
 - **Fuel need.** At full output a unit burns about **2.0 Raw coal/s**: 10 furnaces × 0.067 plus
   about 8 working drills × 0.167 (the spare ones burn nothing).
 
@@ -459,7 +459,8 @@ one mirrored top to bottom, with one belt tile fewer.
   drill has one inserter feeding it fuel from the service belt and one Ash-filtered inserter
   putting its Ash on the belt's outer lane.
 - At the end of the service belt an underground belt lets only the Ash lane through, into two
-  chests (1.40 Ash/s is more than one inserter's 0.82/s). The fuel lane backs up as a buffer.
+  chests (1.40 Ash/s is more than one inserter's 0.86/s at most). The fuel lane backs up as a
+  buffer.
 - To start it, put a few Raw coal into the fuel drill; it feeds itself and everyone else.
 
 Why not 8 drills: 8 drills mine 16/s but burn 1.33/s themselves, so at most 14.67/s leaves. With
@@ -505,8 +506,10 @@ No splitters early on, so lanes do the sorting (all verified in the engine):
   east lane; into the back of an exit pointing east, the east lane; pointing west, the west lane.
   (An entrance passes the lane away from its tunnel; an exit passes the lane on the side it
   points to.)
-- A Mechanical inserter moves 0.82 items/s from a belt into a chest and 0.83 items/s from a
-  moving full belt onto another belt.
+- A Mechanical inserter moves 0.857 items/s from a standing full belt (0.811 if only the far lane
+  carries items), 0.833 from a moving full belt and 0.789 from a chest or a machine, whatever it
+  drops into (measured to three decimals in
+  [chapter 4](04-aluminium-glass-logs.md#9-inserters-set-the-pace)).
 
 ## 8. Checklist
 

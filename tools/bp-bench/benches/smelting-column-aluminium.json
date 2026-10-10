@@ -1,0 +1,8 @@
+{
+  "blueprint": "smelting-column",
+  "note": "The chapter 1 smelting column (10 Stone furnaces, one ore inserter each) on Aluminium ore, as the author uses it in chapter 4: 10 ore -> 1 plate in 6 s. Ore on the furnace-side lane of the lower belt, Raw coal on the furnace-side lane of the upper belt (blueprint coordinates; plates and Ash end in the chests).",
+  "sources": [{ "x": -49, "y": 15, "item": "ore-aluminium", "lane": 2 }, { "x": -49, "y": 10, "item": "raw-coal", "lane": 1 }],
+  "sinks": [],
+  "research": ["ash-separation","automation","automation-science-pack","botany-mk01","coal-processing-1","concrete","crusher","enable-logistics-tab","engine","fast-wood-forestry-upgrade","glass","hidden-mining-fluid-autounlock","mining-with-fluid","moss-mk01","soil-washing","steam-power","steel-axe","steel-processing","wood-processing"],
+  "warm": 120, "measure": 600, "window": 300
+}

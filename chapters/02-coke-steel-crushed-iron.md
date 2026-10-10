@@ -187,7 +187,7 @@ up), and the eight foundries make their 0.533 Steel/s. Iron ore and Coke were ne
 
 One more thing the runs showed: when the chest is full, the Steel lane of the shared belt fills
 too (about 270 plates here), and after the chest is emptied that backlog leaves through the one
-inserter into the chest, at most 0.82 a second. Until it has drained, the foundries nearest the
+inserter into the chest, at most 0.857 a second. Until it has drained, the foundries nearest the
 chest find no gap for their Steel: with the backlog left on the belt, ten minutes gave 0.355
 Steel/s as built and 0.418 with < 10. A second inserter into the chest (or two chests) would halve
 that recovery (not measured).
