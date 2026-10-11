@@ -30,7 +30,7 @@ then on Logs and red science made by machines instead of by hand.
 | 7:37 | Fastwood forestry upgrade done (65 red); 8:25 note: "turd选择'选择性切割'" — the upgrade's choice is Selective cutting heads |
 | 7:40–8:10 | The log block north of the steel site, mostly placed by robots from a blueprint: 10 Moss farms, 8 Botanical nurseries, 16 Fastwood forestries, the Wood processing unit last (8:00) |
 | 8:14–8:20 | Concrete (24 red, a prerequisite of Tar processing); Tar processing started |
-| 8:32 | Chat note: "发现灰烬运力不够" — found the Ash supply not enough (section 7) |
+| 8:32 | Chat note: "发现灰烬运力不够" — the Ash capacity is not enough: the first draft of the log block brought its Ash on half a belt, 7.5 a second against the 12 it needs, and was redrawn (section 6) |
 | 8:30–9:37 | The red science line: eight Burner assembling machines, a Soil extractor and a Wood processing unit; the labs moved next to it (9:10–9:30); two Flora collectors on the Native flora field (9:20). Tar processing done by the save of 9:37 |
 | after 9:37 | The author added a second Wood inserter and a third Stone brick inserter to the red science line (blueprint updated, section 8) |
 
@@ -230,15 +230,21 @@ Blueprint: [`log-production.txt`](../blueprints/log-production.txt), the author'
   and Coke come in from the bus on the west edge, Logs leave there.
 - **Middle:** two rows of five Moss farms; their Moss runs east, together with the Tree seeds, on
   one belt past the row of eight Botanical nurseries.
-- **Top:** two rows of eight Fastwood forestries. The Ash belt runs east under the lower row, turns
-  north at the east end where the nurseries' seedlings join it, and runs back west between the
-  rows carrying both, which feeds both rows. Each forestry's Logs go
-  onto a short belt that joins the Log line west.
+- **Top:** two rows of eight Fastwood forestries, 12 Ash a second together. The Ash comes on a
+  full belt that runs east under the lower row; the lower eight take theirs from it. The rest turns
+  north at the east end, where the nurseries' seedlings join it, and runs back west between the
+  rows carrying both: the upper row takes Ash and seedlings from it, the lower row only seedlings.
+  Each forestry's Logs go onto a short belt that joins the Log line west.
 - **East end:** the Wood processing unit gets its Logs straight from one forestry. That forestry's
   other output inserter, onto the Log line, runs only while the unit holds 2 Logs or more (wired
   through the forestry), so Wood comes first. The unit hands the Wood directly to the Tree seeds
   machine, which burns some of it.
 - Three Offshore pumps give the Water (this map's `pump-anywhere-fork` lets them stand on land).
+
+**This is the second draft.** The author's note at 8:32, "发现灰烬运力不够" (the Ash capacity is not
+enough), is about the first, which brought the Ash on half a belt: 7.5 a second against the 12 the
+forestries need. Now the full belt serves the lower row first (6 a second) and what is left serves
+the upper row (6 more).
 
 **On the bench** (the blueprint on an empty map: unlimited power, the three input belts kept full,
 the Log belt emptied, 30 minutes measured after a 30-minute warm-up):
@@ -276,7 +282,7 @@ the Ash separation block (y 205). On the way up, the log block takes from it (y 
 the red science line (y −176); what is left goes south. The block that needs Ash for its product
 is served before the block that only removes Ash.
 
-**The 8:32 note.** At full output the log block takes 12 Ash/s and red science 1.2, 13.2 together.
+**Enough Ash for the whole base?** At full output the log block takes 12 Ash/s and red science 1.2, 13.2 together.
 The whole base made **11.1 Ash/s** in the minute measured after 9:37. One belt carries 15. So once
 the Logs are used at their full rate, no Ash is left for the separators and the log block itself
 runs short. While the Logs have no user the block stands and the Ash goes south.
