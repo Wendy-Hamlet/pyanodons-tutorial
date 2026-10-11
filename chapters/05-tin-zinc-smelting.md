@@ -37,7 +37,7 @@ circuit stage.
 | 10:50–11:23 | Tar processing at the west edge (x −136, y −131 to −85): two Tar processing units MK 01 and two Destructive distillation columns MK 01, Tar from the Tailings pond, Steam from the steam block. At 11:03 the five coke columns of chapter 2 (y −88) come down |
 | 11:14 | Fluid handling researched: the Check valve |
 | 11:10–11:39 | An Aromatics pipe of about 930 tiles from the Tar processing to the zinc field, cut into three by two Check valves |
-| 11:31 | The author takes out the two Pumps at (−103, 235) and (−101, 235), on the steam pipe to the tin field and the Tar pipe to the Glassworks, to put Check valves in their place (section 4) |
+| 11:31 | The author takes out the two Pumps at (−103, 235) and (−101, 235), on the steam pipe to the tin field and the Tar pipe to the Glassworks: the steam pipe is to get a Check valve, the Tar pipe is to go (section 4) |
 | 11:30–11:45 | 12 Fluid mining drills on Zinc ore at x 410–450, y 215–221, and about 520 tiles of belt to a smelting column of 12 Stone furnaces beside the Ash separation block |
 | 11:45 | The save |
 
@@ -169,7 +169,7 @@ ore costs 1.9 Raw coal** and leaves as much Ash, and one Tin plate 19 Raw coal b
 fuel. At 7.5 ore/s that is 14 Raw coal a second, nearly the whole output of a Raw coal module
 (15/s), and 75 Steam/s, ten of the 24 Boilers.
 
-![The tin mine: two rows of Fluid mining drills on the right with the steam pipe, the ore belt running west to the twelve Stone furnaces and the two plate chests on the left](../images/ch5-tin.jpg)
+![The tin mine: two rows of Fluid mining drills on the right, the ore belt running west between them to the twelve Stone furnaces, the two plate chests on the left; the drills' fuel belts above and below](../images/ch5-tin.jpg)
 
 ![The steam block: two rows of twelve Boilers with no Steam engines between them, the three Solid separators above](../images/ch5-steam.jpg)
 
@@ -202,7 +202,12 @@ Glassworks 128 × 319 and 317 × 102, the Aromatics pipe 20 × 309, 319 × 24 an
 two Check valves. So the two Pumps at y 235 were what kept the tin drills and the Glassworks
 supplied. At 11:45 both places are empty: steam and Tar stand in the north halves, the south halves
 are cut off (the tin drills "missing required fluid", the Glassworks' pipe still full from
-before). One Check valve and one pipe in each gap restore both lines.
+before). One Check valve and one pipe in each gap would restore both lines.
+
+**After the save** the author put a Check valve into the steam pipe (not where the Pump stood).
+The Tar pipe stays cut on purpose: now that the Tar is refined, the Glassworks need not burn Tar,
+and the author will take the pipe away once the Tar left in it is used up. Until then the Glass
+chest is full and the Glassworks stand.
 
 **Is a Check valve a Pump?** The author took the Pumps out because the valve seems to do the same
 without power and in one tile instead of two (data: Pump 1 × 2, 29 kW, 200 per tick; Check valve 1
@@ -245,7 +250,7 @@ lies about 450 tiles east of the base, around (432, 240).
 At 11:45 the drills stand, "missing required fluid": the pipe is empty, because the Tar processing
 has stopped (next section).
 
-![The zinc mine: Fluid mining drills on both sides of the ore belt, the Raw coal belt below and the Ash belt above, the Aromatics pipe](../images/ch5-zinc-field.jpg)
+![The zinc mine: Fluid mining drills on both sides of the ore belt; the Raw coal comes in on the bottom belt and round to the top one, which takes the Ash back west; the Aromatics pipe on the left](../images/ch5-zinc-field.jpg)
 
 ![The zinc smelting column (top) above the Ash separation block, with the ore, Raw coal and Ash belts coming in from the right](../images/ch5-zinc-smelting.jpg)
 
@@ -289,7 +294,7 @@ Coke from Anthracene oil (Tar processing), and most of them burn: Gasoline 1.2 M
 which burn fluid fuel (chapter 4; the author's circuit plan burns Gasoline there). The author
 leaves this until the circuit boards are made and these products are needed.
 
-![Tar processing at the west edge: two Tar processing units and two Destructive distillation columns, the byproduct pipes ending to the right](../images/ch5-tar.jpg)
+![Tar processing at the west edge, from the top: the Pitch column, the Aromatics column, the tops unit and the bottoms unit; the byproduct pipes end to the right](../images/ch5-tar.jpg)
 
 ## 7. Iron, a mall that burns Wood, and the coke columns
 
@@ -322,7 +327,7 @@ what is taken from it.
 
 ![The Wood-burning mall: the Wood processing unit at the top left, ten Burner assembling machines and their chests, the input belts from the left](../images/ch5-mall.jpg)
 
-![The two crushed iron blocks and the iron field's Burner mining drills on the right](../images/ch5-iron.jpg)
+![The two crushed iron blocks, one above the other: Jaw crushers on the right, iron and brick furnaces on the left](../images/ch5-iron.jpg)
 
 **The coke columns come down.** The steel line stopped at about 10:30 with its outputs full (its
 eight foundries stand "full output" at 11:45). Without that Coke user the five coke columns of
