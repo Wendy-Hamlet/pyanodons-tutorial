@@ -335,7 +335,7 @@ the book.
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` after 6:13.
 
-Next: [chapter 4](04-aluminium-glass-logs.md), aluminium mining, glass making and log production.
+Next: [chapter 4](04-aluminium-glass-logs.md), aluminium mining, glass making, log production and red science.
 The log chain needs both of the others: a Botanical nursery MK 01 takes 10 Glass and a Moss farm
 MK 01 10 Aluminium plates (from data).
 

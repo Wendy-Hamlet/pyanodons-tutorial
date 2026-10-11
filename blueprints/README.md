@@ -6,8 +6,9 @@ The author's blueprint book for the tutorial so far. Import a file's content wit
 "Import string" button; `book.txt` holds all of them as one blueprint book (order and label in
 `book.json`). Explanations: [chapter 1](../chapters/01-landing-to-red-science.md),
 [chapter 2](../chapters/02-coke-steel-crushed-iron.md),
-[chapter 3](../chapters/03-ash-separation-raw-coal-power.md) and
-[chapter 4](../chapters/04-aluminium-glass-logs.md).
+[chapter 3](../chapters/03-ash-separation-raw-coal-power.md),
+[chapter 4](../chapters/04-aluminium-glass-logs.md) and
+[chapter 5](../chapters/05-tin-zinc-smelting.md).
 
 Where the numbers come from: the two burner designs of chapter 1 were built and run in the engine
 by `tools/design-lab` (5 minutes of game time, rates measured after the first minute), in the
@@ -23,21 +24,22 @@ machine's full speed.
 
 | File | In game | What it is | Measured |
 |---|---|---|---|
-| `burner-mall.txt` | 初期超市 | The author's first mall: 6 Burner assembling machines, no belts, making Small parts and Air-core inductors | Not measured |
+| `burner-mall.txt` | 初期超市-0 | The author's first mall: 6 Burner assembling machines, no belts, making Small parts and Air-core inductors | Not measured |
 | `smelting-column.txt` | 0.9375 [Iron plate]/[Copper plate] | The author's smelting column: 10 Stone furnaces on half a belt of ore, for iron or copper | Earlier version, iron and copper each: 0.91 plates/s, 0.60 Ash/s, no mixed items, 0 ore left after the supply stops. Two current ones on copper: 1.85 plates/s together |
 | `raw-coal-module.txt` | 15 [Raw coal] | The author's raw coal module: 9 Burner mining drills filling one belt | Earlier version: 15.00 Raw coal/s, 1.40 Ash/s into chests |
 | `raw-coal-power.txt` | 初期满带原煤发电（不清灰） | 12 Boilers and 6 Steam engines on one belt of Raw coal, no Ash inserters | 49–52 Steam/s (12.1–12.8 MW) at the load of 2:00–2:30; full output 22.2 MW from data |
 | `coke-distillation.txt` | 2.7 [Coke] | 3 + 2 Destructive distillation columns, Raw coal to Coal to Coke, Exhaust pipe for the Coal gas | 2.71 Coke/s (2:00–2:10), about 88 Coal gas/s vented |
 | `steel-foundries.txt` | 0.533 [Steel plate] | 8 Advanced foundries, each under its own Soil extractor (runs while the foundry holds under 10 Limestone); Steel into a chest limited to 500 | Engine tests on copies of the saves: 0.533 Steel/s with < 10 (the file), 0.493 with < 8, 0.440 and 0.435 with < 5 (chapter 2's version, 0.43–0.44 in play) ([chapter 3](../chapters/03-ash-separation-raw-coal-power.md#9-steel-limestone--8)) |
-| `crushed-iron.txt` | 3 [Iron plate] | 6 Jaw crushers, 18 iron furnaces and 5 brick furnaces on a full belt of Iron ore | 3.02 Iron plate/s and 1.52 Stone brick/s |
-| `burner-belt-mall.txt` | 初期爪带超市 | The author's second mall: 7 Burner assembling machines making Mechanical inserters, Transport belts and Small parts from the bus's plates | Not measured (stocked its chests and stopped) |
+| `crushed-iron.txt` | 3 [Iron plate] | 6 Jaw crushers, 18 iron furnaces and 5 brick furnaces on a full belt of Iron ore | 3.02 Iron plate/s and 1.52 Stone brick/s; two copies (one more Small electric pole since chapter 5): 6.1 Iron plates/s |
+| `burner-belt-mall.txt` | 初期超市-1 | The author's second mall: 7 Burner assembling machines making Mechanical inserters, Transport belts and Small parts from the bus's plates | Not measured (stocked its chests and stopped) |
 | `raw-coal-power-two-belts.txt` | 两满带原煤发电 | 24 Boilers and 12 Steam engines on two belts of Raw coal, Ash to 3 Solid separators on top | 44.4 MW and 29.6 Raw coal/s from data. At 6:13 only the east half had water (22.2 MW at most; 49.5 Steam/s, 12.2 MW with the Coal dust Boilers, in the minute after); the author has since piped it across, all engines running at 6:14 |
 | `ash-separation.txt` | 灰烬分离 | 3 Solid separators between two Ash belts, 13 inserters each; Coal dust, Soot and Iron oxide out through buffer chests. In the author's base only the belt above is fed | Bench: 50 % with the belt above full (15 Ash/s), 100 % with both (29.9 Ash/s); 20–32 Ash/s separated by both separator groups together in play (5:20–6:10) |
 | `soot-separation.txt` | 烟煤分离 | 1 Solid separator on Soot; each ore into its own chest and Stone furnace (Coal dust as fuel) | 0.5–1.3 Soot/s used (5:50–6:13); Zinc and Lead ore wait in the chests |
 | `iron-oxide-smelting.txt` | 氧化铁处理 | 2 Stone furnaces, Iron oxide to Iron plates (2 : 1), one input inserter each | Bench: 1.717 Iron oxide/s, 0.85 Iron plates/s, furnaces at 15 % (the inserters set the pace); 0.7–0.9 Iron oxide/s in play (6:00–6:13) |
 | `coal-dust-power.txt` | 煤粉处理 | 2 Boilers on Coal dust and 2 Steam engines (one more than the steam needs, so Coal dust burns first) | 2.03 Coal dust/s burnt in the minute after 6:13, about the two-engine share computed from data |
-| `log-production.txt` | 2.348 [Log] | Logs: 10 Moss farms, 8 Botanical nurseries, 16 Fastwood forestries, a Wood processing unit for the Tree seeds; Ash, Stone bricks and Coke in, Logs out | Bench: 2.336 Logs/s (nurseries and forestries at 100 %), Ash 12, Stone bricks 1.25, Coke 0.31 a second ([chapter 4](../chapters/04-aluminium-glass-logs.md#6-the-log-block)) |
+| `log-production.txt` | 2.348 [Log] | Logs: 10 Moss farms, 8 Botanical nurseries, 16 Fastwood forestries, a Wood processing unit for the Tree seeds; Ash, Stone bricks and Coke in, Logs out | Bench: 2.336 Logs/s (nurseries and forestries at 100 %), Ash 12, Stone bricks 1.25, Coke 0.31 a second ([chapter 4](../chapters/04-aluminium-glass-logs.md#6-the-log-block)). The author's note: the High pressure furnace can become a Moondrop greenhouse (9 × 9 against 7 × 7, so a little rebuilding; [chapter 5](../chapters/05-tin-zinc-smelting.md#7-iron-a-mall-that-burns-wood-and-the-coke-columns)) |
 | `red-science.txt` | 0.2 [Automation science pack] | Red science for six labs: 8 Burner assembling machines, a Soil extractor and a Wood processing unit; Native flora, plates, Ash, Logs and Stone bricks in | Bench: 0.200/s (the author's update after 9:37; 0.196 with one Wood inserter) ([chapter 4](../chapters/04-aluminium-glass-logs.md#8-red-science-at-02-a-second)) |
+| `wood-mall.txt` | 初期超市-2 | The author's third mall, beside red science: 10 Burner assembling machines make Transport belts, Underground belts, Mechanical inserters, Pipes and Pipes to ground; a Wood processing unit turns Logs into Wood, the fuel, carried with the Iron plates | Not measured (a mall makes what is taken); fuel from data: 0.375 Wood/s at full work ([chapter 5](../chapters/05-tin-zinc-smelting.md#7-iron-a-mall-that-burns-wood-and-the-coke-columns)) |
 
 ## How the blueprints are labelled
 
@@ -82,7 +84,7 @@ machine's full speed.
   ore inserter brings 0.833. On the bench a full ore lane (7.5/s) feeds nine furnaces and gives
   0.75 Aluminium plates/s.
 
-## Chapter 2, 3 and 4 blocks
+## Chapter 2 to 5 blocks
 
 Pictures and explanations are in [chapter 2](../chapters/02-coke-steel-crushed-iron.md):
 `raw-coal-power` (section 3), `coke-distillation` (4), `steel-foundries` (5, and chapter 3
@@ -90,7 +92,8 @@ section 9), `crushed-iron` (6); and in [chapter 3](../chapters/03-ash-separation
 `burner-belt-mall` (section 2), `ash-separation` (4), `raw-coal-power-two-belts` (5),
 `coal-dust-power` (6), `soot-separation` and `iron-oxide-smelting` (7); and in
 [chapter 4](../chapters/04-aluminium-glass-logs.md): `log-production` (sections 5 and 6),
-`red-science` (8), and the bench test of `ash-separation` (7).
+`red-science` (8), and the bench test of `ash-separation` (7); and in
+[chapter 5](../chapters/05-tin-zinc-smelting.md): `wood-mall` and the second `crushed-iron` (section 7).
 The burner mall is in [chapter 1](../chapters/01-landing-to-red-science.md#5-the-first-mall-035040).
 
 ## Syncing with a running game

@@ -1,4 +1,4 @@
-# Chapter 4 — Aluminium mining, glass making and log production
+# Chapter 4 — Aluminium mining, glass making, log production and red science
 
 [中文版](04-aluminium-glass-logs.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 3](03-ash-separation-raw-coal-power.md)
@@ -439,4 +439,4 @@ On the bench, with the book's blueprints:
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` after 9:37.
 
-Next: chapter 5 (not written yet).
+Next: [chapter 5](05-tin-zinc-smelting.md), tin and zinc smelting.

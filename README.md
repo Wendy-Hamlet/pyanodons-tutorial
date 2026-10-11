@@ -12,7 +12,8 @@ scripts used, so you can re-check them against your own mod versions.
 1. [Landing to red science](chapters/01-landing-to-red-science.md)
 2. [Coke, steel and crushed iron](chapters/02-coke-steel-crushed-iron.md)
 3. [Ash separation and Raw coal power](chapters/03-ash-separation-raw-coal-power.md)
-4. [Aluminium mining, glass making and log production](chapters/04-aluminium-glass-logs.md)
+4. [Aluminium mining, glass making, log production and red science](chapters/04-aluminium-glass-logs.md)
+5. [Tin and zinc smelting](chapters/05-tin-zinc-smelting.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -116,6 +117,8 @@ parameters for yours.
   (copies it into the fixed setup, creates a map, runs it, prints its results, removes it; add
   `-Work C:\tmp\cf-save` to run it with the current mods). `inserter-rate-probe/`: the Mechanical
   inserter to three decimals, every drop timed (`-Ticks 36700 -Work C:\tmp\cf-save`).
+  `valve-probe/`: how far a pipeline carries (320 tiles) and what a Pump and a Check valve do
+  (`-Ticks 2500 -Work C:\tmp\cf-save`).
 - `save-probe.ps1 -Save <save> -Probe <probe> [-Variant <name>]`: runs a measurement mod inside a
   copy of one of the author's saves (save-reading setup; the save itself is only copied), e.g.
   `steel-probe/`: the steel site of chapters 2 and 3 (empties the steel chest and the Boilers' Ash,

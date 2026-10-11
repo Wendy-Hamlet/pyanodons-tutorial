@@ -1,0 +1,8 @@
+{
+  "name": "cf-valve-probe",
+  "version": "0.0.1",
+  "title": "Check valve and pump probe",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "dependencies": ["base"]
+}
