@@ -13,7 +13,7 @@ scripts used, so you can re-check them against your own mod versions.
 2. [Coke, steel and crushed iron](chapters/02-coke-steel-crushed-iron.md)
 3. [Ash separation and Raw coal power](chapters/03-ash-separation-raw-coal-power.md)
 4. [Aluminium mining, glass making, log production and red science](chapters/04-aluminium-glass-logs.md)
-5. [Tin and zinc smelting](chapters/05-tin-zinc-smelting.md)
+5. [Tin and zinc smelting, lead mining](chapters/05-tin-zinc-smelting.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -124,14 +124,16 @@ parameters for yours.
   `steel-probe/`: the steel site of chapters 2 and 3 (empties the steel chest and the Boilers' Ash,
   sets the Soil extractors' circuit condition per variant, `ltN` for Limestone < N, `,coke` to top
   the foundries up with Coke; records every foundry's output, status and
-  missing ingredient).
+  missing ingredient), and `rate-probe/`: the base as it stands over a longer window than the
+  inspector's minute (variant `WARM,MEASURE` in seconds, e.g. `-Ticks 39700 -Variant 60,600`):
+  what it makes and uses per second, and every machine's and drill's status, sampled each second.
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and
-  empties the output belts by script, lets labs research without end, and reports every machine's
+  empties the output belts (and, as fluid sinks, chosen pipes) by script, lets labs research without end, and reports every machine's
   crafts against its recipe at its actual speed, status samples, the ingredient a waiting machine
   lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
-  sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
+  sinks, fluid sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
   save-reading setup.
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see

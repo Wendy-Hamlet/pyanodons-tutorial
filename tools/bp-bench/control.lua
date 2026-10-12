@@ -3,7 +3,8 @@
 -- electric network of the blueprint (unlimited power), a water tile in front of every Offshore
 -- pump, script sources that keep both lanes of each input belt full (or the one lane named:
 -- 1 = left, 2 = right, looking the way the belt runs), script sinks that empty each
--- output belt, and labs that research without end. After a warm-up it compares every machine's
+-- output belt, fluid sinks that empty the pipe segment a fluid leaves by, and labs that
+-- research without end. After a warm-up it compares every machine's
 -- finished crafts with what its recipe allows at its speed (modules included), samples statuses
 -- and which ingredient a waiting machine lacks, and counts what the sources gave and the sinks
 -- took. Results are CF-BENCH log lines.
@@ -162,6 +163,14 @@ script.on_init(function()
     if e then sinks[#sinks + 1] = { e = e, got = {} }
     else out("no belt for the sink at (%d, %d)", s.x, s.y) end
   end
+  -- Fluid sinks: the pipe on that tile; its whole segment is emptied every tick.
+  for _, s in ipairs(concat(spec.fluid_sinks, variant and variant.fluid_sinks)) do
+    local px, py = s.x + 0.5 + dx, s.y + 0.5 + dy
+    local e = surface.find_entities_filtered({ area = { { px - 0.1, py - 0.1 }, { px + 0.1, py + 0.1 } },
+      type = { "pipe", "pipe-to-ground" } })[1]
+    if e then sinks[#sinks + 1] = { e = e, got = {}, fluid = true }
+    else out("no pipe for the fluid sink at (%d, %d)", s.x, s.y) end
+  end
   for _, p in ipairs(spec.prime or {}) do
     local px, py = p.x + dx, p.y + dy
     for _, e in pairs(surface.find_entities_filtered({ area = { { px - 0.1, py - 0.1 }, { px + 0.1, py + 0.1 } } })) do
@@ -295,7 +304,14 @@ script.on_event(defines.events.on_tick, function()
     end
   end
   for _, s in ipairs(b.sinks) do
-    for line = 1, s.e.get_max_transport_line_index() do
+    if s.fluid then
+      local fl = s.e.get_fluid_segment_fluid(1)
+      if fl and fl.amount > 0 then
+        s.got[fl.name] = (s.got[fl.name] or 0) + fl.amount
+        s.e.clear_fluid_segment_fluid(1)
+      end
+    end
+    for line = 1, s.fluid and 0 or s.e.get_max_transport_line_index() do
       local tl = s.e.get_transport_line(line)
       if #tl > 0 then
         for _, c in pairs(tl.get_contents()) do s.got[c.name] = (s.got[c.name] or 0) + c.count end

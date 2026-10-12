@@ -439,4 +439,4 @@ On the bench, with the book's blueprints:
 - Pictures: in-game screenshots with entity info (alt view), taken in the author's game with the
   companion's `/pt-shots` after 9:37.
 
-Next: [chapter 5](05-tin-zinc-smelting.md), tin and zinc smelting.
+Next: [chapter 5](05-tin-zinc-smelting.md), tin and zinc smelting, lead mining.

@@ -2,7 +2,7 @@
 # with unlimited power, full input belts and emptied output belts, and prints whether every
 # machine reaches its recipe's full speed (see tools\bp-bench\control.lua). Benches are
 # tools\bp-bench\benches\<name>.json: the blueprint file, sources {x, y, item} (tiles in the
-# blueprint's own coordinates), sinks {x, y}, items to prime machines with, the technologies to
+# blueprint's own coordinates), sinks {x, y}, fluid_sinks {x, y} (a pipe tile), items to prime machines with, the technologies to
 # count as researched, the technology labs research, warm-up and measuring time in seconds, and
 # variants that add sources or sinks.
 # Runs in the save-reading setup (tools\save-env.ps1, C:\tmp\cf-save: the player's current mods),

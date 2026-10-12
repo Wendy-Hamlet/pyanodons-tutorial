@@ -115,7 +115,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 
 | Fact | Source |
 |---|---|
-| A fluid segment (pipes that touch) may span at most 320 tiles: Py's Pipe and Pipe to ground have `max_pipeline_extent` 320 (other fluid boxes 1280). Longer, it fills and delivers nothing: 310 tiles of Pipe to ground 4,800 Steam/s, 330 and 625 tiles 0. The span is the segment's box on the map, not its length: an L of 200 + 200 tiles delivers 4,800. | Data; `tools/valve-probe` ([chapter 5](../chapters/05-tin-zinc-smelting.md)) |
+| A fluid segment (pipes that touch) may span at most 320 tiles: Py's Pipe and Pipe to ground have `max_pipeline_extent` 320 (other fluid boxes 1280). Longer, it fills and delivers nothing: 310 tiles of Pipe to ground 4,800 Steam/s, 330 and 625 tiles 0. The span is the segment's box on the map, not its length: an L of 200 + 200 tiles delivers 4,800. The author's widest segment covers exactly 320 tiles (an Aromatics pipe) and flows. | Data; `tools/valve-probe` ([chapter 5](../chapters/05-tin-zinc-smelting.md)) |
 | A Pump or a Check valve ends a segment: 625 tiles with one at tile 310 deliver 3,880 (Pump) and 4,781 (Check valve) Steam/s; with a Pump at tile 205 the 420 tiles behind it deliver 0. | `tools/valve-probe` |
 | Pump: 1 × 2, 29 kW, 200 per tick, pushes until the far side is full or the near side empty (20 % → 80 %: the near side emptied into the far one). Check valve (Fluid handling): 1 × 1, no power, one-way, 200 per tick, lets fluid run only from the fuller side to the emptier one and stops when they are level (20 % → 80 %: nothing; 80 % → 20 %: levelled at 50 %). A supply line drained at its far end works with either. | Data; `tools/valve-probe` |
 | A Pipe holds 100 and a Pipe to ground 100, so an underground pair (11 tiles) holds 200: a 100-tile line of them only 1,900. | Data; `tools/valve-probe` |
@@ -132,7 +132,10 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | Glassworks MK 01 burn a fluid fuel, 10 MW each. On Tar (0.2 MJ) a busy one takes 50 Tar/s; the author's melter and caster made 0.2 Glass/s on 56 Tar/s, 280 Tar per Glass. | Data; the author's recorder (chapter 4) |
 | Distillation gives Iron oxide by chance, 20 % of the Coal crafts and 30 % of the Coal gas crafts: the author's 1,338 Coal and 690 Coke came with 119 Iron oxide, 124 expected. | Data; the author's save |
 | Aromatics from Tar (Tar processing): Tar refining bottoms (100 Tar + 100 Steam → 30 Middle oil, 24 Creosote, 75 Anthracene oil, 140 Pitch, 5 s), tops (100 Middle oil + 100 Steam → 50 Light oil, 50 Carbolic oil, 100 Naphthalene oil, 4 s), Coke from Pitch in a column (100 Pitch + 100 Steam → 10 Hydrogen, 20 Light oil, 20 Naphthalene oil, 30 Anthracene oil, 10 Coke, 5 s), Aromatics (50 Light oil → 50 Aromatics + 25 Gasoline, 2 s). Per 100 Tar: 43 Aromatics, with 117 Anthracene oil, 58 Naphthalene oil, 24 Creosote, 15 Carbolic oil, 14 Hydrogen, 21.5 Gasoline, 14 Coke, and 270 Steam in. One column refines 20 Pitch/s against the 28 of one refining unit. | Data ([chapter 5](../chapters/05-tin-zinc-smelting.md)) |
+| Gasoline from Anthracene oil (Tar processing; the recipe is named after its product): 50 Anthracene oil → 20 Gasoline + 5 Coke, 4 s, in a Destructive distillation column (12.5 oil a second). With all its Anthracene oil cracked, 100 Tar give 25.7 Coke (14 from the Pitch) besides the 43 Aromatics, and 68 Gasoline. The author's line, measured at 13.3 Tar/s: 5.75 Aromatics, 3.58 Coke, 9.8 Gasoline, 7.5 Naphthalene oil, 3.2 Creosote, 1.9 Carbolic oil, 1.85 Hydrogen and about 36 Steam a second. | Data; `tools/rate-probe` (chapter 5) |
 | A Tar line stops when any byproduct pipe fills: the author's dead-end pipes filled with Anthracene oil (3,200) and Pitch (2,900) after 850 Aromatics. The oils become Creosote (Creosote technology), Anthracene oil Gasoline and Coke, and most burn (Gasoline 1.2 MJ, Carbolic oil 0.35, Naphthalene oil 0.3, Anthracene oil 0.25, Hydrogen 0.1). | The author's save; data (chapter 5) |
+| Ways out for byproducts: a Tailings pond stores 1,000,000 of one liquid (the author's four Tar liquids would fill theirs in 28 to 145 hours of play), an Exhaust pipe vents a gas (Hydrogen, the Lime furnace's Carbon dioxide), a Sinkhole takes a liquid away (Saline water). | Data; the author's save; `tools/rate-probe` (chapter 5) |
+| A store is not a source: since the coke columns came down no machine makes Tar, and the author's Tar line lives on the pond's 82,094 (13:05), 1.7 hours at 13.3 a second. Coke distillation (chapter 2) made 67.5 Tar a second from 15 Raw coal. | The author's save; `tools/rate-probe`; data (chapter 5) |
 
 ## Farms, logs and red science
 
@@ -145,13 +148,15 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | A Solid separator block with Ash belts above and below the row needs both fed: one basic belt brings 15 Ash/s, half of what three separators take. | Bench `ash-separation`: 50 % with one belt, 100 % with both |
 | Moondrop upgrade (TURD) offers Copper (Moondrop recipes take 10 Copper ore, twice the Moondrop in half the time), Moon (+35 % productivity, −50 % speed, a Methane recipe with a Lamp) and Carbon capture (+50 % speed, twice the energy, a greenhouse recipe making 200 Carbon dioxide every 5 s from nothing). A Moondrop greenhouse MK 01 (9 × 9) runs at speed 1 with its 16 Moondrop modules. | pyalienlife `prototypes/upgrades/moondrop.lua`; data |
 
-## Tin and zinc
+## Tin, zinc and lead
 
 | Fact | Source |
 |---|---|
 | Tin ore is mined with Steam (10 per ore), Zinc ore with Aromatics (4 per ore), both by Fluid mining drills. Tin plate (Mining with fluid) and Zinc plate (Electronics - Stage 1) are 40 ore → 4 plates in 60 s in a Stone furnace: 0.667 ore/s a furnace, twelve for half a belt. The author's tin column: 7.50 ore and 0.75 plates a second in the windows from 10:20 to 11:30 (one dipped to 4.95). | Data; the author's recorder ([chapter 5](../chapters/05-tin-zinc-smelting.md)) |
 | A Simple circuit board takes 3.11 Tin plates (Solder, Ceramic capacitors, High-power resistors) and 3.33 Zinc plates (the CuZn Battery). Zinc has no other use before them. | Data |
 | Steam-mined Tin costs about 1.9 Raw coal an ore: 1.65 for its Steam in the Boilers, 0.27 for the drill (400 kW at 0.5 ore/s). Half a belt of Tin ore burns 14 Raw coal a second. | Data |
+| Lead ore is mined with Acetylene (10 per ore). Lead plate (Solder - Stage 1): 6 ore → 1 plate in 10 s, 0.6 ore/s a Stone furnace. A Simple circuit board takes 2.67 Lead plates (Solder: 2 Tin + 4 Lead → 1); Lead also makes tanks (the PyTank (40 kL) 30, without Duralumin). The author's six drills: 3.02 ore and 0.50 plates a second. | Data; `tools/rate-probe` (chapter 5) |
+| Acetylene (Acetylene technology): Limestone (Soil extractor, 0.4/s) → Lime (High pressure furnace, 15 Coke + 10 Limestone → 10 Lime + 100 Carbon dioxide, 5 s) → Calcium carbide (7 Coke + 2 Lime → 10, 4 s) → Acetylene (Gasifier, 300 Water + 10 carbide → 100 Acetylene + 25 Slaked lime, 8 s); an Evaporator dries the Slaked lime back (60 → 1 Lime + 1 Gravel, 2 s). Per Lead ore 0.94 Coke and 0.16 Limestone. Balanced: 2 extractors, 1 Lime furnace, 2 carbide furnaces, 4 Gasifiers for 50 Acetylene/s. | Data; bench `acetylene`: 49.5/s once every inserter reaches the belt (chapter 5) |
 
 ## Research
 
@@ -222,11 +227,18 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
    room for one input inserter, divide: a Stone furnace on Aluminium ore runs at 50 %, on Iron
    oxide at 15 %. Plan the furnaces by inserters, not by recipe time.
 18. **Cut long pipelines into segments under 320 tiles.** A Pump or a Check valve at least every
-   320 tiles (the span on the map); the author's long Steam, Tar and Aromatics lines keep every
-   segment within 319. A Check valve does it without power wherever the line runs from a full
-   source to a consumer.
+   320 tiles (the span on the map); the author's long Steam, Tar, Aromatics and Acetylene lines
+   keep every segment within 320 tiles. A Check valve does it without power wherever the line runs
+   from a full source to a consumer.
 19. **Wood for burner buildings that should make no Ash.** The author's third mall burns Wood made
    on the spot from Logs: no Ash to take away, and a Log made into Wood gives five times the heat.
+20. **One line's byproduct is the next line's input.** The author's Tar line turns its Pitch and
+   Anthracene oil into Coke, and the Coke into the Acetylene the lead drills mine with. What has no
+   use yet is stored (liquids in Tailings ponds, a day of play or more) or vented (gases), until
+   the circuit boards need it.
+21. **Every inserter of a block reaches something.** One input inserter that reached for a pole
+   tile where a belt ended early held the author's acetylene block at 86 %; on the bench, one belt
+   tile instead made 99 %. Check the end tiles of every belt that feeds inserters.
 
 ## Trains
 
