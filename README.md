@@ -140,3 +140,12 @@ parameters for yours.
   [its README](tools/agent/README.md). Its play journal is [research/agent-play](research/agent-play/journal.md).
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.
+
+## License
+
+- **Code** (`tools/`, `research/plans/*.js`, `research/agent-play/scripts/`): [MIT](LICENSE).
+- **Everything else** (chapters, research notes, images, blueprints): [CC BY 4.0](LICENSE-CONTENT),
+  © 2026 Wendy-Hamlet. Share and adapt it freely, also commercially; credit "Wendy-Hamlet" with a
+  link to this repository and say what you changed.
+- The game graphics in the screenshots remain the property of Wube Software (Factorio) and the
+  authors of the Pyanodons mods.
