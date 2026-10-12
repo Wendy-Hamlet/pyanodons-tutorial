@@ -13,7 +13,7 @@ scripts used, so you can re-check them against your own mod versions.
 2. [Coke, steel and crushed iron](chapters/02-coke-steel-crushed-iron.md)
 3. [Ash separation and Raw coal power](chapters/03-ash-separation-raw-coal-power.md)
 4. [Aluminium mining, glass making, log production and red science](chapters/04-aluminium-glass-logs.md)
-5. [Tin and zinc smelting, lead mining](chapters/05-tin-zinc-smelting.md)
+5. [Tin, zinc and lead smelting](chapters/05-tin-zinc-smelting.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)

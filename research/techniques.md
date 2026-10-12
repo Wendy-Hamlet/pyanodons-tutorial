@@ -136,6 +136,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | A Tar line stops when any byproduct pipe fills: the author's dead-end pipes filled with Anthracene oil (3,200) and Pitch (2,900) after 850 Aromatics. The oils become Creosote (Creosote technology), Anthracene oil Gasoline and Coke, and most burn (Gasoline 1.2 MJ, Carbolic oil 0.35, Naphthalene oil 0.3, Anthracene oil 0.25, Hydrogen 0.1). | The author's save; data (chapter 5) |
 | Ways out for byproducts: a Tailings pond stores 1,000,000 of one liquid (the author's four Tar liquids would fill theirs in 28 to 145 hours of play), an Exhaust pipe vents a gas (Hydrogen, the Lime furnace's Carbon dioxide), a Sinkhole takes a liquid away (Saline water). | Data; the author's save; `tools/rate-probe` (chapter 5) |
 | A store is not a source: since the coke columns came down no machine makes Tar, and the author's Tar line lives on the pond's 82,094 (13:05), 1.7 hours at 13.3 a second. Coke distillation (chapter 2) made 67.5 Tar a second from 15 Raw coal. | The author's save; `tools/rate-probe`; data (chapter 5) |
+| Surplus Coke can go back to Tar: Coal gas from Coke (Coal processing 1), 20 Coke → 20 Coal gas + 20 Tar + 1 Ash, 5 s, in a Destructive distillation column. The author plans to switch it on by circuit when a Tar line's Coke is not taken. | Data; the author (chapter 5) |
 
 ## Farms, logs and red science
 

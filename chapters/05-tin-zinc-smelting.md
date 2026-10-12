@@ -1,4 +1,4 @@
-# Chapter 5 — Tin and zinc smelting, lead mining
+# Chapter 5 — Tin, zinc and lead smelting
 
 [中文版](05-tin-zinc-smelting.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 4](04-aluminium-glass-logs.md)
@@ -191,7 +191,8 @@ instead of ten: ore lane and plate lane on one belt (output inserters "all but A
 Ash on the other. From data: Tin plate is 40 ore → 4 plates in 60 s, so a furnace takes 0.667 ore/s,
 less than the 0.833 its one inserter brings from a moving belt (chapter 4, section 9); 7.5 ore/s
 need 11.25 furnaces, and twelve could smelt 0.8 plates/s. The lane gives **0.75 Tin plates/s**.
-They go into two chests at (−71, 527), which hold 1,600 each and have been full since about 12:10:
+They go into two chests at (−71, 527), because Tin plates also build things (section 2); the
+chests hold 1,600 each and have been full since about 12:10:
 3,200 Tin plates, enough for about 1,030 Simple circuit boards. Since then the drills stand
 "waiting for space" (all sixteen in the measured ten minutes).
 
@@ -283,7 +284,9 @@ lies about 450 tiles east of the base, around (432, 240).
 - **The smelting column**, beside the Ash separation block (y 199, x −57 to −35): the same twelve
   furnaces as for tin, Zinc plate being 40 ore → 4 plates in 60 s like Tin. The ore joins from the
   side, so one lane, 7.5 ore/s at most; the drills give 6, so **0.6 Zinc plates/s** at full. The
-  plate end of the belt has no chest yet; at 13:05 59 Zinc plates stand on it.
+  plate end of the belt has no chest, on purpose: unlike Tin, Zinc and Lead plates are only for
+  circuit boards, and the author will run them straight onto the bus later. At 13:05 59 Zinc
+  plates stand on the belt.
 
 The drills get what the Tar line makes (next section): in the measured ten minutes 5.75 Aromatics
 a second, enough for 1.44 ore. They were "working" in 24 % of the samples and "missing required
@@ -361,7 +364,10 @@ its pipe held 91,722 Tar at 11:45 and 82,094 at 13:05; at 13.3 a second that las
 until about 14:50. Then the Aromatics, the Coke and the Acetylene stop, and with them zinc and
 lead. The Tar came from the coke distillation of chapter 2
 ([`coke-distillation.txt`](../blueprints/coke-distillation.txt)): 67.5 Tar a second from 15 Raw coal,
-with 2.7 Coke and 108 Coal gas.
+with 2.7 Coke and 108 Coal gas. The author's next step is a Tar line that cannot jam when its Coke
+is not taken: a circuit turns the surplus Coke into Coal gas and Tar (data: Coal gas from Coke,
+20 Coke → 20 Coal gas + 20 Tar + 1 Ash in 5 s in a Destructive distillation column, unlocked by
+Coal processing 1). It comes with the next update of this chapter.
 
 **How much is needed.** The author's plan of 6 boards a minute needs 0.33 Zinc plates/s: 3.33 ore,
 13.3 Aromatics and 31 Tar a second through the whole chain. The twelve drills at full would need
@@ -440,17 +446,16 @@ the line:
 **The smelting column.** 13 Stone furnaces at y −69 (x −157 to −133), the same design as for tin
 and zinc: ore lane and plate lane on the lower belt, Raw coal and Ash on the upper one. Thirteen
 could take 7.8 ore/s; the six drills give 3, so seven furnaces get ore (busy 71 % of the time) and
-**0.50 Lead plates/s** come out (measured), enough for 11 boards a minute. Plates and Ash end on
-the belt with no chest: the two chests the author placed at 12:36 were taken away again at 12:38.
-At 13:05 the plate lane is full (111 plates) and the plates gather in the furnaces (up to 23
-each); a Stone furnace holds at most a stack, 100, and then stops. 323 Lead plates were made by
-13:05.
+**0.50 Lead plates/s** come out (measured), enough for 11 boards a minute. As with zinc, the belt
+ends without a chest on purpose (two chests placed at 12:36 were taken away again at 12:38): the
+plates are to go onto the bus later. Until then the plate lane is full (111 plates at 13:05) and
+the plates gather in the furnaces, up to a stack of 100 each. 323 Lead plates were made by 13:05.
 
 ![The acetylene block: top row, the Lime furnace between its two Soil extractors, then two Gasifiers; bottom row, the Washer and the Evaporator, the two Calcium carbide furnaces and two more Gasifiers; the Coke belt comes in from the left between the rows](../images/ch5-acetylene.jpg)
 
 ![The lead mine: six Fluid mining drills in a row above the ore belt; the Raw coal comes in from the right, the Ash leaves up the left edge](../images/ch5-lead-field.jpg)
 
-![The lead smelting column: thirteen Stone furnaces, the Raw coal and Ash belt above, the ore and plate belt below; both lanes end on the right without a chest](../images/ch5-lead-smelting.jpg)
+![The lead smelting column: thirteen Stone furnaces, the Raw coal and Ash belt above, the ore and plate belt below; the belts end on the right, to go onto the bus later](../images/ch5-lead-smelting.jpg)
 
 ## 8. Iron, a mall that burns Wood, and the coke columns
 
