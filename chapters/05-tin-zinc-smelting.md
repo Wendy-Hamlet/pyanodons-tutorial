@@ -383,8 +383,17 @@ and gives 4.92 Aromatics. The Lead plates, in turn, have nowhere to go but the f
 thirteen are full about 20 minutes after the save (section 7). In the same save run on, 25 to 35
 minutes after 13:28, the whole chain stands: the lead drills "waiting for space" (96 % of the
 samples), the Gasifiers "full output" (97 %), the Pitch column and the bottoms unit "full output"
-(100 %), the zinc drills "missing required fluid" (100 %), and no Tar is used. So the Tar line, and
-with it zinc, now runs only while the Lead plates have somewhere to go.
+(100 %), the zinc drills "missing required fluid" (100 %), and no Tar is used.
+
+For now that is no fault. Nothing uses Zinc or Lead plates yet, and a line may stand when its
+product has no user. The author's rule: a line has to run on its own once a main product is in
+steady demand, here the circuit boards, planned at 0.1 a second. From then on no byproduct may
+jam it, and every product that must be made steadily should be decoupled from the others. Lead
+and zinc are not yet: both hang on the Tar line, which gives Coke for 4.6 Lead plates and
+Aromatics for 1.1 Zinc plates per 100 Tar (section 7), while a Simple circuit board takes 2.67
+Lead to 3.33 Zinc plates; the author will deal with that ratio when the circuit board line is
+built. A line that already runs on its own: since the Ash processing of chapter 3, the map takes
+in raw ores and gives Iron and Copper plates and a steady 0.2 red science a second.
 
 **The Tar is a store, and its source comes back.** From 11:03, when the coke columns came down, no
 machine made Tar, and the line lived on what chapter 2 stored: 91,722 Tar in the pond and its pipe
@@ -528,7 +537,8 @@ stack of 100 each: at 13:28 the first five hold their 100 and stand "full output
 hold 23 to 80, one holds 8 and the last two have had no ore yet, 735 plates in all. The ore passes
 the full ones to the next, so the column works on until all thirteen hold 1,300: about 20 minutes
 after the save at 0.49 a second. Then the lead drills stop, and with them the acetylene block and
-the Tar line (section 6). 979 Lead plates were made by 13:28.
+the Tar line: expected while the plates have no user (section 6). 979 Lead plates were made by
+13:28.
 
 ![The acetylene block: top row, the Lime furnace between its two Soil extractors, then two Gasifiers; bottom row, the Washer and the Evaporator, the two Calcium carbide furnaces and two more Gasifiers; the Coke belt comes in from the left between the rows](../images/ch5-acetylene.jpg)
 
@@ -624,9 +634,11 @@ dish with Agar).
   something used, store a liquid in a Tailings pond (1,000,000), vent a gas in an Exhaust pipe.
 - A store is not a source: a line fed from a tank or pond stops when it is empty. Count the hours.
 - A line runs at the pace of its slowest way out. The Tar line's Coke feeds only the acetylene
-  block, which takes only what six lead drills need, and the Lead plates only gather in the
-  furnaces: when those are full (1,300 plates, about 20 minutes after 13:28), the Tar line and zinc
-  stop too.
+  block, which takes only what six lead drills need, so lead and zinc are coupled; with the Lead
+  plates only gathering in the furnaces, everything stands about 20 minutes after 13:28.
+- A jam on a product nothing uses yet is expected. Build for one main product (now the circuit
+  boards); once it is in steady demand the whole chain must run on its own: no byproduct may jam
+  it, and each product needed steadily is decoupled from the others.
 - A circuit can give a surplus a way out: the coke block's sixth column takes Coke only while 4
   or more wait on the belt's last tile, and turns it into Tar. A machine still stops when any output
   is full, so every product, the Coal gas too, needs its own way out.

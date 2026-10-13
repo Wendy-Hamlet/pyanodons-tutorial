@@ -137,7 +137,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | Ways out for byproducts: a Tailings pond stores 1,000,000 of one liquid (the author's four Tar liquids would fill theirs in 35 to 158 hours of play, at the rates of 13:28), an Exhaust pipe vents a gas (Hydrogen, the Lime furnace's Carbon dioxide), a Sinkhole takes a liquid away (Saline water). | Data; the author's save; `tools/rate-probe` (chapter 5) |
 | A store is not a source: from 11:03, when the coke columns came down, no machine made Tar, and the author's Tar line lived on the pond's stock (82,094 at 13:05, 73,764 at 13:28: 1.8 hours at 11.2 a second). Coke distillation (chapter 2) makes 67.5 Tar a second from 15 Raw coal; the author rebuilt it at 13:22 and cut its power, to use the stock first. | The author's saves; `tools/rate-probe`; data (chapter 5) |
 | Surplus Coke back to Tar by circuit: Coal gas (from Coke, Coal processing 1), 20 Coke → 20 Coal gas + 20 Tar + 1 Ash, 5 s, in a Destructive distillation column. The author's new coke block reads the last tile of its Coke belt (hold) and runs its sixth column's four input inserters while the tile holds 4 Coke or more. Bench: Coke not taken → all 2.70 Coke/s into Tar (70.2 Tar/s), the other five columns at 100 %; Coal gas taken at only 20/s (four aluminium drills) → 18 % (0.5 Coke, 12.5 Tar/s), Coke taken or not; Coal gas not taken → everything stops. | Data; `tools/bp-bench.ps1 -Bench coke-distillation` (chapter 5) |
-| A line runs at the pace of its slowest way out. The author's Tar line hands its Coke only to the acetylene block, which takes only the six lead drills' 2.8 Coke/s once their pipe is full: Tar 13.3 → 11.2/s, Aromatics 5.75 → 4.92 (ten minutes from 13:05 and from 13:28). The Lead plates gather only in the 13 furnaces (100 each), full about 20 minutes after 13:28; 25 to 35 minutes after it the lead drills, the acetylene block, the Tar line and the zinc drills all stand. | `tools/rate-probe` on the saves of 13:05 and 13:28 (chapter 5) |
+| A line runs at the pace of its slowest way out. The author's Tar line hands its Coke only to the acetylene block, which takes only the six lead drills' 2.8 Coke/s once their pipe is full: Tar 13.3 → 11.2/s, Aromatics 5.75 → 4.92 (ten minutes from 13:05 and from 13:28). The Lead plates gather only in the 13 furnaces (100 each), full about 20 minutes after 13:28; 25 to 35 minutes after it the lead drills, the acetylene block, the Tar line and the zinc drills all stand. Expected while nothing uses the plates (principle 23). | `tools/rate-probe` on the saves of 13:05 and 13:28 (chapter 5) |
 
 ## Farms, logs and red science
 
@@ -245,6 +245,13 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
    on a machine that turns the surplus into something stored: the author's coke block turns Coke
    into Tar while 4 or more wait at the belt end. Every other output still needs its own way out:
    with its Coal gas drawn only by four aluminium drills the block runs at 18 % on the bench.
+23. **Self-sufficient once a main product is in steady demand.** Build for one main product at a
+   time (after red science: circuit boards, planned at 0.1 a second). A line that jams on a
+   product nobody uses yet is normal, not a fault. Once the main product's line is complete, the
+   whole chain must keep running: no byproduct may jam it, and every product needed steadily is
+   decoupled from the others (the author's lead and zinc both hang on the Tar line, in a ratio
+   unlike the circuit board's: to be dealt with then). Example: after the Ash processing of
+   chapter 3 the map took raw ores and gave Iron and Copper plates and steady red science.
 
 ## Trains
 
