@@ -12,7 +12,7 @@
 | `smelting-column.txt` | 0.9375 [铁板]/[铜板] | 作者的冶炼列：10 台石炉吃半带矿，铁、铜通用 | 旧版本，铁和铜各自：每秒 0.91 块板、0.60 个灰烬，没有串货，断料后带上剩 0 个矿。当前版本两列炼铜：合计每秒 1.85 块 |
 | `raw-coal-module.txt` | 15 [原煤] | 作者的原煤模块：9 台热能采矿机产出满满一带 | 旧版本：原煤每秒 15.00、灰烬每秒 1.40 进箱 |
 | `raw-coal-power.txt` | 初期满带原煤发电（不清灰） | 一条原煤带上的 12 台锅炉和 6 台蒸汽机，没有取灰烬的机械臂 | 2:00–2:30 的负载下每秒 49–52 蒸汽（12.1–12.8 MW）；满功率 22.2 MW 为数据推算 |
-| `coke-distillation.txt` | 2.7 [焦炭] | 3 + 2 台破坏性蒸馏塔，原煤到煤矿再到焦炭，排气管处理煤气 | 每秒 2.71 个焦炭（2:00–2:10），每秒排掉约 88 煤气 |
+| `coke-distillation.txt` | 2.7 [焦炭] | 3 + 2 台破坏性蒸馏塔，原煤到煤矿再到焦炭；第五章起多一座蒸馏塔把多余焦炭转成煤气和焦油（带子末端有 4 个以上焦炭时它的机械臂才工作），不再有排气管 | 第二章版本：每秒 2.71 个焦炭（2:00–2:10），每秒排掉约 88 煤气。第五章版本上测试台：煤气被取走时每秒 2.70 个焦炭；焦炭没人取时全部转成焦油（每秒 70.2 个焦油）；煤气每秒只取走 20 个时只有 18%（每秒 0.5 个焦炭、12.5 个焦油）；煤气没人取时停下（[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md#6-用焦油产芳烃以及其余产物的去处)） |
 | `steel-foundries.txt` | 0.533 [钢材] | 8 台高级铸造厂，每台上方各有一台土壤挖掘机（铸造厂少于 10 个石灰石时运转）；钢材进限 500 的箱子 | 在存档副本上的引擎测试：< 10（本文件）每秒 0.533 块钢材；< 8 为 0.493；< 5（第二章的版本，游戏中 0.43–0.44）0.440 和 0.435（[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md#9-炼钢石灰石--8)） |
 | `crushed-iron.txt` | 3 [铁板] | 一满带铁矿上的 6 台颚式破碎机、18 台炼铁石炉和 5 台石砖炉 | 每秒 3.02 块铁板、1.52 块石砖；两个副本（第五章起多一根小型电线杆）：每秒 6.1 块铁板 |
 | `burner-belt-mall.txt` | 初期超市-1 | 作者的第二个超市：7 台热能组装机用总线上的板做工业机械臂、基础传送带和小部件 | 未实测（箱子装满后停机） |
@@ -21,9 +21,9 @@
 | `soot-separation.txt` | 烟煤分离 | 1 台固体分离机处理烟煤；每种矿进各自的箱子和石炉（烧煤粉） | 每秒用掉 0.5–1.3 个烟煤（5:50–6:13）；锌矿和铅矿暂存箱中 |
 | `iron-oxide-smelting.txt` | 氧化铁处理 | 2 台石炉，氧化铁炼铁板（2 : 1），每台一个送料机械臂 | 测试台：每秒 1.717 个氧化铁、0.85 块铁板，石炉只跑 15%（速度由机械臂决定）；游戏中每秒 0.7–0.9 个氧化铁（6:00–6:13） |
 | `coal-dust-power.txt` | 煤粉处理 | 2 台烧煤粉的锅炉和 2 台蒸汽机（比蒸汽所需多一台，让煤粉优先烧掉） | 6:13 之后那一分钟每秒烧 2.03 个煤粉，与数据推算的两台份额相符 |
-| `log-production.txt` | 2.348 [原木] | 原木：10 台苔藓农场、8 台异星苗圃、16 台速成林场，一台木材工坊供树种子；输入灰烬、石砖、焦炭，输出原木 | 测试台：每秒 2.336 根原木（苗圃和林场 100%），每秒耗灰烬 12、石砖 1.25、焦炭 0.31（[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md#6-原木区块)）。作者的备注：高压炉可换成月落草温室（9 × 9 对 7 × 7，要稍作改动；[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md#8-铁烧木材的超市和焦炭塔)） |
+| `log-production.txt` | 2.348 [原木] | 原木：10 台苔藓农场、8 台异星苗圃、16 台速成林场，一台木材工坊供树种子；输入灰烬、石砖、焦炭，输出原木 | 测试台：每秒 2.336 根原木（苗圃和林场 100%），每秒耗灰烬 12、石砖 1.25、焦炭 0.31（[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md#6-原木区块)）。作者的备注：高压炉可换成月落草温室（9 × 9 对 7 × 7，要稍作改动；[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md#8-铁铜烧木材的超市和焦炭塔)） |
 | `red-science.txt` | 0.2 [机自科技包（红瓶）] | 供六个研究中心的红瓶：8 台热能组装机、一台土壤挖掘机和一台木材工坊；输入原生植被、铁铜板、灰烬、原木和石砖 | 测试台：每秒 0.200 个（作者 9:37 之后更新的版本；只有一个送木材的机械臂时为 0.196）（[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md#8-每秒-02-个红瓶)） |
-| `wood-mall.txt` | 初期超市-2 | 作者的第三个超市，在红瓶旁边：10 台热能组装机做基础传送带、基础地下传送带、工业机械臂、管道和地下管道；一台木材工坊把原木做成木材当燃料，和铁板走同一条带 | 未实测（超市做多少取决于拿走多少）；按数据，全速每秒烧 0.375 个木材（[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md#8-铁烧木材的超市和焦炭塔)） |
+| `wood-mall.txt` | 初期超市-2 | 作者的第三个超市，在红瓶旁边：10 台热能组装机做基础传送带、基础地下传送带、工业机械臂、管道和地下管道；一台木材工坊把原木做成木材当燃料，和铁板走同一条带 | 未实测（超市做多少取决于拿走多少）；按数据，全速每秒烧 0.375 个木材（[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md#8-铁铜烧木材的超市和焦炭塔)） |
 | `acetylene.txt` | 50 [乙炔] | 给铅矿采矿机供乙炔：2 台土壤挖掘机送进做生石灰的高压炉，2 台做碳化钙的高压炉，4 台气化炉；蒸发器把熟石灰烘回生石灰，洗涤机把碎石洗成盐水排进渗水坑；2 台抽取泵。焦炭从西边进（左道），乙炔由一根管道向东送出 | 测试台：每秒 43.2 个乙炔（86%）：第二台碳化钙炉有一个送料机械臂伸向焦炭带末端的电线杆格子。在那里换成一格传送带：每秒 49.5 个，所有机器 100%（[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md#7-铅用乙炔作采矿流体)） |
 
 ## 蓝图的命名规则
@@ -52,7 +52,7 @@
 
 ## 第二到第五章的区块
 
-图片和讲解在[第二章](../chapters/02-coke-steel-crushed-iron.zh-CN.md)：`raw-coal-power`（第 3 节）、`coke-distillation`（第 4 节）、`steel-foundries`（第 5 节，另见第三章第 9 节）、`crushed-iron`（第 6 节）；以及[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md)：`burner-belt-mall`（第 2 节）、`ash-separation`（第 4 节）、`raw-coal-power-two-belts`（第 5 节）、`coal-dust-power`（第 6 节）、`soot-separation` 和 `iron-oxide-smelting`（第 7 节）；以及[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md)：`log-production`（第 5、6 节）、`red-science`（第 8 节），以及 `ash-separation` 的测试台结果（第 7 节）；以及[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md)：`acetylene`（第 7 节）、`wood-mall` 和第二个 `crushed-iron`（第 8 节）。热能组装机超市在[第一章](../chapters/01-landing-to-red-science.zh-CN.md#5-第一个超市035040)。
+图片和讲解在[第二章](../chapters/02-coke-steel-crushed-iron.zh-CN.md)：`raw-coal-power`（第 3 节）、`coke-distillation`（第 4 节）、`steel-foundries`（第 5 节，另见第三章第 9 节）、`crushed-iron`（第 6 节）；以及[第三章](../chapters/03-ash-separation-raw-coal-power.zh-CN.md)：`burner-belt-mall`（第 2 节）、`ash-separation`（第 4 节）、`raw-coal-power-two-belts`（第 5 节）、`coal-dust-power`（第 6 节）、`soot-separation` 和 `iron-oxide-smelting`（第 7 节）；以及[第四章](../chapters/04-aluminium-glass-logs.zh-CN.md)：`log-production`（第 5、6 节）、`red-science`（第 8 节），以及 `ash-separation` 的测试台结果（第 7 节）；以及[第五章](../chapters/05-tin-zinc-smelting.zh-CN.md)：新的 `coke-distillation`（第 6 节）、`acetylene`（第 7 节）、`wood-mall` 和第二个 `crushed-iron`（第 8 节）。热能组装机超市在[第一章](../chapters/01-landing-to-red-science.zh-CN.md#5-第一个超市035040)。
 
 ## 与运行中的游戏同步
 

@@ -163,12 +163,13 @@ script.on_init(function()
     if e then sinks[#sinks + 1] = { e = e, got = {} }
     else out("no belt for the sink at (%d, %d)", s.x, s.y) end
   end
-  -- Fluid sinks: the pipe on that tile; its whole segment is emptied every tick.
+  -- Fluid sinks: the pipe on that tile; its whole segment is emptied every tick, or at most
+  -- `rate` per second (a consumer of known draw, say four drills).
   for _, s in ipairs(concat(spec.fluid_sinks, variant and variant.fluid_sinks)) do
     local px, py = s.x + 0.5 + dx, s.y + 0.5 + dy
     local e = surface.find_entities_filtered({ area = { { px - 0.1, py - 0.1 }, { px + 0.1, py + 0.1 } },
       type = { "pipe", "pipe-to-ground" } })[1]
-    if e then sinks[#sinks + 1] = { e = e, got = {}, fluid = true }
+    if e then sinks[#sinks + 1] = { e = e, got = {}, fluid = true, rate = s.rate, budget = 0 }
     else out("no pipe for the fluid sink at (%d, %d)", s.x, s.y) end
   end
   for _, p in ipairs(spec.prime or {}) do
@@ -306,9 +307,18 @@ script.on_event(defines.events.on_tick, function()
   for _, s in ipairs(b.sinks) do
     if s.fluid then
       local fl = s.e.get_fluid_segment_fluid(1)
+      if s.rate then s.budget = math.min(s.budget + s.rate / 60, s.rate) end
       if fl and fl.amount > 0 then
-        s.got[fl.name] = (s.got[fl.name] or 0) + fl.amount
+        local take = s.rate and math.min(fl.amount, s.budget) or fl.amount
+        s.got[fl.name] = (s.got[fl.name] or 0) + take
+        if s.rate then s.budget = s.budget - take end
         s.e.clear_fluid_segment_fluid(1)
+        -- What a limited sink leaves goes back into the segment.
+        local rest = fl.amount - take
+        if rest > 0.001 then
+          local lost = rest - s.e.insert_fluid({ name = fl.name, amount = rest, temperature = fl.temperature })
+          if lost > 0.001 then s.got[fl.name .. " lost"] = (s.got[fl.name .. " lost"] or 0) + lost end
+        end
       end
     end
     for line = 1, s.fluid and 0 or s.e.get_max_transport_line_index() do

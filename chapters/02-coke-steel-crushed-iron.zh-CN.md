@@ -80,7 +80,7 @@
 
 ## 4. 焦炭：五台蒸馏塔
 
-蓝图：[`coke-distillation.txt`](../blueprints/coke-distillation.txt)，"2.7 [焦炭]"。
+蓝图：[`coke-distillation.txt`](../blueprints/coke-distillation.txt)，"2.7 [焦炭]"。（这个文件现在是作者第五章的版本：多了一座处理没人要的焦炭的蒸馏塔，没有排气管；见[第五章第 6 节](05-tin-zinc-smelting.zh-CN.md#6-用焦油产芳烃以及其余产物的去处)。）
 
 | 配方（破坏性蒸馏塔 MK1，8×8，500 kW） | 原料 → 产物 |
 |---|---|

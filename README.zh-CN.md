@@ -53,7 +53,7 @@
 - `newgame-observer/` + `summarize-newgame.js`：观察新开一局有什么（包括出生点周围的资源、树木、岩石和地面，可用来比较地图设置）；用从存档读出的 `--map-gen-settings` 建图，可以复现同一个世界。
 - `belt-lab/`、`ch1-probe/`、`drill-probe/`、`inserter-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。`run-probe.ps1 <探针>` 运行其中一个（复制进固定环境、建图、运行、输出结果，再删掉；加 `-Work C:\tmp\cf-save` 则用当前的模组运行）。`inserter-rate-probe/`：工业机械臂的速度，精确到小数点后三位，每次放下都计时（`-Ticks 36700 -Work C:\tmp\cf-save`）。`valve-probe/`：一段管道能跨多远（320 格），以及管道泵和止回阀各起什么作用（`-Ticks 2500 -Work C:\tmp\cf-save`）。
 - `save-probe.ps1 -Save <存档> -Probe <探针> [-Variant <版本>]`：在作者存档的副本里运行一个测量模组（读档环境，存档本身只复制），例如 `steel-probe/`：第二、三章炼钢区的实测（清空钢材箱和锅炉灰烬，按版本设置土壤挖掘机的电路条件，`ltN` 表示石灰石 < N，加 `,coke` 给铸造厂补焦炭；逐台记录铸造厂的产量、状态和缺料）；以及 `rate-probe/`：按存档原样测一段比检查器的一分钟更长的时间（版本写作 `预热秒数,测量秒数`，例如 `-Ticks 39700 -Variant 60,600`）：全基地每秒的产出和消耗，以及每秒采样一次的每台机器和采矿机的状态。
-- `bp-bench.ps1 -Bench <名称> [-Variant <方案>]` + `bp-bench/`：蓝图测试台。把 `blueprints/` 里的一张蓝图放到空地图上（用游戏自己的蓝图建造，补齐插件请求），用电力接口给每个电网供电，用脚本保持输入带满载、清空输出带（以及作为流体出口的指定管道），让研究中心一直研究，并报告每台机器完成的次数与它实际速度下配方允许的次数之比、状态采样、等待中的机器缺哪种原料，以及指定观察的实体。每个测试在 `bp-bench/benches/` 里有一个 JSON 文件（蓝图、输入、输出、流体出口、启动时预放的物品、科技、预热和测量时间、方案）。在读档环境里运行。
+- `bp-bench.ps1 -Bench <名称> [-Variant <方案>]` + `bp-bench/`：蓝图测试台。把 `blueprints/` 里的一张蓝图放到空地图上（用游戏自己的蓝图建造，补齐插件请求），用电力接口给每个电网供电，用脚本保持输入带满载、清空输出带（以及作为流体出口的指定管道，全部清空或按设定速度取走），让研究中心一直研究，并报告每台机器完成的次数与它实际速度下配方允许的次数之比、状态采样、等待中的机器缺哪种原料，以及指定观察的实体。每个测试在 `bp-bench/benches/` 里有一个 JSON 文件（蓝图、输入、输出、流体出口、启动时预放的物品、科技、预热和测量时间、方案）。在读档环境里运行。
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。
 - 本地化名称：在配置里设 `locale=zh-CN`（或 `en`），运行 `factorio --dump-prototype-locale`，会在脚本输出目录生成 `*-locale.json`。
 

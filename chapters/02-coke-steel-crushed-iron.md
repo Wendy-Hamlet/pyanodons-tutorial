@@ -114,7 +114,7 @@ Blueprint: [`raw-coal-power.txt`](../blueprints/raw-coal-power.txt), the author'
 
 ## 4. Coke: five distillation columns
 
-Blueprint: [`coke-distillation.txt`](../blueprints/coke-distillation.txt), "2.7 [Coke]".
+Blueprint: [`coke-distillation.txt`](../blueprints/coke-distillation.txt), "2.7 [Coke]". (The file now holds the author's chapter 5 version: a sixth column for the Coke nobody takes, and no Exhaust pipe; see [chapter 5, section 6](05-tin-zinc-smelting.md#6-aromatics-from-tar-and-where-the-rest-goes).)
 
 | Recipe (Destructive distillation column MK 01, 8×8, 500 kW) | In → out |
 |---|---|

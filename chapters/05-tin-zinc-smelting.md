@@ -3,7 +3,7 @@
 [中文版](05-tin-zinc-smelting.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 4](04-aluminium-glass-logs.md)
 
-This chapter follows the same recorded run from 9:37 to 13:05. With red science running at 0.2 a
+This chapter follows the same recorded run from 9:37 to 13:28. With red science running at 0.2 a
 second, the author researched the prerequisites of Electronics - Stage 1 and Electronics itself,
 and got the three metals of the Simple circuit board ready: Tin plates (for Solder, Ceramic
 capacitors and High-power resistors), Zinc plates (for the CuZn Battery) and Lead plates (for
@@ -15,12 +15,16 @@ the Tar processing that turns the Tar line's Coke into Acetylene, for a lead min
 further west. The Tar line's other byproducts are dealt with for the time being: Pitch and
 Anthracene oil become Coke, Hydrogen goes into the air, and four liquids go into Tailings ponds.
 The author's view: Zinc is only used in circuit boards, so these products get their real uses when
-the circuit boards are made. Alongside: a second crushed iron block and more iron drills (Iron
-plates from 2 to 6 a second), a new mall that burns Wood, and the coke columns of chapter 2 taken
-down. Times are game time. Numbers come from the game's data, from the recorder's 10-minute
-production windows, from the save of 13:05 (`tools/inspect-save.ps1`), from ten minutes of that
-save measured (`tools/rate-probe`, new), from the blueprint bench for the author's acetylene block
-(section 7), and from a probe for pipes, Pumps and Check valves (`tools/valve-probe`, section 4).
+the circuit boards are made. The Tar itself is a store: the coke columns of chapter 2, which made
+it, came down at 11:03 when nothing took their Coke, and came back at 13:22 as a new block whose
+sixth column turns the Coke nobody takes into Coal gas and Tar. The author then cut its power, to
+use up the Tar in the pond first. Alongside: a second crushed iron block and more iron drills (Iron
+plates from 2 to 6 a second), a new mall that burns Wood, and a rebuilt copper mine. Times are game
+time. Numbers come from the game's data, from the recorder's 10-minute production windows, from
+the saves of 13:05 and 13:28 (`tools/inspect-save.ps1`), from ten minutes of both measured
+(`tools/rate-probe`, new) and from the half hour after the last, from the blueprint bench for the
+author's acetylene and coke blocks (sections 6 and 7), and from a probe for pipes, Pumps and Check
+valves (`tools/valve-probe`, section 4).
 
 The plan in one sentence: Tin from Steam, Zinc from Aromatics, Lead from Acetylene, and the Tar
 that gives the Aromatics gives, through its Coke, the Acetylene as well.
@@ -42,17 +46,21 @@ that gives the Aromatics gives, through its Coke, the Acetylene as well.
 | 11:10–11:39 | An Aromatics pipe of about 930 tiles from the Tar processing to the zinc field, cut into three by two Check valves |
 | 11:30–11:45 | 12 Fluid mining drills on Zinc ore at x 410–450, y 215–221, and about 520 tiles of belt to a smelting column of 12 Stone furnaces beside the Ash separation block |
 | 11:31–11:48 | The author takes out the two Pumps at (−103, 235) and (−101, 235), on the steam pipe to the tin field and on the Tar pipe to the Glassworks. The steam pipe south of y 179 is relaid with two Check valves (11:47–11:48); the Tar pipe stays cut (section 4) |
-| 11:46–13:04 | Research: Logistics, Storage tanks, Plastics, Basic substrate, Genetics - Stage 1, Biotechnology machines - Stage 1, Copper processing - Stage 1, Electrolysis, Biotechnology - Stage 1, Xenobiology, Land animals - Stage 1, Vrauks - Stage 1, Rendering and Zoology, most of them on the way to pY science pack 1 |
+| 11:46–13:25 | Research: Logistics, Storage tanks, Plastics, Basic substrate, Genetics - Stage 1, Biotechnology machines - Stage 1, Copper processing - Stage 1, Electrolysis, Biotechnology - Stage 1, Xenobiology, Land animals - Stage 1, Vrauks - Stage 1, Rendering, Zoology, Latex technologies, pY science pack 1 (13:19) and Cellulose - Stage 1, most of them on the way to pY science pack 1 |
 | 11:50 | A third Destructive distillation column, to crack Anthracene oil into Gasoline and Coke |
 | 11:58–12:30 | The acetylene block north of the Tar processing (x −173 to −131, y −166 to −145): four Gasifiers (11:58), a Lime furnace with two Soil extractors and an Exhaust pipe (12:06–12:08), two Calcium carbide furnaces (12:09–12:12), a Washer and a Sinkhole (12:21–12:24), the whole block moved once by robots (12:26), an Evaporator (12:30) |
 | 12:35–12:37 | Six Fluid mining drills on Lead ore at y −152, x −309 to −284 (ten placed, four taken back), and a smelting column of 13 Stone furnaces at y −69 |
 | 12:40–12:55 | A Raw coal module (the chapter 1 blueprint) at (19, −64) for the lead line's fuel, and about 1,560 tiles of belt laid by hand: Raw coal to the lead drills and furnaces, the ore to its column, the drills' Ash to the Ash loop |
 | 12:55–12:59 | Four Tailings ponds at x −139 for Naphthalene oil, Creosote, Carbolic oil and Gasoline, and an Exhaust pipe for Hydrogen. From here the Tar line runs without stopping |
 | 13:00–13:04 | A fourth column, the second for Anthracene oil; two more Tar processing units placed and taken away again |
-| 13:05 | The save |
+| 13:07–13:10 | The copper mine rebuilt: seven Burner mining drills and four chests out, 18 drills in two rows in (x 37–65, y 23–27), two belts of Copper ore west |
+| 13:11–13:19 | The author's new coke block placed by robots east of the base (x 150–190, y 39), with an Exhaust pipe, worked on by hand and taken away again |
+| 13:22–13:24 | The new coke block where the old columns stood (y −88): six columns, no Exhaust pipe, its belts joined west (section 6) |
+| 13:26–13:27 | At the quartz field one Glassworks, set to Empty petri dishes, gets an inserter and a chest. Chat note: "为月落草做准备" — preparing for Moondrop (section 8) |
+| 13:28 | The save. The author has cut the coke block's power (one pole taken out), to use up the Tar in the pond first |
 
 Production per second (10-minute windows from the recorder; the last row is ten minutes measured
-in a copy of the save of 13:05, `tools/rate-probe`):
+in a copy of the save of 13:28, `tools/rate-probe`):
 
 | Window ending | Tin ore | Tin plate | Zinc ore | Zinc plate | Lead ore | Lead plate | Aromatics | Acetylene | Coke | Iron plate | Raw coal |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -67,7 +75,8 @@ in a copy of the save of 13:05, `tools/rate-probe`):
 | 12:20 | 0.92 | 0.09 | 0.02 | 0 | 0.01 | 0 | 0 | 0 | 0 | 2.94 | 16.0 |
 | 12:40 | 1.78 | 0.17 | 0.01 | 0.03 | 0.01 | 0 | 0 | 4.67 | 0 | 2.97 | 17.1 |
 | 13:00 | 1.33 | 0.13 | 0.76 | 0.02 | 1.59 | 0.26 | 3.00 | 14.0 | 1.63 | 3.64 | 26.1 |
-| 13:05 + 10 min | 0 | 0 | 1.45 | 0.12 | 3.02 | 0.50 | 5.75 | 42.7 | 3.58 | 3.03 | 29.4 |
+| 13:20 | 0 | 0 | 1.56 | 0.16 | 3.03 | 0.50 | 6.17 | 37.5 | 3.67 | 2.99 | 31.1 |
+| 13:28 + 10 min | 0 | 0 | 1.22 | 0.12 | 3.02 | 0.49 | 4.92 | 29.8 | 2.88 | 2.97 | 26.9 |
 
 Read with the timeline:
 
@@ -78,18 +87,20 @@ Read with the timeline:
   all.
 - **Zinc runs on what the Tar line gives.** The 0.03 Zinc ore a second before 11:30 is the Soot
   separation of chapter 3 (10 % Zinc ore per 2 Soot). The zinc drills run as Aromatics arrive: 0.76
-  ore a second in the last window, 1.45 in the measured ten minutes, a quarter of what the twelve
-  could mine (section 6).
-- **Lead from about 12:45:** 3.02 ore and 0.50 plates a second in the measured ten minutes, six drills at
+  ore a second in the window ending 13:00, 1.56 in the one ending 13:20 and 1.22 in the measured ten
+  minutes, a fifth of what the twelve could mine (section 6).
+- **Lead from about 12:45:** 3.02 ore and 0.49 plates a second in the measured ten minutes, six drills at
   0.5 ore each. The 0.08 Lead plates a second in the window ending 10:00 are 288 Lead ore the Soot
   separation had gathered (it gives 10 % Lead ore too), smelted once Solder was researched.
 - **The Tar line ran only in short bursts** while its byproducts had nowhere to go (Aromatics 0.33
   and 0.50 a second in the windows ending 11:20 and 12:00), and without stopping once the Tailings
-  ponds took them, from 12:55 (section 6). Acetylene follows the Coke it brings.
+  ponds took them, from 12:55 (section 6). Acetylene follows the Coke it brings, and once the lead
+  drills' pipe was full the Coke followed the Acetylene: the Aromatics fall from 6.17 to 4.92 a
+  second between the last two rows.
 - **Coke, Aluminium ore and Steel stop together around 10:30**, as chapter 4 found: the steel line
   is the Coke user, and the Coal gas for aluminium comes with the Coke (Aluminium ore 3.5 a second
   in the window ending 10:00, 0.04 from 11:20). The Coke that comes back at the end is the Tar
-  line's.
+  line's; the new coke block stands without power at 13:28.
 - **Iron plates triple** from 2.1 to 6.1 a second when the second crushed iron block and the new
   drills come in (section 8), and fall back to 3 a second from 11:50: the base uses about 3 a
   second, and once the belts and chests are full the blocks make only what is taken.
@@ -120,9 +131,10 @@ Solder, Ceramic, Fluid pressurization); the author researched the missing ones a
 prerequisites first, with the Moondrop upgrade in between. After it came Repair pack, Gun turret,
 Stone wall, Gate, Landfill, Lamp, Automobilism, Fluid handling, Hydrogenation and basic reforming,
 Radar - Stage 1, Evaporation processing 1, Military and Alloy smelting - Stage 1 (Duralumin,
-Smelter MK 01), then the list in the timeline; at 13:05 Latex stands at 8 %, with pY science pack
-1 next in the queue. Every unit takes 30 s in a lab; at 0.2 red a second a 60-unit technology takes
-300 s, which is the five-minute rhythm of the timeline. The acetylene block also uses recipes of
+Smelter MK 01), then the list in the timeline, up to pY science pack 1 (90 red, 13:12–13:19: the
+pY science pack, the Research center MK 01, Glassware and Rubber stoppers); at 13:28 Kerogen processing
+stands at 56 %, with Shale oil development next in the queue. Every unit takes 30 s in a lab; at
+0.2 red a second a 60-unit technology takes 300 s, which is the five-minute rhythm of the timeline. The acetylene block also uses recipes of
 older technologies: Lime (Concrete, chapter 4), the High pressure furnace, Tailings pond, Exhaust
 pipe and Limestone from the Soil extractor (Coal processing 1), the Sinkhole (Steel processing),
 the Washer (Soil washing) and Saline water from Gravel (Crusher).
@@ -141,7 +153,7 @@ dioxide (section 8).
 
 ## 2. What Tin, Zinc and Lead are for
 
-Recipes unlocked by the 58 technologies of the save that take the plates (data):
+Recipes unlocked by the 61 technologies of the save that take the plates (data):
 
 - **Tin plate:** Solder (2 Tin + 4 Lead), Ceramic capacitors (2 Tin + 1 Ceramic → 3), High-power
   resistors (1 Tin + 2 Coke + 1 Glass → 3), Tinned cable, and two buildings: Evaporator MK 01 (40)
@@ -151,7 +163,7 @@ Recipes unlocked by the 58 technologies of the save that take the plates (data):
 - **Lead plate:** Solder; the PyTank (40 kL) (30, no Duralumin needed) and the other tanks, which
   also take Duralumin; Firearm magazines (2 for 5) and Shotgun shells.
 
-The Simple circuit board takes 1 Printed circuit board, 3 Vacuum tubes, 3 Air-core inductors, 5
+The Simple circuit board takes 1 Printed circuit substrate (tier 1), 3 Vacuum tubes, 3 Air-core inductors, 5
 Ceramic capacitors, 6 High-power resistors, 2 Solder and 1 CuZn Battery for 3 boards. Per board
 that is **3.11 Tin plates, 3.33 Zinc plates and 2.67 Lead plates**. The author's Factory Planner
 plan of 10:51 aims at 6 boards a minute: 18.7 Tin, 20 Zinc and 16 Lead plates a minute, that is
@@ -169,8 +181,8 @@ Boilers facing each other, the Raw coal belts outside, the Ash belts inside to t
 separators above, an Offshore pump at the east end. The steam that would have gone to the engines
 is gathered between the rows and leaves west in one pipe. From data and chapter 3: a Boiler makes
 7.5 Steam/s at 250 °C and burns 1.23 Raw coal/s doing it, so the block makes up to **180 Steam/s**,
-far more than is drawn: the tin drills take 75 when they run, the Tar processing about 36 (section
-6). At 13:05 all 24 Boilers stand "full output".
+far more than is drawn: the tin drills take 75 when they run, the Tar processing about 30 (section
+6). At 13:28 all 24 Boilers stand "full output".
 
 **The pipe.** From the block it runs west to x −103, then north through a Check valve at
 (−103.5, −74.5) to the Tar processing, and south along x −103 to the tin field: about 625 tiles of
@@ -229,8 +241,8 @@ The limit is the segment's extent on the map, not its length: the L of 400 tiles
 box flows. Below the limit the flow is thousands a second, far above anything here (the tin drills
 need 75).
 
-**The author's pipes** at 13:05, each segment as the tiles its box covers on the map (from the
-save):
+**The author's pipes**, each segment as the tiles its box covers on the map (from the save of
+13:05; none of these pipes changed before 13:28):
 
 | Line | Segments | Ended by |
 |---|---|---|
@@ -244,9 +256,11 @@ author's segments stays within the limit. When the author took the Pumps out at
 11:31 to use Check valves instead, the tin drills went dry ("missing required fluid") until the
 valves were in, 17 minutes later; the steam pipe south of y 179 was relaid on the way. The Tar pipe
 to the Glassworks stays cut on purpose, beside the pond and where its Pump stood: now that the Tar
-is refined, the Glassworks need not burn Tar. Of the 9,900 Tar left in the pipe, 9,400 can still
-reach them (7,800 before the Pump at (217, 338.5), 1,600 after it), and the author takes the pipe
-away once they have burnt it. Meanwhile the Glass chest is full and the Glassworks stand.
+is refined, the Glassworks need not burn Tar. At 13:05, 9,400 of the 9,900 Tar left in the pipe
+could still reach them (7,800 before the Pump at (217, 338.5), 1,600 after it), and the author
+takes the pipe away once they have burnt it. At 13:28 the pipe holds no Tar on either side of the
+Pump, and both Glassworks stand without fuel, the one switched to Empty petri dishes having made 14
+(section 8).
 
 **Is a Check valve a Pump?** The author took the Pumps out because the valve seems to do the same
 without power and in one tile instead of two (data: Pump 1 × 2, 29 kW, 200 per tick; Check valve 1
@@ -285,13 +299,13 @@ lies about 450 tiles east of the base, around (432, 240).
   furnaces as for tin, Zinc plate being 40 ore → 4 plates in 60 s like Tin. The ore joins from the
   side, so one lane, 7.5 ore/s at most; the drills give 6, so **0.6 Zinc plates/s** at full. The
   plate end of the belt has no chest, on purpose: unlike Tin, Zinc and Lead plates are only for
-  circuit boards, and the author will run them straight onto the bus later. At 13:05 59 Zinc
-  plates stand on the belt.
+  circuit boards, and the author will run them straight onto the bus later. Until then the plates
+  gather on the belt (103 at 13:28) and in the furnaces, up to a stack of 100 each.
 
-The drills get what the Tar line makes (next section): in the measured ten minutes 5.75 Aromatics
-a second, enough for 1.44 ore. They were "working" in 24 % of the samples and "missing required
-fluid" in the rest, mined 1.45 ore a second and the column made about 0.13 Zinc plates a second.
-132 Zinc plates were made by 13:05.
+The drills get what the Tar line makes (next section): in the measured ten minutes 4.92 Aromatics
+a second, enough for 1.23 ore. They were "working" in 20 % of the samples and "missing required
+fluid" in the rest, mined 1.22 ore a second and the column made 0.12 Zinc plates a second. 316
+Zinc plates were made by 13:28.
 
 ![The zinc mine: Fluid mining drills on both sides of the ore belt; the Raw coal comes in on the bottom belt and round to the top one, which takes the Ash back west; the Aromatics pipe on the left](../images/ch5-zinc-field.jpg)
 
@@ -319,21 +333,22 @@ bottoms unit, the tops unit, the Aromatics column, the Pitch column, and the two
 side by side at the top. Tar comes from the Tailings pond at (−10, −72), which still holds the Tar
 stored since chapter 2; Steam from the steam block through the Check valve at (−103.5, −74.5). One
 Tar refining unit could take 20 Tar/s and make 28 Pitch/s, but one column refines only 20 Pitch/s,
-so the Pitch column sets the pace. Measured over ten minutes:
+so the Pitch column sets the pace, and it can only run while its Coke is taken. Measured over ten
+minutes from the save of 13:28:
 
 | Per second | Made | Where it goes |
 |---|---|---|
-| Tar | 13.3 refined | The bottoms unit stands "full output" a third of the time, held back by the Pitch |
-| Pitch | 18.7 (18.5 refined) | The Pitch column, working 93 % of the time |
-| Aromatics | 5.75 | The zinc drills (section 5) |
-| Coke | 3.58 | By belt to the acetylene block (section 7) |
-| Anthracene oil | 15.6 (17.3 cracked) | The two cracking columns, 70 % busy; the oil stored in their pipe goes down |
-| Gasoline | 9.8 | A Tailings pond |
-| Naphthalene oil | 7.5 | A Tailings pond |
-| Creosote | 3.2 | A Tailings pond |
-| Carbolic oil | 1.9 | A Tailings pond |
-| Hydrogen | 1.85 | An Exhaust pipe |
-| Steam | about 36 used | From the steam block |
+| Tar | 11.2 refined | The bottoms unit stands "full output" 44 % of the time, held back by the Pitch |
+| Pitch | 15.6 (15.7 refined) | The Pitch column, working 78 % of the time, "full output" the rest: its Coke is not taken |
+| Aromatics | 4.92 | The zinc drills (section 5) |
+| Coke | 2.88 | By belt to the acetylene block (section 7) |
+| Anthracene oil | 13.1 (13.1 cracked) | The two cracking columns, 53 % busy |
+| Gasoline | 7.7 | A Tailings pond |
+| Naphthalene oil | 6.6 | A Tailings pond |
+| Creosote | 2.7 | A Tailings pond |
+| Carbolic oil | 1.75 | A Tailings pond |
+| Hydrogen | 1.57 | An Exhaust pipe |
+| Steam | about 30 used | From the steam block |
 
 **How the byproducts got their way out.** The first line (10:50–11:23) had only four machines,
 and every byproduct ran into a pipe that ended nowhere: after 850 Aromatics it stopped, with the
@@ -341,14 +356,15 @@ Anthracene oil pipe (3,200 of 3,200) and the Pitch pipe (2,900 of 2,900) full in
 11:45. The author then gave each one somewhere to go:
 
 - **Anthracene oil**, the largest byproduct, is cracked into Gasoline and Coke: one column at
-  11:50, a second at 13:00 (a column takes 12.5 a second; the line makes 15.6).
+  11:50, a second at 13:00 (a column takes 12.5 a second; at 13.3 Tar a second the line makes
+  15.6).
 - **Pitch** is refined in its column as before, into Coke, Light oil and more oils.
 - **Coke** goes by belt west to the acetylene block, which turns it into the lead drills' mining
   fluid (section 7).
 - **Gasoline, Naphthalene oil, Creosote and Carbolic oil** go into one Tailings pond each
   (12:55–12:58, at x −139 between y −56 and 3). A pond holds 1,000,000 of one liquid (data); at the
-  measured rates the Gasoline pond would be full first, after about 28 hours (Naphthalene oil 37,
-  Creosote 87, Carbolic oil 145).
+  rates measured from 13:28 the Gasoline pond would be full first, after about 35 hours
+  (Naphthalene oil 41, Creosote 103, Carbolic oil 158).
 - **Hydrogen** goes into an Exhaust pipe (12:59). (A Tailings pond would vent a gas too, chapter 3;
   pollution is off on this map.)
 
@@ -358,26 +374,85 @@ Creosote from the three oils (Creosote), and they burn, Gasoline at 1.2 MJ a uni
 author's circuit plan burns Gasoline there). The author leaves this until the circuit boards are
 made and the products are needed.
 
-**The Tar is a store, not a source.** Since the coke columns came down at 11:03 no machine makes
-Tar (none in the measured ten minutes), and the line lives on what chapter 2 stored. The pond and
-its pipe held 91,722 Tar at 11:45 and 82,094 at 13:05; at 13.3 a second that lasts **1.7 hours**,
-until about 14:50. Then the Aromatics, the Coke and the Acetylene stop, and with them zinc and
-lead. The Tar came from the coke distillation of chapter 2
-([`coke-distillation.txt`](../blueprints/coke-distillation.txt)): 67.5 Tar a second from 15 Raw coal,
-with 2.7 Coke and 108 Coal gas. The author's next step is a Tar line that cannot jam when its Coke
-is not taken: a circuit turns the surplus Coke into Coal gas and Tar (data: Coal gas from Coke,
-20 Coke → 20 Coal gas + 20 Tar + 1 Ash in 5 s in a Destructive distillation column, unlocked by
-Coal processing 1). It comes with the next update of this chapter.
+**Coke sets the pace.** The Tar line's Coke has one user, the acetylene block, and that block makes
+only the Acetylene the six lead drills take. In ten minutes measured from 13:05 the Gasifiers were
+still filling the drills' pipe and took 4.1 Coke a second; the line refined 13.3 Tar a second and
+gave 5.75 Aromatics. By 13:28 the pipe is full and the block takes 2.8 Coke a second, what the
+drills need: the Pitch column stands "full output" 22 % of the time, and the line refines 11.2 Tar
+and gives 4.92 Aromatics. The Lead plates, in turn, have nowhere to go but the furnaces, and the
+thirteen are full about 20 minutes after the save (section 7). In the same save run on, 25 to 35
+minutes after 13:28, the whole chain stands: the lead drills "waiting for space" (96 % of the
+samples), the Gasifiers "full output" (97 %), the Pitch column and the bottoms unit "full output"
+(100 %), the zinc drills "missing required fluid" (100 %), and no Tar is used. So the Tar line, and
+with it zinc, now runs only while the Lead plates have somewhere to go.
+
+**The Tar is a store, and its source comes back.** From 11:03, when the coke columns came down, no
+machine made Tar, and the line lived on what chapter 2 stored: 91,722 Tar in the pond and its pipe
+at 11:45, 82,094 at 13:05. The Tar came from those columns
+([`coke-distillation.txt`](../blueprints/coke-distillation.txt), chapter 2): 67.5 Tar a second from
+15 Raw coal, with 2.7 Coke and 108 Coal gas, and they stopped whenever their Coke was not taken
+(chapter 4). The author's new version (the same file, label "2.7 [Coke]"), built at 13:22 where
+the old one stood (x −60 to −12, y −95 to −81), adds a sixth column for that case:
+
+- The five columns of chapter 2 as before: three make Coal from the Raw coal belt, two make Coke
+  from the Coal. The Coke leaves west, then north along x −72 to the steel foundries and the log
+  block's High pressure furnace.
+- The sixth column, at the Coke end, runs Coal gas (from Coke): 20 Coke → 20 Coal gas + 20 Tar + 1
+  Ash in 5 s (data, Coal processing 1), up to 4 Coke a second. The last belt tile before the Coke
+  leaves, (−56.5, −82.5), reads what it holds, and a red wire takes that to the column's four
+  input inserters, which work only while the tile holds 4 Coke or more. When nobody takes the
+  Coke, the belt backs up and the column turns it into Tar.
+- Tar goes to the Tailings pond at (−10, −72), the pond the Tar line draws from; Iron oxide by belt
+  south along x −92 to the Iron oxide furnaces of chapter 3; the sixth column's Ash onto the Ash
+  loop; Coal gas into the pipe to the aluminium drills. This version has no Exhaust pipe (the copy
+  placed first, east of the base at 13:11, had one).
+
+The author's description: "焦油储存到临时尾矿池，煤气暂时销毁；多余焦炭被转化为焦油和煤气" (the Tar
+is stored in the temporary Tailings pond, the Coal gas destroyed for now; the surplus Coke is
+turned into Tar and Coal gas).
+
+**The coke block on the bench** (Raw coal on both lanes; the Iron oxide, the Ash and the Tar always
+taken away; twenty minutes measured after ten), per second, with and without a taker for the Coke
+and an outlet for the Coal gas:
+
+| Coke | Coal gas | Coke out | Coke turned into Tar | Tar | Coal gas | Raw coal |
+|---|---|---|---|---|---|---|
+| Taken | Taken, any amount | 2.70 | 0 | 67.5 | 108 | 15 |
+| Not taken | Taken, any amount | 0 | 2.70 | 70.2 | 110.7 | 15 |
+| Taken | 20 a second | 0.50 | 0 | 12.5 | 20 | 2.8 |
+| Not taken | 20 a second | 0 | 0.48 | 12.7 | 20 | 2.7 |
+| Not taken | Not taken | 0 | 0 | 0 | 0 | 0 |
+
+The circuit does what it is for: with nobody taking the Coke, the sixth column (68 % busy) turns all
+of it into Tar, and the other five run on at full speed. But a column also stops when its Coal gas
+has nowhere to go (chapter 3). This block's Coal gas pipe leads only to the four Fluid mining
+drills on aluminium, which take 20 Coal gas a second while all four mine (the save's one-minute
+measure: 20.0, with 2.0 Aluminium ore). The bench gives such a pipe as a sink of 20 a second: the
+block then runs at 18 %, 0.5 Coke and 12.5 Tar a second, Coke taken or not. The four drills stand
+on 9,000 Aluminium ore (the save), at most 75 minutes at 2 a second; when they stop, the last row.
+An Exhaust pipe on the Coal gas pipe, as in chapter 2, gives the first two rows whatever the drills
+do.
+
+**Power cut, on purpose.** The new columns ran for a short while after they were built: at 13:28
+their Coal gas pipe holds 6,596 (at 13:05 the base had none), enough for the aluminium drills for
+about half the ten measured minutes (0.98 ore a second). Then the author took out one Small
+electric pole, at (−55.5, −92.5), which links the block to the power network: five columns stand
+"no power", the sixth, powered from the west, has no Coke. The author's reason: to use up the Tar
+in the pond first. At 13:28 the pond holds 73,365 Tar (73,764 with its pipe): at 11.2 a second,
+1.8 hours of the Tar line, as long as the line runs.
 
 **How much is needed.** The author's plan of 6 boards a minute needs 0.33 Zinc plates/s: 3.33 ore,
 13.3 Aromatics and 31 Tar a second through the whole chain. The twelve drills at full would need
-24 Aromatics and 56 Tar a second. The line gives 5.75 Aromatics from 13.3 Tar: 0.14 Zinc plates a
-second, 2.6 boards a minute. A second Pitch column would let the bottoms unit take its full 20 Tar
-a second (8.6 Aromatics); beyond that it takes more refining units.
+24 Aromatics and 56 Tar a second. At 13:28 the line gives 4.92 Aromatics from 11.2 Tar: 0.12 Zinc
+plates a second, 2.2 boards a minute. With its Coke taken, a second Pitch column would let the
+bottoms unit take its full 20 Tar a second (8.6 Aromatics); beyond that it takes more refining
+units.
 
 ![Tar processing at the west edge, from the bottom: the bottoms unit, the tops unit, the Aromatics column, the Pitch column and the two cracking columns; the byproduct pipes leave to the right](../images/ch5-tar.jpg)
 
 ![The four Tailings ponds at x −139, from the top: Naphthalene oil, Creosote, Carbolic oil, Gasoline; their pipes come down from the Tar processing](../images/ch5-ponds.jpg)
+
+![The new coke block: six Destructive distillation columns in a row, the Raw coal belt coming in along the bottom from the right, the sixth column (left) with its four circuit-controlled inserters, the Tar pipe to the Tailings pond at the bottom right](../images/ch5-coke.jpg)
 
 ## 7. Lead: Acetylene as the mining fluid
 
@@ -421,11 +496,11 @@ pole makes **49.5 Acetylene/s** (99 %), the carbide furnaces at 100 % and the So
 their full 0.8 Limestone a second. The pole links the eastern machines to the power network, so
 it would need another tile. For the six drills the block has room either way: they take 30.
 
-**In the base** (measured ten minutes) the Gasifiers made 42.7 Acetylene a second, as on the bench,
-and the drills took 30.0; the rest filled the pipe, and by the end the Gasifiers began to stand
-with full outputs. Calcium carbide 4.33, Lime 0.86 (furnace and Evaporator), Coke 4.10 used against
-3.58 arriving from the Tar line: the Coke on the belts went down while the pipe filled. The drills
-alone need 2.8 Coke a second.
+**In the base** the block makes what the six drills take. In ten minutes measured from 13:05,
+while their pipe was still filling, the Gasifiers made 42.7 Acetylene a second, as on the bench,
+from 4.1 Coke. From 13:28 the pipe is full: 29.8 Acetylene a second, the Gasifiers "full output" in
+a third of the samples, Calcium carbide 3.0, Lime 0.61 (furnace and Evaporator) and 2.8 Coke a
+second, the drills' 3 ore × 0.94. That is all the Coke the Tar line can hand on (section 6).
 
 **The mine.** Six Fluid mining drills MK 01 in one row at y −152 (x −309 to −284) drop onto one
 belt: 0.5 ore/s each, 3 a second, 30 Acetylene. The Acetylene comes in one pipe of 201 × 16 tiles
@@ -445,11 +520,15 @@ the line:
 
 **The smelting column.** 13 Stone furnaces at y −69 (x −157 to −133), the same design as for tin
 and zinc: ore lane and plate lane on the lower belt, Raw coal and Ash on the upper one. Thirteen
-could take 7.8 ore/s; the six drills give 3, so seven furnaces get ore (busy 71 % of the time) and
-**0.50 Lead plates/s** come out (measured), enough for 11 boards a minute. As with zinc, the belt
-ends without a chest on purpose (two chests placed at 12:36 were taken away again at 12:38): the
-plates are to go onto the bus later. Until then the plate lane is full (111 plates at 13:05) and
-the plates gather in the furnaces, up to a stack of 100 each. 323 Lead plates were made by 13:05.
+could take 7.8 ore/s; the six drills give 3, and **0.49 Lead plates/s** come out (measured from
+13:28), enough for 11 boards a minute. As with zinc, the belt ends without a chest on purpose (two
+chests placed at 12:36 were taken away again at 12:38): the plates are to go onto the bus later.
+Until then the plate lane is full (124 plates at 13:28) and the plates gather in the furnaces, one
+stack of 100 each: at 13:28 the first five hold their 100 and stand "full output", the next five
+hold 23 to 80, one holds 8 and the last two have had no ore yet, 735 plates in all. The ore passes
+the full ones to the next, so the column works on until all thirteen hold 1,300: about 20 minutes
+after the save at 0.49 a second. Then the lead drills stop, and with them the acetylene block and
+the Tar line (section 6). 979 Lead plates were made by 13:28.
 
 ![The acetylene block: top row, the Lime furnace between its two Soil extractors, then two Gasifiers; bottom row, the Washer and the Evaporator, the two Calcium carbide furnaces and two more Gasifiers; the Coke belt comes in from the left between the rows](../images/ch5-acetylene.jpg)
 
@@ -457,17 +536,24 @@ the plates gather in the furnaces, up to a stack of 100 each. 323 Lead plates we
 
 ![The lead smelting column: thirteen Stone furnaces, the Raw coal and Ash belt above, the ore and plate belt below; the belts end on the right, to go onto the bus later](../images/ch5-lead-smelting.jpg)
 
-## 8. Iron, a mall that burns Wood, and the coke columns
+## 8. Iron, copper, a mall that burns Wood, and the coke columns
 
 **Iron times three.** At 10:15–10:20 robots built a second copy of the chapter 2 crushed iron block
 ([`crushed-iron.txt`](../blueprints/crushed-iron.txt), "3 [Iron plate]": 6 Jaw crushers, 18 iron
 and 5 brick furnaces) just south of the first (crushers at y −15 and y 1), and at 10:40–10:50 the
-author added Burner mining drills on the iron field: 52 of them stand at y −18 to −6 at 13:05.
+author added Burner mining drills on the iron field: 52 of them stand at y −18 to −6 at 13:28.
 The windows ending 10:40 and 11:10: Iron ore 11.5 → 30.1 a second, Crushed iron ore 6.9 → 18.0,
 **Iron plates 2.5 → 6.1**, what two blocks of 3 a second promise. The base uses about 3 a second,
-so once the belts and chests had filled the blocks made only that: at 13:05 half the twelve
-crushers stand with full outputs. The exported blueprint gained one Small electric pole; nothing
-else changed.
+so once the belts and chests had filled the blocks made only that: in the ten minutes measured
+from 13:28 the twelve crushers stand "full output" half the time. The exported blueprint gained
+one Small electric pole; nothing else changed.
+
+**The copper mine rebuilt.** At 13:07–13:10 the author took seven Burner mining drills and four
+chests off the copper field around (54, 35) and put 18 drills there in two rows, at y 23 (x 37–47)
+and y 27 (x 43–65); 17 stand at 13:28. The Copper ore leaves west on two belts; Raw coal comes from
+the belt on x 70, the Ash goes west. Copper ore rose from 5.7 a second (window ending 13:10) to
+12.8 (ending 13:20) while the belts filled; in the measured ten minutes it is 7.55, and 0.94
+Copper plates, what the base takes: the copper furnaces stand "full output" 38 % of the time.
 
 **A mall that burns Wood** ([`wood-mall.txt`](../blueprints/wood-mall.txt), the author's
 "初期超市-2", beside the red science line): ten Burner assembling machines make Transport belts,
@@ -492,12 +578,13 @@ what is taken from it.
 
 ![The two crushed iron blocks, one above the other: Jaw crushers on the right, iron and brick furnaces on the left](../images/ch5-iron.jpg)
 
-**The coke columns come down.** The steel line stopped at about 10:30 with its outputs full.
-Without that Coke user the five coke columns of chapter 2 stopped too, and with them the Coal gas:
-the aluminium drills stand "missing required fluid", as chapter 4 predicted. At 11:03 the author
-took the columns away. Since then the only Coke comes from the Tar line, 3.6 a second in the measured ten
-minutes, and it all goes to the acetylene block; there is no Coal gas in the base. At 13:05 the eight steel
-foundries hold Iron ore and Limestone and wait for Coke.
+**The coke columns come down, and come back.** The steel line stopped at about 10:30 with its
+outputs full. Without that Coke user the five coke columns of chapter 2 stopped too, and with them
+the Coal gas: the aluminium drills stand "missing required fluid", as chapter 4 predicted. At 11:03
+the author took the columns away. From then on the only Coke came from the Tar line, and all of it
+went to the acetylene block. At 13:22 the author's new six-column block took the old columns'
+place (section 6); without power at 13:28, it leaves the eight steel foundries waiting for Coke,
+with Iron ore and Limestone in them.
 
 **The author's note on the log block.** The log block's High pressure furnace burns 0.31 Coke/s
 into the forestries' Carbon dioxide. The Carbon capture greenhouse recipe makes 200 Carbon dioxide
@@ -508,6 +595,13 @@ noted it in the blueprint: "高压炉可原地替换为月落草温室" (the fur
 Moondrop greenhouse). One check from the blueprint: the greenhouse is 9 × 9, the furnace 7 × 7;
 centred on the furnace it would overlap the Moss farm east of it, one inserter and two pipes, so
 the swap needs a little rebuilding.
+
+**Preparing for Moondrop.** The author's last note, at 13:27: "为月落草做准备" (preparing for
+Moondrop). The minute before, at the quartz field, the Glassworks set to Empty petri dishes got an
+inserter and a chest; it had made 14 by the save and stands without fuel (section 4). The first
+Moondrop is grown from Petri dishes (data: 1 Moondrop codex + 2 Petri dishes + 1 Planter box +
+1,000 Water → 4 Moondrop in 200 s, unlocked by Moondrop - Stage 1; a Petri dish is an Empty petri
+dish with Agar).
 
 ## 9. Checklist
 
@@ -529,6 +623,13 @@ the swap needs a little rebuilding.
   too. Every byproduct needs a way out, or the line stops when its pipe fills: turn it into
   something used, store a liquid in a Tailings pond (1,000,000), vent a gas in an Exhaust pipe.
 - A store is not a source: a line fed from a tank or pond stops when it is empty. Count the hours.
+- A line runs at the pace of its slowest way out. The Tar line's Coke feeds only the acetylene
+  block, which takes only what six lead drills need, and the Lead plates only gather in the
+  furnaces: when those are full (1,300 plates, about 20 minutes after 13:28), the Tar line and zinc
+  stop too.
+- A circuit can give a surplus a way out: the coke block's sixth column takes Coke only while 4
+  or more wait on the belt's last tile, and turns it into Tar. A machine still stops when any output
+  is full, so every product, the Coal gas too, needs its own way out.
 - Check every inserter of a new block reaches a belt: one that reaches for a pole tile cost the
   acetylene block 14 % of its output.
 - Wood is the fuel for burner buildings that should not make Ash: one Log as Wood gives 20 MJ.
@@ -539,18 +640,27 @@ the swap needs a little rebuilding.
   `tools/recorder-phases.js` (timeline in 5-minute slices, chat notes), `tools/recorder-log.js`
   (production per 10-minute window) and its minute records (what was built and removed where:
   the Pumps at 11:31, the Check valves at 11:47–11:48, the coke columns at 11:03, the acetylene
-  block, the lead line and the ponds).
-- The save of 13:05 (`Py-Exploration`, consistency check passed): `tools/inspect-save.ps1 -Ticks
-  3700`, then `tools/summarize-save.js` (research, machine states, the drills' status),
-  `tools/trace-layout.js` (belt lines, fluid segments with their contents and extent),
-  `tools/render-area.js` and `tools/render-save-map.js`; fluid segment boxes counted in tiles from
-  the snapshot's `entities.json`. The save of 11:45 for the first Tar line and its full pipes.
+  block, the lead line and the ponds, the copper mine, the new coke block placed twice, the
+  Glassworks' chest).
+- The saves of 13:05 and 13:28 (`Py-Exploration`, consistency check passed): `tools/inspect-save.ps1
+  -Ticks 3700` (with a one-minute measure), then `tools/summarize-save.js` (research, machine
+  states, the drills' status and the ore under them), `tools/trace-layout.js` (belt lines, fluid
+  segments with their contents and extent), `tools/render-area.js` and `tools/render-save-map.js`;
+  fluid segment boxes counted in tiles from the snapshot's `entities.json`; the furnaces' plates
+  and the poles of the coke block from the same file. The save of 11:45 for the first Tar line and
+  its full pipes.
 - **Ten minutes of the base:** `tools/save-probe.ps1 -Save Py-Exploration -Probe rate-probe -Ticks
   39700 -Variant 60,600` (new): after one minute it measures what the base makes and uses per
-  second for ten minutes, and the status of every machine and drill once a second.
+  second for ten minutes, and the status of every machine and drill once a second; run on both
+  saves. On the save of 13:28 also `-Ticks 126100 -Variant 1500,600`: ten minutes from 25 minutes
+  after the save, when the lead column is full.
 - **The acetylene block on the bench:** `tools/bp-bench.ps1 -Bench acetylene` (Coke on its lane,
   the Acetylene pipe emptied by the new fluid sink; 20 minutes after 10 of warm-up), and the same
   with one belt tile for the pole (a copy, not kept).
+- **The coke block on the bench:** `tools/bp-bench.ps1 -Bench coke-distillation` with the variants
+  `vent` (Coke and Coal gas taken), `full` (Coal gas taken, Coke not), `al` and `al-full` (the same
+  two with the Coal gas taken at 20 a second: a fluid sink can now be given a rate) and none
+  (neither taken).
 - Data: the current dump of the author's mods (`C:\tmp\cf-save\data\script-output\data-raw-dump.json`):
   mining fluids, recipes, machine speeds and energy, stack sizes, fuel values, Tailings pond
   volume, `max_pipeline_extent`, the Pump and the Check valve, which technology unlocks what;
@@ -562,6 +672,7 @@ the swap needs a little rebuilding.
 - The blueprints: exported by the author with the companion mod (2026-10-11, 19:06, and the
   acetylene block on 2026-10-12, 12:45) and pulled into `blueprints/`: the Wood mall, the two older
   malls under their new names, one more pole in the crushed iron block, the author's note in the
-  log block's description, and the acetylene block.
+  log block's description, and the acetylene block; on 2026-10-13, 21:49, the new coke block
+  (`coke-distillation.txt`, six columns, the author's description).
 
-Next: chapter 6 (to come).
+Next: chapter 6, Printed circuit substrate (tier 1) (to come).

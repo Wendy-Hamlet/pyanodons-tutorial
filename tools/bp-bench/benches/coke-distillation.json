@@ -1,0 +1,140 @@
+{
+  "blueprint": "coke-distillation",
+  "note": "The author's chapter 5 coke block: three columns make Coal from a full belt of Raw coal (east end, both lanes), two make Coke from the Coal, and a sixth column turns surplus Coke into Coal gas and Tar: its four input inserters run only while the belt tile at the Coke end (-56.5, -82.5) holds 4 Coke or more. Always emptied: the Iron oxide and Ash belts at the west end and the Tar pipe (in the base a Tailings pond). Variants add the Coke sink (the steel site taking all) and the Coal gas pipe (vented, or drawn at 20/s like the four aluminium drills); without them Coke and Coal gas have nowhere to go.",
+  "sources": [
+    {
+      "x": -13,
+      "y": -83,
+      "item": "raw-coal"
+    }
+  ],
+  "sinks": [
+    {
+      "x": -61,
+      "y": -95
+    },
+    {
+      "x": -61,
+      "y": -94
+    }
+  ],
+  "fluid_sinks": [
+    {
+      "x": -60,
+      "y": -82
+    }
+  ],
+  "variants": {
+    "vent": {
+      "sinks": [
+        {
+          "x": -61,
+          "y": -83
+        }
+      ],
+      "fluid_sinks": [
+        {
+          "x": -59,
+          "y": -94
+        }
+      ]
+    },
+    "full": {
+      "fluid_sinks": [
+        {
+          "x": -59,
+          "y": -94
+        }
+      ]
+    },
+    "al": {
+      "sinks": [
+        {
+          "x": -61,
+          "y": -83
+        }
+      ],
+      "fluid_sinks": [
+        {
+          "x": -59,
+          "y": -94,
+          "rate": 20
+        }
+      ]
+    },
+    "al-full": {
+      "fluid_sinks": [
+        {
+          "x": -59,
+          "y": -94,
+          "rate": 20
+        }
+      ]
+    }
+  },
+  "research": [
+    "acetylene",
+    "alloys-mk01",
+    "ash-separation",
+    "automation",
+    "automation-science-pack",
+    "automobilism",
+    "basic-substrate",
+    "biotech-machines-mk01",
+    "biotech-mk01",
+    "botany-mk01",
+    "cellulose-mk01",
+    "ceramic",
+    "coal-processing-1",
+    "concrete",
+    "copper-mk01",
+    "creosote",
+    "crusher",
+    "electrolysis",
+    "electronics",
+    "enable-logistics-tab",
+    "engine",
+    "fast-wood-forestry-upgrade",
+    "fluid-handling",
+    "fluid-pressurization",
+    "fluid-processing-machines-1",
+    "gate",
+    "genetics-mk01",
+    "glass",
+    "gun-turret",
+    "lamp",
+    "land-animals-mk01",
+    "landfill",
+    "latex",
+    "logistics",
+    "military",
+    "mining-with-fluid",
+    "moondrop",
+    "moondrop-upgrade",
+    "moss-mk01",
+    "petri-dish",
+    "plastics",
+    "py-science-pack-1",
+    "py-storage-tanks",
+    "radars-mk01",
+    "rendering",
+    "repair-pack",
+    "sap-mk01",
+    "seaweed-mk01",
+    "soil-washing",
+    "solder-mk01",
+    "steam-power",
+    "steel-axe",
+    "steel-processing",
+    "stone-wall",
+    "syngas",
+    "tar-processing",
+    "vrauks",
+    "wood-processing",
+    "xenobiology",
+    "zoology"
+  ],
+  "warm": 600,
+  "measure": 1200,
+  "window": 600
+}

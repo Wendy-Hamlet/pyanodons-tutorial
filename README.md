@@ -130,7 +130,7 @@ parameters for yours.
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and
-  empties the output belts (and, as fluid sinks, chosen pipes) by script, lets labs research without end, and reports every machine's
+  empties the output belts (and, as fluid sinks, chosen pipes, emptied or drawn at a set rate) by script, lets labs research without end, and reports every machine's
   crafts against its recipe at its actual speed, status samples, the ingredient a waiting machine
   lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
   sinks, fluid sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
