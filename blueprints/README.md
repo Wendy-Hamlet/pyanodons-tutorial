@@ -7,8 +7,9 @@ The author's blueprint book for the tutorial so far. Import a file's content wit
 `book.json`). Explanations: [chapter 1](../chapters/01-landing-to-red-science.md),
 [chapter 2](../chapters/02-coke-steel-crushed-iron.md),
 [chapter 3](../chapters/03-ash-separation-raw-coal-power.md),
-[chapter 4](../chapters/04-aluminium-glass-logs.md) and
-[chapter 5](../chapters/05-tin-zinc-smelting.md).
+[chapter 4](../chapters/04-aluminium-glass-logs.md),
+[chapter 5](../chapters/05-tin-zinc-smelting.md) and
+[chapter 6](../chapters/06-simple-circuit-boards.md).
 
 Where the numbers come from: the two burner designs of chapter 1 were built and run in the engine
 by `tools/design-lab` (5 minutes of game time, rates measured after the first minute), in the
@@ -37,10 +38,11 @@ machine's full speed.
 | `soot-separation.txt` | 烟煤分离 | 1 Solid separator on Soot; each ore into its own chest and Stone furnace (Coal dust as fuel) | 0.5–1.3 Soot/s used (5:50–6:13); Zinc and Lead ore wait in the chests |
 | `iron-oxide-smelting.txt` | 氧化铁处理 | 2 Stone furnaces, Iron oxide to Iron plates (2 : 1), one input inserter each | Bench: 1.717 Iron oxide/s, 0.85 Iron plates/s, furnaces at 15 % (the inserters set the pace); 0.7–0.9 Iron oxide/s in play (6:00–6:13) |
 | `coal-dust-power.txt` | 煤粉处理 | 2 Boilers on Coal dust and 2 Steam engines (one more than the steam needs, so Coal dust burns first) | 2.03 Coal dust/s burnt in the minute after 6:13, about the two-engine share computed from data |
-| `log-production.txt` | 2.348 [Log] | Logs: 10 Moss farms, 8 Botanical nurseries, 16 Fastwood forestries, a Wood processing unit for the Tree seeds; Ash, Stone bricks and Coke in, Logs out | Bench: 2.336 Logs/s (nurseries and forestries at 100 %), Ash 12, Stone bricks 1.25, Coke 0.31 a second ([chapter 4](../chapters/04-aluminium-glass-logs.md#6-the-log-block)). The author's note: the High pressure furnace can become a Moondrop greenhouse (9 × 9 against 7 × 7, so a little rebuilding; [chapter 5](../chapters/05-tin-zinc-smelting.md#8-iron-copper-a-mall-that-burns-wood-and-the-coke-columns)) |
+| `log-production.txt` | 2.348 [Log] | Logs: 10 Moss farms, 8 Botanical nurseries, 16 Fastwood forestries, a Wood processing unit for the Tree seeds; Ash, Stone bricks and Coke in, Logs out | Bench: 2.336 Logs/s (nurseries and forestries at 100 %), Ash 12, Stone bricks 1.25, Coke 0.31 a second ([chapter 4](../chapters/04-aluminium-glass-logs.md#6-the-log-block)). The author's note: the High pressure furnace can become a Moondrop greenhouse (9 × 9 against 7 × 7, so a little rebuilding; [chapter 5](../chapters/05-tin-zinc-smelting.md#8-iron-copper-a-mall-that-burns-wood-and-the-coke-columns)); done in the author's base at 15:00–15:05 ([chapter 6](../chapters/06-simple-circuit-boards.md#2-moondrop-for-the-substrates-methane)), the file still has the furnace |
 | `red-science.txt` | 0.2 [Automation science pack] | Red science for six labs: 8 Burner assembling machines, a Soil extractor and a Wood processing unit; Native flora, plates, Ash, Logs and Stone bricks in | Bench: 0.200/s (the author's update after 9:37; 0.196 with one Wood inserter) ([chapter 4](../chapters/04-aluminium-glass-logs.md#8-red-science-at-02-a-second)) |
 | `wood-mall.txt` | 初期超市-2 | The author's third mall, beside red science: 10 Burner assembling machines make Transport belts, Underground belts, Mechanical inserters, Pipes and Pipes to ground; a Wood processing unit turns Logs into Wood, the fuel, carried with the Iron plates | Not measured (a mall makes what is taken); fuel from data: 0.375 Wood/s at full work ([chapter 5](../chapters/05-tin-zinc-smelting.md#8-iron-copper-a-mall-that-burns-wood-and-the-coke-columns)) |
-| `acetylene.txt` | 50 [Acetylene] | Acetylene for the lead drills: 2 Soil extractors into a Lime furnace, 2 Calcium carbide furnaces, 4 Gasifiers; an Evaporator dries the Slaked lime back into Lime, a Washer turns its Gravel into Saline water for a Sinkhole; 2 Offshore pumps. Coke in from the west (left lane), Acetylene out by one pipe east | Bench: 43.2 Acetylene/s (86 %): one input inserter of the second carbide furnace reaches for the pole where the Coke belt ends. With one belt tile there instead: 49.5/s, every machine at 100 % ([chapter 5](../chapters/05-tin-zinc-smelting.md#7-lead-acetylene-as-the-mining-fluid)) |
+| `acetylene.txt` | 50 [Acetylene] | Acetylene for the lead drills: 2 Soil extractors into a Lime furnace, 2 Calcium carbide furnaces, 4 Gasifiers; an Evaporator dries the Slaked lime back into Lime, a Washer turns its Gravel into Saline water for a Sinkhole; 2 Offshore pumps. Coke in from the west (left lane), Acetylene out by one pipe east | Bench: 49.75 Acetylene/s, every machine at 100 %: the author's corrected version (2026-10-14; [chapter 6](../chapters/06-simple-circuit-boards.md#7-other-changes)). The chapter 5 version made 43.2/s (86 %): one input inserter of the second carbide furnace reached for the pole where the Coke belt ended ([chapter 5](../chapters/05-tin-zinc-smelting.md#7-lead-acetylene-as-the-mining-fluid)) |
+| `simple-circuit-board.txt` | 0.1 [Simple circuit board] | Simple circuit boards: Chipshooter machine, PCB factory, Pulp mill, 4 Electronics factories, 4 Moondrop greenhouses (Methane, Carbon dioxide, two growing Moondrop) and a nursery, 14 Sap extractors, Burner assembling machines for Copper cable, Solder and the CuZn Battery, Clay pit, Washers, Glassworks. Plates, Coke, Stone bricks and Logs in by belt from the west; Creosote, Molten glass, Gasoline and Steam by pipe; boards into a chest | Set by its one Methane greenhouse (4 Methane/s at speed 1.5, the save's Carbon capture upgrade): 0.1 boards/s, every other machine below 100 % (Sap extractors 95 %). Measured where it stands: 0.120/s for 35 minutes on stored parts, then down with the Zinc plates on the bus. Not run on the bench: the greenhouses' speed and Carbon dioxide recipe come from the upgrade chosen in the save ([chapter 6](../chapters/06-simple-circuit-boards.md#3-the-block)) |
 
 ## How the blueprints are labelled
 
@@ -85,7 +87,7 @@ machine's full speed.
   ore inserter brings 0.833. On the bench a full ore lane (7.5/s) feeds nine furnaces and gives
   0.75 Aluminium plates/s.
 
-## Chapter 2 to 5 blocks
+## Chapter 2 to 6 blocks
 
 Pictures and explanations are in [chapter 2](../chapters/02-coke-steel-crushed-iron.md):
 `raw-coal-power` (section 3), `coke-distillation` (4), `steel-foundries` (5, and chapter 3
@@ -94,7 +96,8 @@ section 9), `crushed-iron` (6); and in [chapter 3](../chapters/03-ash-separation
 `coal-dust-power` (6), `soot-separation` and `iron-oxide-smelting` (7); and in
 [chapter 4](../chapters/04-aluminium-glass-logs.md): `log-production` (sections 5 and 6),
 `red-science` (8), and the bench test of `ash-separation` (7); and in
-[chapter 5](../chapters/05-tin-zinc-smelting.md): the new `coke-distillation` (section 6), `acetylene` (section 7), `wood-mall` and the second `crushed-iron` (section 8).
+[chapter 5](../chapters/05-tin-zinc-smelting.md): the new `coke-distillation` (section 6), `acetylene` (section 7), `wood-mall` and the second `crushed-iron` (section 8); and in
+[chapter 6](../chapters/06-simple-circuit-boards.md): `simple-circuit-board` (section 3) and the corrected `acetylene` (section 7).
 The burner mall is in [chapter 1](../chapters/01-landing-to-red-science.md#5-the-first-mall-035040).
 
 ## Syncing with a running game

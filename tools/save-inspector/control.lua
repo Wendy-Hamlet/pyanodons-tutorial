@@ -119,12 +119,20 @@ local function entities(surface)
       }
       local ok, status = pcall(function() return e.status end)
       if ok and status then entry.status = STATUS[status] end
+      -- Which electric network: a machine short of power may sit on a network of its own.
+      local okn, network = pcall(function() return e.electric_network_id end)
+      if okn and network then entry.network = network end
       if e.type == "assembling-machine" or e.type == "furnace" then
         local recipe = e.get_recipe()
         entry.recipe = recipe and recipe.name
         -- What waits inside: shows machines stocked by hand and products nobody takes out.
         entry.input = counts(e.get_inventory(defines.inventory.crafter_input))
         entry.output = counts(e.get_inventory(defines.inventory.crafter_output))
+        -- Modules, and the speed they give: Py farms (Moondrop greenhouse, Sap extractor) take
+        -- their plants or animals as modules and barely work without them.
+        local modules = e.get_module_inventory()
+        entry.modules = modules and counts(modules)
+        entry.speed = e.crafting_speed
         -- Machines with an output port (soil and sap extractors, wood processing units...) drop
         -- their products themselves, onto a belt or straight into the machine standing there.
         if e.prototype.vector_to_place_result then

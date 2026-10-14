@@ -14,6 +14,7 @@ scripts used, so you can re-check them against your own mod versions.
 3. [Ash separation and Raw coal power](chapters/03-ash-separation-raw-coal-power.md)
 4. [Aluminium mining, glass making, log production and red science](chapters/04-aluminium-glass-logs.md)
 5. [Tin, zinc and lead smelting](chapters/05-tin-zinc-smelting.md)
+6. [Simple circuit boards](chapters/06-simple-circuit-boards.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -75,7 +76,7 @@ parameters for yours.
   `render-save-map.js`: first checks that the save loads with exactly the mods and startup
   settings it was played with (it stops otherwise, unless `-AllowModChanges`); then a
   read-only snapshot of the save (research, inventory, buildings with directions and filters,
-  production, nearby ore) and a PNG map; also finds mining outposts, exports each as a blueprint
+  each machine's modules, speed and electric network, production, nearby ore) and a PNG map; also finds mining outposts, exports each as a blueprint
   string and, with `-Ticks`, runs the save one more minute to measure real mining rates and
   everything the base makes and uses per second.
 - `render-area.js x1 y1 x2 y2 out.png`: close-up PNG plus a character grid of one area of a
@@ -127,6 +128,10 @@ parameters for yours.
   missing ingredient), and `rate-probe/`: the base as it stands over a longer window than the
   inspector's minute (variant `WARM,MEASURE` in seconds, e.g. `-Ticks 39700 -Variant 60,600`):
   what it makes and uses per second, and every machine's and drill's status, sampled each second.
+  `WARM,MEASURE,STEP,names` adds a timeline: every STEP seconds what was made and used of each
+  named item or fluid, the status and fluid boxes of each machine named by its tile (`@x:y`), and
+  every machine group whose usual status changed; a last field `+entity@x:y` places that entity
+  when the save loads (a what-if, the only change the probe makes).
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and

@@ -504,6 +504,8 @@ needs (1.75 Coke and 0.5 Lime) and stands short of Coke. A copy with one belt ti
 pole makes **49.5 Acetylene/s** (99 %), the carbide furnaces at 100 % and the Soil extractors at
 their full 0.8 Limestone a second. The pole links the eastern machines to the power network, so
 it would need another tile. For the six drills the block has room either way: they take 30.
+The author made that change after this chapter; `acetylene.txt` now holds the corrected block,
+49.75 Acetylene/s on the bench ([chapter 6](06-simple-circuit-boards.md#7-other-changes)).
 
 **In the base** the block makes what the six drills take. In ten minutes measured from 13:05,
 while their pipe was still filling, the Gasifiers made 42.7 Acetylene a second, as on the bench,
@@ -600,7 +602,8 @@ with Iron ore and Limestone in them.
 into the forestries' Carbon dioxide. The Carbon capture greenhouse recipe makes 200 Carbon dioxide
 every 5 s from nothing; with 16 Moondrop as modules a Moondrop greenhouse MK 01 runs at speed 1
 (data: speed 0.0625, base effect −100 %, +100 % a Moondrop), so one greenhouse gives about 40 a
-second against the 12.5 the block needs, and the Coke and the furnace's 2 MW are freed. The author
+second against the 12.5 the block needs (60: the author's Carbon capture adds half the speed, 1.5
+read in the save of 16:08, [chapter 6](06-simple-circuit-boards.md#2-moondrop-for-the-substrates-methane)), and the Coke and the furnace's 2 MW are freed. The author
 noted it in the blueprint: "高压炉可原地替换为月落草温室" (the furnace can be replaced in place by a
 Moondrop greenhouse). One check from the blueprint: the greenhouse is 9 × 9, the furnace 7 × 7;
 centred on the furnace it would overlap the Moss farm east of it, one inserter and two pipes, so
@@ -687,4 +690,4 @@ dish with Agar).
   log block's description, and the acetylene block; on 2026-10-13, 21:49, the new coke block
   (`coke-distillation.txt`, six columns, the author's description).
 
-Next: chapter 6, Printed circuit substrate (tier 1) (to come).
+Next: [chapter 6, Simple circuit boards](06-simple-circuit-boards.md).

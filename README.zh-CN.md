@@ -12,6 +12,7 @@
 3. [灰烬分离与原煤发电](chapters/03-ash-separation-raw-coal-power.zh-CN.md)
 4. [铝矿开采、玻璃制造、原木生产和红瓶生产](chapters/04-aluminium-glass-logs.zh-CN.md)
 5. [锡矿、锌矿、铅矿冶炼](chapters/05-tin-zinc-smelting.zh-CN.md)
+6. [简易电路板](chapters/06-simple-circuit-boards.zh-CN.md)
 
 参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [焦炭、炼钢、碎矿与灰烬分离](research/coke-and-steel.zh-CN.md)（第二章背后的配方、产率和副产物，以及灰烬分离）· [红瓶 + pY1 工厂](research/red-py1-factory.zh-CN.md)（总线、区块、简易电路板和火车前的关键中间体）· [作者的第一个存档](research/first-save-review.zh-CN.md)（哪些靠手搬，以及取代它们的总线）· [Py 下的铁路](research/py-railway.md)（英文）· [地图设置](research/map-settings.zh-CN.md)（Py 推荐预设、作者的改动及其对地图的影响）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
 
@@ -40,7 +41,7 @@
 - `recipe-tree.js <物品> --techs a,b`：只用某个时间点已解锁的配方展开生产树并汇总原料（中文名）。
 - `rate-plan.js <计划.js> [--build]`：求解一份生产计划（每分钟目标，每种物品指定一个配方，所有速率联立求解，所以副产物和还回来的笼子都算在内）：机器、物品流量、原料、能耗、计划中各区块之间的物流（上总线还是直连），以及建造这些机器的材料；计划里写明燃料时，还会算出烧掉的燃料和留下的灰烬；`local: 'free'` 让只靠水就能做的物品在用它的区块里就地生产，`carry` 让物品以打包形式在区块间运输（石矿以石砖运输），每个区块还会列出需要缓存的副产物。计划文件放在 `research/plans/`。`products.js` 负责读取 2.1 的产物概率，供它和其他配方工具使用。
 - `building-inputs.js <科技,...>`：某个阶段的建筑由哪些物品构成，按用到它的建筑配方数排序（找出超市要做的关键中间体）。
-- `inspect-save.ps1 -Save <存档名|latest|文件.zip> [-Ticks 3700]` + `summarize-save.js` + `render-save-map.js`：先检查存档是否以游玩时完全相同的模组和启动设置载入（不一致就停止，除非加 `-AllowModChanges`），然后只读地读取存档（研究、背包、带朝向和过滤设置的建筑、产量、附近矿物），并画出基地地图；还会找出各个矿区，把每个矿区导出成蓝图字符串，加上 `-Ticks` 时再运行一分钟，实测真实开采速度和全基地每秒的产出与消耗。
+- `inspect-save.ps1 -Save <存档名|latest|文件.zip> [-Ticks 3700]` + `summarize-save.js` + `render-save-map.js`：先检查存档是否以游玩时完全相同的模组和启动设置载入（不一致就停止，除非加 `-AllowModChanges`），然后只读地读取存档（研究、背包、带朝向和过滤设置的建筑、每台机器的插件、速度和所在电网、产量、附近矿物），并画出基地地图；还会找出各个矿区，把每个矿区导出成蓝图字符串，加上 `-Ticks` 时再运行一分钟，实测真实开采速度和全基地每秒的产出与消耗。
 - `render-area.js x1 y1 x2 y2 out.png`：把存档里的一块区域画成放大图并输出字符网格，便于逐格读懂结构。
 - `trace-layout.js x1 y1 x2 y2`：一块区域的物流：每条带线运什么、谁往上放、谁从上取，流体网络（连通的管段及其流体），以及每台机器的进出。存档快照会记录传送带上的物品、流体和过滤模式。
 - `manual-links.js [x1 y1 x2 y2]`：存档里还靠手搬的环节：只进不出的箱子（要手取）、只出不进的箱子（要手补）、手放原料的机器、手加燃料的热能设备，以及两头都靠手的物品（总线该替代的环节）。存档快照会记录箱子和机器里的物品；`logistics.js` 是它和 `trace-layout.js` 共用的传送带与机械臂解读。
@@ -52,7 +53,7 @@
 - `shots.js` + `/pt-shots`（助手模组）：从作者真实的游戏里截图。`shots.js plan` 列出要截的区域，游戏里输入 `/pt-shots` 截图，`shots.js pull` 把图片取回 `images/`。（用 `--benchmark-graphics` 载入真实存档会让游戏崩溃，所以改为在运行中的游戏里截。）
 - `newgame-observer/` + `summarize-newgame.js`：观察新开一局有什么（包括出生点周围的资源、树木、岩石和地面，可用来比较地图设置）；用从存档读出的 `--map-gen-settings` 建图，可以复现同一个世界。
 - `belt-lab/`、`ch1-probe/`、`drill-probe/`、`inserter-probe/`、`train-probe/`、`station-probe/`：各章节和研究笔记背后的引擎实测。`run-probe.ps1 <探针>` 运行其中一个（复制进固定环境、建图、运行、输出结果，再删掉；加 `-Work C:\tmp\cf-save` 则用当前的模组运行）。`inserter-rate-probe/`：工业机械臂的速度，精确到小数点后三位，每次放下都计时（`-Ticks 36700 -Work C:\tmp\cf-save`）。`valve-probe/`：一段管道能跨多远（320 格），以及管道泵和止回阀各起什么作用（`-Ticks 2500 -Work C:\tmp\cf-save`）。
-- `save-probe.ps1 -Save <存档> -Probe <探针> [-Variant <版本>]`：在作者存档的副本里运行一个测量模组（读档环境，存档本身只复制），例如 `steel-probe/`：第二、三章炼钢区的实测（清空钢材箱和锅炉灰烬，按版本设置土壤挖掘机的电路条件，`ltN` 表示石灰石 < N，加 `,coke` 给铸造厂补焦炭；逐台记录铸造厂的产量、状态和缺料）；以及 `rate-probe/`：按存档原样测一段比检查器的一分钟更长的时间（版本写作 `预热秒数,测量秒数`，例如 `-Ticks 39700 -Variant 60,600`）：全基地每秒的产出和消耗，以及每秒采样一次的每台机器和采矿机的状态。
+- `save-probe.ps1 -Save <存档> -Probe <探针> [-Variant <版本>]`：在作者存档的副本里运行一个测量模组（读档环境，存档本身只复制），例如 `steel-probe/`：第二、三章炼钢区的实测（清空钢材箱和锅炉灰烬，按版本设置土壤挖掘机的电路条件，`ltN` 表示石灰石 < N，加 `,coke` 给铸造厂补焦炭；逐台记录铸造厂的产量、状态和缺料）；以及 `rate-probe/`：按存档原样测一段比检查器的一分钟更长的时间（版本写作 `预热秒数,测量秒数`，例如 `-Ticks 39700 -Variant 60,600`）：全基地每秒的产出和消耗，以及每秒采样一次的每台机器和采矿机的状态。版本写成 `预热,测量,分段,名称` 时还会输出时间线：每隔一个分段，列出每种指定物品或流体的产量和消耗、按位置指定的机器（`@x:y`）的状态和流体箱内容，以及常态发生变化的每组机器；最后一项写 `+实体@x:y` 时，读档时在那里放下这个实体（假设测试，也是探针对基地唯一的改动）。
 - `bp-bench.ps1 -Bench <名称> [-Variant <方案>]` + `bp-bench/`：蓝图测试台。把 `blueprints/` 里的一张蓝图放到空地图上（用游戏自己的蓝图建造，补齐插件请求），用电力接口给每个电网供电，用脚本保持输入带满载、清空输出带（以及作为流体出口的指定管道，全部清空或按设定速度取走），让研究中心一直研究，并报告每台机器完成的次数与它实际速度下配方允许的次数之比、状态采样、等待中的机器缺哪种原料，以及指定观察的实体。每个测试在 `bp-bench/benches/` 里有一个 JSON 文件（蓝图、输入、输出、流体出口、启动时预放的物品、科技、预热和测量时间、方案）。在读档环境里运行。
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。
 - 本地化名称：在配置里设 `locale=zh-CN`（或 `en`），运行 `factorio --dump-prototype-locale`，会在脚本输出目录生成 `*-locale.json`。

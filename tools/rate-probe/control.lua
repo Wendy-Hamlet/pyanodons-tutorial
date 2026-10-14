@@ -3,11 +3,20 @@
 -- After a warm-up it takes the force's production statistics, then samples the status of every
 -- crafting machine and drill once a second, grouped by name and recipe (drills: by mined
 -- resource), and at the end prints what the whole base made and used per second.
--- Variant: "WARM,MEASURE" in seconds (default "60,600").
+-- Variant: "WARM,MEASURE" in seconds (default "60,600"), optionally ",STEP,name;name;..." for a
+-- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
+-- used per second in that step, and every machine group whose most frequent status changed; a
+-- name "@x:y" instead is the machine on that tile: its status and the fluid in each of its boxes.
+-- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
+-- pole that was taken out), the only change the probe then makes to the base.
 
 local variant = require("variant")
-local WARM, MEASURE = variant:match("^(%d+),(%d+)$")
-WARM, MEASURE = tonumber(WARM) or 60, tonumber(MEASURE) or 600
+local PLACE
+variant, PLACE = variant:match("^([^+]*),?%+?(.*)$")
+local WARM, MEASURE, STEP, WATCH = variant:match("^(%d+),(%d+),?(%d*),?(.*)$")
+WARM, MEASURE, STEP = tonumber(WARM) or 60, tonumber(MEASURE) or 600, tonumber(STEP)
+local watch = {}
+for name in (WATCH or ""):gmatch("[^;,]+") do watch[#watch + 1] = name end
 
 local function out(fmt, ...) log("CF-RATE " .. string.format(fmt, ...)) end
 local STATUS = {}
@@ -40,9 +49,58 @@ local function group_key(e)
 end
 
 script.on_init(function()
+  for name, x, y in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+)") do
+    local e = game.surfaces.nauvis.create_entity({ name = name, position = { tonumber(x), tonumber(y) }, force = "player" })
+    out("placed %s at %s,%s: %s", name, x, y, e and "ok" or "FAILED")
+  end
   storage.start = game.tick
   out("loaded at tick %d; warm %d s, measure %d s", game.tick, WARM, MEASURE)
 end)
+
+-- Prints one step of the timeline (t: seconds measured): the watched rates, and the groups whose
+-- usual status changed.
+local function step(now, t)
+  local parts = {}
+  for _, name in ipairs(watch) do
+    local x, y = name:match("^@([%-%.%d]+):([%-%.%d]+)$")
+    if x then
+      local e = game.surfaces.nauvis.find_entities_filtered({ position = { tonumber(x), tonumber(y) }, type = { "assembling-machine", "furnace" } })[1]
+      if e then
+        local boxes = {}
+        for i = 1, e.fluids_count do
+          local f = e.get_fluid(i)
+          boxes[#boxes + 1] = f and string.format("%s %.0f", f.name, f.amount) or "-"
+        end
+        out("step %d s: %s at %s,%s: %s; fluid boxes: %s", t, e.name, x, y, STATUS[e.status] or "?", table.concat(boxes, " | "))
+      end
+    end
+  end
+  for _, name in ipairs(watch) do
+    if name:sub(1, 1) ~= "@" then
+      local p, c = 0, 0
+      for _, kind in ipairs({ "items", "fluids" }) do
+        p = p + (now[kind].produced[name] or 0) - (storage.step_before[kind].produced[name] or 0)
+        c = c + (now[kind].consumed[name] or 0) - (storage.step_before[kind].consumed[name] or 0)
+      end
+      parts[#parts + 1] = string.format("%s %.3f/%.3f", name, p / STEP, c / STEP)
+    end
+  end
+  out("step %d s: made/used per s: %s", t, table.concat(parts, ", "))
+  storage.usual = storage.usual or {}
+  for k, g in pairs(storage.step_samples) do
+    local best, n, total = nil, 0, 0
+    for s, c in pairs(g) do
+      total = total + c
+      if c > n then best, n = s, c end
+    end
+    if storage.usual[k] ~= best then
+      out("step %d s: %s now %s (%.0f%%; was %s)", t, k, best, 100 * n / total, storage.usual[k] or "-")
+      storage.usual[k] = best
+    end
+  end
+  storage.step_before = now
+  storage.step_samples = {}
+end
 
 script.on_nth_tick(60, function()
   local surface = game.surfaces.nauvis
@@ -50,7 +108,9 @@ script.on_nth_tick(60, function()
   if t < WARM * 60 then return end
   if not storage.before then
     storage.before = snapshot(surface)
+    storage.step_before = storage.before
     storage.samples = {}
+    storage.step_samples = {}
     storage.machines = surface.find_entities_filtered({ force = "player",
       type = { "assembling-machine", "furnace", "mining-drill" } })
     return
@@ -63,8 +123,16 @@ script.on_nth_tick(60, function()
       storage.samples[k] = g
       local s = STATUS[e.status] or "?"
       g[s] = (g[s] or 0) + 1
+      if STEP then
+        local h = storage.step_samples[k] or {}
+        storage.step_samples[k] = h
+        h[s] = (h[s] or 0) + 1
+      end
     end
   end
+  -- Seconds measured so far (the load tick need not fall on a whole second).
+  storage.seconds = (storage.seconds or 0) + 1
+  if STEP and storage.seconds % STEP == 0 then step(snapshot(surface), storage.seconds) end
   if t < (WARM + MEASURE) * 60 then return end
   storage.done = true
   local now = snapshot(surface)
