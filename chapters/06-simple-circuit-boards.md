@@ -482,4 +482,4 @@ in 10-minute steps; per second, each step's average; the ponds at the end of eac
   and `carbon-capture-module-mk01` in the data; the open technologies and their science packs
   from the data and the save's research list.
 
-Next: chapter 7 (to come).
+Next: [chapter 7](07-copper-screening-titanium-duralumin.md).

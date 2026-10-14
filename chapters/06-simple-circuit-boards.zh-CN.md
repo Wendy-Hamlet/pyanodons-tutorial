@@ -263,4 +263,4 @@
 - 截图：作者在 16:08 用伴生模组拍摄（`/pt-shots`）。
 - 阀门：数据中的 `py-overflow-valve` 和 `py-underflow-valve`（模式、80% 阈值、配方）；碳捕集插件和隐藏插件塔：pyalienlife 的 `scripts/turd/turd.lua` 和数据中的 `carbon-capture-module-mk01`；尚未研究的科技及其所需科技包：数据和存档的研究列表。
 
-下一章：第七章（待续）。
+下一章：[第七章](07-copper-screening-titanium-duralumin.zh-CN.md)。

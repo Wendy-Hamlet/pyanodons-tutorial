@@ -119,7 +119,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | A Pump or a Check valve ends a segment: 625 tiles with one at tile 310 deliver 3,880 (Pump) and 4,781 (Check valve) Steam/s; with a Pump at tile 205 the 420 tiles behind it deliver 0. | `tools/valve-probe` |
 | Pump: 1 × 2, 29 kW, 200 per tick, pushes until the far side is full or the near side empty (20 % → 80 %: the near side emptied into the far one). Check valve (Fluid handling): 1 × 1, no power, one-way, 200 per tick, lets fluid run only from the fuller side to the emptier one and stops when they are level (20 % → 80 %: nothing; 80 % → 20 %: levelled at 50 %). A supply line drained at its far end works with either. | Data; `tools/valve-probe` |
 | A Pipe holds 100 and a Pipe to ground 100, so an underground pair (11 tiles) holds 200: a 100-tile line of them only 1,900. | Data; `tools/valve-probe` |
-| Overflow valve: lets a fluid through only while its input side is over 80 % full; Underflow valve: only while its output side is under 80 %. Both Fluid handling, each made with one Simple circuit board. The author's uses: the aluminium drills get Coal gas first and the rest passes an Overflow valve to a Gasifier (Syngas into an Exhaust pipe); Treated wood gets Creosote first and the rest passes an Overflow valve into a Sinkhole; the steam block's Steam enters the long steam pipe through an Underflow valve. | Data; the author's save of 16:40 ([chapter 6](../chapters/06-simple-circuit-boards.md)) |
+| Overflow valve: lets a fluid through only while its input side is over 80 % full; Underflow valve: only while its output side is under 80 %. Both Fluid handling, each made with one Simple circuit board. The author's uses: the aluminium drills get Coal gas first and the rest passes an Overflow valve to a Gasifier (Syngas into an Exhaust pipe); Treated wood gets Creosote first and the rest passes an Overflow valve into a Sinkhole; the steam block's Steam enters the long steam pipe through an Underflow valve; the lead drills get Acetylene first and the rest passes an Overflow valve to the titanium drills (chapter 7). | Data; the author's saves of 16:40 ([chapter 6](../chapters/06-simple-circuit-boards.md)) and 17:48 ([chapter 7](../chapters/07-copper-screening-titanium-duralumin.md)) |
 
 ## Distillation byproducts
 
@@ -164,13 +164,22 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | Lead ore is mined with Acetylene (10 per ore). Lead plate (Solder - Stage 1): 6 ore → 1 plate in 10 s, 0.6 ore/s a Stone furnace. A Simple circuit board takes 2.67 Lead plates (Solder: 2 Tin + 4 Lead → 1); Lead also makes tanks (the PyTank (40 kL) 30, without Duralumin). The author's six drills: 3.02 ore and 0.50 plates a second. | Data; `tools/rate-probe` (chapter 5) |
 | Acetylene (Acetylene technology): Limestone (Soil extractor, 0.4/s) → Lime (High pressure furnace, 15 Coke + 10 Limestone → 10 Lime + 100 Carbon dioxide, 5 s) → Calcium carbide (7 Coke + 2 Lime → 10, 4 s) → Acetylene (Gasifier, 300 Water + 10 carbide → 100 Acetylene + 25 Slaked lime, 8 s); an Evaporator dries the Slaked lime back (60 → 1 Lime + 1 Gravel, 2 s). Per Lead ore 0.94 Coke and 0.16 Limestone. Balanced: 2 extractors, 1 Lime furnace, 2 carbide furnaces, 4 Gasifiers for 50 Acetylene/s. | Data; bench `acetylene`: 49.5/s once every inserter reaches the belt (chapter 5); the author's corrected block 49.75/s (chapter 6) |
 
+## Copper screening and titanium
+
+| Fact | Source |
+|---|---|
+| Copper processing - Stage 1 (red science): Automated screener MK 01 (7 × 7, 300 kW) 5 Copper ore → 2 Copper (grade 2) + 1 Copper (grade 1), 3 s; Jaw crusher MK 01 (1 MW) 2 grade 1 → 1 grade 2 + 2 Stone, 3 s; a furnace 5 grade 2 → 2 Copper plates, 2 s. So 5 ore and a Stone per plate, against 8 ore in 10 s with the plain recipe. One belt of ore (15 a second): nine screeners, five crushers, three furnaces for the plates and five for Stone bricks; 3 plates and 1.5 bricks a second, 7.7 MW. The author's block: 3.01 plates a second measured. | Data; `tools/rate-probe`, the save of 17:48 ([chapter 7](../chapters/07-copper-screening-titanium-duralumin.md)) |
+| A resource's `fluid_amount` is per 10 ore: Titanium ore takes 4 Acetylene an ore (40), Lead ore 10 (100). Measured: 2.75 Titanium ore and 1.25 Lead ore a second used 23.0 Acetylene (23.5 from the data). | Data; `tools/rate-probe` (chapter 7) |
+| Titanium plate (Alloy smelting - Stage 1): 40 Titanium ore → 4 plates in 60 s in a furnace, 0.667 ore a second a Stone furnace. A Fluid mining drill MK 01 mines 0.25 Titanium ore a second (speed 0.5, mining time 2). The author's eleven drills: 2.75 ore and 0.275 plates a second, the work of four furnaces. | Data; `tools/rate-probe` (chapter 7) |
+| Duralumin (Alloy smelting - Stage 1): 4 Aluminium plates + 2 Copper plates → 1 in 4 s, only in a Smelter MK 01 (10 MW of fluid fuel), whose recipe takes 15 Titanium plates, 40 Steel plates, 50 Ceramic and 5 Simple circuit boards among others. On the way to pY science pack 1, Titanium plates also go into the Slaughterhouse MK 01 (40) and the Reproductive complex MK 01 (100), for the Formic acid of the Glassware's Rubber stoppers. | Data; the author's Factory Planner plan (chapter 7) |
+
 ## Circuit boards
 
 | Fact | Source |
 |---|---|
 | Simple circuit board (Electronics - Stage 1, Chipshooter machine): 1 Printed circuit substrate (tier 1) + 3 Vacuum tubes + 3 Air-core inductors + 5 Ceramic capacitors + 6 High-power resistors + 2 Solder + 1 CuZn Battery → 3, 4 s. The substrate needs Formica, Formica Formaldehyde, Formaldehyde Methane (60 → 50), and the only Methane at this stage is a Moondrop greenhouse's (100 Water + 100 Carbon dioxide + 1 seed → 40, 15 s): one greenhouse at speed 1.5 is 4 Methane, 0.033 substrates, 0.1 boards a second. | Data; the author's block, Methane greenhouse busy 100 % for an hour ([chapter 6](../chapters/06-simple-circuit-boards.md)) |
 | 0.1 Simple circuit boards a second take from outside: Copper plates 1.13, Iron plates 0.25, Tin plates 0.31, Lead plates 0.27, Zinc plates 0.33, Coke 0.40, Stone bricks 0.83 (Saline water), Logs 0.29, Molten glass 1.67 (Glass 0.17), Creosote 6.7 (Treated wood), Steam 6.4 (Clay). Their Zinc is 13.3 Aromatics: 31 Tar a second through the author's Tar line, more than one Tar refining unit takes (20). | Data (chapter 6) |
-| The author's chain after the tidy-up of 16:40 (chapter 6): its pace is the Tar, and the Tar is what the coke block makes for the Coal gas it can hand on (aluminium drills first, then one Gasifier at 16.7 a second, its Syngas into an Exhaust pipe). Measured: 27 Coal gas, 26.7 Tar, 12 Aromatics, 0.30 Zinc plates and 0.1 boards a second while the drills mine; 16.7, 20.4, 8.75, 0.22 and 0.07 once their ore is gone (about 2.5 hours after the save). Nothing stops in either. | `tools/rate-probe`, two hours and a half hour from 2.5 hours after the save of 16:40 (chapter 6) |
+| The author's chain after the tidy-up of 16:40 (chapter 6): its pace is the Tar, and the Tar is what the coke block makes for the Coal gas it can hand on (aluminium drills first, then one Gasifier at 16.7 a second, its Syngas into an Exhaust pipe). Measured: 27 Coal gas, 26.7 Tar, 12 Aromatics, 0.30 Zinc plates and 0.1 boards a second while the drills mine; 16.7, 20.4, 8.75, 0.22 and 0.07 once their ore is gone (about 2.5 hours after the save). Nothing stops in either. With a second Gasifier (17:18) the block hands on 23.4 Coal gas a second without the aluminium drills: 28.5 Tar, 12.3 Aromatics, 0.31 Zinc plates, 0.1 boards. | `tools/rate-probe`, two hours and a half hour from 2.5 hours after the save of 16:40 (chapter 6); half an hour from two hours after the save of 17:48 (chapter 7) |
 | A stock buys time, not rate: 724 Zinc plates on the bus ran the author's block at 0.120 boards a second for 35 minutes, while the zinc column made 0.15 plates a second against 0.40 used; at 40 minutes the boards fell to 0.01–0.04. | `tools/rate-probe`, an hour after the save of 16:08 (chapter 6) |
 
 ## Research
@@ -244,7 +253,9 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 18. **Cut long pipelines into segments under 320 tiles.** A Pump or a Check valve at least every
    320 tiles (the span on the map); the author's long Steam, Tar, Aromatics and Acetylene lines
    keep every segment within 320 tiles. A Check valve does it without power wherever the line runs
-   from a full source to a consumer.
+   from a full source to a consumer. The Acetylene line to the titanium drills (chapter 7): about
+   890 tiles past an Overflow valve, cut by two Check valves into segments spanning 254, 311 and 88
+   tiles.
 19. **Wood for burner buildings that should make no Ash.** The author's third mall burns Wood made
    on the spot from Logs: no Ash to take away, and a Log made into Wood gives five times the heat.
 20. **One line's byproduct is the next line's input.** The author's Tar line turns its Pitch and
@@ -268,7 +279,12 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
    board line was complete at 16:08 (chapter 6); an hour of it measured: 40 minutes on the Zinc
    stock, then the boards and, through its Creosote, the Tar line stopped together. After the
    author's tidy-up (16:40: every byproduct a way out, Naphthalene oil and Gasoline stored for
-   later technologies) nothing stopped in three hours measured.
+   later technologies) nothing stopped in three hours measured. Chapter 7: while the copper was
+   rebuilt (old mine out at 16:45, the screened copper from 17:25) the bus ran out of Copper plates
+   and the boards lost about a quarter of an hour, so build the new supply of a main product's
+   ingredient before taking the old one away. The screened copper's surplus (3 plates a second,
+   1.1 used) filled the bus and chests within two hours, after which the block makes what is
+   used: the expected jam on a surplus.
 
 ## Trains
 
