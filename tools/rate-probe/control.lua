@@ -6,7 +6,8 @@
 -- Variant: "WARM,MEASURE" in seconds (default "60,600"), optionally ",STEP,name;name;..." for a
 -- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
 -- used per second in that step, and every machine group whose most frequent status changed; a
--- name "@x:y" instead is the machine on that tile: its status and the fluid in each of its boxes.
+-- name "@x:y" instead is the entity with fluid boxes on that tile (a machine, a tank, a pond):
+-- its status and the fluid in each of its boxes.
 -- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
 -- pole that was taken out), the only change the probe then makes to the base.
 
@@ -64,14 +65,19 @@ local function step(now, t)
   for _, name in ipairs(watch) do
     local x, y = name:match("^@([%-%.%d]+):([%-%.%d]+)$")
     if x then
-      local e = game.surfaces.nauvis.find_entities_filtered({ position = { tonumber(x), tonumber(y) }, type = { "assembling-machine", "furnace" } })[1]
+      local e
+      for _, c in pairs(game.surfaces.nauvis.find_entities_filtered({ position = { tonumber(x), tonumber(y) } })) do
+        local ok, n = pcall(function() return c.fluids_count end)
+        if ok and n > 0 and c.type ~= "pipe" and c.type ~= "pipe-to-ground" then e = c end
+      end
       if e then
         local boxes = {}
         for i = 1, e.fluids_count do
           local f = e.get_fluid(i)
           boxes[#boxes + 1] = f and string.format("%s %.0f", f.name, f.amount) or "-"
         end
-        out("step %d s: %s at %s,%s: %s; fluid boxes: %s", t, e.name, x, y, STATUS[e.status] or "?", table.concat(boxes, " | "))
+        local ok, status = pcall(function() return e.status end)
+        out("step %d s: %s at %s,%s: %s; fluid boxes: %s", t, e.name, x, y, ok and STATUS[status] or "-", table.concat(boxes, " | "))
       end
     end
   end

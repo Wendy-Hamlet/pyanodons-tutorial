@@ -3,7 +3,7 @@
 [中文版](06-simple-circuit-boards.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 5](05-tin-zinc-smelting.md)
 
-This chapter follows the same recorded run from 13:28 to 16:08. The plan was the Printed circuit
+This chapter follows the same recorded run from 13:28 to 16:40. The plan was the Printed circuit
 substrate (tier 1); the author went on and built the whole Simple circuit board: one block north of
 the base (blueprint `simple-circuit-board`, labelled 0.1 boards a second) that makes the substrate,
 Vacuum tubes, the three small parts (Ceramic capacitors, High-power resistors, Air-core inductors),
@@ -13,22 +13,28 @@ greenhouse. Around the block the author laid a bus of seven belts from the smelt
 630 tiles long, moved the quartz field's Glassworks next to the bus and piped its Molten glass about
 690 tiles north, and turned the Tar line's Naphthalene and Carbolic oil into Creosote for the Treated
 wood. The first boards came a few minutes before the save of 16:08. The author expected the line
-not to hold its output for long, without knowing what would give out first; this chapter measures
-it. Times are game time. Numbers come from the game's data, from the recorder's 10-minute
+not to hold its output for long, without knowing what would give out first; measured, it held 40
+minutes. The author then tidied the Tar line in half an hour, and from the save of 16:40 the whole
+chain runs on, with only Naphthalene oil and Gasoline gathering in their ponds, kept for later
+technologies. Times are game time. Numbers come from the game's data, from the recorder's 10-minute
 production windows, from the save of 16:08 (`tools/inspect-save.ps1`, which now also records each
-machine's modules, speed and electric network), from an hour of the base after the save in
-5-minute steps (`tools/rate-probe`, which can now print such a timeline), the same hour with the
-coke block's pole put back, and from the blueprint bench for the author's corrected acetylene block.
+machine's modules, speed and electric network) and the save of 16:40, from an hour after the first
+save in 5-minute steps (`tools/rate-probe`, which can now print such a timeline), the same hour
+with the coke block's pole put back, two hours after the second save, and from the blueprint bench
+for the author's corrected acetylene block.
 
-The result in one sentence: the block is held at 0.1 boards a second by one greenhouse's Methane
-and runs there for about 40 minutes after the save; then the Zinc plates on the bus are used up,
-and once the boards stop, the Tar line stops too, because its Creosote has no other user.
+The result: the block is held at 0.1 boards a second by one greenhouse's Methane. At 16:08 the
+base kept it there for about 40 minutes; then the Zinc plates on the bus were used up, and once the
+boards stopped, the Tar line stopped too, because its Creosote had no other user. After the
+author's tidy-up every byproduct of the Tar line has a way out and nothing stops in three hours
+measured; the boards run at 0.1 a second while the aluminium drills still take Coal gas, and at
+0.07 once their ore is gone, about two and a half hours after the save (section 8).
 
 ## The run at a glance
 
 | Game time | What happened |
 |---|---|
-| 13:25–13:36 | Research: Cellulose - Stage 1 (13:25), Kerogen processing (13:30), Shale oil development (13:36). The last research of the chapter: the labs stand from 13:36 to the save, with the red science line full |
+| 13:25–13:36 | Research: Cellulose - Stage 1 (13:25), Kerogen processing (13:30), Shale oil development (13:36). The last research of the chapter: from 13:36 every open technology needs pY science pack 1 too, and the labs stand |
 | 13:30–13:55 | A new site north of the base (x −65 to −30, y −230 to −195): 14 Sap extractors, three Wood processing units, a Botanical nursery, a Tar processing unit for Treated wood; 28 Planter boxes handcrafted |
 | 13:40–13:55 | Seaweed crop facilities placed and taken away again, and four Moondrop greenhouses handcrafted. Chat note at 13:45: "月落草需要一点海藻启动，后续py1再做海藻完整产线" — Moondrop needs a little Seaweed to start; the full seaweed line comes later, with pY science pack 1 (section 2) |
 | about 13:50 | The lead furnaces are full: the lead drills, the acetylene block and the Tar line stop (Aromatics 4.5/s in the window ending 13:50, 0 from 14:10), as chapter 5 measured for about 20 minutes after its save |
@@ -40,7 +46,12 @@ and once the boards stop, the Tar line stops too, because its Creosote has no ot
 | 15:00–15:40 | The electronics part of the block: four Electronics factories MK 01 (Vacuum tubes, High-power resistors, Air-core inductors, Ceramic capacitors); Burner assembling machines for Copper cable, Solder and the CuZn Battery; a Clay pit and High pressure furnaces for Ceramic, Graphite and Cellulose, with two Soil extractors for Limestone; two Jaw crushers and four Washers for Saline water; a Glassworks for Glass |
 | 15:45–16:05 | The bus finished: about 1,700 more tiles of belt; the second Tailings pond taken away; more pipe; the Chipshooter machine MK 01 at (−15, −232) (15:50–15:55) |
 | 16:05 | A Tar processing unit for Creosote from Naphthalene oil at (−136, −198) |
-| 16:08 | The save: 30 Simple circuit boards in the block's chest |
+| 16:08 | The save: 30 Simple circuit boards in the block's chest. The screenshots of this chapter are taken (`/pt-shots`) |
+| 16:10–16:35 | More Tar refining: a second Tar refining unit (16:10–16:15), a second Pitch column (16:15–16:20), a third Anthracene oil column (16:30–16:35) |
+| 16:10–16:30 | Ten Boilers burning the Tar line's surplus Coke for its Steam, placed at y −75, then at y −253, then at y −257; 107 Basic splitters and three valves handcrafted from the first boards |
+| 16:20–16:40 | An Underflow valve on the steam block's pipe (16:20–16:25); an Overflow valve and a Sinkhole for Creosote (16:25–16:30); an Overflow valve for Coal gas and an Exhaust pipe for the Syngas (16:35–16:40) |
+| 16:35–16:40 | The coke block's pole put back; the Tar pond and the Naphthalene oil unit taken away |
+| 16:40 | The second save (section 7) |
 
 Production per second (10-minute windows from the recorder):
 
@@ -55,6 +66,10 @@ Production per second (10-minute windows from the recorder):
 | 15:10 | 0 | 0 | 2.00 | 0.11 | 0 | 0.73 | 0.42 | 0 | 0.27 | 3.66 |
 | 15:20 to 15:50 | 0 | 0 to 0.58 | 2.00 | 0 to 0.01 | 0 | 0.73 | 0 to 1.25 | 0 | 0 to 0.76 | 0 to 1.14 |
 | 16:00 | 1.07 | 0.83 | 2.00 | 0.09 | 0.68 | 0.67 | 5.33 | 27.3 | 3.16 | 4.79 |
+| 16:10 | 4.00 | 3.33 | 2.00 | 0.15 | 0.51 | 0.34 | 6.17 | 29.8 | 3.68 | 10.3 |
+| 16:20 | 4.00 | 3.33 | 2.00 | 0.15 | 0.51 | 0.37 | 7.25 | 30.0 | 4.33 | 22.2 |
+| 16:30 | 4.00 | 3.33 | 2.00 | 0.19 | 0.51 | 0.40 | 7.25 | 30.5 | 4.23 | 12.3 |
+| 16:40 | 4.00 | 3.33 | 2.00 | 0.23 | 0.50 | 0.38 | 10.5 | 29.5 | 7.06 | 10.4 |
 
 Read with the timeline:
 
@@ -69,7 +84,11 @@ Read with the timeline:
 - **Tin plates at 0.73 a second from 14:50:** the tin column's chests were full (chapter 5); with
   the bus, its plates go north, and 3,061 Tin plates lie on the bus at the save.
 - The recorder lists no Simple circuit board in the window ending 16:00: the boards came in the
-  last eight minutes before the save (30 in the chest).
+  last eight minutes before the save (30 in the chest). From 16:20 the windows show 0.12 boards a
+  second, the Methane greenhouse at its full 4 a second.
+- **The tidy-up shows from 16:30:** Aromatics 7.25 → 10.5 and Coke 4.2 → 7.1 a second in the window
+  ending 16:40, with the second refining unit and the coke block's Tar (23.6 Tar a second made in
+  that window).
 
 ## 1. The technologies of this stage
 
@@ -91,7 +110,8 @@ Every recipe of the board was researched in chapter 5; this chapter needed no ne
 The three researched at the start of the chapter are not used yet: Cellulose - Stage 1 (Cellulose
 from Wood and Sodium hydroxide), Kerogen processing (the Retorter; its Kerogen is mined with a
 technology not researched) and Shale oil development (Condensates from Shale oil, the Olefin plant,
-the Reformer). After 13:36 the six labs stand: no technology was being researched at the save.
+the Reformer). After 13:36 the six labs stand: every technology still open needs pY science pack 1
+as well as red (18 of them, data), and the author makes no pY science pack 1 yet.
 
 ## 2. Moondrop, for the substrate's Methane
 
@@ -104,9 +124,12 @@ The substrate is where Moondrop comes in (data):
   With the author's technologies it is the only Methane recipe: the others need technologies not
   researched yet, or the upgrade's other choice, Moon.
 
-**Getting the first Moondrop.** A greenhouse has a base effect of −100 % speed and takes only
-Moondrop as modules, +100 % each: empty it does nothing, with all 16 it runs at speed 1 (data);
-the author's Carbon capture adds half again, and the inspector reads speed 1.5 in the save. The
+**Getting the first Moondrop.** A greenhouse (speed 0.0625) has a base effect of −100 % speed and
+takes only Moondrop as modules, +100 % each: without the upgrade it does nothing empty and runs at
+speed 1 with all 16 (data). The author's Carbon capture puts a hidden beacon with a +800 % speed
+module (and +200 % energy) on every greenhouse (pyalienlife's T.U.R.D. script and data), so an
+empty greenhouse already runs at speed 0.5 and a full one at 1.5, which the inspector reads in the
+save. The
 first Moondrop come from a Botanical nursery, by the recipe that makes Moondrop from a codex:
 1 Moondrop codex + 2 Petri dishes + 1 Planter box + 1,000 Water → 4 Moondrop, 200 s. A codex is
 handcrafted from 2 Glass, 50 Air-core inductors and 20 Tinned cables; a Petri dish is an Empty petri dish (the Glassworks at the quartz
@@ -135,7 +158,11 @@ Carbon dioxide: the swap the author noted at 10:14, "之前产二氧化碳的高
 grown for its modules). Chapter 5 put one greenhouse at 40 Carbon dioxide a second; with the
 upgrade it is 60.
 
+![The log block's west end at 16:08: the Moondrop greenhouse on Carbon dioxide where the High pressure furnace stood, beside the Moss farms](../images/ch6-co2.jpg)
+
 ## 3. The block
+
+![The board block at 16:08, north up: Clay pit, furnaces, Electronics factories and Washers along the top, the 14 Sap extractors in two rows, the Chipshooter machine and the PCB factory on the right, the greenhouses and the nursery at the bottom](../images/ch6-boards.jpg)
 
 Blueprint `simple-circuit-board` ("0.1[item=electronic-circuit]", 578 entities, x −60 to −2,
 y −264 to −202 in the save). The Simple circuit board (Chipshooter machine): 1 substrate + 3 Vacuum
@@ -189,6 +216,8 @@ its own Glassworks (10 MW at 10 %; Gasoline 1.2 MJ). Water comes from its three 
 
 ## 4. The bus and the pipes
 
+![Where the bus turns east into the block (16:08)](../images/ch6-bus.jpg)
+
 The block's inputs arrive from the west (from the save):
 
 - **The bus**: seven belts side by side at x −82 to −73, running north to the block. Lead (x −82)
@@ -211,9 +240,16 @@ The block's inputs arrive from the west (from the save):
   (−103.5, −74.5).
 - **Creosote**: one pipe segment (57 pipes, x −136 to −58) joins the Tar refining unit's Creosote
   output, the two new Creosote units at (−137, −187) (Carbolic oil) and (−137, −199) (Naphthalene
-  oil, from its Tailings pond, 41,499 at the save) and the block's Treated wood unit, the only user.
+  oil, from its Tailings pond, 41,499 at the save) and the block's Treated wood unit, the only user
+  (at 16:08; section 7 for the change).
 
-## 5. An hour of the base after the save
+![The zinc column at y 199 at 16:08: Zinc ore from the east, plates west onto the bus](../images/ch6-zinc.jpg)
+
+![The melting Glassworks at (−57, 348) at 16:08, the Quartz belt from the east, the bus belts to the west](../images/ch6-glass.jpg)
+
+![The Tar line's north end at 16:08: the Creosote units for Naphthalene oil (top) and Carbolic oil, and the Gasifier for Syngas below them; the Naphthalene unit came out again at 16:35–16:40](../images/ch6-creosote.jpg)
+
+## 5. An hour after the save of 16:08
 
 The author expected the line not to hold 0.1 boards a second for long. Measured in a copy of the
 save of 16:08 (`tools/rate-probe`, one minute of warm-up, then an hour in 5-minute steps; per
@@ -289,8 +325,9 @@ more Creosote):
   7.4 Creosote from the refining alone (6.7 used), more with the Naphthalene and Carbolic oil
   units. Every surplus needs a way out, or it stops the line as the Creosote did.
 - **Lead and Zinc are coupled**, as the author noted after chapter 5: both hang on the Tar line, the
-  Zinc on its Aromatics and the Lead on its Coke. Today the line runs at the pace of its slowest
-  way out, the Creosote, and that pace is set by the boards themselves.
+  Zinc on its Aromatics and the Lead on its Coke. At 16:08 the line ran at the pace of its slowest
+  way out, the Creosote, and that pace was set by the boards themselves. Section 7 shows how the
+  author gave each byproduct a way out, section 8 what the Tar line gives then.
 
 What the data offers, for the author to weigh (all available now): Creosote's only use is Treated
 wood, but a Tailings pond stores it and a Sinkhole takes it away (Void Creosote, 20,000 a craft);
@@ -298,38 +335,120 @@ and Tar processing has a Destructive distillation column recipe, named after its
 Carbon dioxide, that gives Aromatics straight from Tar: 350 Tar → 100 Aromatics + 500 Flue gas +
 100 Carbon dioxide + 1 Rich clay in 2.5 s, gases and one item for byproducts.
 
-## 7. Other changes
+## 7. The author's tidy-up, 16:10–16:40
+
+After the measurements of section 5 the author reworked the Tar line in half an hour (recorder;
+the save of 16:40):
+
+- **More Tar refining.** A second Tar refining unit at (−147.5, −85.5) (16:10–16:15), a second
+  Pitch column at (−146, −127) (16:15–16:20) and a third Anthracene oil column at (−157, −139)
+  (16:30–16:35): two refining units take up to 40 Tar a second (data: 100 in 5 s each).
+- **The coke block runs again.** The pole at (−55.5, −92.5) is back (16:35–16:40); the block's Tar
+  goes straight to the refining units, and the Tar pond at (−10, −72) is taken away (16:35–16:40),
+  with its Tar. The block's Coke joins the Coke belt to the board block at (−72, −83).
+- **Coke burnt for the Tar line's Steam.** The Coke belt now runs on past the board block, west
+  along y −255, to ten Boilers at y −257 (x −160 to −133; placed at y −75 first and moved twice,
+  16:10–16:30). Their Steam goes into the pipe that feeds both refining units, the tops unit, both
+  Pitch columns and the Clay pit. Coke the Lead and the block do not take is burnt there, so it can
+  no longer stop a column. The steam block's pipe got an Underflow valve at (−60.5, 110.5)
+  (16:20–16:25), which lets Steam through only while the far side is under 80 % full (data).
+- **A way out for Coal gas and Creosote**, through Overflow valves, which let a fluid through only
+  while the near side is over 80 % full (data):
+  - Coal gas: the aluminium drills take it first; past an Overflow valve at (−129.5, −168.5) the
+    rest goes to the Gasifier (Syngas from coal gas), whose Syngas now goes to an Exhaust pipe at
+    (−108.5, −176.5) (16:35–16:40) and whose Tar joins the refining units' Tar pipe.
+  - Creosote: once the Treated wood unit's pipe is full, past an Overflow valve at (−116.5, −91.5)
+    into a Sinkhole at (−116.5, −89.5) (16:25–16:30). Void Creosote takes 20,000 a craft (data), so
+    the Sinkhole fills and empties in batches.
+  - The Naphthalene oil unit came out again (16:35–16:40). Naphthalene oil and Gasoline go into
+    their two Tailings ponds: the author's choice, since both should have uses once more
+    technologies are unlocked.
+- **The first boards' first use.** An Overflow or Underflow valve takes one Simple circuit board
+  (data; Fluid handling), and so does a Basic splitter: the author handcrafted the three valves and
+  107 splitters (110 boards; three splitters placed by 16:40). By the save 261 boards were made,
+  146 of them in the chest.
+
+## 8. Two hours after the save of 16:40
+
+Measured in a copy of the save of 16:40 (`tools/rate-probe`, one minute of warm-up, then two hours
+in 10-minute steps; per second, each step's average; the ponds at the end of each step):
+
+| Minutes after 16:40 | Boards | Batteries | Zinc plates made / used | Aluminium ore | Coal gas | Tar | Aromatics | Coke | Creosote made / to Treated wood | Naphthalene oil pond | Gasoline pond |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0–10 | 0.110 | 0.040 | 0.32 / 0.40 | 1.56 | 32.0 | 30.0 | 12.4 | 8.41 | 11.3 / 6.5 | 49,831 | 18,252 |
+| 10–20 | 0.100 | 0.040 | 0.30 / 0.40 | 1.08 | 26.8 | 26.7 | 12.3 | 8.00 | 11.2 / 7.0 | 59,792 | 24,338 |
+| 20–40 | 0.100 | 0.040 | 0.31 / 0.40 | 1.04 | 26.6 | 26.7 | 12.3 | 8.01 | 11.2 / 6.5 | 79,615 | 36,533 |
+| 40–60 | 0.100 | 0.031 | 0.31 / 0.31 | 1.05 | 26.7 | 26.7 | 12.1 | 7.93 | 10.7 / 6.8 | 99,039 | 48,250 |
+| 60–80 | 0.100 | 0.031 | 0.31 / 0.31 | 1.05 | 26.7 | 26.7 | 12.0 | 7.89 | 10.5 / 6.8 | 118,165 | 59,732 |
+| 80–100 | 0.100 | 0.030 | 0.29 / 0.30 | 1.04 | 27.0 | 26.9 | 11.5 | 7.59 | 10.4 / 6.5 | 136,772 | 70,505 |
+| 100–110 | 0.100 | 0.028 | 0.30 / 0.28 | 0.69 | 23.7 | 24.8 | 10.8 | 7.04 | 9.7 / 7.0 | 145,458 | 75,218 |
+| 110–120 | **0.090** | 0.028 | 0.25 / 0.28 | 0.53 | 21.9 | 23.7 | 10.3 | 6.60 | 9.3 / 6.5 | 153,686 | 79,334 |
+| 150–180 (second run) | 0.070 | 0.023 | 0.22 / 0.23 | 0.04 | 16.7 | 20.4 | 8.75 | 5.64 | 8.0 / 4.6 | 198,192 | 99,930 |
+
+(Rows of 20 minutes are the mean of two steps.)
+
+- **Nothing stops.** Every byproduct of the Tar line leaves: the Coke is used as fast as it is made
+  (the Boilers burn what the Lead and the block leave), the Creosote goes 6.5 to 7 a second to
+  Treated wood and the rest into the Sinkhole, which voided its first 20,000 between minutes 50
+  and 60 (19,556 → 1,750 in its box), the Syngas (23.3 a second) into the Exhaust pipe, and the
+  Lead plates are made as they are used (0.27 a second from minute 50). The Methane greenhouse
+  worked all two hours.
+- **Naphthalene oil and Gasoline gather, as the author intends**: about 16 and 9.4 a second over
+  the two hours. A Tailings pond holds 1,000,000 (data): at these rates the Naphthalene oil pond is
+  full in about 15 more hours, the Gasoline pond in more than a day.
+- **The boards: 0.100 a second for 110 minutes, 0.090 in the last ten.** What sets them is Zinc
+  again, now steadily. The Tar line takes the coke block's Tar as it comes, 26 to 27 a second (its
+  two refining units together can take 40), and its 12 Aromatics a second make 0.30 Zinc plates,
+  0.030 Batteries, 0.09 boards. The 0.1 of the first 110 minutes also used the 328 Zinc plates and
+  995 Zinc ore stored at the save, and the Batteries made from them in the first 40 minutes.
+- **The Tar comes with the Coal gas, and one Coal gas user is running out.** The coke block makes
+  Tar only as fast as its Coal gas is taken: by the aluminium drills first, and past the Overflow
+  valve by the Gasifier, at most 16.7 a second (50 every 3 s, data). The three drills had 341,
+  3,124 and 4,354 Aluminium ore under them at 16:40 and mine 0.5 a second each: the first stopped
+  within ten minutes, the second at about 100. Coal gas fell from 27 to 22 a second, Tar from 27
+  to 24, Aromatics to 10.3, and the boards to 0.090.
+- **With the aluminium ore gone** (a second run: half an hour from 2.5 hours after the save) the
+  Gasifier is the only way out for the Coal gas, 16.7 a second. The coke block then makes about
+  10 Tar a second and the Gasifier 10 more (30 per 50 Coal gas, data): 20.4 in all, Aromatics 8.75,
+  Zinc plates 0.22, and the boards settle at 0.07 a second. Nothing else changes: every byproduct
+  still leaves, and the two ponds still fill (Naphthalene oil 11.8 and Gasoline 5.0 a second).
+- In short: the line now runs without stopping, as the author expected. Its rate follows the Tar,
+  and the Tar follows how much Coal gas the coke block can hand on: 27 a second to the drills and
+  one Gasifier at 16:40 (0.1 boards), 16.7 to the Gasifier alone once the drills' ore is gone
+  (0.07 boards).
+
+## 9. Other changes
 
 - **The acetylene block corrected.** The author moved the pole at the end of its Coke belt and laid
   the belt tile there, as chapter 5 suggested. Exported on 2026-10-14 and run on the bench again:
   49.75 Acetylene a second, all four Gasifiers at 100 % (43.2 before).
-- **The ponds.** The Creosote and Carbolic oil ponds were taken away (one at 14:45–14:50, one at
-  15:50–15:55);
-  the Naphthalene oil pond (41,499 at the save) now feeds Creosote, the Gasoline pond (4,534) the
-  Glassworks, and the Tar pond holds 26,381 Tar (73,764 at 13:28).
-- **The coke block is still without power**, and the Gasifier for Syngas is the author's start on a
-  second way out for its Coal gas (50 Coal gas + 100 Water → 70 Syngas + 30 Tar + 1 Ash, 3 s; its
-  Tar into the Tar pond's pipe); the Syngas has no user yet (section 5).
+- **The ponds.** The Creosote and Carbolic oil ponds were taken away at 14:45–14:50 and 15:50–15:55
+  (which first, the recorder does not say), the Tar pond at 16:35–16:40. Two are left: Naphthalene
+  oil (38,694 at 16:40) and Gasoline (10,781).
 
-## 8. Checklist
+## 10. Checklist
 
 - Start Moondrop with a little Seaweed: Agar → Petri dishes, plus a Moondrop codex and a
   Planter box, gives 4 Moondrop in a nursery; seeds and greenhouses multiply them. A greenhouse
-  needs 16 Moondrop as modules for speed 1.
+  needs 16 Moondrop as modules for speed 1 (with Carbon capture: 0.5 empty, 1.5 full).
 - Label a block by its scarcest machine: one Methane greenhouse is 0.1 boards a second.
 - A stock buys time, not rate: 724 Zinc plates gave 40 minutes of 0.12 boards, then the boards
   fell to the Zinc the Tar line makes.
 - A byproduct with one user runs its line at that user's pace; if that user needs the line, a
   stop does not clear by itself (Creosote → Treated wood → boards → Zinc → Tar line).
-- Once the main product's line is complete, run the whole base for an hour before calling it
-  done (`tools/rate-probe` with a timeline).
+- Give every byproduct a way out before the main product depends on the line, behind an Overflow
+  valve so the real users come first: a pond for what later technologies will use, a Sinkhole or
+  an Exhaust pipe for the rest, and Boilers for surplus Coke (their Steam back into the line).
+- Once the main product's line is complete, run the whole base for an hour or two before calling
+  it done (`tools/rate-probe` with a timeline), and look for outlets that will run out: here the
+  aluminium drills' ore, one of the two takers of the Coal gas that sets the Tar.
 
-## 9. How these facts were checked
+## 11. How these facts were checked
 
 - The run: the companion mod's recorder (run `2652821414-0`), read with `tools/recorder-phases.js`
   (timeline in 5-minute slices, chat notes, what was built and handcrafted where) and
   `tools/recorder-log.js` (production per 10-minute window).
-- The save of 16:08 (`Py-Exploration`, consistency check passed): `tools/inspect-save.ps1 -Ticks
+- The saves of 16:08 and 16:40 (`Py-Exploration`, consistency check passed): `tools/inspect-save.ps1 -Ticks
   3700`, which now records each crafting machine's modules, its speed and the electric network
   of every entity; `tools/summarize-save.js`; `tools/trace-layout.js` (the bus lines and where they
   are joined, the pipe segments and which machines share one: the Creosote segment);
@@ -342,7 +461,10 @@ Carbon dioxide, that gives Aromatics straight from Tar: 350 Tar → 100 Aromatic
   Run with the rates first, then again with the Tar refining unit, the Creosote units and the
   melting Glassworks read every step (the same numbers both times), and once with
   `+small-electric-pole@-55.5:-92.5` (the probe places that pole when the save loads: the only
-  change it makes).
+  change it makes). On the save of 16:40: `-Ticks 435700 -Variant 60,7200,600,<names>` (two hours,
+  the Tar refining units, the ponds, the Sinkhole, a coke Boiler and the melting Glassworks read
+  every step; `@x:y` now reads any entity with fluid boxes) and `-Ticks 648100 -Variant
+  9000,1800,600,<names>` (half an hour from 2.5 hours after the save).
 - **The acetylene block on the bench:** `tools/bp-bench.ps1 -Bench acetylene` on the exported
   blueprint. The board block was not run on the bench: its greenhouses' speed and their Carbon
   dioxide recipe come from the Moondrop upgrade chosen in the save, which an empty bench map does
@@ -353,6 +475,11 @@ Carbon dioxide, that gives Aromatics straight from Tar: 350 Tar → 100 Aromatic
   pyalienlife's `prototypes/upgrades/moondrop.lua` for Carbon capture.
 - The blueprints: exported by the author with the companion mod on 2026-10-14, 15:00, and pulled
   into `blueprints/`: the new board block (`simple-circuit-board.txt`, its description added) and
-  the corrected acetylene block.
+  the corrected acetylene block. The tidy-up of section 7 is not in a blueprint.
+- The screenshots: taken by the author at 16:08 with the companion mod (`/pt-shots`).
+- The valves: `py-overflow-valve` and `py-underflow-valve` in the data (mode, 80 % threshold,
+  recipe); the Carbon capture module and the hidden beacon: pyalienlife's `scripts/turd/turd.lua`
+  and `carbon-capture-module-mk01` in the data; the open technologies and their science packs
+  from the data and the save's research list.
 
 Next: chapter 7 (to come).

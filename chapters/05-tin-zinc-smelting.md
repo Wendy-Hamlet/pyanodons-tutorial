@@ -18,8 +18,8 @@ The author's view: Zinc is only used in circuit boards, so these products get th
 the circuit boards are made. The Tar itself is a store: the coke columns of chapter 2, which made
 it, came down at 11:03 when nothing took their Coke, and came back at 13:22 as a new block whose
 sixth column turns the Coke nobody takes into Coal gas and Tar. The author then cut its power, to
-use up the Tar in the pond first. Alongside: a second crushed iron block and more iron drills (Iron
-plates from 2 to 6 a second), a new mall that burns Wood, and a rebuilt copper mine. Times are game
+use up the Tar in the pond first. Alongside: a second crushed iron block and more iron drills (at
+most 6 Iron plates a second instead of 3, Iron oxide not counted), a new mall that burns Wood, and a rebuilt copper mine. Times are game
 time. Numbers come from the game's data, from the recorder's 10-minute production windows, from
 the saves of 13:05 and 13:28 (`tools/inspect-save.ps1`), from ten minutes of both measured
 (`tools/rate-probe`, new) and from the half hour after the last, from the blueprint bench for the
@@ -101,9 +101,10 @@ Read with the timeline:
   is the Coke user, and the Coal gas for aluminium comes with the Coke (Aluminium ore 3.5 a second
   in the window ending 10:00, 0.04 from 11:20). The Coke that comes back at the end is the Tar
   line's; the new coke block stands without power at 13:28.
-- **Iron plates triple** from 2.1 to 6.1 a second when the second crushed iron block and the new
-  drills come in (section 8), and fall back to 3 a second from 11:50: the base uses about 3 a
-  second, and once the belts and chests are full the blocks make only what is taken.
+- **Iron plates: twice the capacity.** One crushed iron block makes at most 3 a second, two make
+  6 (Iron oxide not counted; section 8). The windows show 2.1 before, which was what the base took,
+  6.1 while the new belts and chests filled, and 3 a second again from 11:50: the base uses about 3
+  a second, and once the belts and chests are full the blocks make only what is taken.
 
 ## 1. The technologies of this stage
 
@@ -505,7 +506,7 @@ pole makes **49.5 Acetylene/s** (99 %), the carbide furnaces at 100 % and the So
 their full 0.8 Limestone a second. The pole links the eastern machines to the power network, so
 it would need another tile. For the six drills the block has room either way: they take 30.
 The author made that change after this chapter; `acetylene.txt` now holds the corrected block,
-49.75 Acetylene/s on the bench ([chapter 6](06-simple-circuit-boards.md#7-other-changes)).
+49.75 Acetylene/s on the bench ([chapter 6](06-simple-circuit-boards.md#9-other-changes)).
 
 **In the base** the block makes what the six drills take. In ten minutes measured from 13:05,
 while their pipe was still filling, the Gasifiers made 42.7 Acetylene a second, as on the bench,
@@ -550,12 +551,13 @@ the Tar line: expected while the plates have no user (section 6). 979 Lead plate
 
 ## 8. Iron, copper, a mall that burns Wood, and the coke columns
 
-**Iron times three.** At 10:15–10:20 robots built a second copy of the chapter 2 crushed iron block
+**Twice the iron.** At 10:15–10:20 robots built a second copy of the chapter 2 crushed iron block
 ([`crushed-iron.txt`](../blueprints/crushed-iron.txt), "3 [Iron plate]": 6 Jaw crushers, 18 iron
 and 5 brick furnaces) just south of the first (crushers at y −15 and y 1), and at 10:40–10:50 the
 author added Burner mining drills on the iron field: 52 of them stand at y −18 to −6 at 13:28.
 The windows ending 10:40 and 11:10: Iron ore 11.5 → 30.1 a second, Crushed iron ore 6.9 → 18.0,
-**Iron plates 2.5 → 6.1**, what two blocks of 3 a second promise. The base uses about 3 a second,
+**Iron plates 2.5 → 6.1**: two blocks of 3 a second, twice what one can make (Iron oxide not
+counted; the 2.5 before was what the base took, not the first block's limit). The base uses about 3 a second,
 so once the belts and chests had filled the blocks made only that: in the ten minutes measured
 from 13:28 the twelve crushers stand "full output" half the time. The exported blueprint gained
 one Small electric pole; nothing else changed.
@@ -602,8 +604,8 @@ with Iron ore and Limestone in them.
 into the forestries' Carbon dioxide. The Carbon capture greenhouse recipe makes 200 Carbon dioxide
 every 5 s from nothing; with 16 Moondrop as modules a Moondrop greenhouse MK 01 runs at speed 1
 (data: speed 0.0625, base effect −100 %, +100 % a Moondrop), so one greenhouse gives about 40 a
-second against the 12.5 the block needs (60: the author's Carbon capture adds half the speed, 1.5
-read in the save of 16:08, [chapter 6](06-simple-circuit-boards.md#2-moondrop-for-the-substrates-methane)), and the Coke and the furnace's 2 MW are freed. The author
+second against the 12.5 the block needs (60: the author's Carbon capture adds a hidden +800 % speed
+module, speed 1.5 with 16 Moondrop and 0.5 even empty, [chapter 6](06-simple-circuit-boards.md#2-moondrop-for-the-substrates-methane)), and the Coke and the furnace's 2 MW are freed. The author
 noted it in the blueprint: "高压炉可原地替换为月落草温室" (the furnace can be replaced in place by a
 Moondrop greenhouse). One check from the blueprint: the greenhouse is 9 × 9, the furnace 7 × 7;
 centred on the furnace it would overlap the Moss farm east of it, one inserter and two pipes, so
