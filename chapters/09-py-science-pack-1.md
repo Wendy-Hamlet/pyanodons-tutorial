@@ -3,8 +3,8 @@
 [中文版](09-py-science-pack-1.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 8](08-vrauks.md)
 
-This chapter follows the same recorded run from the save of 21:35 to the save of 23:31. Its goal is
-the author's: **pY science pack 1 at 0.1 a second**, the Factory Planner factory "pY科技包1型" (6 a
+This chapter follows the same recorded run from the save of 21:35 to the save of 23:31, and the
+author's fixes up to the save of 23:40. Its goal is the author's: **pY science pack 1 at 0.1 a second**, the Factory Planner factory "pY科技包1型" (6 a
 minute). The Vrauk line of chapter 8 gives the Formic acid; around it the author built the latex
 chain (Seaweed, Sodium alginate, Creamy latex, Latex slabs, Latex), Rubber stoppers and Glassware,
 the Research center MK 01 that makes the pack, and moved the labs beside it. Research started again
@@ -27,6 +27,11 @@ the Raw coal and making twice the Ash, and **after 40 minutes the Ash takes the 
 Soot separator cannot put its Ash out, the Ash separators cannot put their Soot out, the Boilers
 fill with Ash, and at 60 minutes the base has no electricity left (section 7).
 
+The author then fixed the substrate, gave the by-products a Burner and changed how the Soot
+separator's Ash joins the Ash belt (23:31–23:40), expecting the Ash handling may not be complete
+yet. Measured on the save of 23:40, the pack line runs by itself, but the power still fails, at 40
+to 60 minutes: the Ash loop has one way off, too small for twice the Ash (section 7).
+
 ## The run at a glance
 
 | Game time | What happened |
@@ -43,7 +48,10 @@ fill with Ash, and at 60 minutes the base has no electricity left (section 7).
 | 22:40 | A fourth Destructive distillation column cracking Anthracene oil at (−168, −139) (50 Anthracene oil → 20 Gasoline + 5 Coke, 4 s; data) |
 | 22:50 | Ten more Boilers at y −260 (x −159.5 to −132.5) beside the ten Coke Boilers of chapter 6, built by robots with their fuel belt; an Offshore pump moved from (−161.5, −256.5) to (−129.5, −256.5) |
 | 23:05–23:15 | The Concrete corner beside the acetylene block laid one tile west (Sinkhole, Jaw crusher) |
-| 23:31 | The save (the recorder's last record): 48 packs made since 21:35, Burner at 75 % |
+| 23:31 | The save: 48 packs made since 21:35, Burner at 75 % |
+| 23:33 | Burner researched; Quartz processing - Stage 1 next |
+| 23:31–23:40 | The author's fixes: the substrate inserter at (−36.5, −376.5) and the substrate chest taken away (section 5); the four by-product chests replaced by one chest and one Burner at (−35.5, −362.5), whose Ash goes by a new belt along y −359.5 and x −94.5 into the Ash line at a Splitter at (−95, −251.5) (section 3); the Soot separator's Ash put onto the Ash belt at x −92.5 by an inserter at (−91.5, 370.5) instead of a side-load, and a Splitter at (−92, 383.5) where a second Ash belt joins it (section 7) |
+| 23:40 | The save (end of the chapter); the line exported again |
 
 Production per second (10-minute windows from the recorder):
 
@@ -110,7 +118,7 @@ The new machines stand in a column west of the Vrauk line, x −57 to −20, fro
   Creamy latex and Formic acid by pipe; the Latex furnace beside it takes the slabs and Steam.
 - **Rubber stoppers and Glassware** (y −373 to −361, section 4) and the Research center at the top.
 
-<!-- ![The latex column: Seaweed crop facilities at the bottom, the Sap extractors and the Washer, the Latex slab column and the Latex furnace, the Slaughterhouse and the Caged vrauk assembler on the right](../images/ch9-latex.jpg) -->
+![The lower half of the latex column: the Soil extractor and the Sodium alginate furnace at the left, the Washer for Creamy latex and a second Soil extractor, the four Sap extractors, the three new Seaweed crop facilities, the Jaw crusher for Stone at the bottom left; the Slaughterhouse at the top edge (taken after the author's fix)](../images/ch9-latex.jpg)
 
 ## 3. Formic acid: Vrauks, one Cage and the Slaughterhouse
 
@@ -123,15 +131,23 @@ the assembler at 23:31. One round takes the Slaughterhouse's 10 s and the insert
 packs a second a Vrauk arrives every 20 s. In the run with the substrate inserter (section 7) the
 Slaughterhouse renders 0.05 Caged vrauks a second for two hours: the single Cage keeps up.
 
-**The by-products** go into four Wooden chests at (−24.5, −352.5) to (−24.5, −349.5), one each
-for Meat, Chitin, Guts and Brains (58, 29, 58, 29 at the save). A Wooden chest has 16 slots and
+**The by-products** went into four Wooden chests at (−24.5, −352.5) to (−24.5, −349.5), one each
+for Meat, Chitin, Guts and Brains (58, 29, 58, 29 at the save of 23:31). A Wooden chest has 16 slots and
 these items stack to 100 (data), so each holds 1,600. At 3 Vrauks a minute the line makes 0.1
-Meat and 0.1 Guts a second: **those two chests are full about 4.3 hours after the save**, the
-Chitin and Brain chests twice as late, and then the Slaughterhouse stops and with it the packs.
-North of the Slaughterhouse stand four ghosts of the Burner, the building the technology now being
-researched unlocks. A Burner voids Meat, Guts, Brains and Chitin, one item per 1.5 s at speed 5,
-3.3 a second (data); four ghosts and four by-products suggest one Burner per chest, though the
-author has not said so. The Burner burns chemical fuel (180 kW; data).
+Meat and 0.1 Guts a second: **those two chests would have been full about 4.3 hours after the
+save**, the Chitin and Brain chests twice as late, and then the Slaughterhouse and the packs would
+have stopped.
+North of the Slaughterhouse stood four ghosts of the Burner, the building the technology of
+the same name, then being researched, unlocks.
+
+**The author's fix (23:35–23:40).** Burner was researched at 23:33. The four chests went; one
+inserter, filtered to everything but Cages, now puts all the by-products into one Wooden chest at
+(−32.5, −361.5), and another feeds them from it into one Burner at (−35.5, −362.5), which burns
+Wood from the Wood processing unit's belt (chemical fuel, 180 kW; data). The Burner runs a void
+recipe for each of them, one item per 1.5 s at speed 5, 3.3 a second; the line makes 6 by-products
+per Vrauk, 0.3 a second, a tenth of what one Burner takes. It does not make them vanish entirely:
+every void recipe gives back 1 Ash at 20 % (data), 0.06 Ash a second here, which a new belt takes
+west along y −359.5 and south along x −94.5 into the Ash line at a Splitter at (−95, −251.5).
 
 ## 4. Rubber stoppers and Glassware
 
@@ -163,10 +179,11 @@ everything else, the substrate, goes on west to (−35.5, −376.5), and there t
 from the Research center. No inserter takes from it. At the save 244 belt tiles hold substrate,
 about a thousand, and its assembler stands "output full". The Research center holds 36 and the
 chest 37; the 48 packs made since 21:35 used 288, so the substrate went into the chest by hand.
-The blueprint has the same gap. One inserter at (−36.5, −376.5), taking from the belt end and
-dropping into the Research center, closes it (section 7).
+The blueprint exported at 20:34 had the same gap. One inserter at (−36.5, −376.5), taking from the
+belt end and dropping into the Research center, closes it (section 7). **The author put exactly that
+inserter in at 23:35–23:40** and took the chest away; the blueprint exported afterwards has it.
 
-<!-- ![The top of the line: the Research center with the Glassware Glassworks on its left, the substrate chest and the end of the substrate belt, the Splitter that takes the red science off, the five labs on the right and the four Burner ghosts below](../images/ch9-science.jpg) -->
+![The top of the line after the author's fix: the Glassware Glassworks at the top left, the Research center, the Splitter that sends the red science to the five labs on the right; below them the Wood column, the Latex slab column, the Latex furnace and the Wood processing unit at the left, the Burner for the by-products in the middle, the Slaughterhouse and the Caged vrauk assembler at the bottom](../images/ch9-science.jpg)
 
 **The labs.** Five Labs at x −16.5 and −11.5 (y −370.5 to −358.5), fed from the red science belt.
 Burner costs 50 units of 1 pY science pack 1 and 2 Automation science packs, 45 s each, like the
@@ -230,13 +247,37 @@ the Ash separators and the Soot separator themselves run on electricity. It is a
 zinc and the Tar of chapter 6: the Ash separation needs the Soot separation, whose Ash needs the
 Ash separation.
 
-<!-- ![The Soot separator at (−56.5, 365.5): Soot comes in from the belt above, the ores go into the chests and Stone furnaces on the right, its Ash onto the belt below](../images/ch9-soot.jpg) -->
+![The Soot separator at (−56.5, 365.5): Soot comes in from the belt above, the ores go into the chests and Stone furnaces on its right, its Ash onto the belt below (taken after the author's fix)](../images/ch9-soot.jpg)
 
 **What it means.** The pack line itself is complete with one inserter. What the base lacks is room
 for twice the Ash once everything runs. Not measured yet, from data: the Burner that is now being
-researched voids Ash and Soot, 3.3 a second each, so about eight Burners would take the 25 a second
-that piled up and one the Soot; and the Soot separator's Ash needs a way out that does not depend on
+researched burns Ash and Soot, 3.3 a second each, but every item it burns gives back 1 Ash in 5
+(data): a Burner on Ash removes 2.7 a second, so about ten would take the 25 a second that piled
+up, and one would take the Soot; and the Soot separator's Ash needs a way out that does not depend on
 the Ash separators.
+
+**After the author's fix (save of 23:40).** The author then put the inserter in, gave the
+by-products a Burner (section 3) and let the Soot separator's Ash onto the Ash belt at x −92.5 by an
+inserter at (−91.5, 370.5) instead of a side-load, on the belt's other lane; a second Ash belt now
+joins it through a Splitter at (−92, 383.5). In their words the Ash handling may not be complete
+yet, but the Soot separator's Ash no longer jams its belt. Measured the same way for two hours:
+
+| Minutes after the save | 10 | 20 | 30 | 40 | 50 | 60 on |
+|---|---|---|---|---|---|---|
+| pY science pack 1 per second | 0.100 | 0.100 | 0.095 | 0.080 | 0.025 | 0 |
+| Boards per second | 0.130 | 0.130 | 0.100 | 0.075 | 0.025 | 0 |
+| Ash made / separated per second | 89 / 78 | 87 / 59 | 77 / 55 | 68 / 28 | 24 / 4 | 0 |
+
+The pack line and its by-products work: the Burner takes the 0.1 Meat and 0.1 Guts a second as they
+come. The power does not hold. The Soot separator again stands "output full" from the first
+minutes, half the Coal dust Boilers at y 382 fill with Ash at 20 minutes, the station at y 260 and
+273 at 30 to 40, the base goes to "low power" at 40 minutes and has stopped by 60. The Ash still
+has nowhere to go. In the save of 23:40 the Ash loop, north along x −92.5 and back south along
+x −93.5, is full along its whole length, and its only way off is the belt at y 205.5 into the three
+separators at y 210.5; meanwhile four of the twelve separators, two of the three at y 97.5 among
+them, stand short of Ash in front of nearly empty belts. A free lane does not help when both lanes
+of the loop are full. The Ash needs more ways off the loop: to the separators that wait for it, or
+into Burners on the loop (2.7 a second each). Not measured yet.
 
 ## 8. Other changes
 
@@ -255,13 +296,14 @@ the Ash separators.
 
 ## 9. The blueprints
 
-The author exported the book at 20:34 (real time), just before the save; `tools/bp-sync.js pull`
-reports two new designs and three changed ones:
+The author exported the book at 20:34 (real time), just before the save of 23:31, and the line again
+at 22:56 after the fixes; `tools/bp-sync.js pull` reports two new designs and three changed ones:
 
 - **`py-science-pack-1`** (new), "0.1 [pY science pack 1]": the whole line of chapters 8 and 9,
-  x −60 to 48, y −379 to −264 in save coordinates, 1,088 belt tiles, 116 inserters, the 8 paddocks
-  and 2 complexes, the latex column, the Research center, 5 labs and the 4 Burner ghosts. It has the
-  same gap as the save: no inserter at (−36.5, −376.5). Not run on the bench: the Vrauk line needs
+  x −60 to 48, y −377 to −264 in save coordinates, the 8 paddocks and 2 complexes, the latex column,
+  the Research center, 5 labs and the Burner. The first export (20:34) had the gap of section 5 and
+  four Burner ghosts; the file is the author's second export (22:56, after the fixes), with the
+  substrate inserter, the by-product chest and the Burner. Not run on the bench: the Vrauk line needs
   100 minutes to fill its slots from a few Vrauks, and the Moondrop greenhouse's speed comes from the
   Carbon capture upgrade chosen in the save; it was measured where it stands (section 7).
 - **`copper-screening`** (new), "3 [Copper plate]": the copper block of chapter 7, x −70 to 53,
@@ -282,10 +324,13 @@ reports two new designs and three changed ones:
   a while when a chest beside the machine was filled by hand; a copy of the save run without the
   player shows it within minutes.
 - Give the Slaughterhouse's by-products a way out before their chests fill (4.3 hours for Meat and
-  Guts at 3 Vrauks a minute): the Burner, the first pY science pack 1 technology, voids them.
+  Guts at 3 Vrauks a minute): the Burner, the first pY science pack 1 technology, burns them and
+  gives back 1 Ash in 5.
 - A new line that makes the base work harder makes more Ash. Before it runs, check that every Ash
   separator gets Ash and that the Soot separator's Ash and the separators' Soot can always leave;
-  otherwise the Ash stops the Boilers and the electricity with them.
+  otherwise the Ash stops the Boilers and the electricity with them. A loop belt of Ash needs as
+  many ways off as Ash comes on: when it is full, a free lane is no help, and everything that drops
+  onto it (here the Soot separator) stops too.
 - The author's Syngas call holds: once the pack line runs, its Molten glass burns the Syngas and the
   stored Gasoline (about 8 a second net), and the boards stay at 0.1.
 
@@ -306,14 +351,16 @@ reports two new designs and three changed ones:
   Naphthalene oil and Tar (10-minute steps); and with the inserter for 75 minutes
   (`-Ticks 274000 -Variant 60,4500,300,...`) watching Ash, Coal dust, Soot, Iron oxide, Raw coal,
   Coke, Steam and Water, with the probe now also grouping Boilers and Steam engines by row. Stored
-  fluids and the Soot separator's inserters from the save's snapshot.
+  fluids and the Soot separator's inserters from the save's snapshot. The save of 23:40 (after the
+  author's fix): `tools/inspect-save.ps1`, the same two-hour run as saved, the Ash belts followed
+  tile by tile in its snapshot.
 - The blueprints: `tools/bp-sync.js pull` (the author's export of 20:34 real time), compared entity by
   entity with the files before; `tools/bp-bench.ps1 -Bench acetylene` and
   `-Bench iron-oxide-smelting` on the new versions.
 - Data: the current dump of the author's mods (`C:\tmp\cf-save\data\script-output\data-raw-dump.json`):
   recipes, machine speeds, module effects (Moondrop, Carbon capture), the Burner's void recipes,
   stack sizes, technology costs; English names from the mods' `locale/en`.
-- The screenshots: planned (`node tools/shots.js plan ch9-science ch9-latex ch9-soot`), to be
-  taken by the author with the companion mod (`/pt-shots`).
+- The screenshots: taken by the author with the companion mod (`/pt-shots`) after the fix, areas
+  planned with `node tools/shots.js plan`.
 
 Next: chapter 10 (to come).
