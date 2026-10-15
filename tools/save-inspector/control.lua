@@ -155,6 +155,14 @@ local function entities(surface)
           entry.filter = f and (type(f) == "table" and f.name or f)
           entry.filter_mode = e.inserter_filter_mode -- "whitelist" or "blacklist"
         end
+        -- What the hand holds: items circulating in a loop (barrels) can wait there.
+        local held = e.held_stack
+        if held and held.valid_for_read then entry.held = { [held.name] = held.count } end
+      elseif e.type == "splitter" then
+        -- A splitter's filter sends one item to its priority side, everything else to the other.
+        local f = e.splitter_filter
+        entry.filter = f and (type(f.name) == "table" and f.name.name or f.name)
+        entry.input_priority, entry.output_priority = e.splitter_input_priority, e.splitter_output_priority
       elseif e.type == "container" or e.type == "logistic-container" then
         entry.items = counts(e.get_inventory(defines.inventory.chest))
       elseif e.type == "underground-belt" then
@@ -174,7 +182,7 @@ local function entities(surface)
         end
       end
       -- Items on belts, both lanes together.
-      if e.type == "transport-belt" or e.type == "underground-belt" then
+      if e.type == "transport-belt" or e.type == "underground-belt" or e.type == "splitter" then
         local items = {}
         for line = 1, e.get_max_transport_line_index() do
           for _, c in pairs(e.get_transport_line(line).get_contents()) do items[c.name] = (items[c.name] or 0) + c.count end

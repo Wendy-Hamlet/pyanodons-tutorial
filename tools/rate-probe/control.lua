@@ -9,7 +9,8 @@
 -- name "@x:y" instead is the entity with fluid boxes on that tile (a machine, a tank, a pond):
 -- its status and the fluid in each of its boxes.
 -- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
--- pole that was taken out), the only change the probe then makes to the base.
+-- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
+-- places it facing that way (north, east, south, west; default north).
 
 local variant = require("variant")
 local PLACE
@@ -50,9 +51,10 @@ local function group_key(e)
 end
 
 script.on_init(function()
-  for name, x, y in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+)") do
-    local e = game.surfaces.nauvis.create_entity({ name = name, position = { tonumber(x), tonumber(y) }, force = "player" })
-    out("placed %s at %s,%s: %s", name, x, y, e and "ok" or "FAILED")
+  for name, x, y, dir in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*)") do
+    local e = game.surfaces.nauvis.create_entity({ name = name, position = { tonumber(x), tonumber(y) },
+      direction = defines.direction[dir ~= "" and dir or "north"], force = "player" })
+    out("placed %s at %s,%s %s: %s", name, x, y, dir ~= "" and dir or "north", e and "ok" or "FAILED")
   end
   storage.start = game.tick
   out("loaded at tick %d; warm %d s, measure %d s", game.tick, WARM, MEASURE)

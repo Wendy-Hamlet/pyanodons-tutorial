@@ -200,7 +200,7 @@ From data (all of these machines have crafting speed 1 once filled with their mo
 | Logs | Fastwood forestry MK 01 (450 kW) | 3 Tree seedlings + 30 Ash + 500 Water → 6 Logs, 40 s |
 
 **Farms run on their modules.** A Moss farm and a Fastwood forestry have a base effect of −100 %
-speed (data), so empty they do nothing. Their module slots take only their own kind: Moss in the
+speed (data), so empty they all but stand still (a ten-thousandth of their speed; chapter 8). Their module slots take only their own kind: Moss in the
 15 slots of a Moss farm, Trees in the 10 of a forestry, each +100 % speed. Full, a Moss farm runs
 at 15 × 0.0667 = 1 and a forestry at 10 × 0.1 = 1 (measured on the bench: 80 s and 40 s a craft).
 The blueprint requests them; build them in by hand or let robots bring them (the bench put 150

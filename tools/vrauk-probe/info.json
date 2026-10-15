@@ -1,0 +1,8 @@
+{
+  "name": "cf-vrauk-probe",
+  "version": "0.0.1",
+  "title": "Vrauk start-up probe",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "dependencies": ["base"]
+}

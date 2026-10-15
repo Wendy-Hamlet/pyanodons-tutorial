@@ -18,6 +18,7 @@ context.
 | A belt tile fed from one side only, with no belt behind it, is a curve, not a side-load: both lanes of the feeding belt go on. With a belt behind it (even an empty one) it side-loads onto the near lane. | Engine, `tools/belt-lab` |
 | A Splitter splits each lane evenly between its two outputs and keeps it on its lane: fed on the E lane only, both outputs carry it on the E lane (51 and 52 items after 20 s). | Engine, `tools/belt-lab` |
 | **Lane balancer** (the author's): a Splitter, then its two outputs side-loaded into one belt from opposite sides, so that each output fills one lane. The Splitter makes the two outputs equal, whatever the lanes of the input: fed on one lane only, the merged belt carries 37 and 34 items on its two lanes after 20 s. | The author; engine, `tools/belt-lab` |
+| A Splitter with a belt on one output only still sends items to the other output, and keeps 4 of them there (2 per lane) for good: fed on both lanes, 12 items stand on it against 8 with the output priority set to the side that has the belt. A chain of such Splitters loses 4 items at each one before anything reaches its end. The author's Vrauk line has eight on chains where inserters only drop items (Barrels, Vrauks): set the output priority there. Where an inserter picks from the dead half, the 4 items are that inserter's buffer. | Engine, `tools/belt-lab`; `tools/vrauk-probe` ([chapter 8](../chapters/08-vrauks.md)) |
 | To put items onto the far lane of a belt that already runs (a loop), use inserters: they drop on the far lane. A Splitter keeps the lanes, and side-loading reaches only the near lane. The author's Ash loop jammed with its outer lane full while the incoming Ash ran on that same lane; five Mechanical inserters onto the inner lane fixed it. | The author's game (chapter 7); `tools/belt-lab` |
 
 **Lane filtering with an underground belt.** A belt that runs into the *side* of an underground
@@ -149,7 +150,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 
 | Fact | Source |
 |---|---|
-| Moss farms and Fastwood forestries have a base effect of −100 % speed: empty they do nothing. Their slots take only their own module (Moss, Tree), +100 % each; full they run at speed 1 (15 × 0.0667 and 10 × 0.1). | Data; blueprint bench (chapter 4) |
+| Moss farms and Fastwood forestries have a base effect of −100 % speed, limited to −99.99 %: empty they run at a ten-thousandth of their speed, which is nearly nothing but not quite (see Vrauks below: an empty machine still takes one craft's ingredients in and holds them). Their slots take only their own module (Moss, Tree), +100 % each; full they run at speed 1 (15 × 0.0667 and 10 × 0.1). | Data; blueprint bench (chapter 4) |
 | A balanced log block: 10 Moss farms : 8 Botanical nurseries : 16 Fastwood forestries make 2.0 Moss, 1.2 Tree seedlings and 2.4 Logs a second, 2.348 net after the Wood for the Tree seeds; they take Ash 12, Stone bricks 1.25, Coke 0.31 and about 316 Water a second, and about 13 MW. The chain needs a few Logs to start. | Data; bench `log-production`: 2.336 Logs/s |
 | Fastwood forestry upgrade (a TURD technology) offers Dry storage (Fiber), Selective cutting heads (Wood processing unit: 4 Logs → 40 Wood in 1 s instead of 20 in 4 s) and Internal burner (forestries −50 % energy, +50 % speed and productivity, twice the Ash). | pyalienlife `prototypes/upgrades/fwf.lua` |
 | Red science at 0.2/s is one Burner assembling machine; it needs 0.4 Planter boxes/s, that is 2.0 Soil/s (one Soil extractor running all the time), 0.8 Wood/s plus fuel and 1.6 Stone bricks/s into the Empty planter box machine (two Mechanical inserters each at their limit), and 2 Native flora/s (two Flora collectors MK 01). | Data; bench `red-science`: 0.196/s with one Wood inserter, 0.200 with two |
@@ -176,8 +177,19 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | A resource's `fluid_amount` is per 10 ore: Titanium ore takes 4 Acetylene an ore (40), Lead ore 10 (100). Measured: 2.75 Titanium ore and 1.25 Lead ore a second used 23.0 Acetylene (23.5 from the data). | Data; `tools/rate-probe` (chapter 7) |
 | Titanium plate (Alloy smelting - Stage 1): 40 Titanium ore → 4 plates in 60 s in a furnace, 0.667 ore a second a Stone furnace. A Fluid mining drill MK 01 mines 0.25 Titanium ore a second (speed 0.5, mining time 2). The author's eleven drills: 2.75 ore and 0.275 plates a second, the work of four furnaces. | Data; `tools/rate-probe` (chapter 7) |
 | Duralumin (Alloy smelting - Stage 1): 4 Aluminium plates + 2 Copper plates → 1 in 4 s, only in a Smelter MK 01 (10 MW of fluid fuel), whose recipe takes 15 Titanium plates, 40 Steel plates, 50 Ceramic and 5 Simple circuit boards among others. On the way to pY science pack 1, Titanium plates also go into the Slaughterhouse MK 01 (40) and the Reproductive complex MK 01 (100), for the Formic acid of the Glassware's Rubber stoppers. | Data; the author's Factory Planner plan (chapter 7) |
-| Before pY science pack 1, Duralumin is needed once: about 345 for the machines that start the Vrauks. The first Vrauks come only from a Creature chamber MK 01 (400 s each), since the Vrauk paddock and the Reproductive complex have base speed −100 % and run only with Vrauks as modules. Creature chamber 130 (with the Gene lab, Biofactory and PyTanks it uses up), Gene lab MK 01 for Moss gene samples 100, Data array 50, Incubator MK 01 15, Biofactory MK 01 for Plastic bars 50; also 295 Titanium plates and 60 Plastic bars. Steady use comes later (Burner assembling machine MK 02, trains, Intermetallics). | Data (chapter 7) |
+| Before pY science pack 1, Duralumin is needed once: about 345 for the machines that start the Vrauks. The first Vrauks come only from a Creature chamber MK 01 (400 s each), since the Vrauk paddock and the Reproductive complex have base speed −100 % and run only with Vrauks as modules. Creature chamber 130 (with the Gene lab, Biofactory and PyTanks it uses up), Gene lab MK 01 for Moss gene samples 100, Data array 50, Incubator MK 01 15, Biofactory MK 01 for Plastic bars 50; also 295 Titanium plates and 60 Plastic bars. The author needed **245**: the Creature chamber's recipe takes a whole Gene lab, so they used the lab for the Moss gene samples first and crafted it into the chamber afterwards (also 40 Plastic bars). Steady use comes later (Burner assembling machine MK 02, trains, Intermetallics). | Data (chapter 7); save statistics ([chapter 8](../chapters/08-vrauks.md)) |
 | One Smelter MK 01 fed from chests, one Mechanical inserter per chest: 0.197 Duralumin a second, 79 % of full speed, because the recipe takes 1 Aluminium plate a second and the inserter brings 0.789. It burns Naphthalene oil (0.3 MJ): 26.3 a second at that speed, 33.3 at full; the Tar line's 16.5 a second keep one Smelter at half speed. | `tools/rate-probe`, the save of 18:03 (chapter 7) |
+
+## Vrauks
+
+| Fact | Source |
+|---|---|
+| Vrauk paddock MK 01 (12 × 12, 250 kW, speed 0.05, 10 slots): 10 Vrauk cocoons + 15 Native flora + 5 Moss + 3 Water barrels → 2 Vrauks + 3 Barrels, 160 s. Reproductive complex MK 01 (21 × 21, 500 kW, speed 0.5, 2 slots): 10 Moss + 3 Sap + 5 Native flora + 4 Water barrels → 4 to 6 cocoons (5 on average) + 4 Barrels, 40 s. Both take Vrauks as modules (+1 speed each) on a base effect of −1. Full (84 Vrauks in 8 paddocks and 2 complexes): 3 Vrauks and 15 cocoons a minute, the author's plan; measured 28 to 32 Vrauks every 10 minutes. | Data; `tools/vrauk-probe` ([chapter 8](../chapters/08-vrauks.md)) |
+| A machine on a base effect of −100 % is limited to −99.99 %: without modules it runs at a ten-thousandth of its speed (a paddock 0.000005). It starts a craft as soon as its ingredients are in, shows "working", and holds them for good (a paddock's craft would take 370 days); its inserters then fill its input again. An empty Vrauk paddock holds 9 Water barrels and 30 cocoons this way. | Engine, a copy of the author's save (chapter 8) |
+| Inserters fill a machine's input with two crafts' worth while it works on a third: a paddock holds 9 Water barrels, a complex 12, whether they have Vrauks or not. Eight paddocks and two complexes hold 96; at full output the author's line had 128 barrels in it, 32 in crafts. With 64 it stopped within half an hour. | `tools/vrauk-probe` (chapter 8) |
+| The first Vrauks: Creature chamber MK 01, 400 s each, from Moss gene samples (Gene lab), Generic earth DNA samples (Data array, 15 red science packs each) and Biosamples (Incubator). The chamber's recipe takes a whole Gene lab: use the lab first, then craft it in. The author's five Vrauks took 245 Duralumin, 680 Titanium plates with the complexes and the Slaughterhouse, and 33 minutes of the chamber. | Data; save statistics (chapter 8) |
+| Growth: a Vrauk in a paddock makes 1/1600 of a Vrauk a second, so the paddocks double at best every 18.5 minutes (3 → 80 in 88 minutes); one Vrauk in a complex makes the cocoons for 20 in paddocks. Measured, every new Vrauk put back within a minute: five Vrauks to all 84 slots in 110 minutes. | Data; `tools/vrauk-probe` (chapter 8) |
+| The game's production statistics leave barrels out (`ignored_by_stats` on the barrel results of the filling recipes and the Vrauk recipes): count Water barrels by the Barreling machine's finished crafts. | Data; `tools/vrauk-probe` |
 
 ## Circuit boards
 
@@ -247,7 +259,10 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
    furnaces, their Soot into Soot separation, their Iron oxide into furnaces, each through a buffer
    chest. Size the separators for the Ash already piled up, not only for what the base makes.
 14. **Burn byproduct fuel first** by giving its Boilers one Steam engine more than their steam needs
-   (see Steam power).
+   (see Steam power). For fluid fuel, by circuit: the author's seven Glassworks get one fuel pipe fed
+   by three pumps, each switched by a condition read from the pipes: Hydrogen while there is any,
+   Syngas while there is no Hydrogen, stored Gasoline only while there is neither. The two gases had
+   been vented before (chapter 8). A pipe holds one fluid, so the fuel changes once the pipe is empty.
 15. **Product before disposal.** An Ash loop passes the blocks that need Ash for a product (logs,
    planter boxes) before it reaches the separators, which get what is left.
 16. **Priority by circuit.** Where one machine feeds two users, let the second user's inserter run
@@ -290,13 +305,24 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
    and the boards lost about a quarter of an hour, so build the new supply of a main product's
    ingredient before taking the old one away. The screened copper's surplus (3 plates a second,
    1.1 used) filled the bus and chests within two hours, after which the block makes what is
-   used: the expected jam on a surplus.
+   used: the expected jam on a surplus. Chapter 8: with its Exhaust pipe taken away,
+   the Syngas could leave only through Glassworks that stood full; within an hour of the save the
+   Syngas Gasifiers filled, and the Tar line, the zinc and the boards ran down to 0.005 a second (an
+   Exhaust pipe put back: 0.1).
 24. **A one-off need is a batch, not a line.** Before building a line for a new material, look at
    what it is needed for now. Before pY science pack 1 Duralumin is needed once, for the machines
    that start the Vrauks (about 345), so the author made it in one Smelter fed from chests by hand,
    from the Aluminium plates in store, with the Naphthalene oil the Tar line had stored as fuel:
    about 400 in half an hour (chapter 7). The full line, with a new aluminium mine, waits until
    Duralumin is needed steadily.
+25. **Items that circulate run on a loop belt** (the author's note: "循环物品形成环带避免堵塞"). The
+   author's Water barrels go round one closed belt past the complexes, the paddocks and the
+   Barreling machine, so a full machine never stops the belt. Count the containers for every place
+   where they wait, not for the recipes alone: two crafts' worth in each machine's input and one in
+   work, also in machines that do not run yet; 4 on every Splitter output without a belt; and the
+   belts. The author's estimate, twice the barrels of the recipes running at once, gave 64; the line
+   needs 128 (chapter 8). And keep the other chains of such a block free of dead ends: set the
+   output priority of a Splitter used as a drop point.
 
 ## Trains
 

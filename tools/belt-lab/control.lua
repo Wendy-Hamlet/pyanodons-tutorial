@@ -6,6 +6,8 @@
 --   4. Mechanical inserter throughput from a full belt into a chest.
 --   5. Which lanes a Splitter's outputs carry when its input has items on one lane only.
 --   6. The author's lane balancer: a Splitter whose two outputs side-load one belt from both sides.
+--   7. A Splitter with a belt on one output only: how many items wait on the other output, with
+--      and without output priority on the side that has the belt.
 -- Lanes are named by compass side of a north-going belt: W (left, line 1) and E (right, line 2).
 
 local N, E, S, W = defines.direction.north, defines.direction.east, defines.direction.south, defines.direction.west
@@ -144,6 +146,21 @@ script.on_init(function()
   for y = 56, 58 do belt(surface, 65, y, N) end
   belt(surface, 65, 55, W)
   s.merged = column(64, 25, 55)
+
+  -- 7. A belt fed on both lanes into a Splitter whose west output has a belt and whose east output
+  --    has none; the second copy gives the west output priority. The belt ends in a sink.
+  s.one_out = {}
+  for i, priority in ipairs({ "none", "left" }) do
+    local x = -30 + 20 * i
+    for y = 61, 72 do belt(surface, x, y, N) end
+    belt(surface, x - 1, 70, E); source(surface, x - 1, 70, E, "iron-plate")
+    belt(surface, x + 1, 71, W); source(surface, x + 1, 71, W, "copper-plate")
+    local sp = must(surface.create_entity({ name = "splitter", position = { x + 1, 60.5 }, direction = N, force = "player" }), "splitter")
+    sp.splitter_output_priority = priority
+    for y = 50, 59 do belt(surface, x, y, N) end
+    local chest = sink(surface, x, 50, N)
+    s.one_out[i] = { priority = priority, splitter = sp, chest = chest }
+  end
 end)
 
 local T5 = 1200 -- the lane counts are read after 20 s, before any output belt backs up
@@ -165,6 +182,17 @@ script.on_event(defines.events.on_tick, function(event)
     out("splitter fed on the E lane only, after %d s: west output W %d E %d; east output W %d E %d", T5 / 60, ww, we, ew, ee)
     local mw, me = lane_sum(s.merged)
     out("splitter + two-sided merge, fed on the E lane only, after %d s: merged belt W %d E %d", T5 / 60, mw, me)
+  end
+  if s and event.tick == T then
+    for _, c in ipairs(s.one_out) do
+      local held, lines = 0, {}
+      for line = 1, c.splitter.get_max_transport_line_index() do
+        local n = c.splitter.get_transport_line(line).get_item_count()
+        held, lines[#lines + 1] = held + n, line .. ":" .. n
+      end
+      out("splitter with a belt on the west output only, priority %s, after %d s: %d items on the splitter (by line %s), %d passed",
+        c.priority, T / 60, held, table.concat(lines, " "), c.chest.get_item_count())
+    end
   end
   if not s or event.tick ~= T then return end
   for _, c in ipairs(s.cases) do

@@ -125,7 +125,7 @@ The substrate is where Moondrop comes in (data):
   researched yet, or the upgrade's other choice, Moon.
 
 **Getting the first Moondrop.** A greenhouse (speed 0.0625) has a base effect of −100 % speed and
-takes only Moondrop as modules, +100 % each: without the upgrade it does nothing empty and runs at
+takes only Moondrop as modules, +100 % each: without the upgrade it all but stands still empty (chapter 8) and runs at
 speed 1 with all 16 (data). The author's Carbon capture puts a hidden beacon with a +800 % speed
 module (and +200 % energy) on every greenhouse (pyalienlife's T.U.R.D. script and data), so an
 empty greenhouse already runs at speed 0.5 and a full one at 1.5, which the inspector reads in the
