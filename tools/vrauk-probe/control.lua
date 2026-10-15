@@ -11,7 +11,8 @@
 -- What-ifs, applied when the save loads: "prio" gives every splitter that has a belt on one
 -- output only the output priority on that side, unless an inserter picks from the other side
 -- (a splitter keeps 4 items on an output without a belt, tools/belt-lab); "barrels:N" adds N
--- water barrels, half into each complex.
+-- water barrels, half into each complex; "barrels:-N" takes N barrels away, from the belts first
+-- (Water barrels, then empty ones), then from the chests and the machines' inputs.
 -- Every step it prints Vrauks, cocoons and water barrels made, the Vrauks placed, how the
 -- complexes, the paddocks with Vrauks and the barrel machine spent the step, and where the
 -- barrels and cocoons are.
@@ -27,7 +28,7 @@ for field in (variant .. ","):gmatch("([^,]*),") do
   elseif tonumber(field) then STEP = tonumber(field)
   elseif field == "detail" then DETAIL = true
   elseif field == "prio" then PRIO = true
-  elseif field:match("^barrels:%d+$") then BARRELS = tonumber(field:match("%d+"))
+  elseif field:match("^barrels:%-?%d+$") then BARRELS = tonumber(field:match("%-?%d+"))
   elseif i == 1 and field ~= "" then mode = field end
 end
 local PADDOCK, COMPLEX, BARRELER = "vrauks-paddock-mk01", "rc-mk01", "barrel-machine-mk01"
@@ -190,6 +191,31 @@ script.on_init(function()
       local share = math.floor(BARRELS / #complexes) + ((n <= BARRELS % #complexes) and 1 or 0)
       out("barrels: %d water barrels into the complex at %s,%s", c.get_inventory(defines.inventory.crafter_input).insert({ name = "water-barrel", count = share }), c.position.x, c.position.y)
     end
+  elseif BARRELS < 0 then
+    local left, taken = -BARRELS, {}
+    local function take(kind, remove)
+      for _, name in ipairs({ "water-barrel", "barrel" }) do
+        if left > 0 then
+          local n = remove(name, left)
+          left, taken[kind] = left - n, (taken[kind] or 0) + n
+        end
+      end
+    end
+    for _, e in pairs(find({ type = { "transport-belt", "underground-belt", "splitter" } })) do
+      for line = 1, e.get_max_transport_line_index() do
+        local tl = e.get_transport_line(line)
+        take("belts", function(name, n) return tl.remove_item({ name = name, count = n }) end)
+      end
+    end
+    for _, e in pairs(find({ type = "container" })) do
+      take("chests", function(name, n) return e.remove_item({ name = name, count = n }) end)
+    end
+    for _, e in pairs(find({ type = { "assembling-machine", "furnace" } })) do
+      local inv = e.get_inventory(defines.inventory.crafter_input)
+      take("machines", function(name, n) return inv.remove({ name = name, count = n }) end)
+    end
+    out("barrels: took %d away (belts %d, chests %d, machine inputs %d)", -BARRELS - left,
+      taken.belts or 0, taken.chests or 0, taken.machines or 0)
   end
   storage.seconds, storage.samples, storage.placed = 0, {}, 0
   storage.before = { vrauks = made("vrauks"), cocoon = made("cocoon"), ["water-barrel"] = made("water-barrel"), moss = made("moss") }

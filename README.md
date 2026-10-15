@@ -16,7 +16,7 @@ scripts used, so you can re-check them against your own mod versions.
 5. [Tin, zinc and lead smelting](chapters/05-tin-zinc-smelting.md)
 6. [Simple circuit boards](chapters/06-simple-circuit-boards.md)
 7. [Copper screening, titanium smelting and duralumin](chapters/07-copper-screening-titanium-duralumin.md)
-8. [The Vrauk line](chapters/08-vrauks.md)
+8. [Vrauks](chapters/08-vrauks.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -138,7 +138,7 @@ parameters for yours.
   and Water barrels made, how the Reproductive complexes, the paddocks with Vrauks and the
   Barreling machine spent the step, and where the barrels and cocoons are; variant `fill` moves the
   Vrauks from the line's chest into free module slots every minute, `prio` sets the output priority
-  of Splitters with one output belt, `barrels:N` adds Water barrels (e.g. `-Ticks 864100 -Variant
+  of Splitters with one output belt, `barrels:N` adds Water barrels (`barrels:-N` takes them off the belts) (e.g. `-Ticks 864100 -Variant
   fill,prio,600`).
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests

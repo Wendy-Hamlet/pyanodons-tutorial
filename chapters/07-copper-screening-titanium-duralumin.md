@@ -349,4 +349,4 @@ So the author made one batch, from the Aluminium plates already in store, and le
 - No blueprint: the author has not exported the new blocks.
 - The screenshots: taken by the author with the companion mod (`/pt-shots`).
 
-Next: [chapter 8, the Vrauk line](08-vrauks.md).
+Next: [chapter 8, Vrauks](08-vrauks.md).

@@ -1,9 +1,10 @@
-# Chapter 8 — The Vrauk line
+# Chapter 8 — Vrauks
 
 [中文版](08-vrauks.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 7](07-copper-screening-titanium-duralumin.md)
 
-This chapter follows the same recorded run from the save of 18:03 to the save of 21:27. Its goal
+This chapter follows the same recorded run from the save of 18:03 to the save of 21:27, and the
+author's fix of the Vrauk line up to the save of 21:35. Its goal
 is the author's: a line that breeds **Vrauks**, the animals whose Formic acid pY science pack 1
 needs (chapter 7, section 1). On the way the author built the supplies the Vrauks and the pack
 share: Petri dishes, a second moss block, Quartz and Glass, Plastic. Then came a batch of start-up
@@ -12,7 +13,7 @@ paddocks, two Reproductive complexes and a loop of 64 Water barrels. The author 
 to need a long time before it runs at full output; the next chapter is to finish pY science pack 1.
 Times are game time. Numbers come from the game's data, from the recorder's 10-minute production
 windows, from the saves of 18:03 and 21:27 (`tools/inspect-save.ps1`), from runs of the 21:27 save
-(`tools/vrauk-probe`, `tools/rate-probe`), from a belt test (`tools/belt-lab`) and from the
+(`tools/vrauk-probe`, `tools/rate-probe`) and of the 21:35 save, from a belt test (`tools/belt-lab`) and from the
 author's Factory Planner plan (`tools/planner-summary.js`). The author has not exported blueprints
 of the new blocks; they plan to export the whole pY science pack 1 line once it is done.
 
@@ -26,6 +27,14 @@ full **110 minutes** after the save, and the line makes the plan's 3 Vrauks a mi
 Separately, the base no longer holds its boards: with the Syngas Exhaust pipe gone, the Syngas
 Gasifiers fill up, and the Tar line, the zinc and the boards run down to 0.005 a second within the
 hour. With an Exhaust pipe put back, the boards stay at 0.1.
+
+The author then fixed the line (21:27–21:35): a filter on each of the eight Splitters, the
+Deconstruction planner sent to the side without a belt (a community trick: the filtered item never
+comes, so everything goes the other way), and 64 more Barrels, 128 in all. Measured on the save of 21:35, all 84 slots are full 100 minutes later; with 96 or
+100 barrels the start is as fast, but at full output the paddocks then wait a quarter of the time
+(section 6).
+The Syngas they leave for now: once pY science pack 1 is made, the Syngas will be used up, and so
+will the stored Gasoline; they will decide then (the author).
 
 ## The run at a glance
 
@@ -49,7 +58,9 @@ hour. With an Exhaust pipe put back, the boards stay at 0.1.
 | 21:05–21:15 | 64 Barrels handcrafted. The author's note: "做64个桶，这个数是我用同时进行的配方所需数乘估算得到的" (64 barrels, a number estimated from what the recipes running at the same time need) |
 | 21:15–21:25 | Two Reproductive complexes MK 01 handcrafted and placed at (−43, −315) and (−21, −315), with 100 Concrete each; a Slaughterhouse MK 01 handcrafted and kept for the next chapter |
 | 21:25 | The author's note: "循环物品形成环带避免堵塞" (items that circulate form a loop belt, so nothing jams) |
-| 21:27 | The save (end of the chapter): three Vrauks in one paddock, one in each Reproductive complex |
+| 21:27 | The save: three Vrauks in one paddock, one in each Reproductive complex |
+| 21:27–21:35 | The author's fix: the eight Splitters of the empty-barrel and Vrauk chains get a filter (Deconstruction planner, to the side without a belt), the Barrels stuck there are taken off, 64 more Barrels handcrafted; screenshots at 21:34–21:35 (section 6) |
+| 21:35 | The save (end of the chapter) |
 
 Production per second (10-minute windows from the recorder):
 
@@ -123,6 +134,8 @@ At the save the block stands full: 500 Petri dishes were made since 18:03, 240 u
 start-up among them), 100 wait in a chest at (−19.5, −280.5); 170 Basic substrate were made and
 none used yet (save statistics). The Molten glass comes from the Glassworks at y 348.5 (section 3).
 
+![North of the base: the five new Moss farms and the Moondrop greenhouse along the top, the Cellulose furnaces and Soil extractors at the left, the three Microorganism mines, the Basic substrate assembler and the Washer beside them, the three Seaweed crop facilities, and the Glassworks, Agar furnace and Petri dish assembler at the bottom left](../images/ch8-north.jpg)
+
 ## 3. Moss, glass, syngas and plastic
 
 - **A second moss block** at y −294 (x −37 to −7): five Moss farms MK 01 with 15 Moss each as
@@ -146,6 +159,8 @@ none used yet (save statistics). The Molten glass comes from the Glassworks at y
   **Gasoline** pumps in a row only while there is neither Hydrogen nor Syngas. A pipe holds one
   fluid at a time, so the fuel changes once the Glassworks have burnt the pipe empty. At the save
   the fuel pipe holds Syngas.
+![The south end of the pipes: at the left the three pump sets that choose the fuel, the seven Glassworks at the right with the Quartz ore belt above them](../images/ch8-glass.jpg)
+
 - **Molten glass** goes north again in the pipe of chapter 6 along x −104.5, now also to the Petri
   dish Glassworks at (−56.5, −267.5).
 - **Plastic** (19:10–19:20): a Biofactory MK 01 beside the Tar line at (−134.5, −198.5), 50 Aromatics
@@ -180,7 +195,7 @@ more every 1,067 s (18 minutes).
 
 ## 5. The Vrauk line
 
-<!-- ![The Vrauk line: the two Reproductive complexes at the left, the eight paddocks in two rows with the corridor between them, the Barreling machine and the Vrauk chest at the right end, the barrel loop along the bottom](../images/ch8-vrauks.jpg) -->
+![The Vrauk line after the fix: the three Sap extractors and the two Reproductive complexes at the left, the eight paddocks in two rows with the corridor between them, the Barreling machine and the Vrauk chest at the right end, the barrel loop along the bottom](../images/ch8-vrauks.jpg)
 
 The line stands north of the base, x −60 to 47, y −336 to −300 (save of 21:27):
 
@@ -256,6 +271,30 @@ in crafts: all 128. The author's 64 is twice what the recipes running at the sam
 minute; the bare arithmetic of section 1 gives 88 at best. Fewer moves, or Vrauks spread over many
 paddocks, make it longer.
 
+**The author's fix (21:27–21:35).** The eight Splitters got a filter instead of an output priority:
+the Deconstruction planner, sent to the side without a belt, a common trick in the community to
+keep items from sticking on a Splitter. That item never comes, so everything goes to the side where
+the chain goes on. Measured (`tools/belt-lab`): with a belt at the end that takes everything, the
+filter and the output priority both leave no item on the dead side; with the output belt backed
+up, the priority sends 4 items there, the filter none. The author took the stuck Barrels off and
+made 64 more: at 21:35 there are 128.
+
+**After the fix.** On the save of 21:35, measured the same way (*fill*): all 84 slots full 100
+minutes after the save, then 26 to 32 Vrauks every 10 minutes with the paddocks working 100 %.
+The author's question was whether 96 or 100 barrels would do; the probe took the difference off
+the belts when the save loaded:
+
+| Barrels | All 84 slots full | Paddocks working at full output | Vrauks every 10 minutes at full output | Cocoons on the belts at minute 150 |
+|---|---|---|---|---|
+| 128 (the save) | 100 minutes | 100 % | 26 to 32 | 286 |
+| 100 | 100 minutes | 75 % | 18 to 26 | 468 |
+| 96 | 100 minutes | 75 % | 20 to 24 | 483 |
+
+The start is as fast with 96: while few paddocks work, the barrels go round. At full output they
+do not: with 96 or 100 the paddocks wait for Water barrels a quarter of the time (they held 24 to
+36 of their 48), and the cocoons they cannot use pile up on the loop, still rising at minute 150.
+With 128, 27 to 35 Water barrels are on the belts at full output; the paddocks need that slack.
+
 **The rest of the base in the hour after the save.**
 
 Measured with `tools/rate-probe` (10-minute steps, per second), once as the save stands and once
@@ -281,7 +320,9 @@ by-product whose only way out is a product nobody takes stops the line that make
 **With an Exhaust pipe put back** the Gasifiers stood full 44 % of the hour, the line made 36
 Syngas, 32 Tar, 13.8 Aromatics and 0.34 to 0.36 Zinc plates a second throughout, and the boards
 held 0.1 a second. The test vents all the Syngas that reaches it; behind an Overflow valve (as
-the Coal gas in chapter 6) it would take only what the Glassworks leave.
+the Coal gas in chapter 6) it would take only what the Glassworks leave. The author leaves the
+Syngas as it is for now: once pY science pack 1 is made, it will be used up, and so will the
+stored Gasoline (the author).
 
 ## 7. Other changes
 
@@ -292,9 +333,10 @@ the Coal gas in chapter 6) it would take only what the Glassworks leave.
   then 10 to 16.
 - **Concrete** (20:05–20:15), for the Reproductive complexes (100 each): a Burner assembling machine
   at (−174.5, −145.5) beside the acetylene block, 5 Lime + 10 Sand + 10 Gravel + 100 Water → 5
-  Concrete in 0.5 s, with a Jaw crusher for Sand (4 Gravel → 3, 1 s), its own Offshore pump and a
-  Sinkhole; Lime and Gravel come from the acetylene block (data; save). 265 Concrete made in all,
-  200 used.
+  Concrete in 0.5 s, with a Jaw crusher for Sand (4 Gravel → 3, 1 s) and its own Offshore pump; Lime
+  and Gravel come from the acetylene block (data; save). The Sinkhole beside them was there before,
+  for Saline water (the author); it now stands at (−181.5, −150.5). 265 Concrete made in all, 200
+  used.
 - **Power:** two more Boilers and Steam engines beside the two at (−56, 382) (20:20–20:25); all 28
   Steam engines of the base are on one network.
 - **Red science for the samples.** The ten Generic earth DNA samples took 150 red science packs
@@ -311,14 +353,17 @@ the Coal gas in chapter 6) it would take only what the Glassworks leave.
   33 minutes of the chamber for five Vrauks.
 - Count every place where a circulating container waits: three crafts' worth in every machine on
   the loop (also the idle ones), 4 on every Splitter output without a belt, and the belts. The Vrauk
-  line holds 128 Water barrels at full output; with 64 it stops within half an hour.
-- A Splitter used as a two-tile drop point for two machines: set its output priority to the side
-  where the chain goes on, or it keeps 4 items on the other side for good.
+  line holds 128 Water barrels at full output; with 64 it stops within half an hour, with 96 or 100 it
+  starts as fast but runs at three quarters.
+- A Splitter used as a two-tile drop point for two machines: give it a filter with an item that
+  never comes (the Deconstruction planner) on the side without a belt, as the author did, or it
+  keeps 4 items there for good. Output priority alone also works until the chain backs up.
 - Put every new Vrauk back at once: from five Vrauks to all 84 slots took 110 minutes in the run
   that did.
 - Every by-product keeps a way out that does not wait for an unused product. With the Syngas only
   burnt in Glassworks that stand full, the boards fall to 0.005 a second within an hour of the
-  save; an Exhaust pipe put back keeps them at 0.1.
+  save; an Exhaust pipe put back keeps them at 0.1. The author leaves it until pY science pack 1
+  uses the Syngas.
 
 ## 9. How these facts were checked
 
@@ -338,13 +383,15 @@ the Coal gas in chapter 6) it would take only what the Glassworks leave.
   `belt_neighbours` and underground pairs from tile to tile.
 - **The start-up:** `tools/save-probe.ps1 -Probe vrauk-probe` on the save of 21:27: `as-is` for an
   hour; `fill` (the Vrauks from the chest into free slots every minute) with the what-ifs `prio`
-  and `barrels:64` for four hours, in 10-minute steps.
+  and `barrels:64` for four hours, in 10-minute steps; on the save of 21:35, `fill` as saved (128
+  barrels) for three hours and with `barrels:-28` and `barrels:-32` (100 and 96) for two and a half.
 - **An empty paddock at work:** in a copy of the save, 10 cocoons put into a paddock without Vrauks,
   its status, crafting progress and input read every 2 seconds.
 - **An hour of the base after the save:** `tools/save-probe.ps1 -Probe rate-probe -Ticks 219700
   -Variant 60,3600,600,<names>`, as it stands and with a Syngas Exhaust pipe put back when the save
   loads (`,+py-gas-vent@-106.5:-177.5:south`).
-- **The Splitter with one output belt:** `tools/belt-lab` (test 7), run with
+- **The Splitter with one output belt:** `tools/belt-lab` (test 7: no setting, output priority, the
+  Deconstruction planner as filter, and the last two with the output belt backed up), run with
   `tools/run-probe.ps1 belt-lab -Ticks 3700 -Work C:\tmp\cf-save`.
 - Data: the current dump of the author's mods (`C:\tmp\cf-save\data\script-output\data-raw-dump.json`):
   recipes, machine speeds, module slots and base effects, the barrel results the production
