@@ -59,7 +59,7 @@ will the stored Gasoline; they will decide then (the author).
 | 21:15–21:25 | Two Reproductive complexes MK 01 handcrafted and placed at (−43, −315) and (−21, −315), with 100 Concrete each; a Slaughterhouse MK 01 handcrafted and kept for the next chapter |
 | 21:25 | The author's note: "循环物品形成环带避免堵塞" (items that circulate form a loop belt, so nothing jams) |
 | 21:27 | The save: three Vrauks in one paddock, one in each Reproductive complex |
-| 21:27–21:35 | The author's fix: the eight Splitters of the empty-barrel and Vrauk chains get a filter (Deconstruction planner, to the side without a belt), the Barrels stuck there are taken off, 64 more Barrels handcrafted; screenshots at 21:34–21:35 (section 6) |
+| 21:27–21:35 | The author's fix: the eight Splitters of the empty-barrel and Vrauk chains get a filter (Deconstruction planner, to the side without a belt), the Barrels stuck there are taken off, 64 more Barrels handcrafted; the Moondrop greenhouse filled to 16 Moondrops (section 3); screenshots at 21:34–21:35 (section 6) |
 | 21:35 | The save (end of the chapter) |
 
 Production per second (10-minute windows from the recorder):
@@ -140,10 +140,18 @@ none used yet (save statistics). The Molten glass comes from the Glassworks at y
 
 - **A second moss block** at y −294 (x −37 to −7): five Moss farms MK 01 with 15 Moss each as
   modules (speed 1.0), on the recipe 100 Muddy sludge + 100 Carbon dioxide + 20 Stone → 16 Moss in
-  80 s: **1.0 Moss a second** from the five, beside the ten of chapter 4. A Moondrop greenhouse with
-  14 Moondrops makes their Carbon dioxide (200 per 5 s at speed 0.875, 35 a second; they use 6.25),
-  a Soil extractor and a Washer their Muddy sludge, a Jaw crusher their Stone from Stone bricks
-  (data). The plan needs 55.5 Moss a minute for the pack and the Vrauks; the five give 60.
+  80 s: **1.0 Moss a second** from the five, beside the ten of chapter 4. A Moondrop greenhouse
+  makes their Carbon dioxide, a Soil extractor and a Washer their Muddy sludge, a Jaw crusher their
+  Stone from Stone bricks (data). The plan needs 55.5 Moss a minute for the pack and the Vrauks; the
+  five give 60.
+- **The greenhouse's 16 slots.** It was built with 14 Moondrops, a mistake the author corrected in
+  the fix of 21:27–21:35: in the 21:35 save it holds 16. The T.U.R.D. upgrade Carbon capture adds a
+  module with speed +8 and consumption +2 to every greenhouse, and each Moondrop adds speed +1 and
+  nothing to consumption (data), so the speed is 0.0625 × (8 + Moondrops): 1.375 with 14, 1.5 with
+  16 (both saves), 200 Carbon dioxide per 5 s, that is 55 or 60 a second. The five farms use 6.25,
+  so 14 were fast enough (the author), but the greenhouse draws the same 1.35 MW while it works
+  either way, and with 16 it works 1.375/1.5 of the time for the same gas: 8 % less energy, which
+  is why the author filled it.
 - **Quartz and glass.** Molten glass is made from Quartz ore (6 → 10, 5 s; data). Six more Crystal
   mines MK 01 on the quartz field (eight in all) and six more Glassworks at y 348.5 (seven) make
   it: up to 14 Molten glass a second in the windows ending 19:20 and 19:30, and the Quartz ore 7.8 to
@@ -400,4 +408,4 @@ stored Gasoline (the author).
 - No blueprint: the author will export the whole pY science pack 1 line when it is done.
 - The screenshots: taken by the author with the companion mod (`/pt-shots`).
 
-Next: chapter 9, pY science pack 1 (to come).
+Next: [chapter 9, pY science pack 1](09-py-science-pack-1.md).

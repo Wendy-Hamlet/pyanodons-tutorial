@@ -17,6 +17,7 @@ scripts used, so you can re-check them against your own mod versions.
 6. [Simple circuit boards](chapters/06-simple-circuit-boards.md)
 7. [Copper screening, titanium smelting and duralumin](chapters/07-copper-screening-titanium-duralumin.md)
 8. [Vrauks](chapters/08-vrauks.md)
+9. [pY science pack 1](chapters/09-py-science-pack-1.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -129,7 +130,8 @@ parameters for yours.
   the foundries up with Coke; records every foundry's output, status and
   missing ingredient), and `rate-probe/`: the base as it stands over a longer window than the
   inspector's minute (variant `WARM,MEASURE` in seconds, e.g. `-Ticks 39700 -Variant 60,600`):
-  what it makes and uses per second, and every machine's and drill's status, sampled each second.
+  what it makes and uses per second, and every machine's and drill's status, sampled each second
+  (Boilers and Steam engines grouped by the row they stand in).
   `WARM,MEASURE,STEP,names` adds a timeline: every STEP seconds what was made and used of each
   named item or fluid, the status and fluid boxes of each machine named by its tile (`@x:y`), and
   every machine group whose usual status changed; a last field `+entity@x:y[:direction]` places that entity

@@ -2,7 +2,8 @@
 -- (tools/save-probe.ps1 runs it in a copy of the save; nothing in the base is changed).
 -- After a warm-up it takes the force's production statistics, then samples the status of every
 -- crafting machine and drill once a second, grouped by name and recipe (drills: by mined
--- resource), and at the end prints what the whole base made and used per second.
+-- resource; Boilers and Steam engines: by the row they stand in), and at the end prints what the
+-- whole base made and used per second.
 -- Variant: "WARM,MEASURE" in seconds (default "60,600"), optionally ",STEP,name;name;..." for a
 -- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
 -- used per second in that step, and every machine group whose most frequent status changed; a
@@ -37,6 +38,10 @@ local function snapshot(surface)
 end
 
 local function group_key(e)
+  -- Boilers and Steam engines have no recipe: grouped by the row they stand in.
+  if e.type == "boiler" or e.type == "generator" then
+    return string.format("%s at y %.1f", e.name, e.position.y)
+  end
   if e.type == "mining-drill" then
     local t = e.mining_target
     return e.name .. " on " .. (t and t.name or "-")
@@ -120,7 +125,7 @@ script.on_nth_tick(60, function()
     storage.samples = {}
     storage.step_samples = {}
     storage.machines = surface.find_entities_filtered({ force = "player",
-      type = { "assembling-machine", "furnace", "mining-drill" } })
+      type = { "assembling-machine", "furnace", "mining-drill", "boiler", "generator" } })
     return
   end
   if storage.done then return end
