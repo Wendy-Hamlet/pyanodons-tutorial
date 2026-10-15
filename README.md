@@ -15,7 +15,7 @@ scripts used, so you can re-check them against your own mod versions.
 4. [Aluminium mining, glass making, log production and red science](chapters/04-aluminium-glass-logs.md)
 5. [Tin, zinc and lead smelting](chapters/05-tin-zinc-smelting.md)
 6. [Simple circuit boards](chapters/06-simple-circuit-boards.md)
-7. [Copper screening, titanium smelting and duralumin](chapters/07-copper-screening-titanium-duralumin.md) (first part: copper and titanium)
+7. [Copper screening, titanium smelting and duralumin](chapters/07-copper-screening-titanium-duralumin.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)

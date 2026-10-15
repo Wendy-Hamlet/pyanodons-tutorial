@@ -3,25 +3,29 @@
 [中文版](07-copper-screening-titanium-duralumin.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 6](06-simple-circuit-boards.md)
 
-This chapter follows the same recorded run from 16:40. It has three steps, and this first part
-covers the first two, built from 16:40 to the save of 17:48: **copper screening** (Copper
-processing - Stage 1: Copper ore screened and crushed before it is smelted) and **titanium**
-(Titanium ore mined with Acetylene and smelted in Stone furnaces). The third step, Duralumin, follows
-in the second part. The order is set by the buildings: Duralumin is made only in a Smelter MK 01,
-and the Smelter needs 15 Titanium plates (data). The author's Factory Planner plan for pY science
-pack 1 also needs Titanium plates, for its Slaughterhouse and Reproductive complex (section 1).
+This chapter follows the same recorded run from 16:40. It has three steps. The first two were built
+from 16:40 to the save of 17:48: **copper screening** (Copper processing - Stage 1: Copper ore
+screened and crushed before it is smelted) and **titanium** (Titanium ore mined with Acetylene and
+smelted in Stone furnaces). The third, **Duralumin**, followed from 17:50 to the save of 18:03, and
+on purpose it is only a small temporary line: one Smelter fed from chests by hand (section 6). The
+order is set by the buildings: Duralumin is made only in a Smelter MK 01, and the Smelter needs
+15 Titanium plates (data). The author's Factory Planner plan for pY science pack 1 also needs
+Titanium plates, for its Slaughterhouse and Reproductive complex (section 1).
 Times are game time. Numbers come from the game's data, from the recorder's 10-minute production
-windows, from the save of 17:48 (`tools/inspect-save.ps1`), from an hour after that save in
-10-minute steps and half an hour two hours after it (`tools/rate-probe`), and from the author's
-Factory Planner plan (`tools/planner-summary.js`). The author has not exported blueprints of the
-new blocks.
+windows, from the saves of 17:48 and 18:03 (`tools/inspect-save.ps1`), from an hour after each
+save in 10-minute steps and half an hour two hours after the first (`tools/rate-probe`), and from
+the author's Factory Planner plan (`tools/planner-summary.js`). The author has not exported
+blueprints of the new blocks.
 
 The result: the screened copper makes **3.0 Copper plates a second** from one belt of Copper ore
 (15 a second), against 0.54 in the window ending 16:00 from the old furnaces, which take 8 ore per
 plate where screening takes 5. Eleven Fluid mining drills make **2.75 Titanium ore a second** with
 11 Acetylene, and the work of four of twelve Stone furnaces turns it into **0.275 Titanium plates a second**,
 which gather in two chests. In the hours after the save nothing stops, and the boards hold 0.1 a
-second, also once the aluminium drills' ore is gone (section 4).
+second, also once the aluminium drills' ore is gone (section 4). Then one Smelter MK 01, burning the
+Naphthalene oil the Tar line had stored, makes **0.197 Duralumin a second** from chests of
+Aluminium and Copper plates: about 400 in all from the plates the author put in, more than the
+about 345 that the machines starting the Vrauks need (section 6).
 
 ## The run at a glance
 
@@ -38,7 +42,12 @@ second, also once the aluminium drills' ore is gone (section 4).
 | 17:33–17:38 | Eleven Fluid mining drills MK 01 on the titanium field at x 264 to 290, y 414 to 421, handcrafted in batches (with Pipes, Steam engines, Stone furnaces, Burner mining drills) |
 | 17:39–17:46 | The rest of the Acetylene pipe (a Check valve at (201.5, 414.5)), about 620 tiles of belt along y 417 for the ore, twelve Stone furnaces at y 419 (x −67 to −45) with two chests, and the Raw coal belt for the drills |
 | 17:47 | Factory Planner: the author's factory "pY科技包1型" (pY science pack 1) saved again (first written at 14:45) |
-| 17:48 | The save |
+| 17:48 | The save (end of the first two steps) |
+| 17:50–17:56 | The aluminium drills on the last of their ore: three Fluid mining drills taken up and one put down again at (−7.5, 27.5), with 735 ore under it; two are left (section 6) |
+| 17:55–17:58 | The Smelter MK 01 handcrafted (with its ten Steam engines) and placed at (−54.5, 43.5) |
+| 17:57 | Five Mechanical inserters at x −91.5 (y 22.5 to 26.5) in place of a piece of belt; they move Ash from the belt at x −90.5 onto the one at x −92.5 |
+| 18:00–18:01 | Three Wooden chests with one inserter each beside the Smelter, and a Naphthalene oil pipe to it from the Tar line's pond: 153 tiles of Pipe to ground |
+| 18:03 | The save (end of the chapter) |
 
 Production per second (10-minute windows from the recorder). Titanium ore does not appear yet:
 the drills started after 17:40.
@@ -210,14 +219,87 @@ starting two hours after the save):
 - **A second Gasifier for Syngas from Coal gas** (17:18), beside the first at the Tar line's north
   end. Each takes at most 16.7 Coal gas a second (data); chapter 6 found that one is not enough once
   the aluminium drills stop. With two, the boards hold 0.1 a second (section 4).
-- **Aluminium for the second part.** Duralumin takes 4 Aluminium plates each. The aluminium drills
-  of chapter 4 have mined their part of the field (section 4); at the save there are 1,600
-  Aluminium plates in the chest at (−69.5, 29.5) and 122 in the author's inventory, enough for 430
-  Duralumin. The aluminium fields near the base: around (−3, 54), 1.2 million in its chunks (the
-  one mined so far), and around (96, −160), 6.5 million (save snapshot). Aluminium ore needs 10
-  Coal gas per ore (chapter 4).
+- **Aluminium for Duralumin.** Duralumin takes 4 Aluminium plates each. The aluminium drills
+  of chapter 4 have mined their part of the field (section 4); at the save there are 2,929
+  Aluminium plates in the two chests at (−70.5, 29.5) and (−69.5, 29.5) (1,329 and 1,600), 100 in a
+  chest at (−62.5, 365.5) and 122 in the author's inventory: 3,151, enough for 787 Duralumin. The
+  aluminium fields near the base: around (−3, 54), 1.2 million in its chunks (the one mined so
+  far), and around (96, −160), 6.5 million (save snapshot). Aluminium ore needs 10 Coal gas per
+  ore (chapter 4).
 
-## 6. Checklist
+## 6. Duralumin
+
+**A batch, not a line.** Before building, the author asked what Duralumin is needed for now (data;
+the author's plan):
+
+- The buildings of the pY science pack 1 plan need none. But the plan's Formic acid comes from
+  Vrauks, and the first Vrauks can only be made in a **Creature chamber MK 01** (recipe: 10 Native
+  flora, 3 Moss gene samples, 1 Vrauk codex, 2 Generic earth DNA samples and 10 Petri dishes → 1
+  Vrauk in 400 s). The Vrauk paddock MK 01 and the Reproductive complex MK 01 have a base speed of
+  −100 % and work only with Vrauks put in as modules (10 and 2 slots). The Creature chamber and the
+  machines for its ingredients are made with Duralumin:
+
+| Machine (data) | For | Duralumin | Titanium plates | Plastic bars |
+|---|---|---|---|---|
+| Creature chamber MK 01 (its recipe uses up a Gene lab MK 01, which uses up a Biofactory MK 01 and two PyTanks) | the first Vrauks | 130 | 95 | 40 |
+| Gene lab MK 01 | Moss gene samples: 2 Petri dishes + 20 Moss, 10 s | 100 | 55 | 20 |
+| Data array | Generic earth DNA samples: 1 Iron chest + 15 red science + 10 Biosamples, 25 s | 50 | 100 | – |
+| Incubator MK 01 | Biosamples: 1 Bio container (2 Titanium plates in it) + 15 Native flora, 10 s | 15 | 30 | – |
+| Biofactory MK 01 | Plastic bars: 50 Aromatics + 100 Syngas → 1, 1.5 s, the only recipe unlocked | 50 | 15 | – |
+| **Total** | | **345** | **295** | **60** |
+
+- Of the 18 technologies pY science pack 1 opens, two need Duralumin: Crusher 2 (Secondary crusher
+  MK 01, 20) and Composting (Compost plant MK 01, 30 and 10 Intermetallics). It is used steadily
+  only later: in Burner assembling machines MK 02 (5 each), locomotives and cargo wagons, and
+  Intermetallics, whose Vitreloy takes 3 Duralumin per 2 (data).
+
+So the author made one batch, from the Aluminium plates already in store, and leaves a full line
+(with a new aluminium mine) for later.
+
+**The line** (17:55–18:01):
+
+- **One Smelter MK 01** (13 × 13) at (−54.5, 43.5), handcrafted on the spot. Duralumin takes 4
+  Aluminium plates and 2 Copper plates in 4 s: 1 Aluminium plate a second at full speed.
+- **Three Wooden chests** on its east side at x −46.5, each with one Mechanical inserter: Copper
+  plates (y 37.5), Aluminium plates (y 38.5), and the Duralumin out (y 39.5). The author filled them
+  by hand: at the save 1,440 Copper plates and 1,449 Aluminium plates are in them, and 36 Duralumin
+  already made. The old aluminium chests by the furnaces at y 29.5 were emptied; 1,495 Aluminium
+  plates are in the author's inventory.
+- **Fuel: Naphthalene oil**, which the Tar line had been storing for later (chapter 6). A new line of
+  Pipe to ground, 153 tiles, takes it from the pipe of the Tar line's Tailings pond at (−139, −56)
+  south along x −117.5 and east along y 43.5 to the Smelter. It burns any fluid fuel at 10 MW
+  (data); Naphthalene oil has 0.3 MJ, so at full speed 33.3 a second.
+
+<!-- ![The duralumin line: the Smelter MK 01, the Naphthalene oil pipe coming in on the left, the three chests with their inserters on the right](../images/ch7-duralumin.jpg) -->
+
+**Measured** (a copy of the save of 18:03, an hour in 10-minute steps after a minute of warm-up;
+`tools/rate-probe`):
+
+| Minutes after 18:03 | Duralumin | Aluminium plates used | Naphthalene oil made / used | Naphthalene oil in the pond (end of step) | Aluminium ore | Boards |
+|---|---|---|---|---|---|---|
+| 0–10 | 0.198 | 0.793 | 16.5 / 26.3 | 108,985 | 1.05 | 0.100 |
+| 10–20 | 0.197 | 0.787 | 16.7 / 26.3 | 103,218 | 1.04 | 0.100 |
+| 20–30 | 0.192 | 0.760 | 16.5 / 25.4 | 97,912 | 0.73 | 0.100 |
+| 30–40 | 0 | 0 | 16.5 / 0 | 107,741 | 0.55 | 0.100 |
+| 40–60 | 0 | 0 | 16.6 / 0 | 127,499 | 0.56 | 0.100 |
+
+- **0.197 Duralumin a second, 79 % of full speed.** The Smelter works 79 % of the time and waits
+  for Aluminium plates the rest: one Mechanical inserter moves 0.789 items a second from a chest
+  (chapter 4), and the recipe takes 1 a second. Two inserters on the Aluminium plates, or one
+  electric Inserter (1.25 a second; it costs 1 Duralumin), would let it run at full speed.
+- **About 400 Duralumin in all.** Between minutes 20 and 30 the Aluminium chest is empty and the
+  Smelter stops: its 1,449 plates made 362 more, about 400 with the 36 of the save, more than the
+  345 of the table. The 1,495 plates in the author's inventory would make 373 more.
+- **The fuel lasts.** While the Smelter runs, the pond loses 10 Naphthalene oil a second (115,427 at
+  the save, 97,912 after half an hour); the Tar line makes 16.5 a second, enough to keep one Smelter
+  at half speed for good, and the pond fills again once it stops (it holds 1,000,000; data).
+- **Nothing else changes.** The boards stay at 0.100 a second in every step, Copper plates at 2.9
+  to 3.0 made, Titanium plates at 0.27 to 0.28.
+- **The last aluminium ore.** The drill put down at (−7.5, 27.5) mines its 735 ore in about 25
+  minutes (Aluminium ore 1.05 → 0.55 a second, each drill 0.5); the one at (−12.5, 33.5) has 1,911
+  ore under it, about an hour. After that only Soot separation gives Aluminium ore (section 4).
+
+## 7. Checklist
 
 - Screen copper before smelting it (Copper processing - Stage 1, red science only): 5 Copper ore
   per plate instead of 8, and one Stone with each plate. One belt of ore (15 a second) takes nine
@@ -231,8 +313,15 @@ starting two hours after the save):
   call (here the lead drills, then the titanium drills), and cut a long line into segments under
   320 tiles with Check valves (no power needed).
 - Duralumin is made only in a Smelter MK 01, which needs 15 Titanium plates: titanium comes first.
+- Before building a line for a new material, look at what it is needed for now. Before pY science
+  pack 1, Duralumin is needed once: about 345 for the machines that start the Vrauks. One Smelter
+  fed from chests made about 400 from the Aluminium plates in store in half an hour.
+- Duralumin takes 1 Aluminium plate a second, more than one Mechanical inserter brings (0.789): use
+  two, or an electric Inserter.
+- A stored by-product fluid is fuel: the Smelter burns Naphthalene oil (0.3 MJ; 33.3 a second at
+  full speed), and the Tar line's 16.5 a second keep one Smelter at half speed.
 
-## 7. How these facts were checked
+## 8. How these facts were checked
 
 - The run: the companion mod's recorder (run `2652821414-0`), read with `tools/recorder-phases.js`
   (timeline in 5-minute slices) and `tools/recorder-log.js` (production per 10-minute window, and
@@ -248,10 +337,16 @@ starting two hours after the save):
   60,3600,600,<names>`, with a titanium drill, the Overflow valve, an acetylene Gasifier and a lead
   drill read every step; **half an hour two hours later:** `-Ticks 540100 -Variant
   7200,1800,600,<names>`, with the two Syngas Gasifiers read every step.
+- The save of 18:03 (copied before reading; consistency check passed): `tools/inspect-save.ps1
+  -Ticks 3700`; what changed since 17:48 from the two saves' `entities.json`; **an hour after it:**
+  `tools/save-probe.ps1 -Probe rate-probe -Ticks 219700 -Variant 60,3600,600,<names>`, with the
+  Smelter and the Naphthalene oil pond read every step.
+- The machines that start the Vrauks: their building recipes from the data, expanded through the
+  machines that go into them (Gene lab, Biofactory, PyTanks).
 - Data: the current dump of the author's mods (`C:\tmp\cf-save\data\script-output\data-raw-dump.json`):
   recipes, machine speeds, power and sizes, the resources' mining fluids, stack and chest sizes,
   Pipe to ground reach, which technology unlocks what; English names from the mods' `locale/en`.
 - No blueprint: the author has not exported the new blocks.
 - The screenshots: taken by the author with the companion mod (`/pt-shots`).
 
-Next: the second part of chapter 7, Duralumin (to come).
+Next: chapter 8, Vrauks (to come).

@@ -164,7 +164,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | Lead ore is mined with Acetylene (10 per ore). Lead plate (Solder - Stage 1): 6 ore → 1 plate in 10 s, 0.6 ore/s a Stone furnace. A Simple circuit board takes 2.67 Lead plates (Solder: 2 Tin + 4 Lead → 1); Lead also makes tanks (the PyTank (40 kL) 30, without Duralumin). The author's six drills: 3.02 ore and 0.50 plates a second. | Data; `tools/rate-probe` (chapter 5) |
 | Acetylene (Acetylene technology): Limestone (Soil extractor, 0.4/s) → Lime (High pressure furnace, 15 Coke + 10 Limestone → 10 Lime + 100 Carbon dioxide, 5 s) → Calcium carbide (7 Coke + 2 Lime → 10, 4 s) → Acetylene (Gasifier, 300 Water + 10 carbide → 100 Acetylene + 25 Slaked lime, 8 s); an Evaporator dries the Slaked lime back (60 → 1 Lime + 1 Gravel, 2 s). Per Lead ore 0.94 Coke and 0.16 Limestone. Balanced: 2 extractors, 1 Lime furnace, 2 carbide furnaces, 4 Gasifiers for 50 Acetylene/s. | Data; bench `acetylene`: 49.5/s once every inserter reaches the belt (chapter 5); the author's corrected block 49.75/s (chapter 6) |
 
-## Copper screening and titanium
+## Copper screening, titanium and duralumin
 
 | Fact | Source |
 |---|---|
@@ -172,6 +172,8 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | A resource's `fluid_amount` is per 10 ore: Titanium ore takes 4 Acetylene an ore (40), Lead ore 10 (100). Measured: 2.75 Titanium ore and 1.25 Lead ore a second used 23.0 Acetylene (23.5 from the data). | Data; `tools/rate-probe` (chapter 7) |
 | Titanium plate (Alloy smelting - Stage 1): 40 Titanium ore → 4 plates in 60 s in a furnace, 0.667 ore a second a Stone furnace. A Fluid mining drill MK 01 mines 0.25 Titanium ore a second (speed 0.5, mining time 2). The author's eleven drills: 2.75 ore and 0.275 plates a second, the work of four furnaces. | Data; `tools/rate-probe` (chapter 7) |
 | Duralumin (Alloy smelting - Stage 1): 4 Aluminium plates + 2 Copper plates → 1 in 4 s, only in a Smelter MK 01 (10 MW of fluid fuel), whose recipe takes 15 Titanium plates, 40 Steel plates, 50 Ceramic and 5 Simple circuit boards among others. On the way to pY science pack 1, Titanium plates also go into the Slaughterhouse MK 01 (40) and the Reproductive complex MK 01 (100), for the Formic acid of the Glassware's Rubber stoppers. | Data; the author's Factory Planner plan (chapter 7) |
+| Before pY science pack 1, Duralumin is needed once: about 345 for the machines that start the Vrauks. The first Vrauks come only from a Creature chamber MK 01 (400 s each), since the Vrauk paddock and the Reproductive complex have base speed −100 % and run only with Vrauks as modules. Creature chamber 130 (with the Gene lab, Biofactory and PyTanks it uses up), Gene lab MK 01 for Moss gene samples 100, Data array 50, Incubator MK 01 15, Biofactory MK 01 for Plastic bars 50; also 295 Titanium plates and 60 Plastic bars. Steady use comes later (Burner assembling machine MK 02, trains, Intermetallics). | Data (chapter 7) |
+| One Smelter MK 01 fed from chests, one Mechanical inserter per chest: 0.197 Duralumin a second, 79 % of full speed, because the recipe takes 1 Aluminium plate a second and the inserter brings 0.789. It burns Naphthalene oil (0.3 MJ): 26.3 a second at that speed, 33.3 at full; the Tar line's 16.5 a second keep one Smelter at half speed. | `tools/rate-probe`, the save of 18:03 (chapter 7) |
 
 ## Circuit boards
 
@@ -285,6 +287,12 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
    ingredient before taking the old one away. The screened copper's surplus (3 plates a second,
    1.1 used) filled the bus and chests within two hours, after which the block makes what is
    used: the expected jam on a surplus.
+24. **A one-off need is a batch, not a line.** Before building a line for a new material, look at
+   what it is needed for now. Before pY science pack 1 Duralumin is needed once, for the machines
+   that start the Vrauks (about 345), so the author made it in one Smelter fed from chests by hand,
+   from the Aluminium plates in store, with the Naphthalene oil the Tar line had stored as fuel:
+   about 400 in half an hour (chapter 7). The full line, with a new aluminium mine, waits until
+   Duralumin is needed steadily.
 
 ## Trains
 
