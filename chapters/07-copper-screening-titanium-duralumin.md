@@ -45,7 +45,7 @@ about 345 that the machines starting the Vrauks need (section 6).
 | 17:48 | The save (end of the first two steps) |
 | 17:50–17:56 | The aluminium drills on the last of their ore: three Fluid mining drills taken up and one put down again at (−7.5, 27.5), with 735 ore under it; two are left (section 6) |
 | 17:55–17:58 | The Smelter MK 01 handcrafted (with its ten Steam engines) and placed at (−54.5, 43.5) |
-| 17:57 | Five Mechanical inserters at x −91.5 (y 22.5 to 26.5) in place of a piece of belt; they move Ash from the belt at x −90.5 onto the one at x −92.5 |
+| 17:57 | A small repair beside the main work: the belt bringing Ash to the Ash loop had jammed. The loop's outer lane was full, and the incoming Ash also ran on one lane, the right one, so neither joining the belt straight on nor a Splitter helped (the author). Five Mechanical inserters at x −91.5 (y 22.5 to 26.5), in place of a piece of belt, now lift the Ash from the belt at x −90.5 onto the inner lane of the loop at x −92.5 |
 | 18:00–18:01 | Three Wooden chests with one inserter each beside the Smelter, and a Naphthalene oil pipe to it from the Tar line's pond: 153 tiles of Pipe to ground |
 | 18:03 | The save (end of the chapter) |
 
@@ -122,7 +122,7 @@ and 3.00 Copper (grade 1) made and used, **3.01 Copper plates a second**: exactl
 sums. The screeners work 99 % of the time, the crushers 89 %, the copper furnaces 30 % (the work of
 three). In the window ending 16:00 the old furnaces made 0.54 plates from 4.33 ore (8 to 1).
 
-<!-- ![Copper screening: the drill field at the bottom right, the screeners in a row, the crushers, the copper furnaces and the brick furnaces at the left by the bus](../images/ch7-screening.jpg) -->
+![Copper screening: the drill field at the bottom right, the screeners in a row, the crushers, the copper furnaces and the brick furnaces at the left by the bus](../images/ch7-screening.jpg)
 
 **The gap while it was rebuilt.** The old copper mine went at 16:43–16:45 and the new drills came
 at 17:20–17:23. Meanwhile the Copper plates on the bus ran out: the base used 0.27 a second in the
@@ -171,9 +171,9 @@ of the column. Then the furnaces fill and the drills stop: normal while nothing 
 (techniques principle 23). The first users are the Smelter MK 01 (15) and the plan's buildings (40
 and 100).
 
-<!-- ![The titanium mine: eleven Fluid mining drills in two rows with the ore belt between them; the Acetylene pipe comes in from the left, Raw coal runs along the top and Ash leaves along the bottom](../images/ch7-titanium-mine.jpg) -->
+![The titanium mine: eleven Fluid mining drills in two rows with the ore belt between them; the Acetylene pipe comes in from the left, Raw coal runs along the top and Ash leaves along the bottom](../images/ch7-titanium-mine.jpg)
 
-<!-- ![The titanium furnaces: twelve Stone furnaces, the ore arriving from the right, the two chests at the left](../images/ch7-titanium-smelting.jpg) -->
+![The titanium furnaces: twelve Stone furnaces, the ore arriving from the right, the two chests at the left](../images/ch7-titanium-smelting.jpg)
 
 ## 4. An hour after the save of 17:48
 
@@ -270,7 +270,7 @@ So the author made one batch, from the Aluminium plates already in store, and le
   south along x −117.5 and east along y 43.5 to the Smelter. It burns any fluid fuel at 10 MW
   (data); Naphthalene oil has 0.3 MJ, so at full speed 33.3 a second.
 
-<!-- ![The duralumin line: the Smelter MK 01, the Naphthalene oil pipe coming in on the left, the three chests with their inserters on the right](../images/ch7-duralumin.jpg) -->
+![The duralumin line: the Smelter MK 01, the Naphthalene oil pipe coming in on the left, the three chests with their inserters on the right](../images/ch7-duralumin.jpg)
 
 **Measured** (a copy of the save of 18:03, an hour in 10-minute steps after a minute of warm-up;
 `tools/rate-probe`):

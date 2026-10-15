@@ -15,6 +15,7 @@ context.
 | A mining drill drops onto the belt lane **nearest** to it. | Engine, `tools/belt-lab` |
 | An inserter drops onto the belt lane **farthest** from it. | Engine, `tools/belt-lab` |
 | Side-loading puts everything from the feeding belt onto the lane of the target belt nearest the feeding belt. | Engine (all designs below) |
+| To move items onto the other lane, use inserters (they drop on the far lane). A belt joined straight on keeps its lanes, and so does a Splitter: the author's Ash loop jammed with its outer lane full while the incoming Ash ran on that same lane, and five Mechanical inserters onto the inner lane fixed it. | The author's game (chapter 7), the inserter lane from `tools/belt-lab` |
 
 **Lane filtering with an underground belt.** A belt that runs into the *side* of an underground
 belt tile lets only one of its lanes through:
