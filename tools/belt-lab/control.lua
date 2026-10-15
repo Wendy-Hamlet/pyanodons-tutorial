@@ -4,6 +4,8 @@
 --   2. Which lane a burner mining drill drops onto (drill west / east of a north-going belt).
 --   3. Which lane an inserter drops onto.
 --   4. Mechanical inserter throughput from a full belt into a chest.
+--   5. Which lanes a Splitter's outputs carry when its input has items on one lane only.
+--   6. The author's lane balancer: a Splitter whose two outputs side-load one belt from both sides.
 -- Lanes are named by compass side of a north-going belt: W (left, line 1) and E (right, line 2).
 
 local N, E, S, W = defines.direction.north, defines.direction.east, defines.direction.south, defines.direction.west
@@ -114,10 +116,56 @@ script.on_init(function()
   local taker = surface.create_entity({ name = "burner-inserter", position = { 21.5, 45.5 }, direction = W, force = "player" })
   if taker.pickup_position.x > 21.5 then taker.direction = E end
   s.taker_chest = surface.create_entity({ name = "iron-chest", position = { taker.drop_position.x, taker.drop_position.y }, force = "player" })
+
+  -- 5. Splitter: a north-going belt fed on its E lane only, into a Splitter; both outputs run
+  --    north 20 tiles. 6. The author's lane balancer: the same Splitter, then its two outputs
+  --    side-loaded into one belt from opposite sides (west output from the west, east from the east).
+  local function feed_e_lane(x)
+    -- A belt tile behind the fed one keeps it straight, so the side feed lands on the E lane only
+    -- (with nothing behind it the fed tile turns into a curve and carries both lanes).
+    for y = 61, 71 do belt(surface, x, y, N) end
+    belt(surface, x + 1, 70, W); source(surface, x + 1, 70, W, "iron-ore")
+    must(surface.create_entity({ name = "splitter", position = { x + 1, 60.5 }, direction = N, force = "player" }), "splitter")
+  end
+  local function column(x, y1, y2)
+    local list = {}
+    for y = y1, y2 do list[#list + 1] = belt(surface, x, y, N) end
+    return list
+  end
+  feed_e_lane(-60)
+  s.split = { west = column(-60, 40, 59), east = column(-59, 40, 59) }
+  feed_e_lane(60)
+  -- West output: north to y 55, then east into the merged belt's west side.
+  for y = 56, 59 do belt(surface, 60, y, N) end
+  for x = 60, 63 do belt(surface, x, 55, E) end
+  -- East output: east along y 58 to x 65, north to y 56, then west into the merged belt's east side.
+  belt(surface, 61, 59, N)
+  for x = 61, 64 do belt(surface, x, 58, E) end
+  for y = 56, 58 do belt(surface, 65, y, N) end
+  belt(surface, 65, 55, W)
+  s.merged = column(64, 25, 55)
 end)
+
+local T5 = 1200 -- the lane counts are read after 20 s, before any output belt backs up
+
+local function lane_sum(belts)
+  local w, e = 0, 0
+  for _, b in ipairs(belts) do
+    w = w + b.get_transport_line(1).get_item_count()
+    e = e + b.get_transport_line(2).get_item_count()
+  end
+  return w, e
+end
 
 script.on_event(defines.events.on_tick, function(event)
   local s = storage.s
+  if s and event.tick == T5 then
+    local ww, we = lane_sum(s.split.west)
+    local ew, ee = lane_sum(s.split.east)
+    out("splitter fed on the E lane only, after %d s: west output W %d E %d; east output W %d E %d", T5 / 60, ww, we, ew, ee)
+    local mw, me = lane_sum(s.merged)
+    out("splitter + two-sided merge, fed on the E lane only, after %d s: merged belt W %d E %d", T5 / 60, mw, me)
+  end
   if not s or event.tick ~= T then return end
   for _, c in ipairs(s.cases) do
     if c.chest then

@@ -15,7 +15,10 @@ context.
 | A mining drill drops onto the belt lane **nearest** to it. | Engine, `tools/belt-lab` |
 | An inserter drops onto the belt lane **farthest** from it. | Engine, `tools/belt-lab` |
 | Side-loading puts everything from the feeding belt onto the lane of the target belt nearest the feeding belt. | Engine (all designs below) |
-| To move items onto the other lane, use inserters (they drop on the far lane). A belt joined straight on keeps its lanes, and so does a Splitter: the author's Ash loop jammed with its outer lane full while the incoming Ash ran on that same lane, and five Mechanical inserters onto the inner lane fixed it. | The author's game (chapter 7), the inserter lane from `tools/belt-lab` |
+| A belt tile fed from one side only, with no belt behind it, is a curve, not a side-load: both lanes of the feeding belt go on. With a belt behind it (even an empty one) it side-loads onto the near lane. | Engine, `tools/belt-lab` |
+| A Splitter splits each lane evenly between its two outputs and keeps it on its lane: fed on the E lane only, both outputs carry it on the E lane (51 and 52 items after 20 s). | Engine, `tools/belt-lab` |
+| **Lane balancer** (the author's): a Splitter, then its two outputs side-loaded into one belt from opposite sides, so that each output fills one lane. The Splitter makes the two outputs equal, whatever the lanes of the input: fed on one lane only, the merged belt carries 37 and 34 items on its two lanes after 20 s. | The author; engine, `tools/belt-lab` |
+| To put items onto the far lane of a belt that already runs (a loop), use inserters: they drop on the far lane. A Splitter keeps the lanes, and side-loading reaches only the near lane. The author's Ash loop jammed with its outer lane full while the incoming Ash ran on that same lane; five Mechanical inserters onto the inner lane fixed it. | The author's game (chapter 7); `tools/belt-lab` |
 
 **Lane filtering with an underground belt.** A belt that runs into the *side* of an underground
 belt tile lets only one of its lanes through:
@@ -80,7 +83,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | Some machines drop their products themselves, like a mining drill, so they need no output inserter (inserters can add throughput): Soil extractor, Sap extractor, Wood processing unit, Sand extractor, Classifier, Ground borer, Clay pit, Casting unit (prototype field `vector_to_place_result`). | Data |
 | A circuit that starts a supplier below a threshold must cover two batches when the supplier is slower than the consumer: a Soil extractor (8 Limestone per 20 s) feeding an Advanced foundry (5 per 15 s) gives 0.435 Steel/s for 8 pairs at < 5, 0.493 at < 8 and the full 0.533 from < 10 up. | Engine, `tools/save-probe.ps1` + `tools/steel-probe`; a tick model agrees (chapter 3) |
 | A Soil extractor facing north drops 3.8 tiles below its centre, on the tile just past its bottom edge. A Foundry standing there gets the Limestone directly (24 Limestone in 60 s, all inside the Foundry); a belt there gets it on one lane only, the lane nearer the extractor. | Engine, `tools/inserter-probe` |
-| The author's steel site stacks one Soil extractor on each Foundry this way. According to the author, a splitter can spread a port's output evenly over both lanes of a belt (not measured yet). | Author's save, author |
+| The author's steel site stacks one Soil extractor on each Foundry this way. Output that lands on one lane can be spread over both with the author's lane balancer (Splitter and two-sided merge, above). | Author's save; `tools/belt-lab` |
 | Taking from a Stone furnace or Boiler, an inserter takes the product **and** the Ash, never the fuel. | Engine, `tools/ch1-probe` |
 | Taking from a Burner mining drill, an **unfiltered** inserter also pulls the fuel out and starves the drill; filtered to Ash it takes only Ash. | Engine, `tools/ch1-probe` |
 
