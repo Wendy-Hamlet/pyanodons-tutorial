@@ -141,6 +141,71 @@ The 53 numbered lessons are in the [journal](journal.md#lessons); grouped:
    switch off chains that served a finished goal (paused circuits still ate Wood, idle HPFs still
    ate Coke).
 
+## 7. At the same point: the author's second game at 23 hours
+
+The author's second game ("Py-Exploration", seed 2652821414, recorded from the start; chapters 1
+to 9 of the tutorial) reached pY science pack 1 at the same game time as mine. Both saves stand at
+23 hours with 63 and 64 technologies and the first pY science pack 1 technology (Burner) under way
+or just done. Read the same way as section 2:
+
+| | The author's second game (23:31) | Me (23:03) |
+|---|---|---|
+| Game time | 23.5 h | 23.1 h |
+| Technologies researched | 63, Burner at 75 % | 64 (Burner done at 22:10), Electric mining drill at 80 % |
+| pY science pack 1 | 48 packs, the first in the window ending 23:30; a line built for 0.1 a second (360 an hour) | 93 packs, the first at 19:06; about 40 an hour at the end |
+| Entities | 27,404 | 2,754 |
+| Machines with a recipe | 343 | 106 |
+| Belts (+ underground) | 19,889 (+979) | 491 (+8) |
+| Inserters | 2,355 | 257 |
+| Chests | 124 | 438 |
+| One-way chests (filled or emptied only by hand) per machine | 0.17 (36 + 21) | 1.69 (97 + 82) |
+| Boilers / Steam engines | 96 / 28 | 19 / 13 |
+| Steam per hour | 530 k | 118 k |
+| Labs | 5 | 16 |
+
+Production per game hour (machine-made only; totals in brackets where they say more):
+
+| Item | The author's second game | Me |
+|---|---|---|
+| Iron plate | 8,579 | 4,215 |
+| Copper plate | 3,989 | 2,318 |
+| Coke | 9,985 | 1,931 |
+| Stone brick | 4,843 | 2,679 |
+| Tin plate | 681 | 229 |
+| Aluminium plate | 158 | 93 |
+| Steel plate | 198 | 71 |
+| Glass | 251 | 108 |
+| Titanium plate | 239 | 64 |
+| Moondrop | 74 | 34 |
+| Moss | 852 | 273 |
+| Wood | 4,586 | (hand-crafted) |
+| Native flora | 2,053 | 3,271 |
+| Automation science pack | 177 | 261 |
+| Simple circuit board | 106 (2,499 in all) | 17 (402 in all) |
+| Duralumin | (400 in all) | (433 in all) |
+| Vrauks | (117 in all) | (61 in all) |
+| Glassware | (50 in all) | (96 in all) |
+| pY science pack 1 | (48 in all) | (93 in all) |
+
+What the two show:
+
+- **The same point by opposite routes.** I made my first packs four hours earlier, one machine per
+  step and a scripted round to carry everything else; the author made them four hours later, with
+  every step built as a belt-fed line sized for 0.1 packs a second. Their base is ten times mine in
+  entities and makes 1.5 to 6 times as much per hour (Coke 5 times, boards 6, Titanium 3.7, Moss 3);
+  I am ahead only in red science, Native flora and the count of packs so far.
+- **The same chain and the same narrow step.** Both games found the path Creature chamber → Vrauks →
+  Slaughterhouse → Formic acid → Latex → Rubber stoppers → Glassware, and in both the Vrauks set the
+  pace: my one paddock made about 2 Vrauks every 320 s (about 40 packs an hour); the author's 8
+  paddocks and 2 complexes make 3 a minute, exactly the 0.1 packs a second they planned.
+- **Both had a hand in the loop at the end.** Mine everywhere (179 one-way chests, every one a line
+  in the round); the author's in one place, the chest of Basic substrate at the Research center,
+  because its belt ends one tile short (chapter 9).
+- **Ash.** I let Ash go into chests for eighteen hours and voided it with three Burners at the end.
+  The author separated it from the start, but once the pack line runs the base burns twice the Raw
+  coal, and the loop of Ash separation and Soot separation stops the Boilers and the power within an
+  hour (chapter 9); the Burner they are researching is the same way out I took.
+
 ## Sources
 
 - The author's save "Pyanodons" of 2026-09-30 19:13 and my save `C:\tmp\cf-agent\saves\agent.zip`
@@ -149,3 +214,6 @@ The 53 numbered lessons are in the [journal](journal.md#lessons); grouped:
   `tools/manual-links.js` (`PT_SAVE_SNAPSHOT` points them at a snapshot folder).
 - Per-hour figures: the saves' cumulative item and fluid production divided by game time.
 - Timeline and lessons: [journal](journal.md).
+- Section 7: the author's save "Py-Exploration" of 2026-10-15 (game time 23:31), read the same way in its
+  own mod setup (consistency check passed); events from the recorder and the tutorial's
+  [chapter 9](../../chapters/09-py-science-pack-1.md).
