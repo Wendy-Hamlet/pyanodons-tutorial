@@ -63,9 +63,17 @@ before every save inspection (`save-env.ps1`).
 Paths in the scripts match the author's machine (game in `E:\SteamLibrary`); adjust the
 parameters for yours.
 
-- `dump-data.ps1` + `analyze-py.js`: `data.raw` of your exact mod set, and a summary of it.
+- `dump-data.ps1` + `analyze-py.js`: `data.raw` of your exact mod set and its localised names
+  (zh-CN and en), and a summary of it. Rebuild it when your mods update: the recipe tools read it.
 - `recipe-tree.js <item> --techs a,b`: production tree and raw totals using only the recipes
-  unlocked at that point (Chinese names).
+  unlocked at that point (Chinese names; `--techs save,a` adds everything researched in the
+  latest save snapshot). Mined and pumped items count as raw inputs only while a drill for them
+  is buildable; items from map entities (fish, trees, rocks) are marked finite, and an item with
+  no recipe yet names the technologies that would give it one. Recipes no technology unlocks are
+  named, never silently dropped: `sources.js`, shared with `rate-plan.js`, tells a script-run
+  machine (the Digosaurus dig site, whose recipes stand in for the script and come with the
+  machine) from T.U.R.D. upgrade recipes. The totals follow the first recipe listed at every step;
+  barrel and canister (un)loading comes last.
 - `rate-plan.js <plan.js> [--build]`: solves a production plan (per-minute targets, one chosen
   recipe per item, all rates solved together so byproducts and returned cages count): machines,
   item flows, raw inputs, power, flows between the plan's blocks (bus or direct link) and what
@@ -131,8 +139,8 @@ parameters for yours.
   missing ingredient), and `rate-probe/`: the base as it stands over a longer window than the
   inspector's minute (variant `WARM,MEASURE` in seconds, e.g. `-Ticks 39700 -Variant 60,600`):
   what it makes and uses per second, and every machine's and drill's status, sampled each second
-  (Boilers and Steam engines grouped by the row they stand in).
-  `WARM,MEASURE,STEP,names` adds a timeline: every STEP seconds what was made and used of each
+  (Boilers and Steam engines grouped by the row they stand in), and every electric network's
+  mean power by generator and consumer kind. `WARM,MEASURE,STEP,names` adds a timeline: every STEP seconds what was made and used of each
   named item or fluid, the status and fluid boxes of each machine named by its tile (`@x:y`), and
   every machine group whose usual status changed; a last field `+entity@x:y[:direction]` places that entity
   when the save loads (a what-if, the only change the probe makes). `vrauk-probe/`: the start-up
@@ -149,8 +157,10 @@ parameters for yours.
   the block's own network has left, so its Steam engines run as hard as their steam allows: every
   step the network's power by entity, the crafts, what came in and went out, the items on its belts
   and in its Boilers, the Boilers holding Ash, the items passing each lane of chosen belt tiles
-  (counted by their ids), and every machine group's status (fields of the
-  variant at the top of its `control.lua`).
+  (counted by their ids), how fast a Storage tank filled once with a fluid fuel empties (the
+  fuel a fluid-burning Boiler takes), and every machine group's status (fields of the
+  variant at the top of its `control.lua`). With the whole base as its box it is a load test:
+  the power the base can give beyond what it uses.
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and

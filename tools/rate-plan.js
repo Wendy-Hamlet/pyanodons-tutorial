@@ -42,7 +42,11 @@ const unlockedBy = {};
 for (const [tn, t] of Object.entries(raw.technology)) for (const e of arr(t.effects)) if (e.type === 'unlock-recipe') (unlockedBy[e.recipe] = unlockedBy[e.recipe] || []).push(tn);
 // Recipes a mod script enables (Py's T.U.R.D. upgrades) appear in no technology; plans list them.
 const scripted = new Set(plan.scriptRecipes || []);
-const usable = (r) => raw.recipe[r].enabled !== false || scripted.has(r) || (unlockedBy[r] || []).some((t) => techs.has(t));
+// The recipes of machines a script runs (the Digosaurus dig site) come with the machine.
+const sources = require('./sources')(raw);
+const unlocked = (r) => raw.recipe[r].enabled !== false || scripted.has(r) || (unlockedBy[r] || []).some((t) => techs.has(t));
+const viaMachine = new Set(sources.machineRecipes(unlocked));
+const usable = (r) => unlocked(r) || viaMachine.has(r);
 
 // ---- machines ------------------------------------------------------------------------------------
 const machinesFor = {};
@@ -273,7 +277,8 @@ for (const [i, f] of order) {
     const d = raw['mining-drill'][mine.drill];
     drillPower[d.energy_source.type] = (drillPower[d.energy_source.type] || 0) + (need / mine.perDrill) * watts(d.energy_usage);
   }
-  const src = (plan.sources || {})[i] || (mine ? `开采：${fmt(need / mine.perDrill)} 台${nm(mine.drill)}（每台每秒 ${fmt(mine.perDrill, 3)}）` : '');
+  const map = sources.mapSources[i] ? `⚠ 只有地图上有限的${[...new Set(sources.mapSources[i].map((s) => nm(s.entity)))].slice(0, 3).join('/')}，采完不再生` : '';
+  const src = (plan.sources || {})[i] || (mine ? `开采：${fmt(need / mine.perDrill)} 台${nm(mine.drill)}（每台每秒 ${fmt(mine.perDrill, 3)}）` : map);
   console.log(`| ${nm(i)}${isFluid(i) ? '（流体）' : ''} | ${fmt(pm(need))} | ${split} | ${src} |`);
 }
 console.log('\n## 多余的副产物（每分钟）\n');

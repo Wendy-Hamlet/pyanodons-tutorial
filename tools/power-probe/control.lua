@@ -121,6 +121,17 @@ script.on_init(function()
     out("water at %s: %s", w, e and "ok" or "FAILED")
   end
 
+  -- A Storage tank filled once with a fluid fuel: the reports show how fast it empties, which is
+  -- the fuel a fluid-burning Boiler took.
+  local tanks = {}
+  for _, s in ipairs(list(opt.fill)) do
+    local fluid, amount, x, y = s:match("^([%w%-_]+):(%d+)@([%-%.%d]+):([%-%.%d]+)$")
+    local e = surface.find_entities_filtered({ position = { num(x), num(y) }, type = "storage-tank" })[1]
+    local n = e and e.insert_fluid({ name = fluid, amount = num(amount) }) or 0
+    out("filled the tank at %s:%s with %.0f %s", x, y, n, fluid)
+    if e then tanks[#tanks + 1] = { e = e, fluid = fluid, at = x .. ":" .. y } end
+  end
+
   local sources, sinks = {}, {}
   for _, s in ipairs(list(opt.src)) do
     local item, x, y = s:match("^([%w%-_]+)@([%-%.%d]+):([%-%.%d]+)$")
@@ -139,7 +150,8 @@ script.on_init(function()
     local item, count = opt.prime:match("^([%w%-_]+):(%d+)$")
     local nb = 0
     for _, b in pairs(surface.find_entities_filtered({ area = area, type = "boiler" })) do
-      nb = nb + b.get_inventory(defines.inventory.fuel).insert({ name = item, count = num(count) })
+      local inv = b.get_inventory(defines.inventory.fuel)
+      if inv then nb = nb + inv.insert({ name = item, count = num(count) }) end
     end
     out("primed the Boilers with %d %s", nb, item)
   end
@@ -156,7 +168,7 @@ script.on_init(function()
   out("networks in the box: %s; load on %s", table.concat(n, ", "), tostring(load.electric_network_id))
 
   storage.p = {
-    surface = surface, area = area, sources = sources, sinks = sinks, load = load, absorbed = 0,
+    surface = surface, area = area, sources = sources, sinks = sinks, load = load, absorbed = 0, tanks = tanks,
     pole = poles[1], taken = {}, start = game.tick,
     machines = surface.find_entities_filtered({ area = area,
       type = { "assembling-machine", "furnace", "boiler", "generator", "mining-drill" } }),
@@ -187,7 +199,11 @@ local function belt_items(p)
 end
 
 local function snapshot(p)
-  local s = { made = {}, used = {}, crafts = {}, absorbed = p.absorbed, given = {}, taken = {}, tick = game.tick }
+  local s = { made = {}, used = {}, crafts = {}, absorbed = p.absorbed, given = {}, taken = {}, tick = game.tick,
+    tank = {} }
+  for _, t in ipairs(p.tanks) do
+    if t.e.valid then s.tank[t.fluid .. " at " .. t.at] = t.e.get_fluid_count(t.fluid) end
+  end
   -- An electric network's statistics count what consumers took as input, what generators gave
   -- as output (the other way round from item statistics); energy in J.
   local st = p.pole.electric_network_statistics
@@ -225,23 +241,34 @@ local function report(p, label, now, before, samples)
   out("%s: crafts per s %s", label, fmt_rates(now.crafts, before.crafts, sec, 1, ""))
   out("%s: sources gave per s %s; sinks took per s %s", label, fmt_rates(now.given, before.given, sec, 1, ""),
     fmt_rates(now.taken, before.taken, sec, 1, ""))
+  if next(now.tank) then
+    local left = {}
+    for k, v in pairs(now.tank) do left[#left + 1] = string.format("%s %.0f", k, v) end
+    out("%s: filled tanks emptied per s %s; left %s", label, fmt_rates(before.tank, now.tank, sec, 1, ""),
+      table.concat(left, ", "))
+  end
   local items, parts = belt_items(p), {}
   for k, v in pairs(items) do parts[#parts + 1] = k .. " " .. v end
   table.sort(parts)
   out("%s: items on the box's belts now: %s", label, table.concat(parts, ", "))
+  -- A fluid-burning Boiler has no fuel or burnt result inventory.
+  local function count(e, inv)
+    local i = e.get_inventory(inv)
+    return i and i.get_item_count() or 0
+  end
   local ash, fuel, nb = 0, 0, 0
   for _, e in pairs(p.machines) do
     if e.valid and e.type == "boiler" then
       nb = nb + 1
-      ash = ash + e.get_inventory(defines.inventory.burnt_result).get_item_count()
-      fuel = fuel + e.get_inventory(defines.inventory.fuel).get_item_count()
+      ash = ash + count(e, defines.inventory.burnt_result)
+      fuel = fuel + count(e, defines.inventory.fuel)
     end
   end
   out("%s: %d Boilers hold %d fuel items and %d burnt results now", label, nb, fuel, ash)
   local full = {}
   for _, e in pairs(p.machines) do
     if e.valid and e.type == "boiler" then
-      local n = e.get_inventory(defines.inventory.burnt_result).get_item_count()
+      local n = count(e, defines.inventory.burnt_result)
       if n >= 50 then full[#full + 1] = string.format("%.1f,%.1f %d", e.position.x, e.position.y, n) end
     end
   end

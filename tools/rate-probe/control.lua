@@ -3,7 +3,8 @@
 -- After a warm-up it takes the force's production statistics, then samples the status of every
 -- crafting machine and drill once a second, grouped by name and recipe (drills: by mined
 -- resource; Boilers and Steam engines: by the row they stand in), and at the end prints what the
--- whole base made and used per second.
+-- whole base made and used per second, and each electric network's mean power by generator and
+-- consumer kind.
 -- Variant: "WARM,MEASURE" in seconds (default "60,600"), optionally ",STEP,name;name;..." for a
 -- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
 -- used per second in that step, and every machine group whose most frequent status changed; a
@@ -35,6 +36,29 @@ local function snapshot(surface)
     items = flow(force.get_item_production_statistics(surface)),
     fluids = flow(force.get_fluid_production_statistics(surface)),
   }
+end
+
+-- Electric networks by id, with one pole of each (its statistics are the whole network's).
+local function networks(surface)
+  local by = {}
+  for _, p in pairs(surface.find_entities_filtered({ type = "electric-pole" })) do
+    local id = p.electric_network_id
+    if id then
+      by[id] = by[id] or { pole = p, poles = 0 }
+      by[id].poles = by[id].poles + 1
+    end
+  end
+  return by
+end
+
+-- Energy (J) given by each generator kind and taken by each consumer kind so far: on an electric
+-- network output_counts are what generators gave and input_counts what consumers took.
+local function energy(net)
+  local st = net.pole.electric_network_statistics
+  local e = { made = {}, used = {} }
+  for k, v in pairs(st.output_counts) do e.made[k] = v end
+  for k, v in pairs(st.input_counts) do e.used[k] = v end
+  return e
 end
 
 local function group_key(e)
@@ -126,6 +150,9 @@ script.on_nth_tick(60, function()
     storage.step_samples = {}
     storage.machines = surface.find_entities_filtered({ force = "player",
       type = { "assembling-machine", "furnace", "mining-drill", "boiler", "generator" } })
+    storage.nets = networks(surface)
+    storage.power_before = {}
+    for id, net in pairs(storage.nets) do storage.power_before[id] = energy(net) end
     return
   end
   if storage.done then return end
@@ -160,6 +187,24 @@ script.on_nth_tick(60, function()
       local parts = {}
       for _, p in ipairs(list) do parts[#parts + 1] = string.format("%s %.3f", p[1], p[2]) end
       out("%s %s per s: %s", kind, dir, table.concat(parts, ", "))
+    end
+  end
+  -- Mean power of every network with more than one pole, by generator and consumer kind (MW).
+  for id, net in pairs(storage.nets) do
+    if net.pole.valid and net.poles > 1 then
+      local now_e, before = energy(net), storage.power_before[id]
+      for _, side in ipairs({ "made", "used" }) do
+        local list, total = {}, 0
+        for name, j in pairs(now_e[side]) do
+          local mw = (j - (before[side][name] or 0)) / MEASURE / 1e6
+          total = total + mw
+          if mw > 0.05 then list[#list + 1] = { name, mw } end
+        end
+        table.sort(list, function(a, b) return a[2] > b[2] end)
+        local parts = {}
+        for _, p in ipairs(list) do parts[#parts + 1] = string.format("%s %.2f", p[1], p[2]) end
+        out("power network %d (%d poles) %s %.1f MW: %s", id, net.poles, side, total, table.concat(parts, ", "))
+      end
     end
   end
   local keys = {}
