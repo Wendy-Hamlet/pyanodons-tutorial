@@ -141,7 +141,15 @@ parameters for yours.
   Barreling machine spent the step, and where the barrels and cocoons are; variant `fill` moves the
   Vrauks from the line's chest into free module slots every minute, `prio` sets the output priority
   of Splitters with one output belt, `barrels:N` adds Water barrels (`barrels:-N` takes them off the belts) (e.g. `-Ticks 864100 -Variant
-  fill,prio,600`).
+  fill,prio,600`). `power-probe/`: a power block where it stands, finished by script where the
+  author has not built it yet (ghosts in its box revived, entities placed: poles wired whatever the
+  distance, inserters with a filter; infinity pipes of Water, script sources keeping its input
+  belts full, sinks emptying its output belts, fuel put into its Boilers once, since a block whose
+  crushers run on its own power cannot start itself), with an energy interface that takes whatever
+  the block's own network has left, so its Steam engines run as hard as their steam allows: every
+  step the network's power by entity, the crafts, what came in and went out, the items on its belts
+  and in its Boilers, the Boilers holding Ash, and every machine group's status (fields of the
+  variant at the top of its `control.lua`).
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and
