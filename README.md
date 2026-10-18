@@ -148,7 +148,8 @@ parameters for yours.
   crushers run on its own power cannot start itself), with an energy interface that takes whatever
   the block's own network has left, so its Steam engines run as hard as their steam allows: every
   step the network's power by entity, the crafts, what came in and went out, the items on its belts
-  and in its Boilers, the Boilers holding Ash, and every machine group's status (fields of the
+  and in its Boilers, the Boilers holding Ash, the items passing each lane of chosen belt tiles
+  (counted by their ids), and every machine group's status (fields of the
   variant at the top of its `control.lua`).
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests

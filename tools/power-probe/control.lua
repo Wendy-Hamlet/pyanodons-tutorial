@@ -16,9 +16,13 @@
 --   water=x:y|...            infinity pipes of Water
 --   place=name@x:y[:dir[:item]]|... entities placed (dir north, east, south, west; default
 --                            north; an inserter's direction is the side it picks up from;
---                            item: an inserter's whitelist filter)
+--                            item: an inserter's whitelist filter; for an underground belt
+--                            input or output, for a crafting machine its recipe)
 --   load=x:y                 the energy interface (2x2; inside a pole's supply area)
 --   each=name|...            machines of that name sampled one by one, not as a group
+--   lanes=x:y|...            belt tiles whose two lanes are watched every tick: items that passed
+--                            each lane per second (left and right, looking the way the belt runs;
+--                            counted by the items' ids) and the mean items on each lane
 --   prime=item:count         fuel put into every Boiler of the box once (a block that powers its
 --                            own crushers cannot start itself)
 
@@ -39,6 +43,8 @@ local function out(fmt, ...) log("CF-POWER " .. string.format(fmt, ...)) end
 local STATUS = {}
 for k, v in pairs(defines.entity_status) do STATUS[v] = k end
 local BELTS = { "transport-belt", "underground-belt", "splitter" }
+local STATUS_DIR = {}
+for k, v in pairs(defines.direction) do STATUS_DIR[v] = k end
 
 local function belt_at(surface, x, y)
   return surface.find_entities_filtered({ position = { x, y }, type = BELTS })[1]
@@ -82,11 +88,14 @@ script.on_init(function()
   local placed, missed = {}, {}
   for _, p in ipairs(list(opt.place)) do
     local name, x, y, dir, filter = p:match("^([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*):?([%w%-_]*)$")
+    local ug = prototypes.entity[name] and prototypes.entity[name].type == "underground-belt"
     local e = surface.create_entity({ name = name, position = { num(x), num(y) }, force = f,
-      direction = defines.direction[dir ~= "" and dir or "north"] })
+      direction = defines.direction[dir ~= "" and dir or "north"], type = ug and filter or nil })
     if e then
       placed[name] = (placed[name] or 0) + 1
-      if filter ~= "" then
+      if filter ~= "" and e.type == "assembling-machine" then
+        e.set_recipe(filter)
+      elseif filter ~= "" and not ug then
         e.use_filters = true
         e.inserter_filter_mode = "whitelist"
         e.set_filter(1, filter)
@@ -155,6 +164,14 @@ script.on_init(function()
     fuel = {}, each = {},
   }
   for _, n in ipairs(list(opt.each)) do storage.p.each[n] = true end
+  storage.p.lanes = {}
+  for _, l in ipairs(list(opt.lanes)) do
+    local x, y = l:match("([%-%.%d]+):([%-%.%d]+)")
+    local e = belt_at(surface, num(x), num(y))
+    if e then storage.p.lanes[#storage.p.lanes + 1] = { e = e, at = l, n = { 0, 0 }, t = 0, sn = { 0, 0 }, st = 0,
+      f = { 0, 0 }, sf = { 0, 0 }, prev = { {}, {} } }
+    else out("no belt for the lane sample %s", l) end
+  end
 end)
 
 local function belt_items(p)
@@ -229,6 +246,15 @@ local function report(p, label, now, before, samples)
     end
   end
   if #full > 0 then out("%s: Boilers holding 50 or more burnt results: %s", label, table.concat(full, ", ")) end
+  for _, l in ipairs(p.lanes) do
+    local n, t, f = l.sn, l.st, l.sf
+    if label == "total" then n, t, f = l.n, l.t, l.f end
+    if t > 0 then
+      out("%s: lanes at %s (%s %s): left %.3f/s (%.2f items), right %.3f/s (%.2f items)", label, l.at, l.e.name,
+        STATUS_DIR[l.e.direction] or "-", f[1] / sec, n[1] / t, f[2] / sec, n[2] / t)
+    end
+    l.sn, l.st, l.sf = { 0, 0 }, 0, { 0, 0 }
+  end
   local keys = {}
   for k in pairs(samples) do keys[#keys + 1] = k end
   table.sort(keys)
@@ -278,6 +304,19 @@ script.on_event(defines.events.on_tick, function()
   end
   p.absorbed = p.absorbed + p.load.energy
   p.load.energy = 0
+  if p.before and not p.done then
+    for _, l in ipairs(p.lanes) do
+      for i = 1, 2 do
+        local now, new = {}, 0
+        for _, it in pairs(l.e.get_transport_line(i).get_detailed_contents()) do
+          now[it.unique_id] = true
+          if not l.prev[i][it.unique_id] then new = new + 1 end
+        end
+        l.prev[i] = now
+        l.f[i], l.sf[i] = l.f[i] + new, l.sf[i] + new
+      end
+    end
+  end
 end)
 
 script.on_nth_tick(60, function()
@@ -300,6 +339,13 @@ script.on_nth_tick(60, function()
         g[k][s] = (g[k][s] or 0) + 1
       end
     end
+  end
+  for _, l in ipairs(p.lanes) do
+    for i = 1, 2 do
+      local c = l.e.get_transport_line(i).get_item_count()
+      l.n[i], l.sn[i] = l.n[i] + c, l.sn[i] + c
+    end
+    l.t, l.st = l.t + 1, l.st + 1
   end
   p.seconds = (p.seconds or 0) + 1
   if p.seconds % STEP == 0 then
