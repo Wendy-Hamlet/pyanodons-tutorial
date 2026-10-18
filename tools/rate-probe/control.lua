@@ -123,6 +123,17 @@ local function step(now, t)
     end
   end
   out("step %d s: made/used per s: %s", t, table.concat(parts, ", "))
+  -- Power of the networks with more than 50 poles in this step (MW).
+  for id, net in pairs(storage.nets or {}) do
+    if net.pole.valid and net.poles > 50 then
+      local e, before = energy(net), storage.power_step[id]
+      local made, used = 0, 0
+      for name, j in pairs(e.made) do made = made + j - (before.made[name] or 0) end
+      for name, j in pairs(e.used) do used = used + j - (before.used[name] or 0) end
+      out("step %d s: power network %d made %.1f MW, used %.1f MW", t, id, made / STEP / 1e6, used / STEP / 1e6)
+      storage.power_step[id] = e
+    end
+  end
   storage.usual = storage.usual or {}
   for k, g in pairs(storage.step_samples) do
     local best, n, total = nil, 0, 0
@@ -153,6 +164,8 @@ script.on_nth_tick(60, function()
     storage.nets = networks(surface)
     storage.power_before = {}
     for id, net in pairs(storage.nets) do storage.power_before[id] = energy(net) end
+    storage.power_step = {}
+    for id, e in pairs(storage.power_before) do storage.power_step[id] = e end
     return
   end
   if storage.done then return end
