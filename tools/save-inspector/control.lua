@@ -1,6 +1,10 @@
 -- Read-only snapshot of a save. tools/inspect-save.ps1 loads a COPY of the save in an isolated
--- Factorio setup with this mod added; on the first tick it writes
+-- Factorio setup with this mod added; one second after loading it writes
 -- script-output/cellforge/save-report.json and entities.json, and changes nothing in the world.
+-- Not on the first tick: then a machine whose electric buffer holds barely one tick of its use
+-- reports low power although its network has enough (the Moondrop greenhouses with the T.U.R.D.
+-- Carbon capture module, +200 % consumption: 4 of 6 on that tick, none after it, measured with
+-- tools/status-probe).
 -- `config` in the report is what the game said changed when loading the save here (this mod
 -- itself excluded); inspect-save.ps1 uses it to check the setup matches the save.
 
@@ -296,6 +300,7 @@ local function export_outposts(surface, groups)
 end
 
 local SAMPLE_EVERY, MEASURE_TICKS = 60, 3600
+local SETTLE = 60 -- ticks run before the snapshot (see the top)
 
 -- After the snapshot, keep sampling outpost drills so a longer run (inspect-save.ps1 -Ticks) can
 -- measure real mining rates and how often drills stand still.
@@ -362,6 +367,8 @@ script.on_event(defines.events.on_tick, function()
     return
   end
   if storage.done then return end
+  storage.settle = storage.settle or game.tick + SETTLE
+  if game.tick < storage.settle then return end
   storage.done = true
   local groups = outposts(surface)
   helpers.write_file("cellforge/outposts.json", helpers.table_to_json(export_outposts(surface, groups)))

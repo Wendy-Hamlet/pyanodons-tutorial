@@ -14,7 +14,7 @@
 #        node tools\summarize-save.js
 param(
     [Parameter(Mandatory = $true)][string]$Save,
-    [int]$Ticks = 10,
+    [int]$Ticks = 70, # the inspector snapshots one second after loading
     [switch]$AllowModChanges,
     [string]$Factorio = 'E:\SteamLibrary\steamapps\common\Factorio\bin\x64\factorio.exe',
     [string]$Work = 'C:\tmp\cf-save'

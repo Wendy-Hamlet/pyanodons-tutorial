@@ -89,7 +89,8 @@ parameters for yours.
   read-only snapshot of the save (research, inventory, buildings with directions and filters,
   each machine's modules, speed and electric network, production, nearby ore) and a PNG map; also finds mining outposts, exports each as a blueprint
   string and, with `-Ticks`, runs the save one more minute to measure real mining rates and
-  everything the base makes and uses per second.
+  everything the base makes and uses per second. The snapshot is taken one second after loading:
+  on the first tick machines with a tiny electric buffer read "low power" (see `status-probe/`).
 - `render-area.js x1 y1 x2 y2 out.png`: close-up PNG plus a character grid of one area of a
   snapshot, for reading a structure tile by tile.
 - `trace-layout.js x1 y1 x2 y2`: the logistics of an area of a snapshot: belt lines with what
@@ -161,6 +162,9 @@ parameters for yours.
   fuel a fluid-burning Boiler takes), and every machine group's status (fields of the
   variant at the top of its `control.lua`). With the whole base as its box it is a load test:
   the power the base can give beyond what it uses.
+- `status-probe/` (with `save-probe.ps1 -Variant name,ticks`): the status and electric buffer of
+  every entity of one name on every tick after a save loads, the share of each status, and the
+  effects of its modules and beacons: tells a state the base is in from one tick's look.
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and
