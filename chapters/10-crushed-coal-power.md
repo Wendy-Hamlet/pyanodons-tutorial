@@ -111,6 +111,10 @@ It is two mirrored rows around a middle strip:
 - **19 Steam engines** east of the separators (x −26.5 to 0.5, y 160.5 to 166.5), with their Water
   from two Offshore pumps at the east end (44.5, 152.5) and (44.5, 174.5).
 
+![The west half of the block: the upper row of crushers with their Boilers and Ash belt at the top, the Ash belts turning into the middle strip at the left edge, the three Solid separators and the Steam engines there, the lower row mirrored at the bottom (taken after the save)](../images/ch10-block-west.jpg)
+
+![The east half: the other seven crushers of each row and their Boilers, the Steam pipes along the middle, the Raw coal belt coming up on the right at x 45 and 46, the Offshore pumps at the east end of the Boiler rows (taken after the save)](../images/ch10-block-east.jpg)
+
 **From the draft to the block.** The author first laid the block out east of the base, at x 108
 to 266 (24:30–25:10). We measured that draft in a copy of the save of 25:01, finishing it by script
 (19 Steam engines, poles, water; `tools/power-probe`, research notes, Steam power): **70.0 MW at 30
@@ -143,6 +147,8 @@ full belt. The drills drop onto a belt along y 322 that splits: four of them fee
 south to y 326 and runs east, the other four the belt that runs east along y 322. At x 45 and 46
 both turn north and run about 180 tiles to the block, x 46 to the upper row, x 45 to the lower
 (save).
+
+![The Raw coal field: the Burner mining drills of the older stations at the top left, the eight Electric mining drills at the bottom left, and their two belts east and north to the block (taken after the save)](../images/ch10-coal-field.jpg)
 
 The drills' belts end at the block, so the block takes as much Raw coal as its Boilers burn, and
 the drills wait for the rest: in the 10 minutes after the save the drills stood "waiting for space"
@@ -287,6 +293,8 @@ bricks for the red science block, research doubles.
   (25:40–25:50); in the runs after the save the copper ore is back at 15.2 a second, a full belt.
 - **Research:** twelve technologies, all on pY science pack 1 and red science (table at the top),
   at 0.05 units a second (section 5).
+
+![The Molten glass block at the top (the two Glassworks, the Gas furnace and the Jaw crusher with its Stone chest), and below it the two Soot separators with their Stone furnaces, the new one on the right (taken after the save)](../images/ch10-glass-soot.jpg)
 
 ## 7. The blueprints
 
