@@ -23,9 +23,10 @@ for three reasons, found by sampling every machine of the block on its own: **a 
 at the west end of each row slowly fills with Ash**, because a row's 15 Ash a second is exactly
 what its belt carries; and in the base at full load **the Coal dust backs up**, since the base then
 makes 8.26 a second and its Coal dust Boilers burn 7.40, so the lower row's crushers wait
-(sections 4 and 5). Turning the pipe round gives all 30 crushers back, and swapping the two fuel
-filters of each row's westmost crusher as well keeps the block at 29.8 Raw coal a second, fuel for
-69.4 MW, over three hours (66.5 MW as built). Research runs at half speed,
+(sections 4 and 5). **With two fixes the block runs full**, as the draft did: the pipe turned round,
+and a second Ash inserter on the second Boiler from the west end of each row; then all 30 crushers
+take 30 Raw coal a second and the block gives 70 MW, 51.7 MW of it to the base, with no Ash building
+up over two hours (section 4). Research runs at half speed,
 0.05 units a second, because the red science block lacks Stone bricks (section 5).
 
 ## The run at a glance
@@ -193,7 +194,7 @@ crusher on its own:
    full to the last item at the west end. In the upper row the same Boiler stays at 56 Ash only
    because of the stopped crusher: its half of the row makes 1 Ash a second less.
 
-**Two fixes tried** (the same run, the block alone):
+**Fixes tried** (the block alone, as above):
 
 - **The Pipe to ground at (−13.5, 154.5) turned to face north**, like the pair beside it at
   (−16.5, 154.5): all 30 crushers run, 9.89 crafts a second (29.7 Raw coal, fuel for 69.2 MW) over
@@ -210,13 +211,26 @@ crusher on its own:
   once that Boiler was full: fuel for 69.4 MW, against 66.5 as built. The engines gave 70.3 MW for
   all three hours, 51.8 MW of it to the load.
 
-So the Ash at the west end has no margin. Each row makes 15 Ash a second and the belt carries 15:
-both lanes must be full to the last item where the last Boilers drop theirs, and a Mechanical
-inserter does not find every gap. In the draft (section 2) the same three fixes ran three hours
-without Ash building up; in the finished block one Boiler at the west end fills, in one row or both
-depending on which Boiler gets which fuel. Taking some Ash
-off the row before its west end, or a faster belt once Logistics 2 is researched (it needs pY
-science pack 2 and Logistic science), would give the margin; neither was measured.
+**Where it stops, and the fix that runs it full.** Two more runs with the pipe turned took the
+belt's far end out of the question: with the Ash taken off at the corner, so that nothing behind
+the Boilers can hold the belt up, the upper row's Boiler at (−55.5, 153) still held 624 Ash after
+30 minutes; with the two separator belts emptied at their dead ends instead, 627. So the Ash is
+stuck at one drop, not downstream: that Boiler's single inserter has to put 0.67 Ash a second onto
+a lane that already carries 6.67 of its 7.5, and it does not find enough gaps. **One more Ash
+inserter on that Boiler, on the free tile west of the first one** ((−56.5, 154.5) in the upper row,
+(−56.5, 172.5) in the lower, dropping onto the same lane a tile further on), and the block **runs
+full**: from 30 minutes on all 30 crushers made 10.000 crafts a second (30 Raw coal) and the three
+separators 3.000 (30 Ash, all three at 100 %), the 60 Boilers held the same 114 Ash at every step
+of two hours, and the engines gave their full 70.3 MW, 51.7 MW of it to the load. That is the
+draft's result (section 2: 30.0 Raw coal, 70.0 MW). With the filters swapped as well, the upper
+row's westmost Boiler, now on Coal, filled again (335 Ash at 30 minutes), so the swap is not part
+of the fix.
+
+In the draft the Boiler in the same place managed with one inserter: the lane counts there were the
+same (both lanes 7.33 a second before the last Boiler, so 6.67 on the far lane before the one before
+it). Why the finished block's lane leaves
+fewer gaps for it was not found; the second inserter gives it a second drop point. Each row's 15
+Ash a second is exactly what its belt carries, so the west end has no other margin.
 
 ## 5. The base after the save
 
@@ -325,9 +339,10 @@ Both changed stations ran without trouble in the two hours after the save (secti
   60 Boilers give 70 MW, about 51 MW after the crushers and separators, against 40 MW burnt raw.
 - Two Boilers per crusher, one on Crushed coal (54 % busy at most) and one on Coal (72 %), and 19
   Steam engines for 30 crushers.
-- A row of 15 crushers fills its Ash belt to the last item. Switch lanes halfway, give the west
-  end's Boilers a way onto the other lane, and over an hour watch every Boiler there, not only the
-  total: one Boiler that cannot put out its Ash costs its crusher.
+- A row of 15 crushers fills its Ash belt to the last item. Switch lanes halfway, give the westmost
+  Boiler a way onto the other lane and the one before it a second Ash inserter, and over an hour
+  watch every Boiler there, not only the total: one Boiler that cannot put out its Ash costs its
+  crusher.
 - Measure a new power block alone: cut its wires to the base, keep its inputs full, take its
   outputs and sample every machine. In the base it runs below its capacity, and a fault such as a
   Pipe to ground turned the wrong way (one crusher lost, 2.3 MW) does not show.
@@ -356,7 +371,11 @@ Both changed stations ran without trouble in the two hours after the save (secti
   Ash lanes counted item by item (`lanes=`) at ten belt tiles; and with the fixes, the Pipe to
   ground turned (`turn=-13.5:154.5:north`, new) for 90 minutes and, with the two filters swapped
   (`filter=-57.5:151.5:coal|-54.5:151.5:crushed-coal|-57.5:175.5:coal|-54.5:175.5:crushed-coal`,
-  new), for three hours.
+  new), for three hours; then with the pipe turned for 30 minutes each, the Ash taken off at the
+  corner (`sink=-57.5:155.5|-57.5:171.5`) and at the separator belts' ends
+  (`sink=-29.5:158.5|-29.5:168.5`), and for two hours with the second Ash inserters
+  (`place=burner-inserter@-56.5:154.5:north:ash|burner-inserter@-56.5:172.5:south:ash`), also with
+  the filters swapped. The draft's runs of the same day were compared with these lane by lane.
 - **The base after the save:** `tools/save-probe.ps1 -Probe rate-probe` for 10 minutes and two
   hours (power every 10 minutes), and `-Probe power-probe` for 30 minutes with the whole base as
   the box and the load at (−37, 167), once more with every crusher on its own and the Coal dust
