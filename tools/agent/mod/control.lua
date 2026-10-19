@@ -2,7 +2,8 @@
 --
 -- The agent is a character entity with no player behind it (a headless server has no players).
 -- It gets what a new Py player gets: the freeplay start items and the Py Quick Start kit (power
--- armor with personal roboports, 100 construction robots), and the Far Reach bonuses.
+-- armor with personal roboports, 100 construction robots), and the Far Reach bonuses. Added to a
+-- copy of a player's save, it takes that player's place and inventory instead (adopt_player).
 --
 -- Commands (sent through RCON by tools/agent/a.js): /agent <op> <json arguments>
 -- The answer is JSON printed back to RCON. Ops are in lib/observe.lua (reading) and
@@ -103,8 +104,64 @@ local function apply_py_recommended()
   ms.enemy_expansion.max_expansion_cooldown = 648000
 end
 
+-- Added to a game in progress (a copy of a player's save): the agent takes over that player.
+-- A server keeps a disconnected player's character off the map, but the player's inventories
+-- stay readable, so a character is created where the player stood and every stack is moved into
+-- it: nothing is created, the totals are reported. The armor widens the main inventory on both
+-- sides, so it is copied first and taken from the player last (taking it first shrinks the
+-- player's inventory and spills the stacks beyond its new size onto the ground).
+-- Nothing else changes (no start kit, no crash site, the map settings as they are).
+local adopt_inventories = { "character_main", "character_guns", "character_ammo", "character_trash", "character_armor" }
+
+local function adopt_player()
+  local p
+  for _, q in pairs(game.players) do p = p or q end
+  if not p then return { error = "no player in this save" } end
+  local s = p.surface
+  local pos = s.find_non_colliding_position("character", p.position, 30, 0.5) or p.position
+  local c = s.create_entity { name = "character", position = pos, force = p.force }
+  local armor_src = p.get_inventory(defines.inventory.character_armor)
+  local armor_dst = c.get_inventory(defines.inventory.character_armor)
+  if armor_src and armor_src[1].valid_for_read then armor_dst[1].set_stack(armor_src[1]) end
+  local moved, left = 0, 0
+  for _, k in ipairs(adopt_inventories) do
+    local src = p.get_inventory(defines.inventory[k])
+    local dst = c.get_inventory(defines.inventory[k])
+    if k == "character_armor" then
+      if src and src[1].valid_for_read then moved = moved + src[1].count; src[1].clear() end
+    elseif src and dst then
+      for i = 1, #src do
+        local st = src[i]
+        if st.valid_for_read then
+          local n = st.count
+          local slot
+          for j = 1, #dst do if not dst[j].valid_for_read then slot = dst[j]; break end end
+          if slot and slot.set_stack(st) then st.clear(); moved = moved + n else left = left + n end
+        end
+      end
+    end
+  end
+  storage.char = c
+  apply_reach(c)
+  storage.crash_site_created = true
+  storage.adopted_from = p.name
+  chart_around(c.position, 200)
+  event("agent took over " .. p.name .. "'s place at " .. serpent.line(util.pos(c.position)) ..
+    ": moved " .. moved .. " items, " .. left .. " left behind")
+  return { pos = util.pos(c.position), moved = moved, left = left }
+end
+
+act.adopt = function()
+  if storage.char and storage.char.valid then return { error = "the agent already has a character" } end
+  return adopt_player()
+end
+
 script.on_init(function()
   init_storage()
+  if game.tick > 0 then
+    storage.adopt_pending = true -- the player is disconnected only after the first tick
+    return
+  end
   apply_py_recommended()
   surface().request_to_generate_chunks({ 0, 0 }, 3)
   surface().force_generate_chunk_requests()
@@ -115,6 +172,8 @@ end)
 
 script.on_configuration_changed(function()
   init_storage()
+  -- A save the agent was just added to: the character comes from adopt_player, never a new kit.
+  if storage.adopt_pending or storage.adopted_from then return end
   if game.tick < 60 * 60 * 10 then create_crash_site() end
   if not (storage.char and storage.char.valid) then spawn_character(true) end
   apply_reach(storage.char)
@@ -202,6 +261,13 @@ local function job_step()
 end
 
 script.on_event(defines.events.on_tick, function()
+  if storage.adopt_pending and game.tick % 60 == 0 then
+    local p = game.players[1]
+    if not (p and p.connected) and not (storage.char and storage.char.valid) then
+      storage.adopt_pending = nil
+      adopt_player()
+    end
+  end
   if storage.jobs[1] then job_step() end
 end)
 
