@@ -19,7 +19,7 @@ The result: the block works. Measured alone it gives 66.5 to 70.3 MW, about 50 M
 own crushers and separators take, and with it the base's power is met in every step of the two
 hours after the save; the Ash failure of chapter 9 does not come back. It falls short of its 70 MW
 for three reasons, found by sampling every machine of the block on its own: **a Pipe to ground at
-(−13.5, 154.5) faces the wrong way** (in the blueprint too), so one crusher never runs; **one Boiler
+(−13.5, 154.5) faces the wrong way** (in the blueprint exported then), so one crusher never runs; **one Boiler
 at the west end of each row slowly fills with Ash**, because a row's 15 Ash a second is exactly
 what its belt carries; and in the base at full load **the Coal dust backs up**, since the base then
 makes 8.26 a second and its Coal dust Boilers burn 7.40, so the lower row's crushers wait
@@ -183,7 +183,8 @@ crusher on its own:
    its Steam goes into a Pipe to ground at (−13.5, 154.5) that faces the same way as its partner
    below, so the two do not connect and the Steam has nowhere to go. The Boiler stops burning, its
    crusher at (−15.5, 147.5) fills up with Coal and stops, and the crusher's Crushed coal Boiler at
-   (−16.5, 153) never gets fuel. The `crushed-coal-power` blueprint has the same Pipe to ground.
+   (−16.5, 153) never gets fuel. The blueprint exported at 20:35 has the same Pipe to ground (turned in the
+   author's later versions, section 7).
 2. **The lower row's Ash fills one Boiler.** The Coal Boiler second from the west end, (−55.5, 174),
    holds 583 Ash after 30 minutes and 1,000 within the hour; from then on it burns only as fast as
    its inserter gets Ash out. Counted item by item, the lane its inserter drops onto (the far lane)
@@ -262,6 +263,14 @@ others the Boiler holding the most Ash held the same count (12 to 161) at 30, 60
 The update's short belt and Splitter take care of the westmost Boiler, but the one before it, a Coal
 Boiler with one inserter on the fullest lane, is the same as before; one more inserter on its free
 tile makes the block run full whatever the start.
+
+**The author's fix.** The author then added exactly these two inserters, and two poles (export of
+2026-10-19, 13:03): apart from the poles it is the configuration that ran full in all six starts,
+so those runs stand for it. The block after the fix, to compare with the pictures in section 2:
+
+![The west half after the author's fixes: at the left end of each Ash belt the westmost Boiler's short belt and the Splitter (red filter icon) that merges it into the Ash belt, and the second Boiler from the west with its two Ash inserters (taken 2026-10-19)](../images/ch10-block-west-fixed.jpg)
+
+![The east half after the fixes, unchanged apart from the Coal dust belt along the top (taken 2026-10-19)](../images/ch10-block-east-fixed.jpg)
 
 ## 5. The base after the save
 
@@ -355,7 +364,10 @@ The author exported the book at 20:35 (real time), with the save of 25:47;
   onto a short belt, which a Splitter (filtered to the Deconstruction planner, so everything leaves
   by its one open side) merges with the Ash belt; the Coal dust along a belt at y 141.5; 39
   separator inserters. Tested with random start phases (section 4): it jams in 3 of 6 starts
-  unless the second Boiler from the west gets a second Ash inserter; with it, 0 of 6.
+  unless the second Boiler from the west gets a second Ash inserter; with it, 0 of 6. The author
+  added those two inserters (and two poles) in a second export the same day, which is the file now.
+  Its separators' poles are still joined to the rest only through the author's bus poles: built
+  elsewhere they need one more pole or wire (the description says so).
 - **`molten-glass`** (new), "15 [Molten glass]": the Jaw crusher, the two Glassworks, the Gas
   furnace and its Stone chest with the circuit wire (section 6). Not run on the bench, which cannot
   give the Glassworks their fluid fuel; measured where it stands (section 6).
