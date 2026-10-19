@@ -227,10 +227,10 @@ row's westmost Boiler, now on Coal, filled again (335 Ash at 30 minutes), so the
 of the fix.
 
 **Why one inserter is not enough there** (the author's explanation, which the numbers support). A
-Mechanical inserter turns 0.013 of a turn a tick (data): a round trip takes 77 ticks, so it moves at
-most 0.78 items a second (0.765 measured, by the separators' inserters in the draft). A Coal Boiler
-makes 0.67 Ash a second, 87 % of that, so its inserter can afford to wait at a full lane for a gap
-only 13 % of the time; a Crushed coal Boiler (0.33, 43 %) can wait much longer. The Boilers
+Mechanical inserter turns 0.013 of a turn a tick (data); measured, a round trip takes 76 ticks, so
+it moves at most 0.789 items a second (`tools/inserter-rate-probe`, techniques). A Coal Boiler makes
+0.67 Ash a second, 85 % of that, so its inserter can afford to wait at a full lane for a gap only
+15 % of the time; a Crushed coal Boiler (0.33, 42 %) can wait much longer. The Boilers
 upstream always find room, so the gaps they leave come in a fixed pattern set by the phases of their
 drops, and whether the lane's spare 0.83 a second passes while the inserter is there to use it
 depends on that pattern. The runs fit this: the lower row, the same in every run, filled that Boiler
@@ -353,7 +353,7 @@ Both changed stations ran without trouble in the two hours after the save (secti
   Steam engines for 30 crushers.
 - A row of 15 crushers fills its Ash belt to the last item. Switch lanes halfway, give the westmost
   Boiler a way onto the other lane and the one before it a second Ash inserter (a Mechanical
-  inserter moves at most 0.78 items a second; a short belt that side-loads takes any gap), and over an hour
+  inserter moves at most 0.789 items a second; a short belt that side-loads takes any gap), and over an hour
   watch every Boiler there, not only the total: one Boiler that cannot put out its Ash costs its
   crusher.
 - Measure a new power block alone: cut its wires to the base, keep its inputs full, take its
