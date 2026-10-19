@@ -8,7 +8,8 @@
 -- Every STEP seconds and over the whole measurement it prints the network's power by entity
 -- (made and used, MW), what the load took, the crafts of the box's machines, what the sources
 -- gave and the sinks took, the items waiting on the box's belts and in its Boilers, and every
--- machine group's statuses (Boilers by row and the fuel they burn).
+-- machine group's statuses (Boilers by row and the fuel they burn; a Boiler's samples before it
+-- first burns anything count under "on -", so such a group is not a Boiler that never burns).
 -- Variant: "WARM,MEASURE,STEP" then ";key=value" fields, lists separated by "|":
 --   box=x1:y1:x2:y2          the block
 --   src=item@x:y|...         belt tiles kept full of item
@@ -19,12 +20,20 @@
 --                            item: an inserter's whitelist filter; for an underground belt
 --                            input or output, for a crafting machine its recipe)
 --   load=x:y                 the energy interface (2x2; inside a pole's supply area)
---   each=name|...            machines of that name sampled one by one, not as a group
+--   each=name|...            machines of that name sampled one by one, not as a group (also
+--                            boiler: each Boiler with the fuel it burns)
 --   lanes=x:y|...            belt tiles whose two lanes are watched every tick: items that passed
 --                            each lane per second (left and right, looking the way the belt runs;
 --                            counted by the items' ids) and the mean items on each lane
 --   prime=item:count         fuel put into every Boiler of the box once (a block that powers its
 --                            own crushers cannot start itself)
+--   isolate=1                the copper wires from the box's poles to poles outside it cut (a block
+--                            the author built into the base's network, measured alone)
+--   fill=fluid:amount@x:y|.. a Storage tank on that tile filled once; the reports show how fast
+--                            it empties (the fuel a fluid-burning Boiler takes)
+--   turn=x:y:dir|...         the entity on that tile turned to face dir (e.g. a Pipe to ground
+--                            placed the wrong way round)
+--   filter=x:y:item|...      the inserter on that tile filtered to item instead (whitelist)
 
 local variant = require("variant")
 local head, rest = variant:match("^([^;]*);?(.*)$")
@@ -110,6 +119,41 @@ script.on_init(function()
     else
       missed[#missed + 1] = p
     end
+  end
+  -- isolate=1 cuts the copper wires from the box's poles to poles outside it: a block built into
+  -- the base's network then runs on its own power, as the block alone.
+  if opt.isolate == "1" then
+    local inside, cut = {}, 0
+    local poles = surface.find_entities_filtered({ area = area, type = "electric-pole" })
+    for _, p in pairs(poles) do inside[p.unit_number] = true end
+    for _, p in pairs(poles) do
+      local c = p.get_wire_connector(defines.wire_connector_id.pole_copper, false)
+      if c then
+        for _, w in pairs(c.connections) do
+          if not inside[w.target.owner.unit_number] then
+            c.disconnect_from(w.target, w.origin)
+            cut = cut + 1
+          end
+        end
+      end
+    end
+    out("isolated the box: %d copper wires to poles outside cut", cut)
+  end
+  for _, s in ipairs(list(opt.turn)) do
+    local x, y, dir = s:match("^([%-%.%d]+):([%-%.%d]+):(%a+)$")
+    local e = surface.find_entities_filtered({ position = { num(x), num(y) } })[1]
+    if e then e.direction = defines.direction[dir] end
+    out("turned %s at %s:%s to %s", e and e.name or "nothing", x, y, e and STATUS_DIR[e.direction] or "-")
+  end
+  for _, s in ipairs(list(opt.filter)) do
+    local x, y, item = s:match("^([%-%.%d]+):([%-%.%d]+):([%w%-_]+)$")
+    local e = surface.find_entities_filtered({ position = { num(x), num(y) }, type = "inserter" })[1]
+    if e then
+      e.use_filters = true
+      e.inserter_filter_mode = "whitelist"
+      e.set_filter(1, item)
+    end
+    out("filter of the inserter at %s:%s: %s", x, y, e and item or "no inserter")
   end
   for n, c in pairs(placed) do out("placed %d %s", c, n) end
   if #missed > 0 then out("could not place: %s", table.concat(missed, " ")) end
@@ -306,6 +350,9 @@ local function group_key(p, e)
   if e.type == "boiler" then
     local u = e.unit_number
     p.fuel[u] = p.fuel[u] or fuel_name(e)
+    if p.each[e.name] then
+      return string.format("%s at %.1f,%.1f on %s", e.name, e.position.x, e.position.y, p.fuel[u] or "-")
+    end
     return string.format("%s at y %.1f on %s", e.name, e.position.y, p.fuel[u] or "-")
   end
   if e.type == "generator" then return e.name end

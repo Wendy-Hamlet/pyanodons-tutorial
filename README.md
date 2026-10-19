@@ -18,6 +18,7 @@ scripts used, so you can re-check them against your own mod versions.
 7. [Copper screening, titanium smelting and duralumin](chapters/07-copper-screening-titanium-duralumin.md)
 8. [Vrauks](chapters/08-vrauks.md)
 9. [pY science pack 1](chapters/09-py-science-pack-1.md)
+10. [Crushed-coal power](chapters/10-crushed-coal-power.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -161,7 +162,10 @@ parameters for yours.
   (counted by their ids), how fast a Storage tank filled once with a fluid fuel empties (the
   fuel a fluid-burning Boiler takes), and every machine group's status (fields of the
   variant at the top of its `control.lua`). With the whole base as its box it is a load test:
-  the power the base can give beyond what it uses.
+  the power the base can give beyond what it uses. A block the author built into the base's
+  network is measured alone by cutting its copper wires to the outside (`isolate=1`); `each=boiler`
+  samples every Boiler on its own, `turn=` and `filter=` try a fix (an entity turned, an
+  inserter's filter changed).
 - `status-probe/` (with `save-probe.ps1 -Variant name,ticks`): the status and electric buffer of
   every entity of one name on every tick after a save loads, the share of each status, and the
   effects of its modules and beacons: tells a state the base is in from one tick's look.

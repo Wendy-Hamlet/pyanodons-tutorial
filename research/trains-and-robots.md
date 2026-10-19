@@ -24,8 +24,11 @@ script-run machine (the Dig-o-saurus' Dig site) are marked: they still need a me
 - **Power: 99.6 MW used, all of it made** by the 49 Steam engines. Load test (an energy interface
   taking whatever is left): the engines gave 161.2 MW on average, 56.6 MW more than the base used,
   but falling (168.6, 162.5, 152.5 MW in the three 10-minute steps). The crushed-coal block's
-  Boilers were out of fuel half the time or more (its Raw coal input is short of 30/s), and some
-  Raw coal Boilers at y 230–260 filled with Ash (1,000). So about 50 MW is spare today, and less
+  crushers were never short of Raw coal but made only 8.07 crafts a second (24.2 Raw coal of 30):
+  one crusher never runs (a Pipe to ground turned the wrong way stops its Coal Boiler), and the
+  lower row's crushers wait to put out their Coal dust, more than the six Coal dust Boilers burn
+  once the whole base runs ([chapter 10](../chapters/10-crushed-coal-power.md), sections 4 and 5).
+  Some Raw coal Boilers at y 230–260 filled with Ash (1,000). So about 50 MW is spare today, and less
   under a long load.
 - Plates made per second: Aluminium 0.612, Lead 0.260, Tin 0.173 (0.310 used: the stock goes
   down), Solder 0.067. Never made in this game: Nexelit plates, Antimony oxide, Nickel plates,

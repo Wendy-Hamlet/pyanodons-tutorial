@@ -182,4 +182,4 @@ pY科技包1型的配方很短，但两种原料背后各有一条长链（数�
 - 数据：作者当前模组的数据导出（`C:\tmp\cf-save\data\script-output\data-raw-dump.json`）：配方、机器速度、插件效果（月落草、碳捕集）、燃烧器的销毁配方、堆叠数、科技花费；英文名来自模组的 `locale/en`。
 - 截图：作者修复后用助手模组拍摄（`/pt-shots`），区域用 `node tools/shots.js plan` 规划。
 
-下一章：第十章（待续）。
+下一章：[第十章 碎煤发电](10-crushed-coal-power.zh-CN.md)。

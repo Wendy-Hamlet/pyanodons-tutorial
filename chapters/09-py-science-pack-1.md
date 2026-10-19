@@ -363,4 +363,4 @@ at 22:56 after the fixes; `tools/bp-sync.js pull` reports two new designs and th
 - The screenshots: taken by the author with the companion mod (`/pt-shots`) after the fix, areas
   planned with `node tools/shots.js plan`.
 
-Next: chapter 10 (to come).
+Next: [chapter 10, crushed-coal power](10-crushed-coal-power.md).
