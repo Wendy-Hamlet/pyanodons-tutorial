@@ -226,11 +226,23 @@ draft's result (section 2: 30.0 Raw coal, 70.0 MW). With the filters swapped as 
 row's westmost Boiler, now on Coal, filled again (335 Ash at 30 minutes), so the swap is not part
 of the fix.
 
-In the draft the Boiler in the same place managed with one inserter: the lane counts there were the
-same (both lanes 7.33 a second before the last Boiler, so 6.67 on the far lane before the one before
-it). Why the finished block's lane leaves
-fewer gaps for it was not found; the second inserter gives it a second drop point. Each row's 15
-Ash a second is exactly what its belt carries, so the west end has no other margin.
+**Why one inserter is not enough there** (the author's explanation, which the numbers support). A
+Mechanical inserter turns 0.013 of a turn a tick (data): a round trip takes 77 ticks, so it moves at
+most 0.78 items a second (0.765 measured, by the separators' inserters in the draft). A Coal Boiler
+makes 0.67 Ash a second, 87 % of that, so its inserter can afford to wait at a full lane for a gap
+only 13 % of the time; a Crushed coal Boiler (0.33, 43 %) can wait much longer. The Boilers
+upstream always find room, so the gaps they leave come in a fixed pattern set by the phases of their
+drops, and whether the lane's spare 0.83 a second passes while the inserter is there to use it
+depends on that pattern. The runs fit this: the lower row, the same in every run, filled that Boiler
+at 583 Ash a half hour as built, at 138 once only the upper row's pipe was turned, and not at all
+with the Ash taken off at the corner; the draft, with the same lane counts, never filled it. Two
+inserters each need only 0.33 a second and can wait. A belt merging from the side has no such limit:
+it takes any gap that passes and holds a few items meanwhile, which is why the westmost Boiler's
+second inserter, feeding a short belt that side-loads the other lane, fills both lanes to 7.5 a
+second. A short feeder belt that side-loads the Ash belt is the general fix for a Boiler on a nearly
+full lane (the author's proposal; not measured, this block has no tile for it between the Boilers
+and the Ash belt). Each row's 15 Ash a second is exactly what its belt carries, so the west end has
+no other margin.
 
 ## 5. The base after the save
 
@@ -340,7 +352,8 @@ Both changed stations ran without trouble in the two hours after the save (secti
 - Two Boilers per crusher, one on Crushed coal (54 % busy at most) and one on Coal (72 %), and 19
   Steam engines for 30 crushers.
 - A row of 15 crushers fills its Ash belt to the last item. Switch lanes halfway, give the westmost
-  Boiler a way onto the other lane and the one before it a second Ash inserter, and over an hour
+  Boiler a way onto the other lane and the one before it a second Ash inserter (a Mechanical
+  inserter moves at most 0.78 items a second; a short belt that side-loads takes any gap), and over an hour
   watch every Boiler there, not only the total: one Boiler that cannot put out its Ash costs its
   crusher.
 - Measure a new power block alone: cut its wires to the base, keep its inputs full, take its
