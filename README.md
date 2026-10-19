@@ -66,6 +66,13 @@ parameters for yours.
 
 - `dump-data.ps1` + `analyze-py.js`: `data.raw` of your exact mod set and its localised names
   (zh-CN and en), and a summary of it. Rebuild it when your mods update: the recipe tools read it.
+- `q.js <name>`: one-call lookup by internal, English or Chinese name, whole or part: the item,
+  fluid, building, recipe, technology or resource in compact lines (every recipe that makes it
+  with machine, time and unlocking technology and its cost, what uses it, building stats), what
+  the latest save snapshot holds of it (researched, built, in the inventory, ore patches), and
+  every paragraph of the research notes and chapters that mentions it (`--data`, `--notes`,
+  `--all`, `--zh`). It keeps a small index of the dump (`q-index.json`), so a query takes under a
+  second.
 - `recipe-tree.js <item> --techs a,b`: production tree and raw totals using only the recipes
   unlocked at that point (Chinese names; `--techs save,a` adds everything researched in the
   latest save snapshot). Mined and pumped items count as raw inputs only while a drill for them
