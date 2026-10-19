@@ -28,12 +28,16 @@
 --   prime=item:count         fuel put into every Boiler of the box once (a block that powers its
 --                            own crushers cannot start itself)
 --   isolate=1                the copper wires from the box's poles to poles outside it cut (a block
---                            the author built into the base's network, measured alone)
+--                            the author built into the base's network, measured alone); a pole
+--                            group of the box left on its own is joined to the largest by a wire
 --   fill=fluid:amount@x:y|.. a Storage tank on that tile filled once; the reports show how fast
 --                            it empties (the fuel a fluid-burning Boiler takes)
 --   turn=x:y:dir|...         the entity on that tile turned to face dir (e.g. a Pipe to ground
 --                            placed the wrong way round)
 --   filter=x:y:item|...      the inserter on that tile filtered to item instead (whitelist)
+--   stagger=seed:gap:name    the box's machines of that name stopped and emptied of work in
+--                            progress, then started one by one in a random order, each 0 to gap s
+--                            after the one before (seeded random): different start phases
 
 local variant = require("variant")
 local head, rest = variant:match("^([^;]*);?(.*)$")
@@ -138,6 +142,31 @@ script.on_init(function()
       end
     end
     out("isolated the box: %d copper wires to poles outside cut", cut)
+    -- Pole groups of the box that reached the block only through outside poles are joined back to
+    -- the largest group by one wire between their closest poles (in the base they share a network).
+    local groups = {}
+    for _, p in pairs(poles) do
+      local id = p.electric_network_id
+      groups[id] = groups[id] or {}
+      table.insert(groups[id], p)
+    end
+    local main
+    for id, g in pairs(groups) do if not main or #g > #groups[main] then main = id end end
+    for id, g in pairs(groups) do
+      if id ~= main then
+        local best, d
+        for _, a in pairs(g) do
+          for _, b in pairs(groups[main]) do
+            local dd = (a.position.x - b.position.x) ^ 2 + (a.position.y - b.position.y) ^ 2
+            if not d or dd < d then best, d = { a, b }, dd end
+          end
+        end
+        best[1].get_wire_connector(defines.wire_connector_id.pole_copper, true).connect_to(
+          best[2].get_wire_connector(defines.wire_connector_id.pole_copper, true), false)
+        out("joined %d poles at %.1f,%.1f to the block's network (wire to %.1f,%.1f, %.1f tiles)", #g,
+          best[1].position.x, best[1].position.y, best[2].position.x, best[2].position.y, math.sqrt(d))
+      end
+    end
   end
   for _, s in ipairs(list(opt.turn)) do
     local x, y, dir = s:match("^([%-%.%d]+):([%-%.%d]+):(%a+)$")
@@ -200,6 +229,35 @@ script.on_init(function()
     out("primed the Boilers with %d %s", nb, item)
   end
 
+  -- stagger=seed:gap:name starts the box's machines of that name one by one: all stopped, their
+  -- work in progress and output cleared (and the Boilers' Ash), then switched on in a random order,
+  -- each a random 0 to gap seconds after the one before. Seeds give different start phases.
+  local starts = {}
+  if opt.stagger then
+    local seed, gap, name = opt.stagger:match("^(%d+):([%d%.]+):([%w%-_]+)$")
+    -- Seeds 1, 2 and 3 gave the same sequence (small seeds end up as one), so they are spread out.
+    local rng = game.create_random_generator(341 + num(seed) * 7919)
+    for _, b in pairs(surface.find_entities_filtered({ area = area, type = "boiler" })) do
+      local inv = b.get_inventory(defines.inventory.burnt_result)
+      if inv then inv.clear() end
+    end
+    local machines = surface.find_entities_filtered({ area = area, name = name })
+    for i = #machines, 2, -1 do
+      local j = rng(i)
+      machines[i], machines[j] = machines[j], machines[i]
+    end
+    local t = 0
+    for _, m in ipairs(machines) do
+      m.disabled_by_script = true
+      m.crafting_progress = 0
+      local inv = m.get_output_inventory()
+      if inv then inv.clear() end
+      t = t + math.floor(rng() * num(gap) * 60)
+      starts[#starts + 1] = { e = m, tick = game.tick + t }
+    end
+    out("stagger seed %s: %d %s started over %.1f s", seed, #starts, name, t / 60)
+  end
+
   local x, y = opt.load:match("([%-%.%d]+):([%-%.%d]+)")
   local load = surface.create_entity({ name = "electric-energy-interface", position = { num(x), num(y) }, force = f })
   load.power_usage, load.power_production, load.electric_buffer_size = 0, 0, 1e12
@@ -210,6 +268,21 @@ script.on_init(function()
   local n = {}
   for id, c in pairs(nets) do n[#n + 1] = string.format("%d (%d poles)", id, c) end
   out("networks in the box: %s; load on %s", table.concat(n, ", "), tostring(load.electric_network_id))
+  -- A network without the load is cut off from the block's engines: name its poles and machines.
+  for id, c in pairs(nets) do
+    if id ~= load.electric_network_id then
+      local at, what = {}, {}
+      for _, p in pairs(poles) do
+        if p.electric_network_id == id then at[#at + 1] = string.format("%.1f,%.1f", p.position.x, p.position.y) end
+      end
+      for _, e in pairs(surface.find_entities_filtered({ area = area })) do
+        if e.type ~= "electric-pole" and e.electric_network_id == id then what[e.name] = (what[e.name] or 0) + 1 end
+      end
+      local w = {}
+      for k, v in pairs(what) do w[#w + 1] = v .. " " .. k end
+      out("network %d (no load): poles %s; powers %s", id, table.concat(at, " "), table.concat(w, ", "))
+    end
+  end
 
   storage.p = {
     surface = surface, area = area, sources = sources, sinks = sinks, load = load, absorbed = 0, tanks = tanks,
@@ -217,7 +290,7 @@ script.on_init(function()
     machines = surface.find_entities_filtered({ area = area,
       type = { "assembling-machine", "furnace", "boiler", "generator", "mining-drill" } }),
     belts = surface.find_entities_filtered({ area = area, type = BELTS }),
-    fuel = {}, each = {},
+    fuel = {}, each = {}, starts = starts, next_start = 1,
   }
   for _, n in ipairs(list(opt.each)) do storage.p.each[n] = true end
   storage.p.lanes = {}
@@ -317,6 +390,17 @@ local function report(p, label, now, before, samples)
     end
   end
   if #full > 0 then out("%s: Boilers holding 50 or more burnt results: %s", label, table.concat(full, ", ")) end
+  -- The three Boilers holding the most burnt results, however few: a slow build-up shows early.
+  local top = {}
+  for _, e in pairs(p.machines) do
+    if e.valid and e.type == "boiler" then top[#top + 1] = { e = e, n = count(e, defines.inventory.burnt_result) } end
+  end
+  table.sort(top, function(a, b) return a.n > b.n end)
+  local most = {}
+  for i = 1, math.min(3, #top) do
+    most[i] = string.format("%.1f,%.1f %d", top[i].e.position.x, top[i].e.position.y, top[i].n)
+  end
+  if #most > 0 then out("%s: most burnt results: %s", label, table.concat(most, ", ")) end
   for _, l in ipairs(p.lanes) do
     local n, t, f = l.sn, l.st, l.sf
     if label == "total" then n, t, f = l.n, l.t, l.f end
@@ -364,6 +448,11 @@ end
 script.on_event(defines.events.on_tick, function()
   local p = storage.p
   if not p then return end
+  while p.next_start <= #p.starts and p.starts[p.next_start].tick <= game.tick do
+    local s = p.starts[p.next_start]
+    if s.e.valid then s.e.disabled_by_script = false end
+    p.next_start = p.next_start + 1
+  end
   for _, s in ipairs(p.sources) do
     for line = 1, 2 do
       if s.e.get_transport_line(line).insert_at_back({ name = s.item, count = 1 }) then s.n = s.n + 1 end

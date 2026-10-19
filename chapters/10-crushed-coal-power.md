@@ -244,6 +244,25 @@ full lane (the author's proposal; not measured, this block has no tile for it be
 and the Ash belt). Each row's 15 Ash a second is exactly what its belt carries, so the west end has
 no other margin.
 
+**Start phases, tested** (the next day, at the author's request). If the phase explanation holds,
+the same block jams or not depending on how it started. Copies were run alone for 90 minutes after
+a start in which the 30 crushers were stopped, emptied of work in progress and switched on one by
+one in a random order, each 0 to 4 seconds after the one before (`stagger=`, seeded; the Boilers'
+Ash cleared, 20 Coal in each to start). A start "jams" when a Boiler's Ash keeps growing; in the
+others the Boiler holding the most Ash held the same count (12 to 161) at 30, 60 and 90 minutes.
+
+| Block (alone, crushers started in a random order) | Starts that jam |
+|---|---|
+| As built at 25:47 (the pipe the wrong way, 29 crushers) | 1 of 3: the lower row's second Boiler from the west, 0.08 Ash a second (full after about 3.4 hours) |
+| The pipe turned | 1 of 3: the upper row's, full within the hour |
+| The pipe turned and a second Ash inserter on that Boiler | 0 of 3 |
+| The author's update (blueprint of 2026-10-19, section 7; its separator poles reach the block only through the base's, so a wire was added) | 3 of 6: the second Boiler from the west, upper row twice and lower row once, full after 60 to 95 minutes; then 9.92 crafts a second |
+| The update and a second Ash inserter at (−55.5, 154.5) and (−55.5, 172.5) | 0 of 6: 30 Raw coal a second, the separators at 100 %, 51.7 MW to the load |
+
+The update's short belt and Splitter take care of the westmost Boiler, but the one before it, a Coal
+Boiler with one inserter on the fullest lane, is the same as before; one more inserter on its free
+tile makes the block run full whatever the start.
+
 ## 5. The base after the save
 
 Copies of the save were run with the block as the author left it, inside the base's network:
@@ -330,7 +349,13 @@ The author exported the book at 20:35 (real time), with the save of 25:47;
 - **`crushed-coal-power`** (new), "碎煤发电" (crushed-coal power), icons Secondary crusher and Raw
   coal: the block of section 2, x −60.5 to 44.5, y 142.5 to 185.5 in save coordinates, 30
   Secondary crushers MK 01, 60 Boilers, 19 Steam engines, 3 Solid separators, 271 Mechanical
-  inserters, 2 Offshore pumps. Measured where it stands, alone (section 4).
+  inserters, 2 Offshore pumps. Measured where it stands, alone (section 4). The file now holds the
+  author's update of the next day (export of 2026-10-19, after the chapter's save): the pipe
+  turned, the westmost Boilers moved a tile apart so that the westmost one's two Ash inserters drop
+  onto a short belt, which a Splitter (filtered to the Deconstruction planner, so everything leaves
+  by its one open side) merges with the Ash belt; the Coal dust along a belt at y 141.5; 39
+  separator inserters. Tested with random start phases (section 4): it jams in 3 of 6 starts
+  unless the second Boiler from the west gets a second Ash inserter; with it, 0 of 6.
 - **`molten-glass`** (new), "15 [Molten glass]": the Jaw crusher, the two Glassworks, the Gas
   furnace and its Stone chest with the circuit wire (section 6). Not run on the bench, which cannot
   give the Glassworks their fluid fuel; measured where it stands (section 6).
@@ -389,6 +414,10 @@ Both changed stations ran without trouble in the two hours after the save (secti
   (`sink=-29.5:158.5|-29.5:168.5`), and for two hours with the second Ash inserters
   (`place=burner-inserter@-56.5:154.5:north:ash|burner-inserter@-56.5:172.5:south:ash`), also with
   the filters swapped. The draft's runs of the same day were compared with these lane by lane.
+  Start phases: the save of 25:47 and the author's save of 2026-10-19 (its block identical to the
+  updated blueprint, checked entity by entity), each run 95 minutes with
+  `stagger=<seed>:4:secondary-crusher-mk01` (new) for 3 or 6 seeds, four copies at a time in
+  separate work folders; `isolate=1` now also joins a pole group of the box left on its own.
 - **The base after the save:** `tools/save-probe.ps1 -Probe rate-probe` for 10 minutes and two
   hours (power every 10 minutes), and `-Probe power-probe` for 30 minutes with the whole base as
   the box and the load at (−37, 167), once more with every crusher on its own and the Coal dust

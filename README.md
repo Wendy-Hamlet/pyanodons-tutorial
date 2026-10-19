@@ -165,7 +165,8 @@ parameters for yours.
   the power the base can give beyond what it uses. A block the author built into the base's
   network is measured alone by cutting its copper wires to the outside (`isolate=1`); `each=boiler`
   samples every Boiler on its own, `turn=` and `filter=` try a fix (an entity turned, an
-  inserter's filter changed).
+  inserter's filter changed), and `stagger=seed:gap:name` starts its machines one by one in a
+  random order, to test whether a design jams under some start phases.
 - `status-probe/` (with `save-probe.ps1 -Variant name,ticks`): the status and electric buffer of
   every entity of one name on every tick after a save loads, the share of each status, and the
   effects of its modules and beacons: tells a state the base is in from one tick's look.
