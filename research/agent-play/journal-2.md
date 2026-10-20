@@ -69,3 +69,11 @@ black boxes; one finished block per technology; no research rush (the author's a
   oxygen furnace needs 5 MW of fuel; `node a.js wait` waits at most `max` real seconds (default 120).
 - Next: carry Coal to the oxygen furnace and Raw coal to the nickel furnaces regularly or give them a
   fuel line; Fish farm before the 30 Fish run out (15 Gearboxes); a first rail line to an outpost.
+- Fish check (data, after the session): Fish and Fish eggs come only from the Fish farm, and every
+  recipe there needs Fish: eggs take 12 Fish (-> 25 eggs), breeding takes 10 eggs (-> 10 Fish). The
+  farm's base speed effect is -100 % (floor -99.99 %), each Fish in its 7 module slots +100 %: with no
+  Fish as module it does not run. So starting it needs at least 13 Fish (12 for eggs + 1 module, at
+  1/7 speed), 19 for full speed. Wild Fish do not come back (map generation only, 0.002 per water
+  tile); the charted map had 6 (30 Fish). I rendered 8 for Fish oil and kept 22: the farm can still
+  start, but one more render leaves 14, two leave 6 and the farm could never start unless unexplored
+  water holds more. Lesson: reserve 13-19 Fish for the farm before using any.
