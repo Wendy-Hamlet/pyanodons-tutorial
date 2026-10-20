@@ -199,7 +199,7 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 | Add up every drill on one mining-fluid source. The author's acetylene block makes 49.75 a second; six lead drills MK 02 want 60, ten titanium drills 20. With an Overflow valve giving lead first call, the titanium drills stop ("missing required fluid") once the lead plates are all used; they keep their 20 while lead takes at most 29.75, about 1.8 plates a second. | `tools/rate-probe` with the plates taken away (chapter 11) |
 | Tin processing - Stage 1: screener 5 Tin ore → 1 Tin (grade 1) + 1 grade 2 at 50 %, 3 s; Jaw crusher 1 grade 2 → 1 grade 1 at 50 % + 1 Stone, 4 s; a furnace 15 grade 1 → 10 Tin plates, 50 s. So 6 ore a plate instead of 10, 0.2 plates a second a furnace instead of 0.067. One belt of ore (15 a second): nine screeners, six crushers exactly, 12.5 furnaces, 2.5 plates a second, 1.5 Stone a second to place. The author's block (13 Fluid mining drills MK 02): 13.48 ore and 2.23 plates a second, 50 Steam a plate instead of 100. | Data; `tools/rate-probe`, the save of 28:02 ([chapter 11](../chapters/11-lead-titanium-tin-smelting.md)) |
 | A filter Splitter whose filter side has no belt holds that item back: the author's tin block sends Tin (grade 2) there, so it never reaches the furnace belt and waits on the Splitter for the last Jaw crusher's inserter. In an hour with the plates taken away no grade 2 got past it. | The save of 28:02; `tools/rate-probe` (chapter 11) |
-| Drills on both sides of one belt each fill their own lane, 7.5 a second at most. The author's tin mine has five drills MK 02 on one side (6 ore a second) and eight on the other (9.6): 13.48 ore a second, not 15.6; the last drills of the eight-drill side wait for space while the other side always works. Balance the rows. | `tools/rate-probe` watch points, one-minute steps (chapter 11) |
+| Drills on both sides of one belt each fill their own lane, 7.5 a second at most. The author's tin mine has five drills MK 02 on one side (6 ore a second) and eight on the other (9.6): 13.48 ore a second, not 15.6; the last drills of the eight-drill side wait for space while the other side always works. The author keeps such extra drills as a reserve for when the first ones mine out (principle 8); waiting, they draw no power: the base's MK 02 drills used 15.9 MW in that hour, just what the working ones need. | `tools/rate-probe` watch points, one-minute steps (chapter 11) |
 
 ## Vrauks
 
@@ -262,7 +262,9 @@ Aluminium ore lane feeds nine furnaces at 0.833 each, 0.75 plates/s; the Iron ox
 8. **Smelting unit.** Ore drill rows and a 10-furnace column on one fuel loop; the drill rows cover
    the whole ore strip and hold more drills than needed, because downstream drills take over when
    upstream ones mine out and blocked drills burn nothing. Uneven rows are mined-out spots. A unit
-   burns about 2.0 Raw coal/s and takes it with three taps (3 × 0.83/s).
+   burns about 2.0 Raw coal/s and takes it with three taps (3 × 0.83/s). The same holds for
+   electric drills: a mining drill has no idle drain, so a blocked Fluid mining drill MK 02 draws
+   no power ([chapter 11](../chapters/11-lead-titanium-tin-smelting.md#6-tin)).
 9. **One column blueprint for every plate.** Plate-side output inserters filtered to everything
    but Ash (blacklist), so the same blueprint smelts iron or copper.
 10. **Mall.** Once handcrafting holds you up (in the author's first run: 48 minutes of recipe time

@@ -18,8 +18,9 @@ The result: **lead takes 2 ore a plate instead of 6, titanium 5.2 instead of 10,
 10.** With their plates taken away the lead block makes **2.9 Lead plates a second** (the old
 column of chapter 5: 0.49), the titanium block **1.15 Titanium plates a second** from 6 ore
 (chapter 7: 0.275) and the tin block **2.23 Tin plates a second** from 13.5 ore (chapter 5: 0.75).
-Every stage of all three has room for a full belt of ore; the tin mine nearly fills one, held to
-13.5 a second because eight of its drills share one lane of the belt (section 6). All three stood
+Every stage of all three has room for a full belt of ore; the tin mine nearly fills one, 13.5 a
+second, because eight of its drills share one lane of the belt and some of them wait as a reserve
+(section 6). All three stood
 full at their saves, because nothing uses titanium yet and the board line takes 0.267 Lead and
 0.31 Tin plates a second. **The lead and titanium blocks share one Acetylene supply that is too
 small for both at full speed**: the lead drills want 60 a second, the titanium drills 20, and the
@@ -163,9 +164,9 @@ As saved, the block makes what the board line takes, 0.26 to 0.28 Lead plates a 
 drills waiting for space 92 % of the time; the chest at (−129.5, −71.5) holds 1,600 plates and the
 furnaces are full.
 
-<!-- ![The lead screening: the nine Automated screeners in a row, the ore belt above them, the Lead (grade 1) belt below](../images/ch11-lead-screening.jpg) -->
+![The lead screening: the nine Automated screeners in a row, the ore belt above them, the Lead (grade 1) belt below](../images/ch11-lead-screening.jpg)
 
-<!-- ![The lead furnaces: two rows of fifteen Stone furnaces, the plate belt leaving east past the chest](../images/ch11-lead-smelting.jpg) -->
+![The lead furnaces: two rows of fifteen Stone furnaces, the plate belt leaving east past the chest](../images/ch11-lead-smelting.jpg)
 
 ## 3. Titanium
 
@@ -232,9 +233,9 @@ it stands the screeners fill up within 20 minutes, the ore belt by 30, and the d
 the hour: the jam of a product with no user yet (techniques principle 23), which frees the
 Acetylene for lead (section 4).
 
-<!-- ![The titanium block: the ore screeners along the ore belt at the top, the Jaw crushers and the grade 3 screeners below them, the furnaces, the brick furnaces and the Burner at the bottom, the plate chests at the left](../images/ch11-titanium.jpg) -->
+![The titanium block: the ore screeners along the ore belt at the top, the Jaw crushers and the grade 3 screeners below them, the furnaces, the brick furnaces and the Burner at the bottom, the plate chests at the left](../images/ch11-titanium.jpg)
 
-<!-- ![The titanium mine: ten Fluid mining drills MK 02 in two rows with the ore belt between them](../images/ch11-titanium-mine.jpg) -->
+![The titanium mine: ten Fluid mining drills MK 02 in two rows with the ore belt between them](../images/ch11-titanium-mine.jpg)
 
 ## 4. Acetylene for both
 
@@ -385,7 +386,16 @@ and the two before it now and then. So the block makes 2.23 plates instead of th
 screeners, crushers and furnaces could make from a full belt; only more drills on the north side
 of the belt would add ore.
 
-<!-- ![The tin block: the ore belt and the drills at the bottom, the screeners above them, the Jaw crushers and the furnaces at the top, the filter Splitter between them, the plate chests at the left](../images/ch11-tin.jpg) -->
+The author calls this a small flaw and places the extra drills on purpose, as with the burner
+drills before (techniques principle 8): when the ore under the first drills on the lane runs out,
+the waiting ones take over by themselves. They expected the reserve to cost a little electricity
+now that the drills are electric; it costs none while it waits. A mining drill has no idle drain
+(the MK 02 sets none, and the engine adds one only to crafting machines; data), so a drill waiting
+for space draws nothing: in the hour with the plates taken the base's Fluid mining drills MK 02
+used 15.9 MW, what its working ones need (six aluminium drills all the time, the tin drills 86 %,
+the lead drills 7 %, the titanium drills not at all, at 900 kW each).
+
+![The tin block: the ore belt and the drills at the bottom, the screeners above them, the Jaw crushers and the furnaces at the top, the filter Splitter between them, the plate chests at the left](../images/ch11-tin.jpg)
 
 ## 7. Other changes
 
@@ -417,7 +427,8 @@ of the belt would add ore.
 - A filter Splitter with no belt on its filter side holds that item back: here it keeps Tin
   (grade 2) off the furnace belt and in reach of the last crusher.
 - Drills on both sides of a belt each fill their own lane, at most 7.5 a second: eight drills on
-  one side and five on the other give 13.5 ore, not 15.6.
+  one side and five on the other give 13.5 ore, not 15.6. The extra drills are a reserve for when
+  the first ones mine out, and a drill waiting for space draws no power.
 - Size every stage for a full belt of ore, as the author did: then more drills are all it takes
   later.
 - Fluid mining drills MK 02 mine twice as fast and need no fuel belt. The mining fluid is per
