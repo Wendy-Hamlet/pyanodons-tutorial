@@ -27,6 +27,7 @@ and design principle in one place) · [Coke, steel, crushing and Ash separation]
 (bus, blocks, Simple circuit boards and the key intermediates before trains) ·
 [The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) ·
 [Map settings](research/map-settings.md) (Py's preset, the author's edits and what they do to the map) ·
+[T.U.R.D. choices](research/turd-choices.md) (the author's picks, the ones still open, every upgrade) ·
 [Blueprints](blueprints/README.md) (measured designs, ready to import).
 
 ## Setup the chapters were written against
@@ -177,6 +178,9 @@ parameters for yours.
   samples every Boiler on its own, `turn=` and `filter=` try a fix (an entity turned, an
   inserter's filter changed), and `stagger=seed:gap:name` starts its machines one by one in a
   random order, to test whether a design jams under some start phases.
+- `turd-probe/` (with `save-probe.ps1 -Ticks 10`): the T.U.R.D. upgrades researched in a save and
+  the option picked for each, read through pyalienlife's own interface, with the hidden modules and
+  machine replacements in place (`research/turd-choices.md`).
 - `status-probe/` (with `save-probe.ps1 -Variant name,ticks`): the status and electric buffer of
   every entity of one name on every tick after a save loads, the share of each status, and the
   effects of its modules and beacons: tells a state the base is in from one tick's look.
