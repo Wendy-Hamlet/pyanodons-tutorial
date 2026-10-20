@@ -186,6 +186,33 @@ function act.remove(a)
   return { removed = name }
 end
 
+-- The circuit condition of a pump, inserter or other entity in reach, as a player sets it in
+-- its window: signal= (an item or fluid name; type= item|fluid|virtual, default fluid),
+-- comparator= (<, >, =, ≥, ≤, ≠) and constant=.
+function act.set_condition(a)
+  local c = need_char()
+  local e = target(a, c)
+  local cb = e.get_or_create_control_behavior() or error(e.name .. " has no circuit settings")
+  cb.circuit_enable_disable = true
+  cb.circuit_condition = {
+    first_signal = { type = a.type or "fluid", name = a.signal or error("give signal") },
+    comparator = a.comparator or "=", constant = a.constant or 0,
+  }
+  return { name = e.name, condition = cb.circuit_condition }
+end
+
+-- An inserter's (or splitter's) filters in reach: filters=a,b (empty clears), mode=whitelist|blacklist.
+function act.set_filters(a)
+  local c = need_char()
+  local e = target(a, c)
+  local list = {}
+  for f in string.gmatch(a.filters or "", "[^,]+") do table.insert(list, f) end
+  e.use_filters = #list > 0
+  for i = 1, e.filter_slot_count do e.set_filter(i, list[i]) end
+  if a.mode then e.inserter_filter_mode = a.mode end
+  return { name = e.name, filters = list }
+end
+
 function act.rotate(a)
   local c = need_char()
   local e = target(a, c)
