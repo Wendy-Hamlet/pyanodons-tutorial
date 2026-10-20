@@ -3,26 +3,30 @@
 [中文版](11-lead-titanium-tin-smelting.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 10](10-crushed-coal-power.md)
 
-This chapter follows the same recorded run from the save of 25:47. Its subject is the author's,
-**better lead, titanium and tin smelting** (铅矿、钛矿和锡矿冶炼改良): the three Stage 1 processing
-technologies screen the ore before it is smelted, so a plate takes far less ore and a furnace makes
-far more plates. This first part covers lead and titanium, built from 26:04 to the save of 27:39;
-the tin block was begun just before the save and follows in the second part. Along with them the
-drills on both fields became Fluid mining drills MK 02, and Mining productivity 1 and 2 were
+This chapter follows the same recorded run from the save of 25:47 to the save of 28:02. Its
+subject is the author's, **better lead, titanium and tin smelting** (铅矿、钛矿和锡矿冶炼改良): the
+three Stage 1 processing technologies screen the ore before it is smelted, so a plate takes far
+less ore and a furnace makes far more plates. Lead and titanium were built from 26:04 to the save
+of 27:39 (sections 2 to 5), tin from 27:32 to the save of 28:02 (section 6). Along with them the
+drills on all three fields became Fluid mining drills MK 02, and Mining productivity 1 and 2 were
 researched. Times are game time. Numbers come from the game's data, from the recorder's 10-minute
-production windows, from the save of 27:39 (`tools/inspect-save.ps1`) and from an hour of that
-save, as it stands and with the new blocks' plates taken away (`tools/rate-probe`). The author has
-not exported blueprints of the new blocks.
+production windows, from the saves of 27:39 and 28:02 (`tools/inspect-save.ps1`) and from an hour
+of each save, as it stands and with the new blocks' plates taken away (`tools/rate-probe`). The
+author has not exported blueprints of the new blocks.
 
-The result: **lead takes 2 ore a plate instead of 6, titanium 5.2 instead of 10.** With its plates
-taken away the lead block makes **2.9 Lead plates a second** (the old column of chapter 5: 0.49),
-and the titanium block **1.15 Titanium plates a second** from 6 ore (chapter 7: 0.275); every stage
-of both has room for a full belt of ore. Both stood full at the save, because nothing uses titanium
-yet and the board line takes 0.267 Lead plates a second. **The two blocks share one Acetylene
-supply that is too small for both at full speed**: the lead drills want 60 a second, the titanium
-drills 20, and the acetylene block makes at most 49.75. An Overflow valve gives lead first call, so
-once everything the lead block makes is used, the titanium drills stop within 20 minutes. While the
-lead users take up to about 1.8 plates a second, both run at full speed (section 4).
+The result: **lead takes 2 ore a plate instead of 6, titanium 5.2 instead of 10, tin 6 instead of
+10.** With their plates taken away the lead block makes **2.9 Lead plates a second** (the old
+column of chapter 5: 0.49), the titanium block **1.15 Titanium plates a second** from 6 ore
+(chapter 7: 0.275) and the tin block **2.23 Tin plates a second** from 13.5 ore (chapter 5: 0.75).
+Every stage of all three has room for a full belt of ore; the tin mine nearly fills one, held to
+13.5 a second because eight of its drills share one lane of the belt (section 6). All three stood
+full at their saves, because nothing uses titanium yet and the board line takes 0.267 Lead and
+0.31 Tin plates a second. **The lead and titanium blocks share one Acetylene supply that is too
+small for both at full speed**: the lead drills want 60 a second, the titanium drills 20, and the
+acetylene block makes at most 49.75. An Overflow valve gives lead first call, so once everything
+the lead block makes is used, the titanium drills stop within 20 minutes. While the lead users take
+up to about 1.8 plates a second, both run at full speed (section 4). And research doubled to 0.1
+units a second once the red science block got its Stone bricks (section 7).
 
 ## The run at a glance
 
@@ -33,7 +37,7 @@ lead users take up to about 1.8 plates a second, both run at full speed (section
 | 26:04–26:16 | **The lead block**: nine Automated screeners MK 01 in a row at y −70.5 (x −226.5 to −170.5), and the thirteen lead furnaces of [chapter 5](05-tin-zinc-smelting.md#7-lead-acetylene-as-the-mining-fluid) rebuilt as two rows of fifteen Stone furnaces (x −163 to −135); screeners and furnaces handcrafted on the spot, about half of them placed by robots. Lead ore stops while it is rebuilt (0.12 a second in the window ending 26:20) |
 | 26:27–26:28 | The six lead drills replaced by Fluid mining drills MK 02 |
 | 26:32 | Mining productivity 1 researched (+10 % ore from every drill); Mining productivity 2 next |
-| 26:33 | Two more Coal dust Boilers and two Steam engines, with their own Offshore pump, at (−41.5, 382) and (−38.5, 382) (section 6) |
+| 26:33 | Two more Coal dust Boilers and two Steam engines, with their own Offshore pump, at (−41.5, 382) and (−38.5, 382) (section 7) |
 | 26:35–26:36 | The twelve titanium furnaces of [chapter 7](07-copper-screening-titanium-duralumin.md#3-titanium) taken away by robots |
 | 26:40–27:10 | The lead block at full speed: 6.4 to 6.6 Lead ore and up to 2.9 Lead plates a second, the Acetylene block at its 50 a second; then the plates fill their store and the drills slow down |
 | 26:43–27:08 | **The titanium block** laid out east of its place (x −25 to 58, y 419 to 471): 13 screeners, five Jaw crushers MK 01, two Secondary crushers MK 01, eleven Stone furnaces, partly by hand and partly by robots, moved and moved again |
@@ -41,8 +45,15 @@ lead users take up to about 1.8 plates a second, both run at full speed (section
 | 27:12–27:20 | Robots move the titanium block west into its place, x −61 to 0, y 417 to 452, beside the end of the titanium ore belt; three chests for the plates |
 | 27:22 | Tin processing - Stage 1 researched; Oil industry machinery - Stage 1 next |
 | 27:22–27:27 | The titanium drills replaced by ten Fluid mining drills MK 02; their Raw coal and Ash belts taken away |
-| 27:32–27:38 | The tin block begun at y 472 to 496 (x −59 to 10): nine screeners, six Jaw crushers, Stone furnaces; the twelve tin furnaces of chapter 5 taken away (the second part of this chapter) |
-| 27:39 | The save; Oil industry machinery - Stage 1 at 62 % |
+| 27:32–27:44 | **The tin block** begun at y 472 to 496 (x −59 to 10): nine screeners, six Jaw crushers, 16 Stone furnaces; the twelve tin furnaces of chapter 5 taken away |
+| 27:39 | The save of the first part; Oil industry machinery - Stage 1 at 62 % |
+| 27:45 | Oil industry machinery - Stage 1 researched; Composting next |
+| 27:46–27:49 | Robots take the tin block up again |
+| 27:50–27:53 | The 16 tin drills (Fluid mining drills MK 01) replaced by hand with 13 MK 02 |
+| 27:53–27:56 | Robots put the tin block down again, rearranged and further south, between y 494 and the ore belt at y 518 (x −62 to 11) |
+| 27:54 | Composting researched; Water animals - Stage 1 next |
+| 27:56–28:01 | Belts, poles and two plate chests placed by hand; the block runs |
+| 28:02 | Water animals - Stage 1 researched, Assembly 2 next; the save |
 
 Production per second (10-minute windows from the recorder). Titanium ore is 0 until the
 window ending 27:30: the old titanium column had filled its chests by about 24:10 and its
@@ -66,7 +77,8 @@ Between the saves of 25:47 and 27:39 the base gained 31 Automated screeners MK 0
 for lead, 13 for titanium, nine for tin), 11 Jaw crushers MK 01 (25 to 36; six of them for tin),
 two Secondary crushers MK 01 (30 to 32), 16 Fluid mining drills MK 02 (6 to 22, while the MK 01
 went from 45 to 28), 20 Stone furnaces (132 to 152), a second Burner, and two Boilers and Steam
-engines (save snapshots).
+engines (save snapshots). By the save of 28:02 the 16 tin drills had become 13 Fluid mining drills
+MK 02 (22 to 35; the MK 01 went from 28 to 12); the rest of the tin block was moved, not added.
 The author left no chat notes in this part of the run.
 
 ## 1. The technologies
@@ -81,8 +93,8 @@ recorder):
   (section 3).
 - **Lead processing - Stage 1** (24:33) unlocks two: screening Lead ore and smelting Lead (grade 1)
   (section 2).
-- **Tin processing - Stage 1** (27:22) unlocks three for tin, built after the save (the second part
-  of this chapter).
+- **Tin processing - Stage 1** (27:22) unlocks three: screening Tin ore, crushing Tin (grade 2)
+  and smelting Tin (grade 1) into plates (section 6).
 
 Two more kinds of research helped the drills:
 
@@ -90,7 +102,7 @@ Two more kinds of research helped the drills:
   as fast as the MK 01 (mining speed 1 against 0.5) and runs on electricity (900 kW) instead of
   burning fuel (400 kW). It costs one MK 01, two Electric mining drills, 10 Simple circuit boards,
   50 Small parts, 10 Steel, 20 Aluminium plates and one Engine (data). The author replaced the six
-  lead drills (26:27) and the titanium drills (27:22–27:27) with it.
+  lead drills (26:27), the titanium drills (27:22–27:27) and the tin drills (27:50–27:53) with it.
 - **Mining productivity 1 and 2** (26:32 and 27:05) add 10 % each: every drill now gives 1.2 ore
   per mining cycle (data). The extra ore uses no mining fluid, since a drill takes its fluid per
   cycle: in the window ending 26:40 (Mining productivity 1) the lead drills mined 6.56 Lead ore a
@@ -98,9 +110,9 @@ Two more kinds of research helped the drills:
 
 Mining machines - Stage 1 (26:02) unlocks eight machines (Scrubber, Flotation cell,
 Hydroclassifier, Impact crusher, Centrifuge, Rectisol, Mixer and Ball mill, all MK 01), each
-needing Intermetallics; none is built yet. Research ran at 0.05 units a second up to the save,
-limited by the red science ([chapter 10](10-crushed-coal-power.md#5-the-base-after-the-save);
-section 6).
+needing Intermetallics; none is built yet. Research ran at 0.05 units a second until about 27:40,
+limited by the red science ([chapter 10](10-crushed-coal-power.md#5-the-base-after-the-save)),
+and then at twice that (section 7).
 
 ## 2. Lead
 
@@ -236,7 +248,7 @@ loads (section 5):
 | Load | Acetylene a second | Gasifiers | Lead | Titanium |
 |---|---|---|---|---|
 | As saved: Lead plates used at 0.267 a second, titanium store full | 24 while the titanium drills run, then 4 | "full output" 77 % | 0.58 ore | 6.0 ore at first, none from minute 20: the block is full |
-| Titanium plates all taken, Lead plates at about 1.1 a second (a first try, see section 8) | 33 to 38 | working 73 % | 2.1 to 2.3 ore | 6.0 ore, 1.15 plates, all hour |
+| Titanium plates all taken, Lead plates at about 1.1 a second (a first try, see section 9) | 33 to 38 | working 73 % | 2.1 to 2.3 ore | 6.0 ore, 1.15 plates, all hour |
 | All plates taken | 47.7 to 48.8 after the pipes empty (about 20 minutes) | working 97 % | 5.8 to 5.95 ore, 2.9 plates | none from minute 20: the drills "missing required fluid" 73 % of the hour |
 
 So the titanium keeps its 20 a second as long as the lead drills take at most 29.75: 2.975 cycles
@@ -244,7 +256,7 @@ a second, 3.57 Lead ore, **about 1.8 Lead plates a second**. Today the base uses
 uses titanium. If the lead users grow past that, the titanium stops without warning; the fix is
 more Acetylene. A second copy of the author's `acetylene` block (49.75 a second) covers both blocks
 at full speed; the 30 a second missing cost about 2.8 Coke a second (0.94 Coke per 10 Acetylene,
-chapter 5).
+chapter 5). The author leaves it as it is for now, since the base uses far less Lead than that.
 
 ## 5. An hour after the save of 27:39
 
@@ -284,7 +296,98 @@ plate chests every second):
 - With only the lead plates taken, the lead runs as in the second table (2.88 to 2.90 plates a
   second from minute 30) and the titanium as in the first.
 
-## 6. Other changes
+## 6. Tin
+
+| Step | Machine (data) | Recipe (data) | One machine, per second |
+|---|---|---|---|
+| Mining | Fluid mining drill MK 02 | Tin ore: 1 s a cycle, 100 Steam per 10 ore | 1 cycle: 1.2 ore, 10 Steam |
+| Screening | Automated screener MK 01 | 5 Tin ore → 1 Tin (grade 1) + 1 Tin (grade 2) at 50 %, 3 s | takes 1.667 ore |
+| Crushing grade 2 | Jaw crusher MK 01 | 1 Tin (grade 2) → 1 grade 1 at 50 % + 1 Stone, 4 s | takes 0.25 grade 2 |
+| Smelting | Stone furnace | 15 Tin (grade 1) → 10 Tin plates, 50 s | takes 0.3 grade 1, makes 0.2 plates |
+
+Five Tin ore give 1 grade 1 and 0.5 grade 2; crushing the grade 2 adds 0.25 grade 1 (and 0.5
+Stone). That is 1.25 grade 1, **0.833 Tin plates from 5 ore: 6 ore a plate instead of 10** (the
+old recipe: 40 ore → 4 plates in 60 s, [chapter 5](05-tin-zinc-smelting.md#3-tin-steam-as-the-mining-fluid)).
+A furnace makes 0.2 plates a second instead of 0.067, three times as many. Tin needs only two
+machines before the furnace, against four for titanium.
+
+The author first built the block at y 472 to 496, then had robots take it up and put it down
+again further south (27:46–27:56), rearranged so that the screeners stand beside the ore belt.
+The block as saved (x −62 to 25, y 494 to 532; screenshot below):
+
+- **The mine.** 13 Fluid mining drills MK 02 where the 16 MK 01 of chapter 5 stood: five at y
+  523.5 (x 2.5 to 22.5) and eight at y 529.5 (x −12.5 to 22.5), dropping onto one belt between the
+  rows (y 526) that runs east, north along x 25 and west along y 518 under the screeners. 13
+  cycles a second could give 15.6 ore, more than a belt carries (15); 15 ore take 125 Steam a
+  second. The Steam comes from the steam block of chapter 5 through the same pipe, past the Check
+  valve at (−103.5, 498.5).
+- **Nine screeners** at y 513.5 (x −48.5 to 7.5) take the ore from the belt below them, three
+  inserters each, and put grade 1 and grade 2 by two filtered inserters onto a belt above them (y
+  508) that runs east, turns north at its end and comes back west along y 506. Nine take up to 15
+  ore a second.
+- **Six Jaw crushers** at y 501.5 (x −27.5 to 7.5) take the grade 2 from that belt and put grade 1
+  back onto it by a filtered inserter; their Stone goes onto a belt at y 496. A full belt of ore
+  makes 1.5 grade 2 a second, exactly what six crushers take.
+- **A filter Splitter** at (−26.5, 507) sends Tin (grade 2) to its north output, where there is no
+  belt, and everything else south to the furnaces. So no grade 2 reaches the furnaces: it waits on
+  the Splitter, and the inserter of the westernmost crusher takes it from there.
+- **Thirteen Stone furnaces** at y 504 (x −57 to −33) in the layout of chapter 5's column: grade 1
+  and plates on the belt below (y 506; output inserters "all but Ash"), Raw coal and Ash on the
+  belt above (y 501). A full belt of ore gives 3.75 grade 1 a second, which needs 12.5 furnaces,
+  for **2.5 Tin plates a second**.
+- **The plates** go west along y 504 past two Wooden chests at (−60.5, 506.5) and (−59.5, 506.5)
+  (3,200 plates, full at the save), then north along x −78 for 733 tiles to y −232 and east to the
+  board line's Solder assembler and Electronics factory, which use 0.31 Tin plates a second.
+- **Three Stone furnaces** at y 498 (x −57 to −53) bake the crushers' Stone (1.5 a second need
+  2.4) into bricks, which go west along y 497 and north along x −75: the author extended the
+  titanium block's brick belt south to here (ten belts at x −74.5).
+- **Fuel and Ash.** The Raw coal belt along x 70 that fed the old drills (chapter 5) now feeds only
+  the 16 furnaces; the Ash goes north along x −93 to the Ash loop.
+- **Electricity:** 9 × 300 kW for the screeners, 6 × 1 MW for the crushers and 13 × 900 kW for the
+  drills: 20.4 MW (data).
+
+**Measured** in copies of the save of 28:02 for an hour, as it stands and with the plates taken
+off the belt and out of the two chests (`tools/rate-probe`, per second, each 10-minute step's
+average):
+
+| Minutes after 28:02 | As saved: Tin ore | Tin plates | Plates taken: Tin ore | Tin (grade 1) | Tin plates | Power used (MW), as saved / taken |
+|---|---|---|---|---|---|---|
+| 0–10 | 13.48 | 2.22 | 13.48 | 3.31 | 2.22 | 136.9 / 136.9 |
+| 10–20 | 13.48 | 2.22 | 13.48 | 3.35 | 2.22 | 137.0 / 137.0 |
+| 20–30 | 13.48 | 2.17 | 13.48 | 3.30 | 2.22 | 129.7 / 129.7 |
+| 30–40 | 6.81 | 0.47 | 13.48 | 3.37 | 2.23 | 111.3 / 125.7 |
+| 40–50 | 0.76 | 0.12 | 13.48 | 3.36 | 2.23 | 97.1 / 123.8 |
+| 50–60 | 1.00 | 0.12 | 13.48 | 3.38 | 2.23 | 98.2 / 122.4 |
+
+- **With the plates taken the block runs flat: 13.48 Tin ore and 2.22 to 2.23 Tin plates a
+  second**, the sums above (13.48 ore give 3.37 grade 1 and 2.25 plates); the probe took 2.228
+  plates a second. Over the hour the drills worked 86 % of the time, the screeners 90 %, the Jaw
+  crushers 89 % and the furnaces 86 %. No grade 2 got past the Splitter: the probe took nothing but
+  plates. No drill was short of Steam (the two watched held 161 at every step); the steam block's Boilers
+  worked 80 to 90 % of the hour, against 26 to 29 % after 27:39, when the tin drills stood.
+- **That is three times the plates of chapter 5** (2.23 a second against 0.75) from 1.8 times the
+  ore. The Steam for a plate halves: 5 mining cycles of 1.2 ore, 50 Steam, against 10 ore and 100
+  Steam, that is 8.3 Raw coal at the Boilers instead of 16.5 (1.65 per 10 Steam, chapter 5), and the
+  drills burn no fuel.
+- **As saved**, the block ran at full speed for 30 minutes while the plates filled the long belt
+  to the board line (its two chests were already full); from minute 40 it makes only what the
+  board line takes. As with lead and titanium, this is a store filling, not a fault (techniques
+  principle 23).
+- The rest of the base: the boards held 0.100 a second in every step, research ran at 0.100 pY
+  science packs a second (section 7), and no electric machine reported low power at up to 137 MW.
+
+**The limit is one lane of the ore belt.** The drills drop onto the belt between the rows, each row
+onto its own lane, and a lane carries at most 7.5 ore a second. The north row's five drills give 6
+and have room; the south row's eight could give 9.6 but get 7.5 onto their lane: 13.5 a second,
+the measured 13.48. Sampled every minute for ten minutes (plates taken), the north row's drills
+worked every time, the south row's easternmost, the last on its lane, waited for space every time
+and the two before it now and then. So the block makes 2.23 plates instead of the 2.5 its
+screeners, crushers and furnaces could make from a full belt; only more drills on the north side
+of the belt would add ore.
+
+<!-- ![The tin block: the ore belt and the drills at the bottom, the screeners above them, the Jaw crushers and the furnaces at the top, the filter Splitter between them, the plate chests at the left](../images/ch11-tin.jpg) -->
+
+## 7. Other changes
 
 - **The crushed-coal block's fix** (25:51–25:56): robots rebuilt the west end of both rows as in
   the author's updated blueprint, with the second Ash inserter on the second Boiler from the west
@@ -294,23 +397,27 @@ plate chests every second):
   Coal dust a second (1.23 each; data). Chapter 10 found the base making 8.26 a second at full load
   against 7.40 that six could burn. In the hour after the save the base made 5.6 Coal dust a second
   and the eight Boilers worked 59 % of the time: the Coal dust no longer backs up.
-- **Research** went on at 0.05 units a second (pY science pack 1 made at 0.05 a second in every
-  window from 26:00; recorder). In the hour after the save the research center made 0.086 packs a
-  second and the red science block 0.163 Automation science packs, its Empty planter box assembler
-  short of ingredients 17 % of the time (80 % in chapter 10); where the extra Stone bricks come from
-  was not traced. The titanium block puts 0.3 bricks a second onto the bus's brick belt.
-- **Tin** (27:32–27:38): the twelve furnaces of the tin column of chapter 5 were taken away and a
-  new block begun north of the tin drills: nine screeners at y 477.5 (x −49.5 to 6.5), six Jaw
-  crushers at y 489.5 and 16 Stone furnaces, without power at the save. The tin drills wait until it
-  runs; two chests at (−70.5, 525.5) and (−69.5, 525.5) hold 3,200 Tin plates and the author
-  carries 741. That is the second part of this chapter.
+- **Research doubled.** Up to the window ending 27:40 it ran at 0.05 units a second (pY science
+  pack 1 made at 0.05 a second in every window from 26:00), with the red science block making 0.10
+  Automation science packs a second, half its 0.2. From the window ending 27:50 the red science
+  block makes 0.20 and the research center 0.09 to 0.10 packs a second (recorder), and 0.100
+  in the hour after the save of 28:02 (probe): Oil industry machinery - Stage 1 (80 units) took 23
+  minutes, Composting and Water animals - Stage 1 (50 each) 9 and 8. Chapter 10 found the red
+  science block short of Stone bricks and expected this doubling once it got them; the brick belt
+  into it (y −167) carried 8 bricks then, 113 at the save of 27:39 and 128 at 28:02. Among the new
+  bricks are the titanium block's 0.3 a second (from 27:20) and the tin block's 0.67 (from 28:00);
+  the base's whole brick balance was not traced.
 
-## 7. Checklist
+## 8. Checklist
 
-- Screen before you smelt: Lead takes 2 ore a plate instead of 6, Titanium 5.2 instead of 10, and
-  a furnace makes 2.5 (lead) or 6 times (titanium) as many plates.
+- Screen before you smelt: Lead takes 2 ore a plate instead of 6, Titanium 5.2 instead of 10, Tin
+  6 instead of 10, and a furnace makes 2.5 (lead), 6 (titanium) or 3 times (tin) as many plates.
 - The titanium chain has five steps with two by-products to place: Stone (bricks, here onto the
-  bus) and Gravel (a Burner voids it).
+  bus) and Gravel (a Burner voids it). Tin has two steps and Stone only.
+- A filter Splitter with no belt on its filter side holds that item back: here it keeps Tin
+  (grade 2) off the furnace belt and in reach of the last crusher.
+- Drills on both sides of a belt each fill their own lane, at most 7.5 a second: eight drills on
+  one side and five on the other give 13.5 ore, not 15.6.
 - Size every stage for a full belt of ore, as the author did: then more drills are all it takes
   later.
 - Fluid mining drills MK 02 mine twice as fast and need no fuel belt. The mining fluid is per
@@ -320,15 +427,17 @@ plate chests every second):
 - A store that fills is not a fault while nothing uses the product; measure such a block with its
   output taken away.
 
-## 8. How these facts were checked
+## 9. How these facts were checked
 
-- The run: the companion mod's recorder (run `2652821414-0`, last record 27:39), read with
-  `tools/recorder-phases.js` (10-minute slices; the minute records for the order of the building)
-  and `tools/recorder-log.js` (production per 10-minute window); no chat notes since 21:25
-  (`tools/recorder-summary.js`).
-- The save of 27:39 (`Py-Exploration`, copied to `C:\tmp\ch11` before reading; consistency check
-  passed): `tools/inspect-save.ps1`, `tools/summarize-save.js`, `tools/trace-layout.js` (belt
-  lines, what each machine takes and gives), `tools/render-area.js`.
+- The run: the companion mod's recorder (run `2652821414-0`, last record 28:02), read with
+  `tools/recorder-phases.js` (10-minute and 1-minute slices for the order of the building) and
+  `tools/recorder-log.js` (production per 10-minute window); no chat notes since 21:25
+  (`tools/recorder-summary.js`). The game was updated to Factorio 2.1.23 at 27:39 (the recorder's
+  configuration change); the measurements ran on the same version.
+- The saves of 27:39 and 28:02 (`Py-Exploration`, copied to `C:\tmp\ch11` before reading;
+  consistency check passed): `tools/inspect-save.ps1`, `tools/summarize-save.js`,
+  `tools/trace-layout.js` (belt lines, what each machine takes and gives), `tools/render-area.js`;
+  the two snapshots compared entity by entity for what changed between them.
 - Data: recipes, machines, ore mining times and fluids, technologies (`tools/q.js`, the data dump
   of 2026-10-18).
 - The hour after the save: `tools/save-probe.ps1 -Probe rate-probe -Ticks 219700 -Variant
@@ -337,4 +446,7 @@ plate chests every second):
   the chest on that tile every second, printing what they took. Titanium: `sink@-60.5:443.5`,
   `empty@-60.5:441.5`, `empty@-59.5:441.5`; lead: `sink@-126.5:-73.5`, `empty@-129.5:-71.5`. A
   first try with the lead sink one tile off (no belt there) left the lead chest's inserter as the
-  only taker: 0.82 Lead plates a second, the inserter's limit, not the block's.
+  only taker: 0.82 Lead plates a second, the inserter's limit, not the block's. Tin, from the save
+  of 28:02: `sink@-65.5:504.5`, `empty@-60.5:506.5`, `empty@-59.5:506.5`.
+- The tin lanes: ten minutes of the same save with the plates taken, in one-minute steps, with
+  watch points (`@x:y`) on eight tin drills of both rows.

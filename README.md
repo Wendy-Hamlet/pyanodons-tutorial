@@ -19,7 +19,7 @@ scripts used, so you can re-check them against your own mod versions.
 8. [Vrauks](chapters/08-vrauks.md)
 9. [pY science pack 1](chapters/09-py-science-pack-1.md)
 10. [Crushed-coal power](chapters/10-crushed-coal-power.md)
-11. [Better lead, titanium and tin smelting](chapters/11-lead-titanium-tin-smelting.md) (first part: lead and titanium)
+11. [Better lead, titanium and tin smelting](chapters/11-lead-titanium-tin-smelting.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)

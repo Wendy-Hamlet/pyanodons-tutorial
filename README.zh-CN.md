@@ -17,7 +17,7 @@
 8. [钳尾刀虫](chapters/08-vrauks.zh-CN.md)
 9. [pY科技包1型](chapters/09-py-science-pack-1.zh-CN.md)
 10. [碎煤发电](chapters/10-crushed-coal-power.zh-CN.md)
-11. [铅矿、钛矿和锡矿冶炼改良](chapters/11-lead-titanium-tin-smelting.zh-CN.md)（前半部分：铅和钛）
+11. [铅矿、钛矿和锡矿冶炼改良](chapters/11-lead-titanium-tin-smelting.zh-CN.md)
 
 参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [焦炭、炼钢、碎矿与灰烬分离](research/coke-and-steel.zh-CN.md)（第二章背后的配方、产率和副产物，以及灰烬分离）· [红瓶 + pY1 工厂](research/red-py1-factory.zh-CN.md)（总线、区块、简易电路板和火车前的关键中间体）· [作者的第一个存档](research/first-save-review.zh-CN.md)（哪些靠手搬，以及取代它们的总线）· [Py 下的铁路](research/py-railway.md)（英文）· [地图设置](research/map-settings.zh-CN.md)（Py 推荐预设、作者的改动及其对地图的影响）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
 
