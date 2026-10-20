@@ -480,7 +480,14 @@ function observe.boxes(a)
   for i = 1, e.fluids_count do
     local box = { }
     local ok, filt = pcall(e.get_fluid_filter, i)
-    box.filter = ok and filt and filt.fluid and (type(filt.fluid) == "string" and filt.fluid or filt.fluid.name) or nil
+    -- 2.0 returns a FluidBoxFilter table, 2.1 the LuaFluidPrototype itself.
+    if ok and filt then
+      if type(filt) == "table" then
+        box.filter = filt.fluid and (type(filt.fluid) == "string" and filt.fluid or filt.fluid.name) or filt.name
+      else
+        box.filter = filt.name
+      end
+    end
     local fl = e.get_fluid(i)
     box.holds = fl and (fl.name .. " " .. math.floor(fl.amount)) or nil
     local ok2, cons = pcall(e.get_fluid_box_pipe_connections, i)
