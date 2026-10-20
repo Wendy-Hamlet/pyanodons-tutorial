@@ -19,6 +19,7 @@ scripts used, so you can re-check them against your own mod versions.
 8. [Vrauks](chapters/08-vrauks.md)
 9. [pY science pack 1](chapters/09-py-science-pack-1.md)
 10. [Crushed-coal power](chapters/10-crushed-coal-power.md)
+11. [Better lead, titanium and tin smelting](chapters/11-lead-titanium-tin-smelting.md) (first part: lead and titanium)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -152,7 +153,9 @@ parameters for yours.
   mean power by generator and consumer kind. `WARM,MEASURE,STEP,names` adds a timeline: every STEP seconds what was made and used of each
   named item or fluid, the status and fluid boxes of each machine named by its tile (`@x:y`), and
   every machine group whose usual status changed; a last field `+entity@x:y[:direction]` places that entity
-  when the save loads (a what-if, the only change the probe makes). `vrauk-probe/`: the start-up
+  when the save loads (a what-if, the only change the probe makes); `+sink@x:y` instead empties the
+  belt on that tile every tick and `+empty@x:y` the chest there every second, printing what they took
+  (a block standing full, measured with its output taken away). `vrauk-probe/`: the start-up
   of the author's Vrauk line (chapter 8): every 5 minutes (or the step given) the Vrauks, cocoons
   and Water barrels made, how the Reproductive complexes, the paddocks with Vrauks and the
   Barreling machine spent the step, and where the barrels and cocoons are; variant `fill` moves the

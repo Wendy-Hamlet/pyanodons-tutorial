@@ -12,7 +12,10 @@
 -- its status and the fluid in each of its boxes.
 -- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
 -- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
--- places it facing that way (north, east, south, west; default north).
+-- places it facing that way (north, east, south, west; default north). Two names there are not
+-- entities: "sink@x:y" empties the belt on that tile every tick, "empty@x:y" the chest on that
+-- tile every second (a user taking all the block makes, for a block standing full); what they
+-- took is printed per second at the end.
 
 local variant = require("variant")
 local PLACE
@@ -80,10 +83,20 @@ local function group_key(e)
 end
 
 script.on_init(function()
+  storage.sinks, storage.empties, storage.taken = {}, {}, {}
+  local surface = game.surfaces.nauvis
   for name, x, y, dir in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*)") do
-    local e = game.surfaces.nauvis.create_entity({ name = name, position = { tonumber(x), tonumber(y) },
-      direction = defines.direction[dir ~= "" and dir or "north"], force = "player" })
-    out("placed %s at %s,%s %s: %s", name, x, y, dir ~= "" and dir or "north", e and "ok" or "FAILED")
+    local pos = { tonumber(x), tonumber(y) }
+    if name == "sink" or name == "empty" then
+      local e = surface.find_entities_filtered({ position = pos,
+        type = name == "sink" and { "transport-belt", "underground-belt" } or "container" })[1]
+      table.insert(name == "sink" and storage.sinks or storage.empties, e)
+      out("%s at %s,%s: %s", name, x, y, e and e.name or "NOTHING THERE")
+    else
+      local e = surface.create_entity({ name = name, position = pos,
+        direction = defines.direction[dir ~= "" and dir or "north"], force = "player" })
+      out("placed %s at %s,%s %s: %s", name, x, y, dir ~= "" and dir or "north", e and "ok" or "FAILED")
+    end
   end
   storage.start = game.tick
   out("loaded at tick %d; warm %d s, measure %d s", game.tick, WARM, MEASURE)
@@ -150,6 +163,30 @@ local function step(now, t)
   storage.step_samples = {}
 end
 
+-- What the sinks and emptied chests took, counted while measuring.
+local function take(inventory)
+  local t = game.tick - storage.start
+  if t >= WARM * 60 and not storage.done then
+    for _, s in pairs(inventory.get_contents()) do
+      storage.taken[s.name] = (storage.taken[s.name] or 0) + s.count
+    end
+  end
+  inventory.clear()
+end
+
+script.on_event(defines.events.on_tick, function()
+  for _, belt in pairs(storage.sinks or {}) do
+    if belt.valid then
+      for i = 1, belt.get_max_transport_line_index() do take(belt.get_transport_line(i)) end
+    end
+  end
+  if game.tick % 60 == 0 then
+    for _, chest in pairs(storage.empties or {}) do
+      if chest.valid then take(chest.get_inventory(defines.inventory.chest)) end
+    end
+  end
+end)
+
 script.on_nth_tick(60, function()
   local surface = game.surfaces.nauvis
   local t = game.tick - storage.start
@@ -201,6 +238,12 @@ script.on_nth_tick(60, function()
       for _, p in ipairs(list) do parts[#parts + 1] = string.format("%s %.3f", p[1], p[2]) end
       out("%s %s per s: %s", kind, dir, table.concat(parts, ", "))
     end
+  end
+  if next(storage.taken) then
+    local parts = {}
+    for name, n in pairs(storage.taken) do parts[#parts + 1] = string.format("%s %.3f", name, n / MEASURE) end
+    table.sort(parts)
+    out("sinks and emptied chests took per s: %s", table.concat(parts, ", "))
   end
   -- Mean power of every network with more than one pole, by generator and consumer kind (MW).
   for id, net in pairs(storage.nets) do
