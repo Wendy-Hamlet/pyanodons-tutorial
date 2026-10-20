@@ -178,6 +178,9 @@ parameters for yours.
   samples every Boiler on its own, `turn=` and `filter=` try a fix (an entity turned, an
   inserter's filter changed), and `stagger=seed:gap:name` starts its machines one by one in a
   random order, to test whether a design jams under some start phases.
+- `dig-probe/` (with `save-probe.ps1 -Variant name,count,warm_s,measure_s`): a what-if for Dig
+  sites: puts that many Dig-o-sauruses of that kind into every site, keeps the food slots full of
+  Guts and counts the trips.
 - `turd-probe/` (with `save-probe.ps1 -Ticks 10`): the T.U.R.D. upgrades researched in a save and
   the option picked for each, read through pyalienlife's own interface, with the hidden modules and
   machine replacements in place (`research/turd-choices.md`).

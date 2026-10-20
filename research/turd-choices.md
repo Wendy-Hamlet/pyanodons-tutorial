@@ -56,7 +56,8 @@ pick.
   from the same ingredients in four times the time (a Dig-o-saurus: 480 s instead of 120), and a
   crafting recipe turns an old one into a new one in 0.5 s. A Dig-o-saurus walks 0.1026 tiles a tick
   instead of 0.076 (405 health instead of 300). The author's Dig site holds one; its trip of
-  13.8 s ([techniques](techniques.md)) was measured with it.
+  13.8 s ([techniques](techniques.md)) was measured with it. Measured with unlimited food
+  (`tools/dig-probe`): 13.9 s a trip against 15.8 s for an ordinary Dig-o-saurus, 14 % more trips.
 - Knowledge transfer (呼吸生物放大器): Creature chambers −10 % speed, +300 % energy; every
   chamber recipe that takes 5 or more DNA samples of one kind takes a tenth of them (a
   Dig-o-saurus: 1 Generic earth DNA sample instead of 10), and one that takes fewer gives each back
