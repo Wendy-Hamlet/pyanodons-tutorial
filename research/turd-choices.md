@@ -65,6 +65,59 @@ pick.
 - Neural fusion: Creature chambers +1,000 % speed and +1,000 % energy; it unlocks the Arthurian
   codex recipe, and the Creature chamber's own recipe takes an Arthurian codex more.
 
+### Analysis: how Claude would have picked these three
+
+Asked by the author on 2026-10-21; an analysis, not the author's decision. The numbers are the base
+of 28:53 as `tools/rate-probe` measured it over an hour. The verdict: the same as the author for
+the first two, Knowledge transfer instead of Planetary adaptation for the third.
+
+**Fastwood forestry upgrade: Selective cutting heads, as the author.** For the 5 Wood a second
+the base uses:
+
+| | Selective cutting heads | Dry storage | Internal burner |
+|---|---|---|---|
+| Logs | 0.5/s | 0.75/s | 1.0/s |
+| Saplings | 0.25/s | 0.375/s | 0.33/s |
+| Moss for the saplings | 0.42/s | 0.63/s | 0.56/s |
+| Water | 42/s | 63/s | 56/s |
+| Ash | 2.5/s | 3.75/s | 6.7/s |
+| Forestries at full speed | 3.3 | 5 | 3.0, at half the power |
+
+The author's 16 forestries stand with a full output 78 % of the hour, so forestries are not the
+limit; Saplings (Moss) and Water are, and Selective cutting heads needs the least of both. Internal
+burner saves forestries and power, which the base does not lack; Dry storage only saves the Wood
+that goes into Raw fiber (1.67 of the 5 a second, for the Formica) and leaves Biomass and Fiber to
+place.
+
+**Moondrop upgrade: Carbon capture, as the author.** The base uses about 18 Carbon dioxide a second:
+8.3 for its 15 Moss farms (recipe `Moss-2`: 100 per 16 Moss) and 10 for Methane (recipe
+`methane-co2`: 100 per 40 Methane). Carbon capture makes it from nothing, and the three greenhouses that do stand with a full
+output 90 % of the time. Without it the High pressure furnace's Lime recipe (`lime`) would have to make
+it: 2.7 Coke and 1.8 Limestone a second, and 1.8 Lime a second left over where the base uses 0.085.
+Moon light makes Methane from Lamps and Water instead (one full greenhouse about 20 a second), but the
+Moss would still need its 8.3; Copper addition only makes more Moondrop.
+
+**Creature chamber upgrade: Knowledge transfer instead of Planetary adaptation.** Planetary
+adaptation makes a Dig-o-saurus 14 % faster (13.9 s a trip against 15.8, `tools/dig-probe`), but the
+ore a Dig site brings is set by the food, not by the trips: faster Dig-o-sauruses only mean fewer
+of them. Knowledge transfer makes each one cheaper instead: 1 Generic earth DNA sample instead of
+10, and a sample is 15 Automation science packs, 10 Biosamples and an Iron chest.
+
+| Food a second | Planetary adaptation | Knowledge transfer (ordinary Dig-o-sauruses) |
+|---|---|---|
+| 0.2 (today's Meat and Guts) | 3 Dig-o-sauruses, 30 samples | 4, 4 samples |
+| 0.4 (0.2 Intermetallics a second) | 6, 60 samples | 7, 7 samples |
+
+At 0.4 the difference is 53 samples: 795 Automation science packs and 530 Biosamples, about an hour
+and a half of the red science line (0.15 a second). Auogs, wanted for batteries, are cheaper too:
+2 Generic earth and 1 Bear DNA sample each (a Bear sample is itself a Generic one, 100 Automation
+science packs and 5 Auog codexes), and with Knowledge transfer each comes back 80 % of the time, so
+an Auog takes about 0.4 and 0.2. The cost, a chamber 10 % slower and 4 MW instead of 1 MW while it
+works, hardly counts in a building that seldom runs. Planetary adaptation would win with many
+Caravans carrying goods from outposts (they too move 35 % faster), less so for a base heading for
+trains. With Planetary adaptation picked, each Dig-o-saurus still takes 10 samples and 480 s in the
+chamber: a larger Dig site needs that sample production planned.
+
 ## 2. Discussed, not picked yet
 
 ### Fish upgrade (discussed 2026-10-21)
