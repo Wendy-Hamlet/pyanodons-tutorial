@@ -21,6 +21,7 @@ for (let y = -89.5; y <= -80.5; y++) g.add('pipe', 48.5, y);   // Tailings from 
 for (const x of [47.5, 46.5, 45.5]) g.add('pipe', x, -80.5);
 ins(39.5, -81.5, 'E', ['nexelit-ore']);                   // V -> W
 ins(42.5, -78.5, 'N', ['tailings-dust']); chest(42.5, -77.5);
+ins(42.5, -86.5, 'N'); chest(42.5, -85.5);                // Q's Soot (added after it stopped Q)
 g.add('offshore-pump', 36.5, -77.5, 'S');                 // W's water from the south
 g.add('pipe', 36.5, -84.5);                               // W's Muddy sludge north into a sinkhole
 g.add('py-sinkhole', 36.5, -86.5, 'E');
