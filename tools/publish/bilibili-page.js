@@ -2,9 +2,9 @@
 // the browser console or a browser-automation tool, after tools/publish/bilibili.js has written a
 // chapter. It adds a file input (#pt-upload) to the page:
 // - given article.md, it imports it with the editor's own Markdown import (replacing the content);
-// - given images, it puts each in place of its marker paragraph "【图片 name】" through the
-//   editor's own image upload (the one used for dropped files), one after another, waiting until
-//   Bilibili has stored each.
+// - given images, it puts each in place of its marker paragraph "【图片 name】caption" through
+//   the editor's own image upload (the one used for dropped files), one after another, waiting
+//   until Bilibili has stored each, and writes the caption into the image's caption field.
 // ptBili.title(text) sets the title; ptBili.log() and ptBili.markers() report. Nothing is saved
 // or published by this script (the editor saves its draft by itself).
 (() => {
@@ -12,13 +12,13 @@
   const editor = () => frame().contentDocument.querySelector('.ProseMirror').editor;
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const log = [];
-  const markerRe = /^【图片 (\S+)】$/;
+  const markerRe = /^【图片 ([^\s】]+)】(.*)$/;
 
   function markers() {
     const out = [];
     editor().state.doc.descendants((node, pos) => {
       const m = node.type.name === 'paragraph' && markerRe.exec(node.textContent.trim());
-      if (m) out.push({ name: m[1], pos });
+      if (m) out.push({ name: m[1], caption: m[2].trim(), pos });
     });
     return out;
   }
@@ -40,7 +40,11 @@
     const handler = ed.extensionManager.extensions.find((e) => e.name === 'fileHandler');
     handler.options.onDrop(ed, [new w.File([file], file.name, { type: file.type })], at.pos);
     for (let k = 0; k < 120 && (k < 2 || pending()); k++) await wait(500);
-    log.push(`${file.name}: ${pending() ? 'still uploading' : 'uploaded'}`);
+    const node = ed.state.doc.nodeAt(at.pos);
+    if (at.caption && node && node.type.name === 'enhancedImage') {
+      ed.view.dispatch(ed.state.tr.setNodeMarkup(at.pos, null, { ...node.attrs, caption: at.caption }));
+    }
+    log.push(`${file.name}: ${pending() ? 'still uploading' : 'uploaded'}${at.caption ? (node && node.type.name === 'enhancedImage' ? ', caption set' : ', caption NOT set') : ''}`);
   }
 
   async function take(files) {

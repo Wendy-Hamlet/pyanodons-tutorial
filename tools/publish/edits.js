@@ -5,6 +5,16 @@
 // replacement] pairs applied to every chapter after that (the English is wrapped, so words
 // are matched across line breaks).
 module.exports = {
+  // Shorter captions where Bilibili's image caption (at most 100 characters) needs them, per
+  // language and picture.
+  captions: {
+    zh: {
+      'ch1-red-science-corner.jpg': '红瓶角（3:00 之后拍摄）：上方是两台研究中心（第二台是 2:10 加的）；下面是土壤挖掘机的箱子、土壤挖掘机和它右边的抽取泵；左下是原生植被矿区上的植被采集器（四根立柱加绿色网格），上方是它的箱子',
+      'ch2-base.jpg': '3:37 的基地。左上：炼钢区，其下是五台蒸馏塔、尾矿池和起始湖。右上：煤矿区（黑色）上的电站和原煤模块。中部：碎矿炼铁区块，右侧铁矿（灰色）上是其采矿区。左下：铜冶炼列，矿来自右下。总线沿左缘北上。',
+      'ch8-north.jpg': '基地北面：上排是五个新苔藓农场和月落草温室；左边是做纤维素的高压炉和土壤挖掘机；中间是三台微生物采集器和做基础基质的组装机、洗涤机；下面是三个海藻生长池；左下是玻璃工厂、琼脂高压炉和培养皿组装机',
+      'ch9-science.jpg': '修复后的产线顶端：左上玻璃工厂做瓶子，中间是科研枢纽和给右边五台研究中心分红瓶的分流器；左下是木材蒸馏塔、乳胶块蒸馏塔、乳胶高压炉和木材工坊，中间是销毁副产物的燃烧器，底部是屠宰场和笼装钳尾刀虫组装机',
+    },
+  },
   rules: {
     en: [
       // The introduction's list of sources.

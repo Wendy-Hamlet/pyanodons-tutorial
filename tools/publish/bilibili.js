@@ -6,10 +6,10 @@
 // Writes DIR/<lang>/NN/: article.md, title.txt, and images/ with the chapter's pictures and one
 // PNG per table (chNN-table-K.png). Default DIR tools/publish/out/bilibili (not committed),
 // default --lang zh, chapters are numbers (default all). In the article each picture and table
-// is a marker paragraph
-// "【图片 name】", a picture's caption the italic paragraph below it. bilibili-page.js, run in
-// the editor page, imports article.md and puts each image in place of its marker through the
-// editor's own upload, so the images end up on Bilibili's server.
+// is a marker paragraph "【图片 name】caption". bilibili-page.js, run in the editor page,
+// imports article.md and puts each image in place of its marker through the editor's own
+// upload, so the images end up on Bilibili's server, with the caption in the image's own
+// caption field (at most 100 characters; longer ones are shortened in edits.js).
 //
 // The text is the tutorial only, as for Steam (edits.js, common.js; the run lists any line still
 // naming a tool), and opens with a note that Claude wrote it from the author's saves, linking the
@@ -21,6 +21,7 @@
 const fs = require('fs');
 const path = require('path');
 const { root, blob, chapters, T, clean, lint, linkTarget, chapter } = require('./common');
+const { captions } = require('./edits');
 
 const args = process.argv.slice(2);
 const opt = (name, def) => {
@@ -39,9 +40,10 @@ let ids = {};
 const idFile = path.join(__dirname, 'bilibili-articles.json');
 if (fs.existsSync(idFile)) ids = JSON.parse(fs.readFileSync(idFile, 'utf8'));
 
-const marker = (name) => `【图片 ${name}】`;
-// Bilibili's suggested longest title.
+const marker = (name, caption = '') => `【图片 ${name}】${caption}`;
+// Bilibili's suggested longest title, and its longest image caption.
 const titleLimit = 30;
+const captionLimit = 100;
 
 // ---------- inline Markdown, rewritten for the editor's importer ----------
 
@@ -111,7 +113,11 @@ function article(n) {
       case 'image': {
         const name = path.posix.basename(b.src);
         pictures.push(name);
-        parts.push(marker(name), `*${mdInline(clean(b.alt), c.file)}*`);
+        // The caption field takes plain text.
+        const caption = (captions[lang] || {})[name] || clean(b.alt).replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+          .replace(/\\([\\`*_{}\[\]()#+\-.!|])/g, '$1').replace(/\*\*|`/g, '');
+        if (caption.length > captionLimit) report.push(`caption of ${name} is ${caption.length} characters (at most ${captionLimit}): shorten it in edits.js`);
+        parts.push(marker(name, caption.replace(/[\\*_[\]<~]/g, (x) => (x === '<' ? '&lt;' : `\\${x}`))));
         break;
       }
       case 'table': {
@@ -127,11 +133,10 @@ function article(n) {
   const md = `${parts.join('\n\n')}\n`;
   const report = [...c.report];
   lint(md, tag, report);
-  // Short enough for Bilibili's 30: "Py 循序渐进 04｜铝矿开采、玻璃制造、原木生产和红瓶生产".
+  // About Bilibili's suggested 30 at most: "Pyanodons 循序渐进 04｜铝矿开采、玻璃制造、原木生产和红瓶生产" (35).
   const title = lang === 'zh'
-    ? `Py 循序渐进 ${String(n).padStart(2, '0')}｜${c.title.replace(/^第[一二三四五六七八九十]+章\s*(?:——|：)?\s*/, '')}`
+    ? `${t.series} ${String(n).padStart(2, '0')}｜${c.title.replace(/^第[一二三四五六七八九十]+章\s*(?:——|：)?\s*/, '')}`
     : `${t.series} · ${c.title}`;
-  if (lang === 'zh' && title.length > titleLimit) report.push(`title is ${title.length} characters (Bilibili suggests at most ${titleLimit}): ${title}`);
   return { n, tag, file: c.file, title, md, tables, pictures, report };
 }
 
@@ -190,6 +195,7 @@ async function renderTables(jobs) {
     for (const p of a.pictures) fs.copyFileSync(path.join(root, 'images', p), path.join(imgDir, p));
     for (const tb of a.tables) jobs.push({ ...tb, path: path.join(imgDir, tb.name) });
     console.log(`${lang} ${a.file}: ${a.md.length} characters, ${a.pictures.length} pictures, ${a.tables.length} tables -> ${dir.replace(/\\/g, '/')}`);
+    console.log(`  title (${a.title.length}${a.title.length > titleLimit ? `, Bilibili suggests at most ${titleLimit}` : ''}): ${a.title}`);
     for (const r of a.report) console.log(`  ${r}`);
     problems += a.report.length;
   }
