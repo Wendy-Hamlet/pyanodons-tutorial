@@ -206,10 +206,11 @@ parameters for yours.
     with every field (title, description, each section in BBCode, at most 8,000 characters) and a
     copy button, plus the images to upload per section.
   - `bilibili.js [--lang zh|en] [chapter ...]`: Bilibili articles (专栏): Markdown for the
-    editor's own importer, every table rendered to a PNG (the editor has no tables; `npm install`
-    in `publish/` once for puppeteer-core, which drives the installed Edge). `bilibili-page.js`,
-    run in the editor page, imports the Markdown and puts each picture and table in place through
-    the editor's own image upload.
+    editor's own importer, every table rendered to a PNG (the editor has no tables) and a 16:9
+    cover per chapter (its main build behind the series name, number and title); `npm install`
+    in `publish/` once for puppeteer-core, which drives the installed Edge. `bilibili-page.js`,
+    run in the editor page, imports the Markdown, puts each picture and table in place through
+    the editor's own image upload with its caption, and uploads the cover.
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.
 

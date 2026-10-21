@@ -3,7 +3,8 @@
 //
 //   node tools/publish/bilibili.js [--lang zh|en] [--out DIR] [chapter ...]
 //
-// Writes DIR/<lang>/NN/: article.md, title.txt, and images/ with the chapter's pictures and one
+// Writes DIR/<lang>/NN/: article.md, title.txt, cover.jpg (1200 x 675: the chapter's main build
+// behind the series name, number and title) and images/ with the chapter's pictures and one
 // PNG per table (chNN-table-K.png). Default DIR tools/publish/out/bilibili (not committed),
 // default --lang zh, chapters are numbers (default all). In the article each picture and table
 // is a marker paragraph "【图片 name】caption". bilibili-page.js, run in the editor page,
@@ -133,11 +134,10 @@ function article(n) {
   const md = `${parts.join('\n\n')}\n`;
   const report = [...c.report];
   lint(md, tag, report);
-  // About Bilibili's suggested 30 at most: "Pyanodons 循序渐进 04｜铝矿开采、玻璃制造、原木生产和红瓶生产" (35).
-  const title = lang === 'zh'
-    ? `${t.series} ${String(n).padStart(2, '0')}｜${c.title.replace(/^第[一二三四五六七八九十]+章\s*(?:——|：)?\s*/, '')}`
-    : `${t.series} · ${c.title}`;
-  return { n, tag, file: c.file, title, md, tables, pictures, report };
+  // About Bilibili's suggested 30 at most: "Pyanodons 循序渐进 04｜铝矿开采、玻璃制造、原木生产和红瓶生产" (37).
+  const subtitle = lang === 'zh' ? c.title.replace(/^第[一二三四五六七八九十]+章\s*(?:——|：)?\s*/, '') : c.title.replace(/^Chapter \d+: /, '');
+  const title = lang === 'zh' ? `${t.series} ${String(n).padStart(2, '0')}｜${subtitle}` : `${t.series} · ${c.title}`;
+  return { n, tag, file: c.file, title, subtitle, md, tables, pictures, report };
 }
 
 // ---------- tables to images ----------
@@ -152,26 +152,55 @@ td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}`;
 
 const isNum = (html) => /^[−\-+]?[\d.,]+\s*(%|×)?$/.test(html.replace(/<\/?b>/g, '').trim());
 
-async function renderTables(jobs) {
-  if (!jobs.length) return;
+// ---------- covers ----------
+
+// The picture behind each chapter's cover: the chapter's main build (otherwise its first picture).
+const coverPictures = {
+  1: 'ch1-copper-pairs.jpg', 2: 'ch2-steel.jpg', 3: 'ch3-ash-separation.jpg', 4: 'ch4-logs.jpg',
+  5: 'ch5-lead-field.jpg', 6: 'ch6-boards.jpg', 7: 'ch7-screening.jpg', 8: 'ch8-vrauks.jpg',
+  9: 'ch9-science.jpg', 10: 'ch10-block-west-fixed.jpg', 11: 'ch11-lead-screening.jpg',
+};
+
+// 1200 x 675 (Bilibili asks for at least 600 x 336): the picture, darkened towards the left, under
+// the series name, the chapter number and its title.
+const coverCss = `*{box-sizing:border-box;margin:0}body{width:1200px;height:675px;overflow:hidden;color:#fff;font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,10,14,.93) 0%,rgba(8,10,14,.8) 48%,rgba(8,10,14,.12) 100%)}
+.text{position:absolute;left:80px;top:0;bottom:0;width:740px;display:flex;flex-direction:column;justify-content:center}
+.series{font-size:44px;font-weight:600;letter-spacing:2px;opacity:.92}
+.num{font-size:150px;font-weight:800;line-height:1.05;color:#ffb547;margin-top:8px}
+.title{font-size:68px;font-weight:800;line-height:1.25;word-break:keep-all}`;
+
+async function render(tableJobs, coverJobs) {
+  if (!tableJobs.length && !coverJobs.length) return;
   let puppeteer;
   try {
     puppeteer = require('puppeteer-core');
   } catch (e) {
     throw new Error('puppeteer-core is missing: run `npm install` in tools/publish');
   }
-  const html = `<!doctype html><html><head><meta charset="utf-8"><style>${tableCss}</style></head><body>${jobs.map((j, k) =>
-    `<div class="t" id="t${k}"><table><tr>${j.head.map((h) => `<th>${h}</th>`).join('')}</tr>${j.rows.map((r) =>
-      `<tr>${r.map((x) => `<td${isNum(x) ? ' class="num"' : ''}>${x}</td>`).join('')}</tr>`).join('')}</table></div><br>`).join('')}</body></html>`;
   // An ASCII profile folder: Edge fails silently under a non-ASCII user profile path.
   const browser = await puppeteer.launch({ executablePath: browserPath, headless: true, userDataDir: 'C:/tmp/pt-render-profile', args: ['--disable-gpu'] });
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
-    await page.setContent(html, { waitUntil: 'load' });
-    for (let k = 0; k < jobs.length; k++) {
-      const el = await page.$(`#t${k}`);
-      await el.screenshot({ path: jobs[k].path });
+    if (tableJobs.length) {
+      const html = `<!doctype html><html><head><meta charset="utf-8"><style>${tableCss}</style></head><body>${tableJobs.map((j, k) =>
+        `<div class="t" id="t${k}"><table><tr>${j.head.map((h) => `<th>${h}</th>`).join('')}</tr>${j.rows.map((r) =>
+          `<tr>${r.map((x) => `<td${isNum(x) ? ' class="num"' : ''}>${x}</td>`).join('')}</tr>`).join('')}</table></div><br>`).join('')}</body></html>`;
+      await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
+      await page.setContent(html, { waitUntil: 'load' });
+      for (let k = 0; k < tableJobs.length; k++) {
+        const el = await page.$(`#t${k}`);
+        await el.screenshot({ path: tableJobs[k].path });
+      }
+    }
+    await page.setViewport({ width: 1200, height: 675, deviceScaleFactor: 1 });
+    for (const j of coverJobs) {
+      const bg = `data:image/jpeg;base64,${fs.readFileSync(j.picture).toString('base64')}`;
+      await page.setContent(`<!doctype html><html><head><meta charset="utf-8"><style>${coverCss}</style></head><body>
+<div class="bg" style="background-image:url(${bg})"></div><div class="shade"></div>
+<div class="text"><div class="series">${escHtml(j.series)}</div><div class="num">${j.number}</div><div class="title">${escHtml(j.subtitle).replace(/和/g, '<wbr>和')}</div></div></body></html>`, { waitUntil: 'load' });
+      await page.screenshot({ path: j.path, type: 'jpeg', quality: 90 });
     }
   } finally {
     await browser.close();
@@ -183,6 +212,7 @@ async function renderTables(jobs) {
 (async () => {
   const nums = Object.keys(chapters).map(Number).filter((k) => chapters[k][lang] && (!wanted.length || wanted.includes(k)));
   const jobs = [];
+  const covers = [];
   let problems = 0;
   for (const n of nums) {
     const a = article(n);
@@ -194,12 +224,14 @@ async function renderTables(jobs) {
     fs.writeFileSync(path.join(dir, 'title.txt'), `${a.title}\n`);
     for (const p of a.pictures) fs.copyFileSync(path.join(root, 'images', p), path.join(imgDir, p));
     for (const tb of a.tables) jobs.push({ ...tb, path: path.join(imgDir, tb.name) });
+    covers.push({ path: path.join(dir, 'cover.jpg'), picture: path.join(root, 'images', coverPictures[n] || a.pictures[0]),
+      series: T[lang].series, number: String(n).padStart(2, '0'), subtitle: a.subtitle });
     console.log(`${lang} ${a.file}: ${a.md.length} characters, ${a.pictures.length} pictures, ${a.tables.length} tables -> ${dir.replace(/\\/g, '/')}`);
     console.log(`  title (${a.title.length}${a.title.length > titleLimit ? `, Bilibili suggests at most ${titleLimit}` : ''}): ${a.title}`);
     for (const r of a.report) console.log(`  ${r}`);
     problems += a.report.length;
   }
-  await renderTables(jobs);
+  await render(jobs, covers);
   console.log(problems ? `${problems} lines to look at` : 'clean');
 })().catch((e) => {
   console.error(e.message);

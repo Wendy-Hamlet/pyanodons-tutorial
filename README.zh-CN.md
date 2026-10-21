@@ -67,7 +67,7 @@
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。
 - `publish/`：把章节发到其他网站。两个版本都只保留教程本身（工具名、命令和“这些事实是怎么核实的”一节都去掉，由 `publish/edits.js` 里的修改完成），开头注明是 Claude 读取作者存档后撰写的，并链接到这里的完整章节。输出在 `publish/out/`（不提交）。
   - `steam.js [--lang en|zh] [章号 ...]`：Steam 指南。Steam 指南没有上传接口，所以它生成一个本地页面，列出每一栏（标题、简介、每个小节的 BBCode 正文，每节不超过 8000 字符）并附复制按钮，还列出每个小节要上传的图片。
-  - `bilibili.js [--lang zh|en] [章号 ...]`：B站专栏。生成给编辑器自带导入功能用的 Markdown，每个表格渲染成一张 PNG（编辑器不支持表格；先在 `publish/` 里运行一次 `npm install` 装 puppeteer-core，它驱动本机的 Edge）。`bilibili-page.js` 在编辑器页面里运行，导入 Markdown，并通过编辑器自己的图片上传把每张图片和表格放到原位。
+  - `bilibili.js [--lang zh|en] [章号 ...]`：B站专栏。生成给编辑器自带导入功能用的 Markdown，每个表格渲染成一张 PNG（编辑器不支持表格），每章再生成一张 16:9 封面（本章主要建筑的截图上叠系列名、章号和标题）；先在 `publish/` 里运行一次 `npm install` 装 puppeteer-core，它驱动本机的 Edge。`bilibili-page.js` 在编辑器页面里运行，导入 Markdown，通过编辑器自己的图片上传把每张图片和表格连同图注放到原位，并上传封面。
 - 本地化名称：在配置里设 `locale=zh-CN`（或 `en`），运行 `factorio --dump-prototype-locale`，会在脚本输出目录生成 `*-locale.json`。
 
 ## 许可证

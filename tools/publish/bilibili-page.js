@@ -5,8 +5,10 @@
 // - given images, it puts each in place of its marker paragraph "【图片 name】caption" through
 //   the editor's own image upload (the one used for dropped files), one after another, waiting
 //   until Bilibili has stored each, and writes the caption into the image's caption field.
-// ptBili.title(text) sets the title; ptBili.log() and ptBili.markers() report. Nothing is saved
-// or published by this script (the editor saves its draft by itself).
+// ptBili.title(text) sets the title; await ptBili.cover() opens the cover upload and leaves its
+// file input as #pt-cover (give it cover.jpg), ptBili.confirmCover() accepts the crop dialog;
+// ptBili.log() and ptBili.markers() report. Nothing is saved or published by this script (the
+// editor saves its draft by itself).
 (() => {
   const frame = () => [...document.querySelectorAll('iframe')].find((f) => f.src.includes('read-editor'));
   const editor = () => frame().contentDocument.querySelector('.ProseMirror').editor;
@@ -91,6 +93,43 @@
     input.value = '';
   };
 
+  // The cover: the "本地上传" choice opens a file picker through a new file input's click(). That
+  // click is caught and the input moved here as #pt-cover, to be given cover.jpg; then
+  // confirmCover() accepts the crop dialog (cover.jpg is already 16:9).
+  async function cover() {
+    const w = frame().contentWindow;
+    const d = frame().contentDocument;
+    if (!w.ptCaught) {
+      const click = w.HTMLInputElement.prototype.click;
+      w.HTMLInputElement.prototype.click = function () {
+        if (this.type !== 'file') return click.call(this);
+        const old = document.getElementById('pt-cover');
+        if (old) old.remove();
+        this.id = 'pt-cover';
+        this.setAttribute('aria-label', 'pt-cover file input');
+        this.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0';
+        document.body.appendChild(this);
+        return undefined;
+      };
+      w.ptCaught = true;
+    }
+    const button = [...d.querySelectorAll('.upload-text')].find((e) => e.textContent.trim() === '添加封面');
+    if (!button) return 'no 添加封面 button (a cover is set already?)';
+    button.parentElement.click();
+    await wait(500);
+    const local = [...d.querySelectorAll('.select-option')].find((e) => e.textContent.trim() === '本地上传');
+    local.click();
+    await wait(500);
+    return document.getElementById('pt-cover') ? 'give #pt-cover the cover' : 'no file input caught';
+  }
+
+  function confirmCover() {
+    const ok = [...frame().contentDocument.querySelectorAll('button, .vui_button')].filter((b) => b.offsetParent && b.textContent.trim() === '确定');
+    if (ok.length !== 1) return `found ${ok.length} 确定 buttons`;
+    ok[0].click();
+    return 'cover confirmed';
+  }
+
   function title(text) {
     const box = frame().contentDocument.querySelector('.title-input__inner');
     const setter = Object.getOwnPropertyDescriptor(frame().contentWindow.HTMLTextAreaElement.prototype, 'value').set;
@@ -99,6 +138,6 @@
     return box.value;
   }
 
-  window.ptBili = { log: () => log.slice(), markers, pending, title };
+  window.ptBili = { log: () => log.slice(), markers, pending, title, cover, confirmCover };
   return 'ptBili ready';
 })();
