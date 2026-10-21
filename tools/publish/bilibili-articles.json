@@ -1,5 +1,15 @@
 {
   "zh": {
-    "1": "https://www.bilibili.com/opus/1261498471171489832"
+    "1": "https://www.bilibili.com/opus/1261498471171489832",
+    "2": "https://www.bilibili.com/opus/1261541231837577220",
+    "3": "https://www.bilibili.com/opus/1261542052172136451",
+    "4": "https://www.bilibili.com/opus/1261542520351883271",
+    "5": "https://www.bilibili.com/opus/1261543001401851912"
+  },
+  "rid": {
+    "zh": { "1": 53535611, "2": 53537850, "3": 53537910, "4": 53537946, "5": 53537988 }
+  },
+  "edits": {
+    "zh": { "1": 1, "2": 1, "3": 1, "4": 1 }
   }
 }

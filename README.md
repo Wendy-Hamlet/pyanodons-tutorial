@@ -210,7 +210,11 @@ parameters for yours.
     cover per chapter (its main build behind the series name, number and title); `npm install`
     in `publish/` once for puppeteer-core, which drives the installed Edge. `bilibili-page.js`,
     run in the editor page, imports the Markdown, puts each picture and table in place through
-    the editor's own image upload with its caption, and uploads the cover.
+    the editor's own image upload with its caption, sets the publish settings and uploads the
+    cover; `relink()` later points a published chapter's links to later chapters at their
+    Bilibili copies. `bilibili-articles.json` records each published chapter (address, article
+    id, edits used). Bilibili takes at most 5 new articles a day per account, and allows 3 edits
+    per article, so each chapter is relinked once, when every chapter it links to is out.
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.
 

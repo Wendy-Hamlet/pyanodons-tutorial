@@ -5,10 +5,12 @@
 // - given images, it puts each in place of its marker paragraph "【图片 name】caption" through
 //   the editor's own image upload (the one used for dropped files), one after another, waiting
 //   until Bilibili has stored each, and writes the caption into the image's caption field.
-// ptBili.title(text) sets the title; await ptBili.cover() opens the cover upload and leaves its
-// file input as #pt-cover (give it cover.jpg), ptBili.confirmCover() accepts the crop dialog;
-// ptBili.log() and ptBili.markers() report. Nothing is saved or published by this script (the
-// editor saves its draft by itself).
+// ptBili.title(text) sets the title; await ptBili.settings() sets the publish settings (see there);
+// await ptBili.cover() opens the cover upload and leaves its file input as #pt-cover (give it
+// cover.jpg), ptBili.confirmCover() accepts the crop dialog; ptBili.state(), ptBili.log() and
+// ptBili.markers() report; ptBili.relink(urls, n) fixes a published chapter's links to later ones.
+// Nothing is saved or published by this script (the editor saves its draft by itself; 发布 or
+// 提交文章 is clicked by hand or by the automation, after checking state()).
 (() => {
   const frame = () => [...document.querySelectorAll('iframe')].find((f) => f.src.includes('read-editor'));
   const editor = () => frame().contentDocument.querySelector('.ProseMirror').editor;
@@ -138,6 +140,75 @@
     return box.value;
   }
 
-  window.ptBili = { log: () => log.slice(), markers, pending, title, cover, confirmCover };
+  // The publish settings the author chose for every chapter: visible to all, custom cover on,
+  // comments on, original declared, the AI declaration NOT ticked, and the series collection.
+  // Run it before cover() (the cover button only shows with the custom cover on).
+  const item = (label) => [...frame().contentDocument.querySelectorAll('.form-item-label')].find((l) => l.textContent.trim() === label).parentElement;
+  const switchOf = (label) => item(label).querySelector('.vui_switch--switch');
+  const boxOf = (text) => [...item('创作声明').querySelectorAll('.vui_checkbox')].find((b) => b.textContent.includes(text));
+  const visibleToAll = () => [...item('可见范围').querySelectorAll('.vui_radio')].find((r) => r.textContent.includes('所有人可见'));
+
+  async function settings(collection = 'Pyanodons 循序渐进') {
+    const d = frame().contentDocument;
+    if (!visibleToAll().classList.contains('vui_radio--checked')) visibleToAll().click();
+    for (const [label, on] of [['自定义封面', true], ['评论开关', true]]) {
+      if (switchOf(label).classList.contains('is-checked') !== on) switchOf(label).click();
+    }
+    for (const [text, on] of [['声明此文章为原创', true], ['AI辅助创作声明', false]]) {
+      if (boxOf(text).querySelector('input').checked !== on) boxOf(text).querySelector('input').click();
+    }
+    if (!item('文集').textContent.includes(collection)) {
+      d.querySelector('.collection-button').click();
+      await wait(800);
+      const dialog = d.querySelector('.collection-dialog');
+      const choice = [...dialog.querySelectorAll('.collection-item')].find((c) => c.textContent.trim() === collection);
+      if (!choice) return `no collection "${collection}"`;
+      choice.click();
+      await wait(300);
+      [...dialog.querySelectorAll('.collection-action button')].find((b) => b.textContent.trim() === '确定').click();
+      await wait(500);
+    }
+    return state();
+  }
+
+  // What the settings are now, to check before publishing.
+  function state() {
+    return {
+      visibleToAll: visibleToAll().classList.contains('vui_radio--checked'),
+      customCover: switchOf('自定义封面').classList.contains('is-checked'),
+      coverSet: !item('自定义封面').textContent.includes('添加封面'),
+      comments: switchOf('评论开关').classList.contains('is-checked'),
+      scheduled: switchOf('定时发布').classList.contains('is-checked'),
+      original: boxOf('声明此文章为原创').querySelector('input').checked,
+      aiDeclared: boxOf('AI辅助创作声明').querySelector('input').checked,
+      collection: item('文集').textContent.trim(),
+      title: frame().contentDocument.querySelector('.title-input__inner').value,
+      markersLeft: markers().length,
+      uploading: pending(),
+    };
+  }
+
+  // In a published chapter opened for editing (new-edit?aid=<rid>&type=3): point its links to
+  // other chapters on GitHub at their Bilibili copies. urls is bilibili-articles.json's "zh"
+  // ({"2": "https://www.bilibili.com/opus/..."}), own the chapter's number (its "本章" link to the
+  // full version stays). Bilibili allows 3 edits per article, so do it once, after every chapter
+  // it links to is out.
+  function relink(urls, own) {
+    const ed = editor();
+    let tr = ed.state.tr;
+    const changed = [];
+    ed.state.doc.descendants((node, pos) => {
+      if (node.type.name !== 'link') return;
+      const m = /\/chapters\/(\d\d)-[^/#]*\.md(#.*)?$/.exec(node.attrs.href || '');
+      const n = m && Number(m[1]);
+      if (!m || n === own || !urls[n]) return;
+      tr = tr.setNodeMarkup(pos, null, { ...node.attrs, href: urls[n] });
+      changed.push(`${node.attrs.text} -> ${n}`);
+    });
+    ed.view.dispatch(tr);
+    return changed;
+  }
+
+  window.ptBili = { log: () => log.slice(), markers, pending, title, cover, confirmCover, settings, state, relink };
   return 'ptBili ready';
 })();
