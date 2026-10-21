@@ -115,11 +115,22 @@ function parse(md) {
       blocks.push({ type: 'table', head: cells[0], rows: cells.slice(2) });
     } else if (listRe.test(line)) {
       const items = [];
+      let inner = null;
       while (i < lines.length) {
         const l = lines[i];
         if (!l.trim()) {
-          const next = lines.slice(i).find((x) => x.trim());
+          const k = lines.findIndex((x, at) => at > i && x.trim());
+          const next = k < 0 ? null : lines[k];
           if (next && listRe.test(next)) { i++; continue; }
+          // An indented block after a blank line (a table or a paragraph inside the last item):
+          // the list ends here and the block follows it, out of the list (neither site nests
+          // tables in list items).
+          if (next && /^ {2,}\S/.test(next)) {
+            let j = k;
+            while (j < lines.length && (!lines[j].trim() || /^ {2,}\S/.test(lines[j]))) j++;
+            inner = parse(lines.slice(k, j).map((x) => x.replace(/^ {2,}/, '')).join('\n'));
+            i = j;
+          }
           break;
         }
         const lm = listRe.exec(l);
@@ -131,6 +142,7 @@ function parse(md) {
         i++;
       }
       blocks.push({ type: 'list', tree: nest(items) });
+      if (inner) blocks.push(...inner);
     } else if (/^!\[[^\]]*\]\([^)]*\)\s*$/.test(line)) {
       const im = /^!\[([^\]]*)\]\(([^)]*)\)/.exec(line);
       blocks.push({ type: 'image', alt: im[1], src: im[2] });
