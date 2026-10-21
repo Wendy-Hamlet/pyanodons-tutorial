@@ -28,6 +28,7 @@ and design principle in one place) · [Coke, steel, crushing and Ash separation]
 [The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) ·
 [Map settings](research/map-settings.md) (Py's preset, the author's edits and what they do to the map) ·
 [T.U.R.D. choices](research/turd-choices.md) (the author's picks, the ones still open, every upgrade) ·
+[Mining drills](research/mining-drills.md) (what an ore costs in Raw coal with each drill, and which power pays) ·
 [Blueprints](blueprints/README.md) (measured designs, ready to import).
 
 ## Setup the chapters were written against
