@@ -2,3 +2,5 @@
 # Generated: book.lua by tools/bp-sync.js push, shots.lua by tools/shots.js plan
 tools/companion/book.lua
 tools/companion/shots.lua
+tools/publish/node_modules/
+tools/publish/out/

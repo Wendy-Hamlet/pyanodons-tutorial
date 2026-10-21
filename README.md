@@ -198,12 +198,18 @@ parameters for yours.
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see
   [its README](tools/agent/README.md). Its play journal is [research/agent-play](research/agent-play/journal.md).
-- `publish/steam.js [--lang en|zh] [chapter ...]`: the chapters as Steam guides, which have no
-  upload API: a local page with every field (title, description, each section in BBCode, at most
-  8,000 characters) and a copy button, plus the images to upload per section. The guides keep the
-  tutorial only (tool names, commands and "How these facts were checked" left out, by the edits in
-  `publish/steam-edits.js`), open with a note that Claude wrote them from the author's saves, and
-  link the full chapter here.
+- `publish/`: the chapters for other sites. Both versions keep the tutorial only (tool names,
+  commands and "How these facts were checked" left out, by the edits in `publish/edits.js`), open
+  with a note that Claude wrote them from the author's saves, and link the full chapter here.
+  Output goes to `publish/out/` (not committed).
+  - `steam.js [--lang en|zh] [chapter ...]`: Steam guides, which have no upload API: a local page
+    with every field (title, description, each section in BBCode, at most 8,000 characters) and a
+    copy button, plus the images to upload per section.
+  - `bilibili.js [--lang zh|en] [chapter ...]`: Bilibili articles (专栏): Markdown for the
+    editor's own importer, every table rendered to a PNG (the editor has no tables; `npm install`
+    in `publish/` once for puppeteer-core, which drives the installed Edge). `bilibili-page.js`,
+    run in the editor page, imports the Markdown and puts each picture and table in place through
+    the editor's own image upload.
 - Localised names: `factorio --dump-prototype-locale` with `locale=zh-CN` (or `en`) in the config
   writes `*-locale.json` into script-output.
 

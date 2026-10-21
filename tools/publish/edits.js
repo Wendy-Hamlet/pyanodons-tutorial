@@ -1,6 +1,6 @@
-// Edits for the Steam guides (tools/publish/steam.js). They take out what a player does not need
-// in a guide: tool names, commands and how a number was measured (the GitHub version keeps
-// them). `files`: per chapter file, [from, to] pairs applied first; each `from` must occur
+// Edits for the published versions (tools/publish/steam.js, bilibili.js). They take out what a
+// player does not need: tool names, commands and how a number was measured (the GitHub version
+// keeps them). `files`: per chapter file, [from, to] pairs applied first; each `from` must occur
 // exactly once, and the export reports those that no longer do. `rules`: per language, [regex,
 // replacement] pairs applied to every chapter after that (the English is wrapped, so words
 // are matched across line breaks).

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Publishing helpers for the tutorial; puppeteer-core renders tables to images with the installed Edge or Chrome.",
+  "dependencies": {
+    "puppeteer-core": "^25.4.0"
+  }
+}
