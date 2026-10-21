@@ -65,6 +65,7 @@
 - `status-probe/`（配合 `save-probe.ps1 -Variant 名称,刻数`）：存档载入后逐刻记录某种实体每一台的状态和电力缓冲、各状态所占比例，以及插件和信标给它的效果：用来区分基地真实的状态和某一刻的假象。
 - `bp-bench.ps1 -Bench <名称> [-Variant <方案>]` + `bp-bench/`：蓝图测试台。把 `blueprints/` 里的一张蓝图放到空地图上（用游戏自己的蓝图建造，补齐插件请求），用电力接口给每个电网供电，用脚本保持输入带满载、清空输出带（以及作为流体出口的指定管道，全部清空或按设定速度取走），让研究中心一直研究，并报告每台机器完成的次数与它实际速度下配方允许的次数之比、状态采样、等待中的机器缺哪种原料，以及指定观察的实体。每个测试在 `bp-bench/benches/` 里有一个 JSON 文件（蓝图、输入、输出、流体出口、启动时预放的物品、科技、预热和测量时间、方案）。在读档环境里运行。
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。
+- `publish/steam.js [--lang en|zh] [章号 ...]`：把章节做成 Steam 指南。Steam 指南没有上传接口，所以它生成一个本地页面，列出每一栏（标题、简介、每个小节的 BBCode 正文，每节不超过 8000 字符）并附复制按钮，还列出每个小节要上传的图片。指南只保留教程本身（工具名、命令和“这些事实是怎么核实的”一节都去掉，由 `publish/steam-edits.js` 里的修改完成），开头注明是 Claude 读取作者存档后撰写的，并链接到这里的完整章节。
 - 本地化名称：在配置里设 `locale=zh-CN`（或 `en`），运行 `factorio --dump-prototype-locale`，会在脚本输出目录生成 `*-locale.json`。
 
 ## 许可证
