@@ -143,8 +143,10 @@
   // The publish settings the author chose for every chapter: visible to all, custom cover on,
   // comments on, original declared, the AI declaration NOT ticked, and the series collection.
   // Run it before cover() (the cover button only shows with the custom cover on).
-  const item = (label) => [...frame().contentDocument.querySelectorAll('.form-item-label')].find((l) => l.textContent.trim() === label).parentElement;
+  // A published article opened for editing has no 评论开关 row: item() is then null.
+  const item = (label) => [...frame().contentDocument.querySelectorAll('.form-item-label')].find((l) => l.textContent.trim() === label)?.parentElement || null;
   const switchOf = (label) => item(label).querySelector('.vui_switch--switch');
+  const isOn = (label) => (item(label) ? switchOf(label).classList.contains('is-checked') : null);
   const boxOf = (text) => [...item('创作声明').querySelectorAll('.vui_checkbox')].find((b) => b.textContent.includes(text));
   const visibleToAll = () => [...item('可见范围').querySelectorAll('.vui_radio')].find((r) => r.textContent.includes('所有人可见'));
 
@@ -175,10 +177,10 @@
   function state() {
     return {
       visibleToAll: visibleToAll().classList.contains('vui_radio--checked'),
-      customCover: switchOf('自定义封面').classList.contains('is-checked'),
+      customCover: isOn('自定义封面'),
       coverSet: !item('自定义封面').textContent.includes('添加封面'),
-      comments: switchOf('评论开关').classList.contains('is-checked'),
-      scheduled: switchOf('定时发布').classList.contains('is-checked'),
+      comments: isOn('评论开关'),
+      scheduled: isOn('定时发布'),
       original: boxOf('声明此文章为原创').querySelector('input').checked,
       aiDeclared: boxOf('AI辅助创作声明').querySelector('input').checked,
       collection: item('文集').textContent.trim(),
