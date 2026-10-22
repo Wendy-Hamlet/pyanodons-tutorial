@@ -109,7 +109,7 @@ windows ending 28:40, 29:30 and 29:50), and the Bio containers were handcrafted 
 
 ## 3. The dig site and the Nexelit plates
 
-<!-- ![The dig site: the Dig site at the bottom right with its three Dig-o-sauruses, the Meat and Guts belt coming down from the north, the Washer and the Nexelit furnace on the left](../images/ch12-dig-site.jpg) -->
+![The dig site: the Dig site at the bottom right with its three Dig-o-sauruses, the Meat and Guts belt coming down from the north, the Washer and the Nexelit furnace on the left, the Natural nexelit the Dig-o-sauruses dig at the bottom left](../images/ch12-dig-site.jpg)
 
 - **Food.** The belt along x −98 brings Meat and Guts from the slaughterhouse at (−31.5, −354.5),
   916 tiles. Two filter inserters, one for Meat and one for Guts, put them into the Dig site at
@@ -133,11 +133,11 @@ and 0.145 plates. What they get beyond 0.2 comes out of the stock on the 916-til
 
 ## 4. Nickel
 
-<!-- ![The nickel mine: two rows of four Fluid mining drills MK 02 with the ore belt between them](../images/ch12-nickel-mine.jpg) -->
+![The nickel mine: two rows of four Fluid mining drills MK 02 with the ore belt between them](../images/ch12-nickel-mine.jpg)
 
-<!-- ![Nickel crushing: nine Jaw crushers in a row, the ore belt below them and the belt for Stone and Nickel (grade 1) above](../images/ch12-nickel-crushing.jpg) -->
+![Nickel crushing: nine Jaw crushers in a row, the ore belt below them and the belt for Stone and Nickel (grade 1) above](../images/ch12-nickel-crushing.jpg)
 
-<!-- ![Nickel smelting: two rows of fifteen Stone furnaces, three brick furnaces below, the plate belts ending on the right](../images/ch12-nickel-smelting.jpg) -->
+![Nickel smelting: two rows of fifteen Stone furnaces, three brick furnaces below, the plate belts ending on the right](../images/ch12-nickel-smelting.jpg)
 
 - **Mine.** Eight Fluid mining drills MK 02 in two rows of four at x −270.5 to −255.5, y 75.5 and
   81.5, on the Nickel field at (−256, 96) (30.4 M; 13.7 M under the drills). Nickel ore takes
@@ -162,7 +162,7 @@ and 0.145 plates. What they get beyond 0.2 comes out of the stock on the 916-til
   (−129.5, 23.5), (−129.5, 18.5) and (−129.5, 29.5).
 
 So **5 Nickel ore make a plate**, and the block, built for 15 ore a second, gets 4.8: about ten of
-the thirty furnaces and a third of the crushers' time are used. Seventeen more drills would fill
+the thirty furnaces (in the picture the first five of each row burn) and a third of the crushers' time are used. Seventeen more drills would fill
 it. Each plate also takes 0.5 Stone (0.25 bricks) and 2 MJ of Raw coal (a Stone furnace burns
 200 kW), that is 0.67 Raw coal and 0.67 Ash.
 
@@ -243,6 +243,7 @@ principle 23):
 - The hour after the save: `tools/save-probe.ps1 -Probe rate-probe -Ticks 219700 -Variant
   '60,3600,600,<items>'`, once as saved and once with `+sink@-129.5:23.5;sink@-88.5:188.5`
   (both plate belts emptied every tick).
-- Pictures: not taken yet; the areas are planned with `node tools/shots.js plan`.
+- The screenshots: taken by the author with the companion mod (`/pt-shots`) after the save,
+  areas planned with `node tools/shots.js plan`.
 
 Next: chapter 13 (to come).
