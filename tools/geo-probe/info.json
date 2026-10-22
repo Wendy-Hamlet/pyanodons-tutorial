@@ -1,0 +1,8 @@
+{
+  "name": "cf-geo-probe",
+  "version": "0.0.1",
+  "title": "Geothermal probe",
+  "author": "Wendy-Hamlet",
+  "factorio_version": "2.1",
+  "dependencies": ["base", "pyalternativeenergy"]
+}

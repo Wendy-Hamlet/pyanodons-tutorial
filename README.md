@@ -20,6 +20,7 @@ scripts used, so you can re-check them against your own mod versions.
 9. [pY science pack 1](chapters/09-py-science-pack-1.md)
 10. [Crushed-coal power](chapters/10-crushed-coal-power.md)
 11. [Better lead, titanium and tin smelting](chapters/11-lead-titanium-tin-smelting.md)
+12. [Nexelit mining and nickel smelting](chapters/12-nexelit-nickel.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -29,6 +30,8 @@ and design principle in one place) · [Coke, steel, crushing and Ash separation]
 [Map settings](research/map-settings.md) (Py's preset, the author's edits and what they do to the map) ·
 [T.U.R.D. choices](research/turd-choices.md) (the author's picks, the ones still open, every upgrade) ·
 [Mining drills](research/mining-drills.md) (what an ore costs in Raw coal with each drill, and which power pays) ·
+[Geothermal power](research/geothermal.md) (how it works, measured: about 75 MW a fissure) ·
+[Antimony oxide](research/antimony-oxide.md) (how much the way to trains and robots needs, and two block sizes) ·
 [Blueprints](blueprints/README.md) (measured designs, ready to import).
 
 ## Setup the chapters were written against
@@ -182,6 +185,10 @@ parameters for yours.
 - `dig-probe/` (with `save-probe.ps1 -Variant name,count,warm_s,measure_s`): a what-if for Dig
   sites: puts that many Dig-o-sauruses of that kind into every site, keeps the food slots full of
   Guts and counts the trips.
+- `geo-probe/` (with `run-probe.ps1 -Ticks 8500`): geothermal power stage by stage on a lab map
+  (plant on a fissure, Regenerative heat exchanger, Steam engines on 500 and 250 degree Steam),
+  each on its own network, with and without +20 % mining productivity; with `save-probe.ps1
+  -Variant cracks` it lists a save's Geothermal fissures (`research/geothermal.md`).
 - `turd-probe/` (with `save-probe.ps1 -Ticks 10`): the T.U.R.D. upgrades researched in a save and
   the option picked for each, read through pyalienlife's own interface, with the hidden modules and
   machine replacements in place (`research/turd-choices.md`).

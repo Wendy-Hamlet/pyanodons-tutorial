@@ -442,4 +442,4 @@ Both changed stations ran without trouble in the two hours after the save (secti
 - The screenshots: taken by the author with the companion mod (`/pt-shots`), areas planned with
   `node tools/shots.js plan`.
 
-Next: chapter 11 (to come).
+Next: [chapter 11, better lead, titanium and tin smelting](11-lead-titanium-tin-smelting.md).

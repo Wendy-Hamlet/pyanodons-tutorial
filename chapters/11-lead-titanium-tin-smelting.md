@@ -461,3 +461,5 @@ the lead drills 7 %, the titanium drills not at all, at 900 kW each).
   of 28:02: `sink@-65.5:504.5`, `empty@-60.5:506.5`, `empty@-59.5:506.5`.
 - The tin lanes: ten minutes of the same save with the plates taken, in one-minute steps, with
   watch points (`@x:y`) on eight tin drills of both rows.
+
+Next: [chapter 12, nexelit mining and nickel smelting](12-nexelit-nickel.md).
