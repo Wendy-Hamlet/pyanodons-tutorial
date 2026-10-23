@@ -7,8 +7,8 @@ This chapter follows the same recorded run from the save of 32:40 to the save of
 subject is the author's, **Intermetallics and getting ready for trains** (金属间化合物与火车准备).
 The author finished the Intermetallics line begun in chapter 13, with Duralumin made on it, built a
 fish block for the Fish oil of the Gearbox and a block for rails, researched the two train
-technologies and handcrafted the first Locomotive and Cargo wagons. They will fix this chapter's
-problems before going on. Times are game time. Numbers come from the game's data, from the
+technologies and handcrafted the first Locomotive and Cargo wagons. After the save they fixed the
+fish block (35:00 to 35:10) and saved again at 35:07. Times are game time. Numbers come from the game's data, from the
 recorder's 10-minute production windows, from the save of 34:59 (`tools/inspect-save.ps1`) and
 from hours of the save run as it stands and with what-ifs (`tools/rate-probe`). The author's
 Factory Planner plans were written by the companion and are quoted below; they have not exported
@@ -16,20 +16,22 @@ blueprints of the new blocks.
 
 The result:
 
-- **The Intermetallics line reaches the plan's 0.167 a second, but only for minutes at a time.**
-  The Duralumin needs a whole Aluminium plate a second, and with ten ore to a plate that is 100
-  Coal gas a second for the aluminium drills, which get the Coal gas first. The Coal gas comes with
-  Tar, and the Tar has one user that takes 40 a second; so when the drills run, the Gasifiers get
-  almost no Coal gas, the Syngas falls from 45 a second to 3, and the plastic, the Antimony oxide
-  and then the Intermetallics stop. In the hour after the save, with the Intermetallics taken away,
-  the line ran at full rate for 25 minutes and then stopped.
-- **A Tailings pond on the Tar pipe** lets both run: 0.167 Intermetallics a second to the end of
-  the hour, Antimony oxide 0.39. It fills in about six hours; the Smelters' Gasoline store lasts
-  about 4.7 hours at that rate. Burning the surplus Tar in the Smelters would answer both (from
-  the data; not measured).
+- **The Intermetallics line is a supermarket.** It made the plan's 0.167 Intermetallics a second
+  for a window, and its products wait in chests for the author to take a few: the trains and the
+  buildings need only a little of them, and no other line takes them, so it need not run at full
+  rate (the author).
+- **Run without a pause it would not keep that rate**, for a reason outside the line: the Duralumin
+  needs a whole Aluminium plate a second, 100 Coal gas for the aluminium drills, which get the Coal
+  gas first. The Coal gas comes with Tar, and the Tar has one user that takes 40 a second; so when
+  the drills run, the Gasifiers get almost no Coal gas, the Syngas falls from 45 a second to 3, and
+  the plastic, the Antimony oxide and then the Intermetallics stop (25 minutes at full rate in the
+  hour after the save). A Tailings pond on the Tar pipe would let both run (measured: 0.167 to the
+  end of the hour).
 - **The fish block made Fish oil for only a few minutes** (enough for 5 Gearboxes): its
-  Electrolyzer's Hydrogen has no way out, so it makes no Oxygen for the Fish farm, and its Composter
-  is stuck on a Wood recipe, so the Slaughterhouse cannot get rid of Skin and Bones.
+  Electrolyzer's Hydrogen had no way out, so it made no Oxygen for the Fish farm, and its Composter
+  was stuck on a Wood recipe, so the Slaughterhouse could not get rid of Skin and Bones. The author
+  fixed both at 35:00 to 35:10, and the block now makes the plan's 4 Fish and 25 Fish oil a
+  minute (measured, an hour of the save of 35:07).
 - **Rails come at 0.4 a second** as planned. The first Locomotive, two Cargo wagons, a Train stop
   and signals were handcrafted at 34:55; the slow part is the Shafts, 50 s each by hand.
 
@@ -63,6 +65,8 @@ The result:
 | 34:53 | Automated rail transportation researched; Moss farm upgrade next |
 | 34:55–35:00 | **Handcrafted: a Locomotive, two Cargo wagons, a Train stop, 20 Rail signals, 15 Chain signals** (and the 8 Brakes MK 01 for them) |
 | 34:59 | The save (`Py-Exploration`, 35.0 h) |
+| 35:00–35:10 | **The fish block fixed**: its Hydrogen piped to the base's Hydrogen pipe, a second Composter for the Wood (section 5) |
+| 35:07 | The screenshots of this chapter (`/pt-shots`) and a second save |
 
 Production per second (10-minute windows from the recorder):
 
@@ -113,7 +117,7 @@ Stage 1, Machine Components - Stage 1, Circuit network, Cybersyn train network, 
 
 ## 2. The Intermetallics line
 
-<!-- ![The Intermetallics line: the Vitreloy Smelter and the Duralumin Smelter at the top, the two alloy Smelters below them, the three Advanced foundries on the left, the plate belts coming in from the right](../images/ch14-intermetallics.jpg) -->
+![The Intermetallics line: the Vitreloy Smelter (top left) and the Duralumin Smelter (top right), the two alloy Smelters below them, the three Advanced foundries on the left, the plate belts coming in from the right](../images/ch14-intermetallics.jpg)
 
 Intermetallics go into every train vehicle (5 a Locomotive, 5 a Cargo wagon), into the Auog
 paddock and the Ralesia plantation just researched, and into 25 buildings in all
@@ -140,10 +144,17 @@ Advanced foundries. Their Intermetallics go east on y −276 to a chest at (−1
 takes one stack, 100. With the chest full the foundries stop: at the save it held 100, the belt
 51 more, and the author had 64 in the inventory.
 
-The line did reach the plan: 0.167 Intermetallics a second in the window ending 33:30, with the
+**A supermarket, not a production line.** The author, after the save: the base needs only a little
+of the line's three products, none of them goes on to another line, so it does not have to run at
+full rate; the planned rate is really that of a supermarket. That is how it is built: each product
+waits in a chest (Vitreloy and alloy in their buffer chests, the Intermetallics in its one-stack
+chest, a little Duralumin in another), and the line stops when they are full.
+
+It did reach the plan: 0.167 Intermetallics a second in the window ending 33:30, with the
 Duralumin Smelter working all the time (0.250 a second). Then it fell to 0.147, 0.105 and nothing
 by 34:00, before the chest was full. The record shows why in the Antimony oxide column: the
-oxide stopped, and the Plastic bars before it.
+oxide stopped, and the Plastic bars before it. For a supermarket that does not matter; sections 3
+and 4 explain it, because the same pipes feed the plastic and the nickel drills.
 
 ## 3. Aluminium for the Duralumin
 
@@ -161,7 +172,7 @@ Aluminium plate is **100 Coal gas**, and the Duralumin's plate a second is 100 C
 the windows the aluminium furnaces made 0.7 plates a second (7 ore, 70 Coal gas) whenever the line
 or the chests took them; the base's Coal gas went from 32 a second to 61.
 
-## 4. Why the Syngas stops: Coal gas, Tar and one Overflow valve
+## 4. What stops it at full rate: Coal gas, Tar and one Overflow valve
 
 The base's Coal gas comes mainly from the three Destructive distillation columns of the coke block
 (Raw coal: 10 → 60 Coal gas + 30 Tar + 3 Coal, 2 s), and it has two users, in a fixed order since
@@ -226,9 +237,13 @@ pond run) the base used 66 Gasoline a second against 27 made, 39 a second out of
 author's Gasoline Tailings pond at (−139, 3) held 658,264 at the save (736,300 at 32:40), about
 4.7 hours at that rate. Tar as the Smelters' fuel would answer both at once (by the data).
 
+None of this needs doing while the line is a supermarket (the author): taking a few hundred
+Intermetallics now and then keeps the aluminium drills idle most of the time. It is what a
+full-rate line would need.
+
 ## 5. Fish oil for the Gearbox
 
-<!-- ![The fish block: the Washer and the Plankton farm on the left, the egg Fish farm and the Fish farm in the middle row, the Electrolyzer above the Fish farm, the Composter and the Slaughterhouse on the right, the Gearbox assembler with its chests at the bottom](../images/ch14-fish.jpg) -->
+![The fish block after the fix (35:07): the Jaw crusher, Washer and Plankton farm on the left, the egg Fish farm and the Fish farm at the bottom, the Electrolyzer above the Fish farm, the Skin and Bones Composter and the Slaughterhouse on the right, the Gearbox assembler below; the new Wood Composter just past the left edge](../images/ch14-fish.jpg)
 
 A Locomotive needs a Gearbox MK 01, and a Gearbox needs 20 Fish oil (2 Shafts MK 01 + 4 Duralumin
 + 5 Steel + 4 Titanium plates + 20 Fish oil, 10 s). Fish oil comes from rendering Fish in a
@@ -281,9 +296,21 @@ than the hand-fed Shafts allow. Without an outlet the oil simply waits in its pi
 assembler, and the block runs again whenever a Gearbox is made: a jam on a product not yet used,
 not a fault.
 
+**The author's fix (35:00 to 35:10).** The Hydrogen pipe now goes on from (−129.5, −317.5) east
+to x −112.5 and from there south, underground, into the bus's Hydrogen pipe on that line (where it
+crosses the Gasoline pipe, near y −136, the Gasoline's Check valve moved one tile); that pipe takes
+the Hydrogen south to the fluid-fuel machines ([chapter 13](13-geothermal-antimony-oxide.md),
+section 4). The Wood inserter is gone, and a second Composter at (−172.5, −322.5) takes the Wood
+alone; its Biomass goes on a belt along y −318.5 to an inserter at (−151.5, −317.5) into the Fish
+farm, switched by a wire. The first Composter now takes only Skin and Bones. In the save of 35:07
+the Electrolyzer holds Oxygen instead of Hydrogen and the Fish farm is working. An hour of that
+save, with a Sinkhole taking the Fish oil: **0.067 Fish and 0.42 Fish oil a second**, the Fish farm
+working all the time. The Wood Composter stood the whole hour with its Biomass belt full: Skin and
+Bones gave 0.063 Biomass a second of the 0.067 used, and the Biomass already on the belt the rest.
+
 ## 6. Rails, and the first train by hand
 
-<!-- ![The rail block: the Jaw crusher and the Wood workshop at the top, the two Solder assemblers MK 02 below them, then the Bolt and Iron stick assemblers, the rail assembler and its chest on the left, the Treated wood unit at the bottom](../images/ch14-rails.jpg) -->
+![The rail block: the Jaw crusher and the Wood workshop at the top, the two Solder assemblers MK 02 below them, then the Bolt and Iron stick assemblers, the rail assembler and its chest on the left, the Treated wood unit at the bottom](../images/ch14-rails.jpg)
 
 A rail (Trains & railway - Stage 1) is 1 Stone + 4 Bolts + 2 Treated wood + 1 Steel + 5 Solder → 3
 rails, 0.5 s. The author's plan "铁轨" (34:33) makes 24 a minute, 0.4 a second, and the block
@@ -359,7 +386,8 @@ In every run the Fish farm made no Fish (section 5).
 
 Two more hours for the fish block: with only the Exhaust pipe on its Hydrogen, 0.067 Fish a second
 for 15 minutes and then none (the Slaughterhouse full of Skin and Bones); with both fixes and a
-Sinkhole taking the Fish oil, 0.067 Fish and 0.42 Fish oil a second for the whole hour (section 5).
+Sinkhole taking the Fish oil, 0.067 Fish and 0.42 Fish oil a second for the whole hour; and the
+same in the save of 35:07 with the author's own fix (section 5).
 
 ## 9. Checklist
 
@@ -387,7 +415,8 @@ Sinkhole taking the Fish oil, 0.067 Fish and 0.42 Fish oil a second for the whol
 - Save of 34:59 (`Py-Exploration`, copied to `C:\tmp\ch14` first; consistency check passed):
   `tools/inspect-save.ps1 -Ticks 3700`, `tools/summarize-save.js`, `tools/trace-layout.js`,
   `tools/render-area.js`; the save of 32:40 for what changed. Tiles free for the Tailings pond: the
-  save's entities, checked over the pond's 18 × 18.
+  save's entities, checked over the pond's 18 × 18. The save of 35:07 for the author's fix of the
+  fish block.
 - Data: recipes, mining fluids, fuel values, the Composter and the Exhaust pipe (`tools/q.js`, data
   export of 2026-10-18).
 - The Composter's Wood inserter: the new `tools/wire-probe` (`save-probe.ps1 -Probe wire-probe
@@ -399,6 +428,8 @@ Sinkhole taking the Fish oil, 0.067 Fish and 0.42 Fish oil a second for the whol
   (a sink for the Fish oil). For this chapter the rate-probe learned two more: `off@x:y` stops the
   machine or inserter on a tile (here the six aluminium drills, the Composter's Wood inserter) and
   `clear@x:y` empties a machine's input and output slots once (the Composter's two Wood).
+- The screenshots: taken by the author with the companion mod (`/pt-shots`) at 35:07, after the
+  fix of the fish block, areas planned with `node tools/shots.js plan`.
 
 Next: chapter 15 (to come).
 

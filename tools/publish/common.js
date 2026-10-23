@@ -158,8 +158,12 @@ function parse(md) {
   return blocks;
 }
 
+// Two wrapped lines join without a space between Chinese characters, or next to Chinese
+// (full-width) punctuation; otherwise with one.
+const isCJKPunct = (c) => /[　-〿＀-￯“”‘’]/.test(c || '');
 function joiner(a, b) {
-  return isCJK(a.slice(-1)) && isCJK(b[0]) ? '' : ' ';
+  const x = a.slice(-1), y = b[0];
+  return (isCJK(x) && isCJK(y)) || isCJKPunct(x) || isCJKPunct(y) ? '' : ' ';
 }
 
 function splitRow(row) {

@@ -105,6 +105,7 @@ function article(n) {
     `${t.full}${sep}[${t.thisChapter}](${blob}chapters/${c.file})${end}${lang === 'zh' ? '' : ' '}${t.blueprints}${sep}[${t.blueprintsLink}](${blob}${t.blueprintsFile})${end}`,
     t.terms, nav].filter(Boolean).map((p) => `> ${p}`).join('\n>\n'), '---');
 
+  const report = [...c.report];
   for (const b of c.blocks) {
     switch (b.type) {
       case 'h': parts.push(`${'#'.repeat(Math.min(b.level - 1, 3))} ${mdInline(clean(b.text), c.file)}`); break;
@@ -132,7 +133,6 @@ function article(n) {
   }
 
   const md = `${parts.join('\n\n')}\n`;
-  const report = [...c.report];
   lint(md, tag, report);
   // About Bilibili's suggested 30 at most: "Pyanodons 循序渐进 04｜铝矿开采、玻璃制造、原木生产和红瓶生产" (37).
   const subtitle = lang === 'zh' ? c.title.replace(/^第[一二三四五六七八九十]+章\s*(?:——|：)?\s*/, '') : c.title.replace(/^Chapter \d+: /, '');
