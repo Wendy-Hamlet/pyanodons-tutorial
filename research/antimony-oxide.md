@@ -140,3 +140,20 @@ the base's centre. The author has crafted 5 Antimony drills MK 01. Two ways to l
 
 Every by-product needs a buffer ([techniques](techniques.md), principle 12): Stone (as bricks),
 Gravel, Iron oxide, and the Hydrogen, which an Exhaust pipe can take.
+
+## 6. What the author built (chapter 13)
+
+The author sized the block by their Factory Planner plan for 0.2 Intermetallics a second: **0.4
+Antimony oxide a second**, four Basic oxygen furnaces, two Electrolyzers, eleven screeners, three
+Jaw crushers, five drills on the field at (−576, −256), not the one in section 5
+(24.2 M, not yet charted when this note was written). It made 0.39 a second in its first full window
+([chapter 13](../chapters/13-geothermal-antimony-oxide.md)). Three things this note did not
+weigh:
+
+- **Ash.** A furnace burning Raw coal makes 1.67 Ash a second, and one Mechanical inserter takes
+  0.79: after about twenty minutes the burnt-result slot is full and the furnace works half the
+  time (0.19 a second from four). Two Ash inserters each, or a fuel with more energy per Ash.
+- **Aromatics.** The Plastic bar is 50 Aromatics an oxide: 20 a second at 0.4, more than the
+  author's Tar line makes (17.2), and the zinc drills mine with the same Aromatics.
+- **Hydrogen.** 40 a second at 0.4; above about 0.3 oxide a second the author's only outlet held
+  the Electrolyzers back. The drills burn Gasoline, not the Hydrogen.

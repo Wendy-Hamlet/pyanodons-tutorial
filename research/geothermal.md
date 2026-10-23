@@ -101,3 +101,13 @@ the map was searched; more may lie closer in the dark.
   exchanger and eight engines the fissure gives 61 MW and 60 Geothermal water a second waits.
 - Geothermal Power - Stage 2 (1,400 units, needs the Logistic science pack) turns the same
   water into Pressurized steam at 1000 °C instead, in a Heat exchanger: not for this stage.
+
+## 5. The author's sites (chapter 13)
+
+The author built three sites, all the same: on the fissures at (−808.5, 286.5), (570.5, 1050.5)
+and (1252.5, 720.5), each a Geothermal plant, a Pressure pump MK 01 with its own Offshore pump, two
+Regenerative heat exchangers and ten Steam engines, joined to the base by a line of Small electric
+poles ([chapter 13](../chapters/13-geothermal-antimony-oxide.md), 30:30–30:55). Measured in a copy
+of the save of 32:40 with a load (`tools/power-probe`, ten minutes): the west site alone **76.39
+MW**, 74.86 MW net (plant 1.00, exchangers 0.40, pump 0.13), as in the lab; the whole base 231.0
+MW, of which it used 84.0 and 147.0 were spare. The coal power blocks were taken up afterwards.

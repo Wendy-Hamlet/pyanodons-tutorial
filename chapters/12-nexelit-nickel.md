@@ -246,4 +246,4 @@ principle 23):
 - The screenshots: taken by the author with the companion mod (`/pt-shots`) after the save,
   areas planned with `node tools/shots.js plan`.
 
-Next: chapter 13 (to come).
+Next: [chapter 13, geothermal power and antimony oxide](13-geothermal-antimony-oxide.md).

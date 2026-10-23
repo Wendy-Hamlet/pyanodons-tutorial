@@ -182,4 +182,4 @@
   `+sink@-129.5:23.5;sink@-88.5:188.5`（两条板材带每刻清空）。
 - 截图：作者在存档后用助手模组拍摄（`/pt-shots`），区域用 `node tools/shots.js plan` 规划。
 
-下一章：第十三章（待续）。
+下一章：[第十三章 地热发电和氧化锑制备](13-geothermal-antimony-oxide.zh-CN.md)。

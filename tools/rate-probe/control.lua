@@ -12,7 +12,9 @@
 -- its status and the fluid in each of its boxes.
 -- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
 -- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
--- places it facing that way (north, east, south, west; default north). Two names there are not
+-- places it facing that way (north, east, south, west; default north; an inserter faces the side
+-- it picks up from), "name@x:y:dir:item" also gives an inserter that whitelist filter or a
+-- crafting machine that recipe. Two names there are not
 -- entities: "sink@x:y" empties the belt on that tile every tick, "empty@x:y" the chest on that
 -- tile every second (a user taking all the block makes, for a block standing full); what they
 -- took is printed per second at the end.
@@ -85,7 +87,7 @@ end
 script.on_init(function()
   storage.sinks, storage.empties, storage.taken = {}, {}, {}
   local surface = game.surfaces.nauvis
-  for name, x, y, dir in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*)") do
+  for name, x, y, dir, item in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*):?([%w%-_]*)") do
     local pos = { tonumber(x), tonumber(y) }
     if name == "sink" or name == "empty" then
       local e = surface.find_entities_filtered({ position = pos,
@@ -95,7 +97,17 @@ script.on_init(function()
     else
       local e = surface.create_entity({ name = name, position = pos,
         direction = defines.direction[dir ~= "" and dir or "north"], force = "player" })
-      out("placed %s at %s,%s %s: %s", name, x, y, dir ~= "" and dir or "north", e and "ok" or "FAILED")
+      if e and item ~= "" then
+        if e.type == "assembling-machine" then
+          e.set_recipe(item)
+        else
+          e.use_filters = true
+          e.inserter_filter_mode = "whitelist"
+          e.set_filter(1, item)
+        end
+      end
+      out("placed %s at %s,%s %s%s: %s", name, x, y, dir ~= "" and dir or "north",
+        item ~= "" and " " .. item or "", e and "ok" or "FAILED")
     end
   end
   storage.start = game.tick
