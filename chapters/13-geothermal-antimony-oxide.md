@@ -387,4 +387,4 @@ that belt is full.
   minutes after the save, areas planned with `node tools/shots.js plan`. By then the author had
   joined the Steam pipe and put up the Duralumin Smelter (chapter 14).
 
-Next: chapter 14 (to come).
+Next: [chapter 14](14-intermetallics-trains.md).

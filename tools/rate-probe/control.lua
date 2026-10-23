@@ -14,10 +14,13 @@
 -- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
 -- places it facing that way (north, east, south, west; default north; an inserter faces the side
 -- it picks up from), "name@x:y:dir:item" also gives an inserter that whitelist filter or a
--- crafting machine that recipe. Two names there are not
+-- crafting machine that recipe. Three names there are not
 -- entities: "sink@x:y" empties the belt on that tile every tick, "empty@x:y" the chest on that
 -- tile every second (a user taking all the block makes, for a block standing full); what they
--- took is printed per second at the end.
+-- took is printed per second at the end. "off@x:y" stops the machine (or inserter) on that tile
+-- (disabled by script: it keeps its connections but makes and uses nothing), to test what a
+-- machine takes from the rest of the base; "clear@x:y" empties that machine's input and output
+-- slots once (the player taking out what blocks it).
 
 local variant = require("variant")
 local PLACE
@@ -94,6 +97,25 @@ script.on_init(function()
         type = name == "sink" and { "transport-belt", "underground-belt" } or "container" })[1]
       table.insert(name == "sink" and storage.sinks or storage.empties, e)
       out("%s at %s,%s: %s", name, x, y, e and e.name or "NOTHING THERE")
+    elseif name == "off" or name == "clear" then
+      local e = surface.find_entities_filtered({ position = pos,
+        type = { "transport-belt", "underground-belt", "splitter", "electric-pole", "pipe",
+          "pipe-to-ground", "resource", "tree", "simple-entity" }, invert = true })[1]
+      local what = ""
+      if e and name == "off" then e.disabled_by_script = true end
+      if e and name == "clear" then
+        for _, kind in pairs({ "crafter_input", "crafter_output" }) do
+          local inv = e.get_inventory(defines.inventory[kind])
+          if inv then
+            for i = 1, #inv do
+              local s = inv[i]
+              if s.valid_for_read then what = what .. string.format(" %s×%d", s.name, s.count) end
+            end
+            inv.clear()
+          end
+        end
+      end
+      out("%s at %s,%s: %s%s", name, x, y, e and e.name or "NOTHING THERE", what)
     else
       local e = surface.create_entity({ name = name, position = pos,
         direction = defines.direction[dir ~= "" and dir or "north"], force = "player" })

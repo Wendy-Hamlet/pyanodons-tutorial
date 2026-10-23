@@ -22,6 +22,7 @@ scripts used, so you can re-check them against your own mod versions.
 11. [Better lead, titanium and tin smelting](chapters/11-lead-titanium-tin-smelting.md)
 12. [Nexelit mining and nickel smelting](chapters/12-nexelit-nickel.md)
 13. [Geothermal power and antimony oxide](chapters/13-geothermal-antimony-oxide.md)
+14. [Intermetallics and getting ready for trains](chapters/14-intermetallics-trains.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -161,7 +162,9 @@ parameters for yours.
   every machine group whose usual status changed; a last field `+entity@x:y[:direction[:item]]` places that entity
   when the save loads (`item`: an inserter's filter or a machine's recipe) (a what-if, the only change the probe makes); `+sink@x:y` instead empties the
   belt on that tile every tick and `+empty@x:y` the chest there every second, printing what they took
-  (a block standing full, measured with its output taken away). `vrauk-probe/`: the start-up
+  (a block standing full, measured with its output taken away); `+off@x:y` stops the machine or
+  inserter on that tile (what it takes from the rest of the base) and `+clear@x:y` empties a
+  machine's input and output slots once. `vrauk-probe/`: the start-up
   of the author's Vrauk line (chapter 8): every 5 minutes (or the step given) the Vrauks, cocoons
   and Water barrels made, how the Reproductive complexes, the paddocks with Vrauks and the
   Barreling machine spent the step, and where the barrels and cocoons are; variant `fill` moves the
@@ -196,6 +199,9 @@ parameters for yours.
 - `status-probe/` (with `save-probe.ps1 -Variant name,ticks`): the status and electric buffer of
   every entity of one name on every tick after a save loads, the share of each status, and the
   effects of its modules and beacons: tells a state the base is in from one tick's look.
+- `wire-probe/` (with `save-probe.ps1 -Ticks 10 -Variant "x:y;x:y"`): how the entities on those
+  tiles are switched by circuits: their enable and logistic conditions, what their wires connect
+  to and the signals on those networks.
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and
