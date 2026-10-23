@@ -120,7 +120,7 @@ Intermetallics) were researched before this chapter. Queue at the save: Laborato
 
 ## 2. Geothermal power
 
-<!-- ![A geothermal site: the Geothermal plant on its fissure at the bottom, the Pressure pump and Offshore pump to its right, the two Regenerative heat exchangers above it and the ten Steam engines at the top](../images/ch13-geothermal.jpg) -->
+![A geothermal site: the Geothermal plant on its fissure at the bottom, the Pressure pump and Offshore pump to its right, the two Regenerative heat exchangers above it and the ten Steam engines at the top](../images/ch13-geothermal.jpg)
 
 How geothermal power works is in [geothermal](../research/geothermal.md) (measured in a lab map
 before the author built it). In short: a Geothermal plant is an 11 × 11 mining drill (1 MW) placed
@@ -174,9 +174,9 @@ and the eight Coal dust Boilers and Steam engines at y 382.
 
 ## 3. The antimony block
 
-<!-- ![The antimony mine: five Antimony drills MK 01 on the south edge of the Antimony field, the Gasoline pipe and the ore belt leaving east](../images/ch13-antimony-mine.jpg) -->
+![The antimony mine: five Antimony drills MK 01 on the south edge of the Antimony field, the Gasoline pipe and the ore belt leaving east](../images/ch13-antimony-mine.jpg)
 
-<!-- ![The antimony block: the four Basic oxygen furnaces at the top with the two Electrolyzers and the plastic Biofactory on their left, the grade 3 screeners in the middle, the first screeners and Jaw crushers below, the brick furnaces at the bottom right](../images/ch13-antimony-block.jpg) -->
+![The antimony block: the four Basic oxygen furnaces at the top with the two Electrolyzers, the plastic Biofactory and the Secondary crusher on their left, the grade 3 screeners in the middle, the first screeners and Jaw crushers below, the Burner for Gravel and the brick furnaces at the bottom right](../images/ch13-antimony-block.jpg)
 
 **What it is for.** The author's Factory Planner plan "金属间化合物" (written by the companion at
 32:40) makes **0.2 Intermetallics a second** in three Advanced foundries MK 01: 0.2 Iron nexelit
@@ -282,7 +282,7 @@ the other 7.7: about 2.3 Zinc ore a second in the first half hour with the Tar l
 
 ## 6. Tidying the base and the Intermetallics line
 
-<!-- ![The Intermetallics line begun: the Vitreloy Smelter at the top, the two alloy Smelters below it, the twenty Coke Boilers at the bottom, moved eight tiles west; their Steam pipe ends at the bottom right, 17 tiles short of its partner](../images/ch13-intermetallics.jpg) -->
+![The Intermetallics line begun, eleven minutes after the save (32:51): the Vitreloy Smelter top left, the Duralumin Smelter top right, the two alloy Smelters below them; at the bottom the twenty Coke Boilers, moved eight tiles west, their Steam pipe already joined again at the bottom right](../images/ch13-intermetallics.jpg)
 
 - **Plates to one place.** From 32:00 the author ran belts north to y −162.5 for the plates the
   Intermetallics take: Nexelit plates (x −88.5, from the Dig site of
@@ -383,6 +383,8 @@ that belt is full.
   leads onto the oxide belt), `py-gas-vent@-168.5:36.5:south`, `sink@-86.5:-162.5`). For this
   chapter the rate-probe's placements learned a fourth field, an inserter's filter or a machine's
   recipe (`name@x:y:dir:item`).
-- Pictures: not taken yet; the areas are planned with `node tools/shots.js plan`.
+- The screenshots: taken by the author with the companion mod (`/pt-shots`) at 32:51, eleven
+  minutes after the save, areas planned with `node tools/shots.js plan`. By then the author had
+  joined the Steam pipe and put up the Duralumin Smelter (chapter 14).
 
 Next: chapter 14 (to come).
