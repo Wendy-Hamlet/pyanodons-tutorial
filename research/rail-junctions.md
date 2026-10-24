@@ -210,3 +210,53 @@ crossed.
 5. **Signals stand on the right of the track as trains run** (right-hand traffic). After copying or
    turning a leg, `junction-bench.js symmetry` shows every signal that differs between the four
    sides.
+
+## Follow-up: stations, a lane change before the junction, X or `\/`
+
+The author took the junction with the lane change at the exits only into their game, then noted
+(2026-10-24, export of 17:33) that their stations branch off the outer lane: a train leaving a
+station is on the outer lane and, at a junction whose outer entrance lane only turns right,
+cannot reach the inner lane. Their answers: split the station's exit, or put a lane change before
+the junction, as in their new layout (two such junctions about 120 tiles apart, each entrance
+from the stretch between them with their lane change just outside the junction's edge). They
+also asked whether a `\/` lane change (the two crossovers one after the other) would be faster
+than the X. Measured:
+
+**The lane change before the junction works, once it has its two entrance chain signals.** Their
+new lane change (换道结构, also used in the layout) keeps the five chain signals inside and the
+two rail signals after the X of `lane-change-fixed.txt`, but not the two chain signals before it.
+The two branches meet in the middle, so the first half of the inner-to-outer branch belongs to
+the outer lane's block; a train waiting on that branch stands in the inner lane's block, and one
+waiting in the middle stands in the outer lane's block: each needs the other's block (fault 1
+again). The junction of the layout, with that lane change turned onto all four entrances (548
+entities, 652 rail items):
+
+| Mixed traffic, trains a minute | Seed 1 | Seed 2 | Seed 3 | Leg feed |
+|---|---|---|---|---|
+| As exported | 22.9 (south and west entrances locked) | 33.3 | 25.7 (north and west locked) | 31.1 (north locked) |
+| With the two entrance chain signals | 36.9 | 37.8 | 38.2 | 36.1 |
+
+For comparison, the original junction (both lane changes inside) carried 30.6 on average with
+the lane feed, and the junction with the exit lane changes only 36.1 with the leg feed. The
+lane change outside costs nothing measurable and gives every entrance lane every turn.
+
+The lane change alone, both lanes fed, each train sent to a random exit lane (half of them
+change lanes), two seeds of 15 minutes:
+
+| Lane change | Trains a minute |
+|---|---|
+| The author's new one, as exported | locked within the first 20 seconds, both seeds |
+| The same with the two entrance chain signals (`lane-change-fixed.txt`) | 21.4, 19.9 |
+| X, a chain signal at every joint of both branches and in the middle of both lanes | 19.6, 18.7 |
+| `\/`: the second crossover moved one crossover's length (18 tiles) on | 16.7, 17.9 |
+| `\` and `/` 24 tiles apart, a rail signal on each lane between them | 15.6, 15.3 |
+
+**The X is the fastest.** In the `\/` a train needs 36 tiles of switches free instead of 18 (2.5 s
+through against 1.6 s); taking the two apart with a waiting place between makes it longer still.
+More signals inside the X did not help either.
+
+The stretch between the two junctions of the layout has no signal: each lane from one junction's
+exit to the next junction's entrance (about 150 tiles) is one block and holds one train; signals
+every 30 tiles or so (more than a train's 21) let trains follow each other. A station's exit
+split onto both lanes was not measured; its branch to the inner lane would cross the outer lane,
+where through trains run.

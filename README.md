@@ -219,8 +219,9 @@ parameters for yours.
   track end with 320 tiles of signalled track, finds entrances and exits by the pathfinder, keeps a
   train (Py's locomotive and two cargo wagons by default, optionally arriving at line speed)
   waiting on every entrance track, sends each to an exit leg by scenario (mix, straight, left,
-  right) and reports trains a minute per movement, the time through the junction, where trains
-  wait and deadlocks. `edit` turns one leg's signals onto the others, makes every rail signal a
+  right; `lanes` sends each train to a random exit lane instead, to test lane changes) and reports
+  trains a minute per movement, the time through the junction, where trains wait, deadlocks and
+  entrances that got no train through. `edit` turns one leg's signals onto the others, makes every rail signal a
   chain signal and puts chain signals at the entrances and rail signals at the exits, then writes
   the junction as a blueprint string. Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
   save-reading setup.

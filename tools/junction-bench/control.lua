@@ -11,7 +11,8 @@
 --     last car is options.clear tiles past the junction. options.source = "leg": one queue per
 --     leg instead, each train placed on an entrance track that leads where it goes (for junctions
 --     whose lanes serve different turns). options.speed: km/h at which a train starts when the
---     options.ahead tiles in front of it are clear. After options.warm minutes it counts,
+--     options.ahead tiles in front of it are clear. options.lanes: each train goes to a random
+--     exit track instead of any of its leg (a test of lane changes). After options.warm minutes it counts,
 --     for options.minutes, the trains through per movement, the time from the junction edge until
 --     the train has left it, its speed at the edge and the signals trains stand at inside the
 --     junction; it reports a deadlock when no train leaves for options.stall seconds.
@@ -292,6 +293,13 @@ local function traffic_setup(surface, box)
       end
     end
   end
+  -- options.entrances = {"W", ...}: the legs trains come in by, for track with no signal to tell.
+  if opts.entrances then
+    for _, t in ipairs(T.tracks) do
+      t.inbound = false
+      for _, leg in ipairs(opts.entrances) do if t.leg == leg then t.inbound = true end end
+    end
+  end
   for _, t in ipairs(T.tracks) do
     local leg = T.legs[t.leg]
     if t.inbound then leg.inn[#leg.inn + 1] = t else leg.out[#leg.out + 1] = t end
@@ -310,7 +318,8 @@ local function traffic_setup(surface, box)
         t.stop = surface.create_entity({ name = "train-stop", position = { far.position.x - 2 * rx, far.position.y - 2 * ry },
           direction = t.d, force = "player" })
       end
-      if t.stop then t.stop.backer_name = "exit " .. t.leg end
+      -- options.lanes: one stop name per exit track, so trains are sent to a lane, not a leg.
+      if t.stop then t.stop.backer_name = "exit " .. t.leg .. (opts.lanes and #leg.out or "") end
     end
   end
   local parts = {}
@@ -404,7 +413,12 @@ local function spawn(surface, t, tick, to, kind)
   local train = cars[1].train
   if #train.carriages ~= #stock then out("spawned train %d coupled to another (%d cars)", train.id, #train.carriages) end
   local schedule = train.get_schedule()
-  schedule.add_record({ station = "exit " .. to })
+  local lane = ""
+  if opts.lanes then
+    T.seed = (T.seed * 1103515245 + 12345) % 2147483648
+    lane = math.floor(T.seed / 65536) % #T.legs[to].out + 1
+  end
+  schedule.add_record({ station = "exit " .. to .. lane })
   schedule.go_to_station(1)
   train.manual_mode = false
   -- Trains arrive at line speed when the track ahead is clear enough to brake on.
@@ -448,6 +462,19 @@ local function report(tick, deadlock)
     local w = list[k]
     out("  waiting at %s %.1f,%.1f: %.0f%% of samples", w.name, w.x, w.y, 100 * w.n / math.max(1, T.samples))
   end
+  -- A leg that got no train through while others did: locked there (the junction as a whole
+  -- keeps running, so the deadlock check does not see it).
+  local from = {}
+  for k, s in pairs(T.stats) do
+    local leg = k:match("^(%a+)%->")
+    from[leg] = (from[leg] or 0) + s.n
+  end
+  local dead = {}
+  for _, name in ipairs({ "N", "E", "S", "W" }) do
+    local leg = T.legs[name]
+    if leg and #leg.inn > 0 and not from[name] then dead[#dead + 1] = name end
+  end
+  if #dead > 0 and total > 0 then out("LOCKED: no train came through from %s", table.concat(dead, ", ")) end
   local minutes = (math.min(tick, T.stop_tick) - T.start) / 3600
   out("%s scenario %s: %d trains in %.1f min = %.2f trains/min; through the junction %.1f s on average (max %.1f); entering at %.0f km/h on average%s",
     data.name, opts.scenario, total, minutes, total / minutes, total > 0 and time / total / 60 or 0, max / 60,
@@ -653,6 +680,36 @@ local function edit_mode(surface)
       end
     end
     out("edges: %d entrance %ss, %d exit rail signals", n_in, e.entry or "rail-chain-signal", n_out)
+  end
+  if e.chain_at_switches then
+    -- A chain signal before every joint where track splits, joins or crosses, for trains running
+    -- the way chain_at_switches names (a direction, 0 = north ... 12 = west): on every rail end
+    -- that leaves towards such a joint.
+    local tx, ty = unit(e.chain_at_switches)
+    local joints = {}
+    for _, r in ipairs(rails_of(surface)) do
+      for _, dir in ipairs({ RD.front, RD.back }) do
+        local l = r.get_rail_end(dir).location
+        local key = l.position.x .. "," .. l.position.y
+        joints[key] = joints[key] or {}
+        table.insert(joints[key], { rail = r, dir = dir, d = l.direction })
+      end
+    end
+    local n = 0
+    for _, list in pairs(joints) do
+      if #list >= 3 then
+        for _, j in ipairs(list) do
+          local ux, uy = unit(j.d)
+          if ux * tx + uy * ty > 0 then
+            local l = j.rail.get_rail_end(j.dir).out_signal_location
+            if l and #surface.find_entities_filtered({ position = l.position, type = SIGNAL_TYPES }) == 0 then
+              if surface.create_entity({ name = "rail-chain-signal", position = l.position, direction = l.direction, force = "player" }) then n = n + 1 end
+            end
+          end
+        end
+      end
+    end
+    out("chain_at_switches: %d chain signals placed", n)
   end
   for _, a in ipairs(e.add or {}) do
     if not set_signal(surface, a.name, { a.x, a.y }, a.d) then out("add: no %s fits at %s,%s", a.name, a.x, a.y) end
