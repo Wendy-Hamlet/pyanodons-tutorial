@@ -260,3 +260,11 @@ exit to the next junction's entrance (about 150 tiles) is one block and holds on
 every 30 tiles or so (more than a train's 21) let trains follow each other. A station's exit
 split onto both lanes was not measured; its branch to the inner lane would cross the outer lane,
 where through trains run.
+
+The exit lane change has a chain signal in the middle of its outer lane and none on its inner
+lane (inherited from the author's original, where that signal was a rail signal). Asked why: it
+is not needed on either side. Every signal from the core's entrance to the exit edge is a chain
+signal, so a train enters the exit lane change only with its way to the edge reserved and never
+stands inside it; the lock of fault 1 needs trains standing inside. Measured on the layout above
+(both lanes fed), with a chain signal added on the inner lane of all four exit lane changes:
+36.8, 38.2 and 38.1 trains a minute against 36.9, 37.8 and 38.2 without, no lock either way.
