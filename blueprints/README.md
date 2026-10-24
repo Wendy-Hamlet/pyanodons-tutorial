@@ -48,6 +48,25 @@ machine's full speed.
 | `copper-screening.txt` | 3 [Copper plate] | Copper screening: one belt of Copper ore (15/s, from the drill field to the east) into 9 Automated screeners; 5 Jaw crushers crush the Copper (grade 1), 10 Stone furnaces smelt the grade 2, 5 more make Stone bricks from the crushers' Stone; plates and bricks go onto the bus and into chests; Raw coal as fuel | Measured where it stands: 3.01 Copper plates/s from 15.1 ore/s, screeners 99 %, crushers 89 %, copper furnaces 30 % ([chapter 7](../chapters/07-copper-screening-titanium-duralumin.md#2-copper-screening)) |
 | `py-science-pack-1.txt` | 0.1 [pY science pack 1] | The whole pY science pack 1 line: the Vrauk line (8 paddocks, 2 Reproductive complexes, a Water barrel loop), the Moss block, Petri dishes and Basic substrate, the latex chain (Seaweed, Sodium alginate, Creamy latex, Latex slabs, Latex), the Slaughterhouse and Caged vrauks, Rubber stoppers with Coal from Wood, Glassware, the Research center and 5 labs, a Burner for the by-products. Logs, Stone bricks, Native flora and red science by belt; Molten glass, Naphthalene oil and Steam by pipe | Set by the Vrauks: 3 a minute, half a Vrauk per pack. Measured where it stands: the first export (save of 23:31) had the substrate belt end one tile before the Research center (6 packs, then stop); the file is the author's second export with that inserter, and the line makes 0.100 packs/s until the base's power fails from Ash at 40 to 60 minutes (the Ash loop, not the line). Not run on the bench: the Vrauk line needs 100 minutes to fill its slots, and the Moondrop greenhouse's speed comes from the save's Carbon capture upgrade ([chapter 9](../chapters/09-py-science-pack-1.md#7-two-hours-after-the-save)) |
 
+## Railway
+
+The author's rail network for the chapters to come (export of 2026-10-24 20:03): four tracks, two
+lanes each way, right-hand traffic, junctions on a 240-tile grid; an early two-track version on
+the outer lanes of the same road, so the inner lanes can be added later. All measured with
+`tools/junction-bench` (trains of one Locomotive and two Cargo wagons arriving at 200 km/h, every
+entrance fed, mixed traffic); how the design came about, the faults found on the way and the
+signal rules: [Rail junctions at grade](../research/rail-junctions.md).
+
+| File | In game | What it is | Measured |
+|---|---|---|---|
+| `rail-lane-change.txt` | 换道结构 | A lane change between the two lanes of one direction: chain signals before the X on both lanes and on the two branches next to the inner lane, rail signals after it | 20.7 trains a minute with half of them changing lanes; without the two entrance chain signals it locks |
+| `rail-junction.txt` | 十字路口 | Four-track junction: lane change just outside each entrance and at each exit, rail signals where trains come in and leave, chain signals inside; 120 × 120 | 36.8, 38.5 and 38.3 trains a minute, no deadlock (the junction the author first drew: about 30) |
+| `rail-junction-early.txt` | 十字路口-初期 | Two-track junction on the outer lanes: each entrance splits after a chain signal onto the right-turn ramp and the inner approach, each exit merges; 120 × 120 | 32.2, 33.0 and 32.5 trains a minute, no deadlock |
+| `rail-grid-edge.txt` | 棋盘格-边 | Grid piece (snaps to 240): two four-track junctions and the 120-tile stretch between them, a rail signal in the middle of each lane | Junctions identical to `rail-junction.txt` |
+| `rail-grid-edge-early.txt` | 棋盘格-边-初期 | The same, two-track | Junctions identical to `rail-junction-early.txt` |
+| `rail-grid.txt` | 棋盘格-铁轨 | Grid piece: four four-track junctions in a square | As a whole 66.1 and 70.8 trains a minute, no deadlock |
+| `rail-grid-early.txt` | 棋盘格-铁轨-初期 | The same, two-track | As a whole 57.8 and 58.5 trains a minute, no deadlock; with one more rail signal on each exit track 25 tiles after the junction's exit signal, 64.3 and 62.5 (the four-track grid gains nothing from it) |
+
 ## How the blueprints are labelled
 
 - **Name:** the theoretical output per second (from the recipe and belt numbers, not the

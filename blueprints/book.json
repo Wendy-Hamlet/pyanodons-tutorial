@@ -23,6 +23,13 @@
     "copper-screening",
     "py-science-pack-1",
     "molten-glass",
-    "crushed-coal-power"
+    "crushed-coal-power",
+    "rail-lane-change",
+    "rail-junction",
+    "rail-junction-early",
+    "rail-grid-edge",
+    "rail-grid-edge-early",
+    "rail-grid",
+    "rail-grid-early"
   ]
 }

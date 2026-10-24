@@ -306,7 +306,8 @@ local function traffic_setup(surface, box)
     -- Rail signals along the extension, from `spacing` tiles out, facing the way trains run.
     local sx, sy = t.ux, t.uy
     if t.inbound then sx, sy = -sx, -sy end
-    for k = opts.spacing / 2, #t.rails - 2, opts.spacing / 2 do place_signal(surface, t.rails[k], sx, sy) end
+    -- (options.first: tiles from the track end to the first of them, default the spacing.)
+    for k = math.floor((opts.first or opts.spacing) / 2), #t.rails - 2, opts.spacing / 2 do place_signal(surface, t.rails[k], sx, sy) end
     if not t.inbound then
       -- The train stop at the far end, on the right of the track.
       local far = t.rails[#t.rails - 1]
