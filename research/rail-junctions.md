@@ -268,3 +268,43 @@ signal, so a train enters the exit lane change only with its way to the edge res
 stands inside it; the lock of fault 1 needs trains standing inside. Measured on the layout above
 (both lanes fed), with a chain signal added on the inner lane of all four exit lane changes:
 36.8, 38.2 and 38.1 trains a minute against 36.9, 37.8 and 38.2 without, no lock either way.
+
+## Signals that can go (the author's latest junction, export of 19:05)
+
+The author fixed the four core chain signals that stood a tile off between sides and asked
+which signals of the junction could still go. Each group was removed on all four sides at once
+and measured on their layout (the junction plus their lane change, with its entrance chain
+signals, outside each entrance; both lanes fed, mixed traffic, the same three seeds; with all
+signals 36.9, 37.8 and 38.2 trains a minute):
+
+| Removed (on every side) | Trains a minute | |
+|---|---|---|
+| Exit lane change: the chain signal in the middle of the outer lane | 37.5, 38.4, 37.9 | can go |
+| Exit lane change: the two chain signals at the crossing | 37.5, 38.5, 37.4 | can go |
+| Both of the above (12 signals) | 37.5, 38.5, 37.4 | can go |
+| Exit lane change: the two branch signals next to the inner lane | 31.9, 33.7, 32.9 | keep |
+| All five of the exit lane change | 31.9, 33.7, 32.9 | keep |
+| Core: the three inside the crossings | 27.3, 28.6, 27.5 | keep |
+| Core: the two exits | 30.7, 32.1, 33.1 | keep |
+| The chain signal on the inner lane's right-turn curve | locked at once, all three seeds | keep |
+
+The last one carries no shortest path, but it parts the entrance approach of one leg from the
+exit lane of the next: without it the two are one block, and the four legs wait on each other.
+The entrance and exit rail signals and the core's entrance chain signals were not removed: they
+are where trains wait, outside the crossings (rule 1).
+
+The same three signals of the lane change itself (the middle of the outer lane, the two at the
+crossing) can go too: 21.4 and 19.9 trains a minute with and without them, two seeds. Without
+the two branch signals as well (entrance and exit signals only) it fell to 15.3 and 15.1. Both
+cut together on the layout (24 chain signals fewer):
+37.1, 38.4 and 39.5. Strings: `junction-ordinary-exit-lane-change-lean.txt` (十字路口-精简信号,
+the author's latest junction without the 12) and `lane-change-lean.txt` (换道结构-精简信号);
+which ones go: `removable-exit-lane-change.png`, `removable-lane-change.png`.
+
+The early two-track version (十字路口-初期: one track each way, using the outer lane positions of
+the four-track road, the same core; each entrance splits after a chain signal onto the right-turn
+ramp and the inner approach, each starting with a rail signal; each exit merges its two branches
+after a chain signal on each): signals right, symmetric but for the four core chain signals the
+four-track version had a tile off (harmless). Mixed traffic 33.5, 34.7 and 35.5 trains a minute
+(the four-track layout 36.9 to 38.2), straight 35.0, left 51.3, right 60.0 (the bench's feed).
+Its two chain signals before each exit merge stay: without them 30.9, 32.2 and 31.1.
