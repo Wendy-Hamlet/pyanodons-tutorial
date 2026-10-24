@@ -28,7 +28,7 @@ Reference: [Techniques and mechanics](research/techniques.md) (every verified me
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
 (the recipes, rates and byproducts behind chapter 2, and Ash separation) · [The red + pY1 factory](research/red-py1-factory.md)
 (bus, blocks, Simple circuit boards and the key intermediates before trains) ·
-[The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) ·
+[The author's first save](research/first-save-review.md) (what moved by hand, and the bus that replaces it) · [Railways under Pyanodons](research/py-railway.md) · [Rail junctions at grade](research/rail-junctions.md) (the author's three junctions measured, faults, a better one) ·
 [Map settings](research/map-settings.md) (Py's preset, the author's edits and what they do to the map) ·
 [T.U.R.D. choices](research/turd-choices.md) (the author's picks, the ones still open, every upgrade) ·
 [Mining drills](research/mining-drills.md) (what an ore costs in Raw coal with each drill, and which power pays) ·
@@ -209,6 +209,20 @@ parameters for yours.
   crafts against its recipe at its actual speed, status samples, the ingredient a waiting machine
   lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
   sinks, fluid sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
+  save-reading setup.
+- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit [-Options <json or @file.json>]` +
+  `junction-bench/` + `junction-bench.js`: the rail junction bench. Builds the rails and signals of
+  one blueprint on an empty map. `map` writes its rails, rail blocks, signals, track ends and every
+  path between track ends with the signals met on the way; `junction-bench.js render` draws it
+  (blocks in colours, rail and chain signals, red rings on chosen places), `paths` lists the paths,
+  `symmetry` lists rails and signals that differ between the four sides. `traffic` extends every
+  track end with 320 tiles of signalled track, finds entrances and exits by the pathfinder, keeps a
+  train (Py's locomotive and two cargo wagons by default, optionally arriving at line speed)
+  waiting on every entrance track, sends each to an exit leg by scenario (mix, straight, left,
+  right) and reports trains a minute per movement, the time through the junction, where trains
+  wait and deadlocks. `edit` turns one leg's signals onto the others, makes every rail signal a
+  chain signal and puts chain signals at the entrances and rail signals at the exits, then writes
+  the junction as a blueprint string. Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
   save-reading setup.
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see

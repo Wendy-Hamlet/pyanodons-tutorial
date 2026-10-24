@@ -1,0 +1,8 @@
+{
+  "name": "cf-junction-bench",
+  "version": "0.1.0",
+  "title": "Junction bench (measurement, removed after each run)",
+  "author": "py-tutorial",
+  "factorio_version": "2.1",
+  "dependencies": ["base"]
+}

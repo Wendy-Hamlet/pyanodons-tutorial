@@ -1,0 +1,212 @@
+# Rail junctions at grade
+
+[中文](rail-junctions.zh-CN.md)
+
+On 2026-10-24 the author made three blueprints of a four-way rail junction (十字路口-普通, ordinary;
+十字路口-苜蓿, cloverleaf; 十字路口-环岛, roundabout), said the signals might be wrong, and asked
+which design is best overall, or for a better one, at grade only. This note answers with
+measurements.
+
+Sources: the blueprints of the author's export of 2026-10-24 15:24 (the companion's
+`export.txt`; not yet pulled into `blueprints/`); rail costs from the data of the author's mods
+(`straight-rail` takes 1 Rail, `half-diagonal-rail` 2, `curved-rail-a` and `curved-rail-b` 3
+each); everything else measured in the engine with the new `tools/junction-bench`
+(`junction-bench.ps1`, `junction-bench.js`), in the save-reading setup (the author's current mods,
+so the trains are Py's).
+
+## How the bench measures
+
+- `-Mode map` builds the blueprint's rails and signals on an empty map and asks the engine for
+  the rail blocks, the track ends and the path between every two track ends, with the signal met
+  at every rail joint on the way (the engine's own signal places of each rail end, both sides of
+  the joint).
+- `-Mode traffic` adds 320 tiles of straight track to every track end, with rail signals every 30
+  tiles, finds the entrances and exits with the pathfinder and puts a train stop "exit <leg>" at
+  the far end of every exit track. Every entrance track always has a train waiting at its far
+  end: one Locomotive and two Cargo wagons (21 tiles, the author's trains), coal, sent at
+  200 km/h when 200 tiles ahead are clear (otherwise from standing). Each goes to the leg its
+  scenario picks: **mix** (straight, left or right at random), **straight**, **left**, **right**.
+  A train is removed once its last car is 60 tiles past the junction. After 3 minutes of warm-up it
+  counts 15 minutes: trains through per movement, the time from the junction's edge until the
+  train has left it, the speed at the edge, where trains stand, and a **deadlock** when no train
+  has left for 120 s. Both lanes of every entrance are fed, each train with its own random
+  destination, so trains often arrive on the lane that does not serve their turn: a stress test of
+  the lane changes.
+- `-Mode edit` changes the signals and writes the result as a blueprint string (see the fixed
+  versions below).
+
+## The three designs
+
+All three are roads of four tracks: two lanes each way, right-hand traffic, lanes 6 tiles apart
+(the inner lanes 5 tiles from the road's centre line, the outer ones 11). Every leg has the
+author's lane change (换道结构, an X between the two lanes of one direction) where trains enter
+and another where they leave.
+
+| | Ordinary | Cloverleaf | Roundabout |
+|---|---|---|---|
+| Size (track ends) | 84 × 84 | 140 × 140 | 84 × 84 |
+| Rails (pieces) | 388 | 532 | 320 |
+| Rail items | 580 | 756 | 544 |
+| Signals (rail + chain) | 36 + 36 | 36 + 24 | 44 + 32 |
+| Right turn | outer lane, own ramp: 56–58 tiles | own ramp: 94–98 | outer ring: 56–58 |
+| Straight | inner lanes cross in a 2 × 2 core: 84–86 | through the core: 138–142 | ring: 88–90 |
+| Left turn | diagonal through the core: 81–84 | straight on, a loop, the core again: 235–240 | ring: 109–122 |
+
+Path lengths are the engine's shortest paths from track end to track end.
+
+## Faults in the signals
+
+1. **The lane change can lock two trains (all three designs).** On the inner lane there is no
+   signal before or after the X: that lane's block runs from the next signal outside the junction
+   through the X's switches to the core, and holds the start of the inner-to-outer branch. The
+   outer lane's block holds the X's two upper branches. A train on the inner lane that wants the
+   outer lane waits at the chain signal on its branch, standing in the inner lane's block; a train
+   on the outer lane that wants the inner lane waits at the chain signal in the X's middle,
+   standing in the outer lane's block. Each needs the block the other stands in. Measured: the
+   cloverleaf locked this way at its south entrance within the first minute of mixed traffic (train S→E
+   at (5.2, 68.9) on the branch to the outer lane, train S→N at (9.7, 64.6) on the branch to the
+   inner lane, everything behind them standing).
+2. **Short blocks after rail signals (ordinary).** The core's exits are rail signals followed by
+   about 19 tiles to the exit lane change's chain signal: a 21-tile train that waits there stands
+   with its last car over the core's exit signal. The entrance lane change ends 13.5 tiles before
+   the core's chain signals: a train waiting for the core stands on the X's merge.
+3. **The roundabout's north entrance is signalled backwards.** The four signals of its lane change
+   and the rail signal on the inner lane, (−8.5, −36.5), (−6.5, −32.5), (−6.5, −33.5), (−8.5,
+   −29.5) and (−3.5, −33.5) in bench coordinates, face trains going north: the inner lane of that
+   entrance can only be driven northwards, against its traffic (the pathfinder finds no way in
+   from it). The west exit from the ring has its two signals the other way round from the other
+   three exits (chain at the ring's far side, rail at the ring). `junction-bench.js symmetry`
+   finds both: all other signals match on every side.
+4. **The roundabout has rail signals on the ring.** A train may enter the ring and stop on it;
+   with four trains each waiting for the next quarter the ring locks. Measured: with left turns only
+   (three quarters of the ring each) it locked before the first train got through, four trains
+   standing on the inner ring.
+5. **The cloverleaf blueprint is cut short in the west.** Its four straight rails end 2 tiles
+   before the lane change's curves: placed against track, the straight lanes of the west leg are
+   not joined and every train there must change lanes. The bench fills the gap (and says so).
+
+## Traffic measured
+
+Trains a minute, 15 minutes after 3 of warm-up, trains arriving at 200 km/h when the track ahead
+allows. **Lane feed**: both lanes of every entrance fed, every train with its own random
+destination (a stress test of the lane changes).
+
+| | Mix | Straight | Left | Right |
+|---|---|---|---|---|
+| Ordinary, as built | 32.1 | 37.5 | 36.9 | 59.5 |
+| Cloverleaf, as built | locked in the first minute | 41.6 | locked at once | 75.2 |
+| Roundabout, as built | 15.0 (only the east leg's trains got through) | 10.8 (none from the north) | locked at once | 59.4 |
+| Ordinary, signals fixed (all chain inside) | 29.9 | 25.3 | 23.7 | 92.1 |
+| Cloverleaf, signals fixed | 15.3 | 20.9 | 7.5 | 39.2 |
+| Roundabout, signals fixed (east leg turned onto the others) | 26.1 | 23.9 | 15.2 | 66.4 |
+
+Mixed traffic over 30 minutes, three more seeds (lane feed): ordinary as built 31.0, 31.4 and
+27.9, no deadlock; ordinary fixed with buffers (below) 30.8, 31.3 and 30.5.
+
+**Leg feed**: one queue per leg; the next train's movement is drawn first (a third each in mix),
+then it waits for a free entrance track that leads there. This is what a network gives when a
+lane change before the junction has already put trains on the lane they need, and the only fair
+feed for junctions whose lanes serve different turns.
+
+| Ordinary junction | Mix | Straight | Left | Rail items | Signals (rail + chain) |
+|---|---|---|---|---|---|
+| As built | 28.2 | 36.5 | 36.3 | 580 | 36 + 36 |
+| Signals fixed, all chain inside | 30.9 | | | 580 | 8 + 80 |
+| Signals fixed, with buffers | 32.5 | | | 580 | 16 + 80 |
+| Lane change at the entrances only | 31.8 | 25.3 | 25.7 | 500 | 24 + 52 |
+| **Lane change at the exits only** | **37.3** | 34.9 | 36.4 | **500** | 16 + 52 |
+| No lane change | 39.4 | 34.9 | 36.4 | 420 | 24 + 32 |
+
+Mixed traffic over 30 minutes with three more seeds (leg feed), and the mean of all four runs:
+
+| Ordinary junction | Seed 2 | Seed 3 | Seed 4 | Mean of four |
+|---|---|---|---|---|
+| As built | 30.5 | 29.4 | 30.5 | 29.7 |
+| Signals fixed, with buffers | 31.5 | 31.4 | 30.7 | 31.5 |
+| Lane change at the exits only | 37.8 | 37.3 | 32.1 | 36.1 |
+| No lane change | 40.3 | 38.6 | 32.2 | 37.6 |
+
+None of the 16 runs locked. With seed 4 the last two fell to 32. A likely reason (not measured
+apart): with one queue per leg, a train at the head that needs the busy outer lane (a right turn)
+holds back trains behind it that could take the inner lane. A network feeds the two lanes
+separately, so this feed probably undersells junctions whose lanes serve different turns.
+
+Right turns alone mostly show how fast the bench feeds trains: they never meet another movement
+in the ordinary design.
+
+## Fixed versions
+
+`-Mode edit` writes each as a blueprint string; the three for the ordinary junction and the lane
+change are in [rail-junctions/](rail-junctions/) (import them in game with the blueprint
+library's import button). Every one was built back from its string and measured as above.
+
+- **Signals fixed, all chain inside** (`-Options '{"edit":{"chain_inside":true,"edges":true}}'`):
+  every rail signal becomes a chain signal, a chain signal stands where each entrance track enters
+  (before the lane change's first switch) and a rail signal where each exit track leaves. A train
+  enters only when its whole way to the exit is free: it cannot stop inside, so nothing inside can
+  lock. Slower in straight and left traffic: a train waiting at the edge needs some 30 tiles more
+  to reach the core than one waiting inside, and its whole path must be free at once.
+- **Signals fixed, with buffers** (`junction-ordinary-fixed.txt`, 十字路口-普通-信号修正): the same,
+  plus two rail signals per leg where a waiting train stands wholly in a block nothing else uses:
+  on the inner lane right after the lane change's first switch (a 27.5-tile block to the core)
+  and at the start of the right-turn ramp. Keeps both lane changes: a drop-in replacement.
+- **Lane change at the exits only** (`junction-ordinary-exit-lane-change.txt`,
+  十字路口-普通-出口换道): the four entrance lane changes removed (32 rails). The outer entrance lane
+  then serves the right turn only and the inner one every turn; the exit lane change sorts trains
+  for the next junction. Rail signals at the entrances (the inner lane's block to the core is 31.5
+  tiles, the ramp's longer), chain signals inside and through the exit lane change, rail signals
+  at the exits.
+- **No lane change** (`junction-ordinary-no-lane-change.txt`, 十字路口-普通-无换道): all eight lane
+  changes removed (64 rails); the core's exits become rail signals too (31.5 tiles to the edge).
+  Lanes are then changed between junctions, with `lane-change-fixed.txt` (换道结构-信号修正: chain
+  signals before the X on both lanes and inside it, rail signals after it).
+
+Why the lane change at the entrance is the expensive one: it ends 13.5 tiles before the core, so a
+train that waits for the core stands on it, and a train coming over from the other lane must have
+the whole core path free as well; at the exit the lane change only meets trains that have already
+crossed.
+
+![The ordinary junction with the lane change at the exits only](rail-junctions/ordinary-exit-lane-change.png)
+
+## Verdict
+
+- **Of the three, the ordinary junction is the best by every measure but rail count.** As built
+  it is the only one that kept running in every test, it carries the most trains, its paths are
+  the shortest (left turns 81–84 tiles against 109–122 on the ring and 235–240 on the cloverleaf),
+  and it is as small as the roundabout (84 × 84) for 36 rail items more. Its signals still need
+  fixing: its lane change can lock (fault 1), as the same lane change did on the cloverleaf.
+- **The roundabout** is the cheapest (544 rail items) and as small, but as built it is broken
+  (fault 3) and its ring can lock (fault 4); fixed, it carries 26 trains a minute in mixed
+  traffic and only 15 in left turns.
+- **The cloverleaf at grade has no advantage.** A cloverleaf's loops exist to avoid crossings on
+  bridges; at grade every left turn crosses the core twice. It needs 2.8 times the area and 756
+  rail items, locks as built, and fixed carries 15 trains a minute in mixed traffic, 7.5 in left
+  turns.
+- **Better, measured: the ordinary junction with the lane change at the exits only**: 36.1 trains
+  a minute in mixed traffic on average over four runs (32.1–37.8) against 29.7 (28.2–30.5) for the
+  original with the same feed, 80 rail items fewer, and no place inside where a stopped train
+  blocks another. If lanes are changed between junctions instead, the junction with no lane change
+  carries 37.6 (32.2–40.3) for 420 rail items. The drop-in fixed version (both lane changes kept)
+  carries 31.5: it removes the risk of a lock, not the lane changes' cost.
+- For the author's game now (one Locomotive, two Cargo wagons) any working junction is far above
+  need: these numbers matter for the city-block network to come.
+
+## The rule behind the fixes
+
+1. **Chain in, chain inside, rail out.** Every signal a train meets from just before its path
+   first shares track with another (a crossing, a merge, a lane change's first switch) until it is
+   clear of the last one is a chain signal; the signal where it leaves is a rail signal, and the
+   block after it (up to the network's next signal) holds a whole train (21 tiles for the author's
+   trains). A lane that only its own trains use before that point may start with a rail signal, as
+   in the two improved versions.
+2. **A rail signal inside only where the waiting train fits and blocks nobody**: the block behind
+   it must hold the whole train and must not be used by any other movement. Measured examples: the
+   inner lane between the lane change and the core (27.5 tiles), a right-turn ramp, the core's
+   exits once no lane change follows them (31.5 tiles).
+3. **A lane change decides before its first switch**: a chain signal on both lanes before the X,
+   only chain signals inside it, a rail signal after it only with a train's length before the next
+   place a train may stop.
+4. **No rail signals on a roundabout's ring.**
+5. **Signals stand on the right of the track as trains run** (right-hand traffic). After copying or
+   turning a leg, `junction-bench.js symmetry` shows every signal that differs between the four
+   sides.
