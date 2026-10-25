@@ -964,6 +964,12 @@ local function fuel_of(train)
   return fuel, ash
 end
 
+local function cargo_of(train)
+  local n = 0
+  for _, w in pairs(train.cargo_wagons) do n = n + w.get_inventory(defines.inventory.cargo_wagon).get_item_count() end
+  return n
+end
+
 local function station_setup(surface)
   build_all(surface)
   -- One train stop, or several of one name (a depot); options.limit overrides their train limits.
@@ -1048,10 +1054,21 @@ local function station_setup(surface)
       schedule.add_record({ station = stop.backer_name,
         wait_conditions = { { type = "inactivity", compare_type = "and", ticks = 100 } } })
     else
+      -- options.load = {item, count, circuit}: Cybersyn's loading order at a provider instead
+      -- (wait until the train holds count items; with circuit, also until the stop sends
+      -- signal-check > 0, the station's "circuit condition" setting).
+      local wait = { { type = "inactivity", compare_type = "and", ticks = 100 } }
+      if opts.load then
+        wait = { { type = "item_count", compare_type = "and", condition = { comparator = "≥",
+          first_signal = { type = "item", name = opts.load.item }, constant = opts.load.count } } }
+        if opts.load.circuit then
+          wait[2] = { type = "circuit", compare_type = "and", condition = { comparator = ">",
+            first_signal = { type = "virtual", name = "signal-check" }, constant = 0 } }
+        end
+      end
       schedule.add_record({ rail = stop.connected_rail, rail_direction = stop.connected_rail_direction, temporary = true,
         wait_conditions = { { type = "time", compare_type = "and", ticks = 1 } } })
-      schedule.add_record({ station = stop.backer_name, temporary = true,
-        wait_conditions = { { type = "inactivity", compare_type = "and", ticks = 100 } } })
+      schedule.add_record({ station = stop.backer_name, temporary = true, wait_conditions = wait })
       schedule.add_record({ rail = S.exit.rails[#S.exit.rails] })
     end
     schedule.go_to_station(1)
@@ -1094,8 +1111,8 @@ local function station_tick(tick)
       elseif t.arrived and not t.left and not at then
         t.left = tick
         local fuel, ash = fuel_of(train)
-        out("train %d: at the stop %.1f s after the start, stood %.1f s; fuel %d -> %d, Ash %d -> %d; %s", t.n,
-          t.arrived / 60, (tick - t.arrived) / 60, t.fuel0, fuel, t.ash0, ash,
+        out("train %d: at the stop %.1f s after the start, stood %.1f s; fuel %d -> %d, Ash %d -> %d, cargo %d; %s", t.n,
+          t.arrived / 60, (tick - t.arrived) / 60, t.fuel0, fuel, t.ash0, ash, cargo_of(train),
           t.inside and "wholly in the stop's block" or "NOT wholly in the stop's block")
         S.done = (S.done or 0) + 1
         S.served = (S.served or 0) + 1
@@ -1124,7 +1141,16 @@ local function station_tick(tick)
     for _, t in ipairs(S.trains) do
       if t.train.valid and not t.gone then
         local p = t.train.front_stock.position
-        parts[#parts + 1] = string.format("%d@%.0f,%.0f/%s", t.n, p.x, p.y, t.arrived and "parked" or t.train.state)
+        -- A waiting train standing in more than one block is marked "across blocks".
+        local front, across = t.train.front_end and t.train.front_end.rail, false
+        if front then
+          for _, r in pairs(t.train.get_rails()) do
+            if not r.is_rail_in_same_rail_block_as(front) then across = true end
+          end
+        end
+        parts[#parts + 1] = string.format("%d@%.0f,%.0f/%s%s", t.n, p.x, p.y,
+          t.arrived and string.format("at the stop, cargo %d", cargo_of(t.train)) or t.train.state,
+          across and " across blocks" or "")
       end
     end
     out("t %d s: %s", tick / 60, table.concat(parts, " "))

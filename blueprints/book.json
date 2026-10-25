@@ -33,6 +33,8 @@
     "rail-grid-early",
     "rail-grid-edge-poles",
     "rail-grid-edge-stations",
-    "rail-refuel"
+    "rail-refuel",
+    "rail-depot",
+    "rail-depot-extension"
   ]
 }

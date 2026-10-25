@@ -169,7 +169,7 @@ supply area, and the four trains refuel exactly as before (22.6 s, 70 → 150, A
 
 ## The author's depot (2026-10-25)
 
-车库-1 (export of 14:20, not yet in blueprints/): a turnaround loop for the same stubs as the refuel
+车库-1 (export of 14:20): a turnaround loop for the same stubs as the refuel
 station. The entrance splits into four parallel diagonal tracks that join again at chain signals,
 then a single track round the loop splits onto four depot tracks (chain signal in, rail signal
 out, 22 tiles between, a stop 车库 with train limit 2 and a combinator in depot mode on each), which
@@ -219,6 +219,49 @@ switch column and the exit merge. Measured the same way (a train going past alon
 - Up to 19 modules (27 tracks) build on the grid piece with stubs without touching anything
   (tested that far). Every track is one more train in the switch column and the exit merge, which
   are single blocks, so the far tracks take longer to reach and to leave.
+
+The author's final version (15:42) puts a rail signal back at the entrance and adds one in the
+middle of the loop: 8 trains parked in 44.4 s, the train going past behind them 59.8 s (65.2 and
+81.5 without the entrance signal). Imported as `blueprints/rail-depot.txt` and
+`rail-depot-extension.txt`.
+
+## Cybersyn before batteries (2026-10-25)
+
+Constant, arithmetic and decider combinators each take a Battery (battery-mk01) in Py (data:
+5 Copper cable + 2 or 5 Simple circuit boards + 1 Battery); the Cybernetic combinator does not
+(5 Copper cable + 5 Simple circuit boards). Red and green wires come with Steam power (its
+`unlock-circuit-network` effect), so they are there from the start. Battery - Stage 1 (175 × red +
+py1) makes the Battery from Glass, 2 Melamine, Lead-antimony alloy, 3 Bolts, 3 Graphite, 3 Zinc
+plates and 30 Cyanic acid; Melamine and Cyanic acid need Ammonia, which at this stage comes from
+Auog manure (see [Trains and robots](trains-and-robots.md)). Logistic science packs take Batteries
+too. The only other constant signal source in the mod set, aerial-base-combinator, is part of Py's
+aerial blimp base.
+
+What Cybersyn can do with only its own combinator and wires (from its source):
+
+- Depot and refueler: need nothing else.
+- Provider: its input is its stock, positive signals; chests wired straight to the combinator do.
+- Requester: needs a negative signal, the amount wanted minus what is there; with no constant
+  combinator there is nothing to make it, so no request, and Cybersyn sends no train at all
+  (a delivery needs a requester and a provider).
+- Per-station thresholds and priorities are signals too. The request threshold has a map setting
+  (default 2,000 items) and a per-combinator "stack thresholds" box that needs no signal.
+
+## The author's first provider (2026-10-25)
+
+固体供货站-1 (export of 15:42, a first draft, not imported): a loop for the same stubs (laid turned
+half round), train limit 3, a 22-tile platform, 24 Mechanical inserters loading the two wagons
+straight from two belt rows fed by one belt through a splitter; the combinator set to provide
+only.
+
+- Its combinator has no wire, so it reports no stock and would never be sent a train. With no
+  buffer chests there is also little to report (a belt holds a few hundred items).
+- Its setting value 801 also ticks "Circuit condition": Cybersyn then adds "signal-check > 0" to
+  the loading order, which only a signal sent to the stop satisfies. Measured with that order:
+  the train was full (2,000 Raw coal) after 120 s and still standing at 180 s.
+- Measured with Cybersyn's loading order (2,000 Raw coal) and both belt rows kept full: 2,000 in
+  about 100 s (101.1 and 99.7 s), the 24 inserters' rate; fed by one belt split in two it cannot
+  be faster than 15 a second, and without chests a train waits for whatever the belt brings.
 
 ## Cybersyn 2.1.2: how it runs
 
