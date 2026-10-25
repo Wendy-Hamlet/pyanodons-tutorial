@@ -110,5 +110,19 @@ module.exports = {
       ['作者的工厂规划器方案由助手模组\n写出，下文引用；', '作者在工厂规划器里的方案下文会引用；'],
       ['（用新工具 `tools/wire-probe` 读出）', ''],
     ],
+    '15-train-preparation-1.md': [
+      ['The numbers come from the game data, the recorder\'s 10-minute production windows, the\nsave of 41:05 (`tools/inspect-save.ps1` and the new `tools/trains-probe`), the source of the Cybersyn\nmod, and measurements of the author\'s blueprints in the engine (`tools/junction-bench` and\n`tools/train-probe`); the full results are in',
+        'The full results of the measurements are in'],
+      ['A new tool measured them: `tools/junction-bench` builds a\njunction\'s rails and signals on an empty map, asks the engine for its blocks and paths, then sends\ntrains of one Locomotive and two Cargo wagons through it from every lane at up to 200 km/h, to\nrandom exits, for 15 minutes',
+        'Each was built on an empty map with its rails and signals, and trains of one Locomotive and two\nCargo wagons went through it from every lane at up to 200 km/h, to random exits, for 15 minutes'],
+      ['Measured with `tools/junction-bench` in a new mode, `station`: the whole blueprint', 'Measured: the whole blueprint'],
+      [' (read from the save with the new `tools/trains-probe`)', ''],
+    ],
+    '15-train-preparation-1.zh-CN.md': [
+      ['数字来自游戏数据、\n记录器的 10 分钟产量窗口、41:05 的存档（`tools/inspect-save.ps1` 和新工具 `tools/trains-probe`）、Cybersyn 模组的源码，以及在引擎里\n对作者蓝图的实测（`tools/junction-bench` 和 `tools/train-probe`）；完整结果见', '实测的完整结果见'],
+      ['新工具 `tools/junction-bench` 来测：它把路口的铁轨和信号建到空地图上，向引擎查询闭塞区和路径，再让', '测法：把路口的铁轨和信号建到空地图上，查询闭塞区和路径，再让'],
+      ['用 `tools/junction-bench` 的新模式 `station` 实测：', '实测：'],
+      ['（用新工具 `tools/trains-probe` 从存档读出）', '（从存档读出）'],
+    ],
   },
 };

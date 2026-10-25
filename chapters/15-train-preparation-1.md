@@ -31,6 +31,10 @@ Conclusions:
   in Py every combinator except Cybersyn's own takes a Battery. The author makes Batteries next.
 - **On the map:** eight two-track junctions east of the base (x 480 to 1680), the refuel station,
   the depot, two trains standing without schedules. The track is not yet joined to the base.
+- **After the save the base runs down within 40 minutes**: Coal gas and then Hydrogen find no outlet,
+  and the coke block and the Tar line stop, taking Coke, Acetylene and Aromatics with them. A Gas
+  vent on each of the two pipes keeps it all running (measured). Zinc, stopped since chapter 13, runs
+  again since the author turned an Overflow valve into a Check valve just after the save.
 
 ## At a glance
 
@@ -58,6 +62,7 @@ Conclusions:
 | 40:40–40:50 | The supply station rebuilt |
 | 40:50–41:05 | In the base: a Tar processing unit at (−136.5, −230.5) making Creosote from Naphthalene oil, with an Underflow valve |
 | 41:05 | Save (`Py-Exploration`, 41.1 hours) |
+| 41:05–41:07 | Screenshots; **the Aromatics Overflow valve on the bus at (−113.5, 179.5) becomes a Check valve**: the zinc drills run again; save at 41:07 |
 
 There are no chat notes in this stretch. The author designed most of the rail pieces as blueprints
 and had them measured between 2026-10-24 and 2026-10-25 (real days); the sections below follow
@@ -202,7 +207,7 @@ sends no more trains to a station than its train limit.
 
 ## 6. The refuel station
 
-![The refuel station beside the road at x 1440: trains come in from the road, go round the loop and stop at the platform; Mechanical inserters on both sides of the Locomotive's place, fuel on one side, Ash on the other](../images/ch15-refuel.jpg)
+![The refuel station at 41:05, beside the road at x 1440 (right): trains come in by the upper track, go round the loop and stop at the platform below it, where a 1+2 train stands; Mechanical inserters fuel the Locomotive from below, where the fuel belt comes up from the Raw coal drill in the south, and take its Ash out above; the blue towers are Big electric poles still to be built](../images/ch15-refuel.jpg)
 
 The author's 加油站-1, for 1+2 trains: a one-way loop with a 22-tile platform and a Cybernetic
 combinator in refueler mode. Beside the Locomotive's place, 5 Mechanical inserters fuel it from 5
@@ -234,7 +239,7 @@ estimate from the two measurements).
 
 ## 7. The depot
 
-![The depot: trains come in by the right-hand track, go round the loop and turn into one of eight tracks, each with its stop 车库 and a Cybernetic combinator; they leave by the merge on the right](../images/ch15-depot.jpg)
+![The depot at 41:05, beside the road at x 1680 (right): trains come in by the upper track, go round the loop and turn into one of the eight tracks, each with its stop 车库 and a Cybernetic combinator, and leave by the merge on the right; all eight tracks are empty](../images/ch15-depot.jpg)
 
 Under Cybersyn, empty trains wait at depots. The author's 车库-1 is another loop for the same stubs:
 a rail signal at the entrance and one in the middle of the loop make two waiting places, then the
@@ -295,7 +300,7 @@ Batteries come.
 
 ## 9. What stands in the game at 41:05
 
-![A two-track junction of the network, at (960, −240): trains keep right; each entrance splits after a chain signal onto the right-turn curve and the track to the core, each exit merges; the stubs north and south wait for roads still to come](../images/ch15-junction.jpg)
+![A two-track junction of the network at (960, −240), 41:05: trains keep right; each entrance splits after a chain signal onto the right-turn curve and the track to the core, each exit merges; the north and south legs end in stubs for roads still to come; Small electric poles run along the middle of the road](../images/ch15-junction.jpg)
 
 East of the base, beside the Raw coal field at (1413, −76) (480.7 million, the largest the
 inspector lists), the author has laid the first stretch of the network, all two-track:
@@ -333,9 +338,14 @@ inspector lists), the author has laid the first stretch of the network, all two-
   substrate re-vitalization (the Moss recipes also give Coarse fraction, the farms take 50 % more energy),
   Internal bioreactor (no pollution, two recipes that turn refined gases back, farms built with a
   Bioreactor), High density culture (Moss without Muddy sludge).
-- **Zinc**: the 12 zinc drills still stand for lack of Aromatics (chapter 13), and the base made
-  under 0.02 Zinc plates a second. Each Battery takes 3; the base's containers hold 2,141, enough
-  for about 700.
+- **Zinc**: the 12 zinc drills had stood for lack of Aromatics since chapter 13, and the base made
+  under 0.02 Zinc plates a second. The author found why: the bus's Aromatics Overflow valve at
+  (−113.5, 179.5) passes only while its near side is over 80 % full, and the Aromatics tailings pond
+  (−139, −38) upstream of it never let the pipe fill that far. Right after the save they replaced it
+  with a Check valve. In the save of 41:07 eleven of the twelve drills work; an hour of that save
+  gives 7.2 Zinc ore and 0.72 Zinc plates a second until, after 40 minutes, the plates fill the
+  space behind the furnaces (nothing uses them yet). Each Battery takes 3; the base's containers held
+  2,141 at 41:05, enough for about 700.
 - **Mods**: Blueprint Sandboxes added at 38:06 (a place to design blueprints apart from the base),
   Cargo Bays and Unloaders removed; Ore Eraser added at 38:11.
 - **Plans in Factory Planner**: "铁板" (39:34), Iron plates by casting, 810 a minute from Iron ore,
@@ -343,7 +353,46 @@ inspector lists), the author has laid the first stretch of the network, all two-
   Logistic science packs a minute in a Research center MK 01 from 0.75 Batteries, 0.5 Animal samples,
   0.5 Poor alien samples and 0.25 Solidified sarcorus a minute.
 
-## 11. The blueprints
+## 11. The hour after the save
+
+The save of 41:05, run for an hour without the player (`tools/rate-probe`), does not hold:
+
+| A second (10-minute steps) | 10 min | 20 | 30 | 40 | 50 | 60 |
+|---|---|---|---|---|---|---|
+| Coal gas made | 41.3 | 37.1 | 10.1 | 0 | 0 | 0 |
+| Tar made | 29.0 | 25.9 | 6.4 | 0 | 0 | 0 |
+| Coke made | 9.1 | 7.7 | 1.9 | 0 | 0 | 0 |
+| Power used (MW) | 75.2 | 61.3 | 41.3 | 28.4 | 25.4 | 24.4 |
+
+The save of 41:07, with the author's check valve, does the same; switching off the new Creosote unit
+changes nothing. The game itself had started down the same road: Tar fell from 48 a second in the
+window to 40:30 to 31, 25 and 17 in the three windows before the save.
+
+What stops it, read from the machines' fluid boxes:
+
+1. **Coal gas has nowhere to go.** The coke block's first columns (Raw coal → 60 Coal gas + 30 Tar
+   + 3 Coal) stand "full output" with their Coal gas box full already in the save. Its users are the
+   aluminium drills (which take it only while the Intermetallics line takes Aluminium plates) and,
+   past the Overflow valve, the three Gasifiers, whose Syngas goes to plastic and the nickel drills,
+   both full. Without Coal
+   the next columns make no Coke and no Tar; without Coke the 20 Coke boilers that give the Tar line
+   its Steam go out, and Acetylene (lead drills), Calcium carbide and the rest that run on Coke
+   follow; without Tar there is no Aromatics (zinc, plastic) and no Creosote (Treated wood for rails).
+2. **Hydrogen has nowhere to go.** With a Gas vent on the Coal gas pipe (at (−101.5, −168.5))
+   the coke block runs again, Tar is held at 40 a second by its one user (chapter 14), and after 40
+   minutes everything stops a second time: the pitch refining columns (100 Pitch + 100 Steam →
+   10 Hydrogen + Light oil, Naphthalene oil, Anthracene oil and Coke) stand "full output" with Hydrogen
+   in their output box, Pitch backs up into tar refining, Tar into the coke block. In that run the base
+   used 9.5 Hydrogen a second in the first ten minutes and none after.
+
+**With a Gas vent on the Coal gas pipe and one on the Hydrogen pipe by the pitch columns (at (−161.5,
+−130.5)) the whole hour runs**: Coal gas 54, Tar 34, Coke 10, Pitch 48 a second, 49 MW at the end,
+the same in a second run. Both are needed: with only the first the base stops at 40 minutes. The
+vents were placed in a copy of the save as a test; a Tailings pond cannot keep a gas (it empties
+any gas that flows into it, chapter 3), so on these pipes it would only be another vent. A block that stands because nobody takes its product is normal here; these two
+gases are different, because the Coke and Tar the whole base needs come out of the same machines.
+
+## 12. The blueprints
 
 The rail pieces of this chapter are in the book (`/pt-book`), each with its measurements; the
 [blueprint list](../blueprints/README.md#railway) has the details: the lane change (换道结构), the
@@ -358,7 +407,7 @@ its chapter's save, so its description gives that chapter's numbers. The mall �
 Simple circuit board block changed a little (a chest limit; two chests taking Glass and Ceramic out).
 The book now holds 45 blueprints.
 
-## 12. Key points
+## 13. Key points
 
 - In Py a Locomotive burns full power whenever it moves: a load of fuel is a fixed driving time
   (750 seconds of Raw coal), and the distance follows from the speed. Cargo weighs nothing; a
@@ -370,14 +419,16 @@ The book now holds 45 blueprints.
   set its train limit to the trains it holds. A depot needs one track per train, train limit 1.
 - In Py, Cybersyn needs a constant combinator for every requesting station, and so Batteries.
   Depots, refuelers and providers work without.
+- A gas that comes out of the same machines as something the base needs must always have an outlet:
+  here Coal gas (with Coke and Tar) and Hydrogen (with the Tar line).
 
-## 13. How these facts were checked
+## 14. How these facts were checked
 
 - Recording: the companion's recorder (run `2652821414-0`, to 41:05), read with
   `tools/recorder-phases.js` (10-minute slices), `tools/recorder-summary.js` and the production
   records of the activity log; no chat notes in this stretch. Factory Planner: "铁轨" (37:23),
   "铁板" (39:34), "物流科技包（绿瓶）" (39:56), read with `tools/planner-summary.js`.
-- The save of 41:05 (`Py-Exploration`, copied to `C:\tmp\ch15`; consistency check passed):
+- The saves of 41:05 and 41:07 (`Py-Exploration`, copied to `C:\tmp\ch15`; consistency check passed):
   `tools/inspect-save.ps1 -Ticks 3700`, `tools/summarize-save.js`, `tools/render-area.js`. The trains
   and stops with the new `tools/trains-probe` (`save-probe.ps1 -Probe trains-probe`): state, schedule,
   fuel, cargo of every train, name and train limit of every stop. T.U.R.D. picks with
@@ -394,7 +445,11 @@ The book now holds 45 blueprints.
   `factorio-api.lua`, `layout.lua`, `settings.lua`).
 - The blueprints of chapters 11 to 14: each compared entity by entity with the save snapshots of
   chapters 11 to 15.
-- Screenshots: taken by the author with the companion (`/pt-shots`), areas planned with
+- The hour after the save: `tools/save-probe.ps1 -Probe rate-probe -Ticks 219700` on both saves, with
+  timelines of these products and the fluid boxes of a pitch column and two tar refining units
+  (`@x:y`); what-ifs `off@-136.5:-230.5` (the new Creosote unit), `py-gas-vent@-101.5:-168.5:south`
+  and `py-gas-vent@-161.5:-130.5:south`.
+- Screenshots: taken by the author with the companion (`/pt-shots`) at 41:05, areas planned with
   `node tools/shots.js plan`.
 
 Next chapter: chapter 16 (to come): Batteries.
