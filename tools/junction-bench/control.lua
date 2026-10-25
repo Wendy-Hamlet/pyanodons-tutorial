@@ -18,6 +18,14 @@
 --     junction; it reports a deadlock when no train leaves for options.stall seconds.
 --   mode "edit": changes the signals (see edit_mode) and writes the junction as a blueprint string.
 --   mode "ends": prints the signal places of the rail ends at options.at (for placing signals).
+--   mode "run": one train (options.stock, e.g. ["locomotive", "cargo-wagon", "cargo-wagon"]; a
+--     name starting with "-" is a locomotive facing backwards) goes round one block of a grid
+--     blueprint clockwise on the outer lanes, through rail waypoints in the middle of the four
+--     stretches, every fuel slot filled with options.fuel (options.cargo: an item filling every
+--     cargo wagon too). Logs speed, distance and fuel every options.every seconds, the speed range
+--     of each lap, when and where the fuel ran out and where the train stopped (options.hold: the
+--     train first stands that many seconds). Run it for enough ticks (-Ticks) to burn all the fuel.
+--   options.locomotives (default 1) and options.wagons: the trains of mode "traffic".
 -- Results are CF-JUNCTION log lines. Run by tools/junction-bench.ps1, which writes bench-data.lua:
 -- the name, the mode, the options and the blueprint's entities as JSON.
 
@@ -28,6 +36,7 @@ local function opt(k, v) if opts[k] == nil then opts[k] = v end end
 opt("extend", 320); opt("spacing", 30); opt("clear", 60); opt("warm", 3); opt("minutes", 20)
 opt("stall", 120); opt("scenario", "mix"); opt("seed", 1); opt("wagons", 2); opt("fuel", "coal")
 opt("locomotive", "locomotive"); opt("wagon", "cargo-wagon"); opt("speed", 0); opt("ahead", 200); opt("source", "lane")
+opt("stock", { "locomotive", "cargo-wagon", "cargo-wagon" }); opt("locomotives", 1)
 
 local function out(fmt, ...) log("CF-JUNCTION " .. string.format(fmt, ...)) end
 local RD = defines.rail_direction
@@ -392,9 +401,10 @@ local function zone_free(surface, t)
 end
 
 local function spawn(surface, t, tick, to, kind)
-  local far = t.rails[#t.rails - 6 - 4 * opts.wagons]
+  local far = t.rails[#t.rails - 6 - 4 * (opts.locomotives - 1 + opts.wagons)]
   local dir = (t.d + 8) % 16
-  local stock = { opts.locomotive }
+  local stock = {}
+  for _ = 1, opts.locomotives do stock[#stock + 1] = opts.locomotive end
   for _ = 1, opts.wagons do stock[#stock + 1] = opts.wagon end
   local x, y = far.position.x, far.position.y
   local cars = {}
@@ -424,7 +434,7 @@ local function spawn(surface, t, tick, to, kind)
   train.manual_mode = false
   -- Trains arrive at line speed when the track ahead is clear enough to brake on.
   if opts.speed > 0 then
-    local k = math.max(1, #t.rails - 6 - 4 * opts.wagons - opts.ahead / 2)
+    local k = math.max(1, #t.rails - 6 - 4 * (opts.locomotives - 1 + opts.wagons) - opts.ahead / 2)
     local q1, q2 = far.position, t.rails[k].position
     local ahead = { { math.min(q1.x, q2.x) - 3, math.min(q1.y, q2.y) - 3 }, { math.max(q1.x, q2.x) + 3, math.max(q1.y, q2.y) + 3 } }
     if surface.count_entities_filtered({ area = ahead, type = { "locomotive", "cargo-wagon", "fluid-wagon" } }) == #stock then
@@ -780,6 +790,114 @@ local function ends_mode(surface)
   end
 end
 
+-- ---------- run ----------
+
+-- One train round one block of a grid blueprint (see the header). The outer lane of clockwise
+-- travel is the lane of each road nearest the block's middle.
+local R = {}
+
+local function run_setup(surface, box)
+  local mx, my = (box.x1 + box.x2) / 2, (box.y1 + box.y2) / 2
+  local function lane(area, key, pick)
+    local best
+    for _, r in ipairs(surface.find_entities_filtered({ area = area, name = "straight-rail" })) do
+      if not best or pick(r.position[key], best.position[key]) then best = r end
+    end
+    return best
+  end
+  local gt, lt = function(a, b) return a > b end, function(a, b) return a < b end
+  local north = lane({ { mx - 1, box.y1 }, { mx + 1, my } }, "y", gt)
+  local east = lane({ { mx, my - 1 }, { box.x2, my + 1 } }, "x", lt)
+  local south = lane({ { mx - 1, my }, { mx + 1, box.y2 } }, "y", lt)
+  local west = lane({ { box.x1, my - 1 }, { mx, my + 1 } }, "x", gt)
+  if not (north and east and south and west) then error("no block found") end
+  out("waypoints N %.1f,%.1f E %.1f,%.1f S %.1f,%.1f W %.1f,%.1f", north.position.x, north.position.y,
+    east.position.x, east.position.y, south.position.x, south.position.y, west.position.x, west.position.y)
+  -- Locomotive first, heading east on the north road; "-name" is a locomotive facing backwards.
+  local x, y = north.position.x + 20, north.position.y
+  local cars, prev = {}, nil
+  for _, s in ipairs(opts.stock) do
+    local back = s:sub(1, 1) == "-"
+    local name = back and s:sub(2) or s
+    if prev then x = x - gap(prev, name) end
+    prev = name
+    local c = surface.create_entity({ name = name, position = { x, y }, force = "player",
+      direction = back and defines.direction.west or defines.direction.east })
+    if not c then error("could not place " .. name .. " at " .. x .. "," .. y) end
+    cars[#cars + 1] = c
+  end
+  local train = cars[1].train
+  if #train.carriages ~= #cars then error("cars did not couple: " .. #train.carriages .. " of " .. #cars) end
+  local energy = 0
+  for _, c in ipairs(cars) do
+    if c.type == "locomotive" then
+      local inv = c.get_fuel_inventory()
+      local item = prototypes.item[opts.fuel]
+      local n = inv.insert({ name = opts.fuel, count = item.stack_size * #inv })
+      energy = energy + n * item.fuel_value
+    elseif c.type == "cargo-wagon" and opts.cargo then
+      local inv = c.get_inventory(defines.inventory.cargo_wagon)
+      inv.insert({ name = opts.cargo, count = prototypes.item[opts.cargo].stack_size * #inv })
+    end
+  end
+  local schedule = train.get_schedule()
+  for _, r in ipairs({ east, south, west, north }) do schedule.add_record({ rail = r }) end
+  schedule.go_to_station(1)
+  train.manual_mode = (opts.hold or 0) > 0
+  out("train %s: %d cars, weight %.0f, fuel %.0f MJ (%s), cargo %s", table.concat(opts.stock, " "), #cars,
+    train.weight, energy / 1e6, opts.fuel, opts.cargo or "none")
+  local front = train.front_stock.position
+  R = { train = train, locos = {}, dist = 0, lap = 0, lap_max = 0, lap_min = math.huge, top = 0,
+    x = front.x + 1, y = front.y, last_x = front.x, every = (opts.every or 10) * 60 }
+  for _, c in ipairs(cars) do if c.type == "locomotive" then R.locos[#R.locos + 1] = c end end
+  storage.R = R
+end
+
+local function fuel_left()
+  local e = 0
+  for _, c in ipairs(R.locos) do
+    e = e + c.burner.remaining_burning_fuel
+    for _, s in pairs(c.get_fuel_inventory().get_contents()) do e = e + s.count * prototypes.item[s.name].fuel_value end
+  end
+  return e
+end
+
+local function run_tick(tick)
+  if R.stopped then return end
+  -- options.hold: seconds the train first stands in manual mode (does a standing train burn fuel?).
+  if opts.hold and tick == opts.hold * 60 then R.train.manual_mode = false end
+  local t = R.train
+  local v = math.abs(t.speed)
+  R.dist = R.dist + v
+  local kmh = v * 216
+  if kmh > R.top then R.top = kmh end
+  if tick > 600 and not R.out then
+    R.lap_max = math.max(R.lap_max, kmh)
+    R.lap_min = math.min(R.lap_min, kmh)
+  end
+  -- A lap ends when the front passes the start point on the north road again.
+  local front = t.front_stock.position
+  if math.abs(front.y - R.y) < 3 and R.last_x < R.x and front.x >= R.x then
+    R.lap = R.lap + 1
+    out("lap %d at %.0f s: %.0f tiles, speed %.0f-%.0f km/h", R.lap, tick / 60, R.dist, R.lap_min, R.lap_max)
+    R.lap_max, R.lap_min = 0, math.huge
+  end
+  R.last_x = front.x
+  local left = fuel_left()
+  if not R.out and left == 0 then
+    R.out = { tick = tick, dist = R.dist, kmh = kmh }
+    out("fuel out at %.0f s: %.0f tiles, speed %.0f km/h", tick / 60, R.dist, kmh)
+  end
+  if tick % R.every == 0 then
+    out("t %4.0f s  speed %5.1f km/h  distance %7.0f tiles  fuel %6.1f MJ  state %d", tick / 60, kmh, R.dist,
+      left / 1e6, t.state)
+  end
+  if R.out and v < 1e-4 then
+    R.stopped = true
+    out("stopped at %.0f s: %.0f tiles (%.0f coasting); top speed %.1f km/h", tick / 60, R.dist, R.dist - R.out.dist, R.top)
+  end
+end
+
 script.on_init(function()
   local surface = game.create_surface("junction")
   surface.generate_with_lab_tiles = true
@@ -793,11 +911,17 @@ script.on_init(function()
   elseif data.mode == "traffic" then
     traffic_setup(surface, box)
     storage.T = T
+  elseif data.mode == "run" then
+    run_setup(surface, box)
   end
 end)
 
-script.on_load(function() if storage.T then T = storage.T end end)
+script.on_load(function()
+  if storage.T then T = storage.T end
+  if storage.R then R = storage.R end
+end)
 
 script.on_event(defines.events.on_tick, function(event)
   if data.mode == "traffic" and T.tracks then traffic_tick(event.tick) end
+  if data.mode == "run" and R.train then run_tick(event.tick) end
 end)
