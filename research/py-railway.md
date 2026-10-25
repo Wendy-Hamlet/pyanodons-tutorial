@@ -129,6 +129,40 @@ offset           -21 ............ -14 ............ -7 ..... -1
 - Py's burner-inserter (Mechanical inserter) has a void energy source: it needs neither fuel nor
   power.
 
+## The author's first refuel station (2026-10-25)
+
+The author chose 1+2 (one Locomotive, two Cargo wagons) and built 加油站-1 (export of 12:39, not
+yet in blueprints/): a one-way turnaround loop that fits the station stubs of their
+棋盘格-边-车站定位 (the early grid edge plus, on each side of the stretch, an entrance and an exit
+stub 6 tiles apart), a 22-tile platform, a Cybernetic combinator in refueler mode, on one side 5
+Mechanical inserters fuelling from 5 one-slot wooden chests fed by a belt, on the other 5
+inserters (filter Ash) emptying the Locomotive's burnt slots into chests that unload onto a second
+belt.
+
+Measured with `tools/junction-bench` mode `station` (the whole blueprint built with every
+setting; trains with 70 Raw coal and 80 Ash get the schedule Cybersyn gives a train it sends to a
+refueler: the stop's own rail for 1 tick, then the stop until 100 ticks of inactivity):
+
+- Every train leaves with 150 Raw coal and 0 Ash after 22.6 s: the inactivity condition waits for
+  the inserters (fuel and Ash going in and out count as activity).
+- The train stands wholly inside the platform block; four trains in a row are served 1.7 a
+  minute.
+- Cybersyn's automatic allow-list (from its source) rejects, at a refueler, any train with a wagon
+  standing beside an inserter; here the inserters stand only beside the Locomotive, so 1+2 is
+  accepted.
+- On the grid piece (`map` of the composite): the main-line block between the chain signal before
+  the diverge and the one between diverge and merge also holds the entrance stub and the
+  station's diagonal, and the main-line signal in front of it is a chain signal. The loop holds the
+  train being refuelled and two waiting; a fourth train waits on the main line. A train going
+  past behind three refuel trains took 35.9 s, behind four 66.7 s (alone 24.9 s). A train limit
+  of 3 on the stop keeps the queue off the main line (Cybersyn sends no more trains to a refueler
+  than its train limit).
+- The blueprint's train stop has no name, so every copy gets a random one.
+- Py's Big electric pole supplies only 2 tiles around it (data), so the combinator is unpowered. A
+  refueler works anyway (Cybersyn reads only its settings and wires); a station's combinator must
+  be powered, as Cybersyn reads no signals from an unpowered one.
+- The Ash chests hold 16 slots × 1,000 Ash each, 80,000 in all: about a thousand refuels.
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,

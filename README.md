@@ -210,7 +210,7 @@ parameters for yours.
   lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
   sinks, fluid sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
   save-reading setup.
-- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit|run [-Options <json or @file.json>]` +
+- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit|run|station [-Options <json or @file.json>]` +
   `junction-bench/` + `junction-bench.js`: the rail junction bench. Builds the rails and signals of
   one blueprint on an empty map. `map` writes its rails, rail blocks, signals, track ends and every
   path between track ends with the signals met on the way; `junction-bench.js render` draws it
@@ -226,7 +226,11 @@ parameters for yours.
   chain signal and puts chain signals at the entrances and rail signals at the exits, then writes
   the junction as a blueprint string. `run` sends one train (`stock`, any fuel and cargo) round one
   block of a grid blueprint until its fuel is gone: speed, distance and fuel over time (range of
-  each composition: [Railways under Pyanodons](research/py-railway.md)). Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
+  each composition: [Railways under Pyanodons](research/py-railway.md)). `station` builds the whole
+  blueprint with every setting (inserters, chests, combinators) around its train stop and sends
+  trains to the stop with the schedule Cybersyn gives a refueler visit, optionally with more trains
+  passing by behind them: time at the stop, fuel and Ash before and after, whether the train
+  stands wholly in the stop's block, trains a minute. Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
   save-reading setup.
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see

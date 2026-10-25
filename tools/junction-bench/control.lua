@@ -25,7 +25,12 @@
 --     cargo wagon too). Logs speed, distance and fuel every options.every seconds, the speed range
 --     of each lap, when and where the fuel ran out and where the train stopped (options.hold: the
 --     train first stands that many seconds). Run it for enough ticks (-Ticks) to burn all the fuel.
---   options.locomotives (default 1) and options.wagons: the trains of mode "traffic".
+--   mode "station": builds the whole blueprint (every entity with its settings) around one train
+--     stop, extends its two track ends and sends options.trains trains (options.fuel_count fuel,
+--     options.ash Ash) from the entrance to the stop with the schedule Cybersyn gives a train it
+--     sends to a refueler; logs per train when it stood at the stop, how long, fuel and Ash before
+--     and after, and whether it stood wholly in the stop's block. options.feed keeps belts full.
+--   options.locomotives (default 1) and options.wagons: the trains of modes "traffic" and "station".
 -- Results are CF-JUNCTION log lines. Run by tools/junction-bench.ps1, which writes bench-data.lua:
 -- the name, the mode, the options and the blueprint's entities as JSON.
 
@@ -37,6 +42,7 @@ opt("extend", 320); opt("spacing", 30); opt("clear", 60); opt("warm", 3); opt("m
 opt("stall", 120); opt("scenario", "mix"); opt("seed", 1); opt("wagons", 2); opt("fuel", "coal")
 opt("locomotive", "locomotive"); opt("wagon", "cargo-wagon"); opt("speed", 0); opt("ahead", 200); opt("source", "lane")
 opt("stock", { "locomotive", "cargo-wagon", "cargo-wagon" }); opt("locomotives", 1)
+opt("trains", 1); opt("fuel_count", 70); opt("ash", 80)
 
 local function out(fmt, ...) log("CF-JUNCTION " .. string.format(fmt, ...)) end
 local RD = defines.rail_direction
@@ -898,10 +904,196 @@ local function run_tick(tick)
   end
 end
 
+-- ---------- station ----------
+
+-- The whole blueprint, every entity with its settings, through a blueprint item; ghosts revived.
+local S = {}
+
+local function build_all(surface)
+  for cx = -8, 8 do
+    for cy = -8, 8 do surface.request_to_generate_chunks({ cx * 32, cy * 32 }, 0) end
+  end
+  surface.force_generate_chunk_requests()
+  local inv = game.create_inventory(1)
+  inv[1].set_stack({ name = "blueprint" })
+  local r = inv[1].import_stack(data.blueprint)
+  if r ~= 0 then out("import_stack returned %d", r) end
+  local ghosts = inv[1].build_blueprint({ surface = surface, force = "player", position = { 0, 0 },
+    build_mode = defines.build_mode.forced })
+  local n = 0
+  for _, g in pairs(ghosts) do
+    if g.valid and g.type == "entity-ghost" then
+      local _, e = g.silent_revive({ raise_revive = true })
+      if e then n = n + 1 end
+    end
+  end
+  inv.destroy()
+  out("built %d of %d entities", n, #ghosts)
+end
+
+local function fuel_of(train)
+  local fuel, ash = 0, 0
+  for _, c in ipairs(train.carriages) do
+    if c.type == "locomotive" then
+      fuel = fuel + c.get_fuel_inventory().get_item_count()
+      ash = ash + c.get_burnt_result_inventory().get_item_count()
+    end
+  end
+  return fuel, ash
+end
+
+local function station_setup(surface)
+  build_all(surface)
+  local stops = surface.find_entities_filtered({ type = "train-stop" })
+  if #stops ~= 1 then error(#stops .. " train stops") end
+  local stop = stops[1]
+  out("train stop %q at %.1f,%.1f, train limit %s", stop.backer_name, stop.position.x, stop.position.y,
+    stop.trains_limit < 4e9 and stop.trains_limit or "none")
+  if stop.backer_name == "" then stop.backer_name = "station" end
+  S.stop = stop
+  -- The entrance and exit: the station's two open track ends, or, with options.entrance_at and
+  -- options.exit_at ({dx, dy} from the train stop), the track ends nearest those points.
+  local ends = track_ends(rails_of(surface))
+  local function nearest(at)
+    local best, bd
+    for _, e in ipairs(ends) do
+      local d = (e.x - stop.position.x - at[1]) ^ 2 + (e.y - stop.position.y - at[2]) ^ 2
+      if not bd or d < bd then best, bd = e, d end
+    end
+    return best
+  end
+  if opts.entrance_at then ends = { nearest(opts.entrance_at), nearest(opts.exit_at) } end
+  for _, e in ipairs(ends) do
+    local ux, uy = unit(e.d)
+    local rails = extend(surface, e, opts.extend)
+    local far = rails[#rails]
+    local inbound = e == ends[1] and opts.entrance_at ~= nil
+    if not opts.entrance_at then
+      inbound = game.train_manager.request_train_path({ type = "any-goal-accessible",
+        starts = { { rail = far, direction = end_facing(far, -ux, -uy) } }, goals = { stop } }).found_path
+    end
+    local t = { ux = ux, uy = uy, rails = rails, d = e.d }
+    -- Rail signals along the extension, facing the way trains run.
+    local sx, sy = ux, uy
+    if inbound then sx, sy = -sx, -sy; S.inn = t else S.exit = t end
+    for k = math.floor(opts.spacing / 2), #rails - 2, opts.spacing / 2 do place_signal(surface, rails[k], sx, sy) end
+  end
+  if not (S.inn and S.exit) then error("no entrance or no exit") end
+  -- options.trains trains queue on the entrance track, each with options.fuel_count fuel and
+  -- options.ash Ash; they get the schedule Cybersyn gives a train it sends to a refueler: a rail
+  -- record on the stop's own rail (1 tick), the stop (100 ticks of inactivity), then the exit.
+  -- options.through more trains queue behind them and only pass by, to the exit.
+  S.trains = {}
+  local t = S.inn
+  local cars = opts.locomotives + opts.wagons
+  local total = opts.trains + (opts.through or 0)
+  for i = 1, total do
+    local k = #t.rails - 6 - 4 * (cars - 1) - (total - i) * (opts.spacing / 2)
+    if k < 2 then error("entrance track too short") end
+    local far = t.rails[k]
+    local x, y = far.position.x, far.position.y
+    local stock = {}
+    for _ = 1, opts.locomotives do stock[#stock + 1] = opts.locomotive end
+    for _ = 1, opts.wagons do stock[#stock + 1] = opts.wagon end
+    local made = {}
+    for j, name in ipairs(stock) do
+      if j > 1 then local g = gap(stock[j - 1], name); x, y = x + t.ux * g, y + t.uy * g end
+      local c = surface.create_entity({ name = name, position = { x, y }, direction = (t.d + 8) % 16, force = "player" })
+      if not c then error("could not place " .. name) end
+      made[#made + 1] = c
+      if c.type == "locomotive" then
+        c.get_fuel_inventory().insert({ name = opts.fuel, count = opts.fuel_count })
+        if opts.ash > 0 then c.get_burnt_result_inventory().insert({ name = "ash", count = opts.ash }) end
+      end
+    end
+    local train = made[1].train
+    local schedule = train.get_schedule()
+    -- i counts from the train nearest the station; the through trains come last.
+    local through = i > opts.trains
+    if not through then
+      schedule.add_record({ rail = stop.connected_rail, rail_direction = stop.connected_rail_direction, temporary = true,
+        wait_conditions = { { type = "time", compare_type = "and", ticks = 1 } } })
+      schedule.add_record({ station = stop.backer_name, temporary = true,
+        wait_conditions = { { type = "inactivity", compare_type = "and", ticks = 100 } } })
+    end
+    schedule.add_record({ rail = S.exit.rails[#S.exit.rails] })
+    schedule.go_to_station(1)
+    train.manual_mode = false
+    S.trains[#S.trains + 1] = { train = train, n = i, through = through }
+  end
+  out("%d trains of %d locomotive(s) + %d wagon(s), each with %d %s and %d Ash", #S.trains, opts.locomotives,
+    opts.wagons, opts.fuel_count, opts.fuel, opts.ash)
+  storage.S = S
+end
+
+local function station_tick(tick)
+  -- options.feed = {{item, at = {dx, dy}}}: a belt kept full, placed relative to the train stop.
+  for _, f in ipairs(opts.feed or {}) do
+    local p = { S.stop.position.x + f.at[1], S.stop.position.y + f.at[2] }
+    local belt = S.stop.surface.find_entities_filtered({ position = p, type = "transport-belt" })[1]
+    if belt then
+      for line = 1, 2 do belt.get_transport_line(line).insert_at_back({ name = f.item }) end
+    elseif tick == 1 then out("no belt at %.1f,%.1f", p[1], p[2]) end
+  end
+  local exit_far = S.exit.rails[#S.exit.rails].position
+  for _, t in ipairs(S.trains) do
+    local train = t.train
+    if train.valid and not t.gone then
+      local at = train.station == S.stop and train.state == defines.train_state.wait_station
+      if at and not t.arrived then
+        t.arrived = tick
+        t.fuel0, t.ash0 = fuel_of(train)
+        -- Does the whole train stand in the stop's block (so the next one can come up behind)?
+        local inside = true
+        for _, r in pairs(train.get_rails()) do
+          if not r.is_rail_in_same_rail_block_as(S.stop.connected_rail) then inside = false end
+        end
+        t.inside = inside
+      elseif t.arrived and not t.left and not at then
+        t.left = tick
+        local fuel, ash = fuel_of(train)
+        out("train %d: at the stop %.1f s after the start, stood %.1f s; fuel %d -> %d, Ash %d -> %d; %s", t.n,
+          t.arrived / 60, (tick - t.arrived) / 60, t.fuel0, fuel, t.ash0, ash,
+          t.inside and "wholly in the stop's block" or "NOT wholly in the stop's block")
+        S.done = (S.done or 0) + 1
+        S.served = (S.served or 0) + 1
+        S.first = S.first or t.arrived
+        S.last = tick
+      end
+      local front = train.front_stock.position
+      if (t.left or t.through) and (front.x - exit_far.x) ^ 2 + (front.y - exit_far.y) ^ 2 < 40 ^ 2 then
+        if t.through then
+          out("through train %d reached the exit after %.1f s", t.n, tick / 60)
+          S.done = (S.done or 0) + 1
+        end
+        for _, c in pairs(train.carriages) do c.destroy() end
+        t.gone = true
+      end
+    end
+  end
+  if not S.reported and S.done == #S.trains then
+    S.reported = true
+    local n = S.served or 0
+    out("%d trains served in %.1f s (first arrival to last departure): %.1f trains a minute", n,
+      n > 0 and (S.last - S.first) / 60 or 0, n > 1 and (n - 1) / ((S.last - S.first) / 3600) or 0)
+  end
+  if tick % 3600 == 0 and not S.reported then
+    local parts = {}
+    for _, t in ipairs(S.trains) do
+      if t.train.valid and not t.gone then
+        local p = t.train.front_stock.position
+        parts[#parts + 1] = string.format("%d@%.0f,%.0f/%d", t.n, p.x, p.y, t.train.state)
+      end
+    end
+    out("t %d s: %s", tick / 60, table.concat(parts, " "))
+  end
+end
+
 script.on_init(function()
   local surface = game.create_surface("junction")
   surface.generate_with_lab_tiles = true
   surface.always_day = true
+  if data.mode == "station" then station_setup(surface); return end
   local box = build(surface)
   if data.mode == "map" then map_mode(surface, box)
   elseif data.mode == "ends" then ends_mode(surface)
@@ -919,9 +1111,11 @@ end)
 script.on_load(function()
   if storage.T then T = storage.T end
   if storage.R then R = storage.R end
+  if storage.S then S = storage.S end
 end)
 
 script.on_event(defines.events.on_tick, function(event)
   if data.mode == "traffic" and T.tracks then traffic_tick(event.tick) end
   if data.mode == "run" and R.train then run_tick(event.tick) end
+  if data.mode == "station" and S.trains then station_tick(event.tick) end
 end)
