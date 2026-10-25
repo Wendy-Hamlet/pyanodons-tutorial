@@ -30,6 +30,8 @@
 --     options.ash Ash) from the entrance to the stop with the schedule Cybersyn gives a train it
 --     sends to a refueler; logs per train when it stood at the stop, how long, fuel and Ash before
 --     and after, and whether it stood wholly in the stop's block. options.feed keeps belts full.
+--   mode "build": builds the whole blueprint and reports what could not be built and which
+--     electric entities are outside every pole's supply area.
 --   options.locomotives (default 1) and options.wagons: the trains of modes "traffic" and "station".
 -- Results are CF-JUNCTION log lines. Run by tools/junction-bench.ps1, which writes bench-data.lua:
 -- the name, the mode, the options and the blueprint's entities as JSON.
@@ -918,17 +920,37 @@ local function build_all(surface)
   inv[1].set_stack({ name = "blueprint" })
   local r = inv[1].import_stack(data.blueprint)
   if r ~= 0 then out("import_stack returned %d", r) end
+  local want = {}
+  for _, e in pairs(inv[1].get_blueprint_entities() or {}) do want[e.name] = (want[e.name] or 0) + 1 end
   local ghosts = inv[1].build_blueprint({ surface = surface, force = "player", position = { 0, 0 },
     build_mode = defines.build_mode.forced })
-  local n = 0
+  local n, got, unpowered, built = 0, {}, {}, {}
   for _, g in pairs(ghosts) do
     if g.valid and g.type == "entity-ghost" then
       local _, e = g.silent_revive({ raise_revive = true })
-      if e then n = n + 1 end
+      if e then
+        n = n + 1
+        got[e.name] = (got[e.name] or 0) + 1
+        built[#built + 1] = e
+      end
     end
   end
   inv.destroy()
-  out("built %d of %d entities", n, #ghosts)
+  -- Checked once everything stands: a pole built later still powers what came before it.
+  for _, e in ipairs(built) do
+    -- (electric_network_id: in some pole's supply area; the lab has nothing that makes power.)
+    if e.valid and e.prototype.electric_energy_source_prototype and not e.electric_network_id then
+      unpowered[#unpowered + 1] = string.format("%s@%.1f,%.1f", e.name, e.position.x, e.position.y)
+    end
+  end
+  local missing = {}
+  for name, k in pairs(want) do
+    if (got[name] or 0) < k then missing[#missing + 1] = string.format("%s %d of %d", name, got[name] or 0, k) end
+  end
+  table.sort(missing)
+  out("built %d entities%s; outside any pole's supply area: %s", n,
+    #missing > 0 and ("; not built: " .. table.concat(missing, ", ")) or "",
+    #unpowered > 0 and table.concat(unpowered, " ") or "none")
 end
 
 local function fuel_of(train)
@@ -1094,6 +1116,7 @@ script.on_init(function()
   surface.generate_with_lab_tiles = true
   surface.always_day = true
   if data.mode == "station" then station_setup(surface); return end
+  if data.mode == "build" then build_all(surface); return end
   local box = build(surface)
   if data.mode == "map" then map_mode(surface, box)
   elseif data.mode == "ends" then ends_mode(surface)

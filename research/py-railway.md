@@ -131,8 +131,8 @@ offset           -21 ............ -14 ............ -7 ..... -1
 
 ## The author's first refuel station (2026-10-25)
 
-The author chose 1+2 (one Locomotive, two Cargo wagons) and built 加油站-1 (export of 12:39, not
-yet in blueprints/): a one-way turnaround loop that fits the station stubs of their
+The author chose 1+2 (one Locomotive, two Cargo wagons) and built 加油站-1 (export of 12:39; the
+final version of 13:41 is `blueprints/rail-refuel.txt`): a one-way turnaround loop that fits the station stubs of their
 棋盘格-边-车站定位 (the early grid edge plus, on each side of the stretch, an entrance and an exit
 stub 6 tiles apart), a 22-tile platform, a Cybernetic combinator in refueler mode, on one side 5
 Mechanical inserters fuelling from 5 one-slot wooden chests fed by a belt, on the other 5
@@ -162,6 +162,10 @@ refueler: the stop's own rail for 1 tick, then the stop until 100 ticks of inact
   refueler works anyway (Cybersyn reads only its settings and wires); a station's combinator must
   be powered, as Cybersyn reads no signals from an unpowered one.
 - The Ash chests hold 16 slots × 1,000 Ash each, 80,000 in all: about a thousand refuels.
+
+The author's final version (13:41) names the stop 加油站, sets its train limit to 3 and adds a
+Small electric pole wired to the big one: rebuilt in the engine, the combinator stands in a pole's
+supply area, and the four trains refuel exactly as before (22.6 s, 70 → 150, Ash 0).
 
 ## Cybersyn 2.1.2: how it runs
 

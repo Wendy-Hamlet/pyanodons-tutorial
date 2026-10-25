@@ -66,6 +66,9 @@ signal rules: [Rail junctions at grade](../research/rail-junctions.md).
 | `rail-grid-edge-early.txt` | 棋盘格-边-初期 | The same, two-track | Junctions identical to `rail-junction-early.txt` |
 | `rail-grid.txt` | 棋盘格-铁轨 | Grid piece: four four-track junctions in a square | As a whole 66.1 and 70.8 trains a minute, no deadlock |
 | `rail-grid-early.txt` | 棋盘格-铁轨-初期 | The same, two-track | As a whole 57.8 and 58.5 trains a minute, no deadlock; with one more rail signal on each exit track 25 tiles after the junction's exit signal, 64.3 and 62.5 (the four-track grid gains nothing from it) |
+| `rail-grid-edge-poles.txt` | 棋盘格-边-小型电线杆 | Small electric poles for a grid edge, laid over either version: 36 poles 7 tiles apart beside the road's centre line (export of 2026-10-25 13:41, like the next two) | Built with both grid edges: no pole touches a rail |
+| `rail-grid-edge-stations.txt` | 棋盘格-边-车站定位 | `rail-grid-edge-early.txt` plus station stubs: on each side of the stretch an entrance and an exit stub 6 tiles apart. The main-line signal before each diverge is a chain signal, so a train finding the station full waits on the main line: a station on these stubs needs a train limit no larger than the trains it holds | With `rail-refuel.txt`: a fourth train waited on the main line (a train going past took 66.7 s instead of 24.9) |
+| `rail-refuel.txt` | 加油站-1 | Refuel station for 1+2 trains (Cybersyn refueler) on those stubs: a one-way turnaround loop, 22-tile platform, 5 inserters fuelling from one-slot chests on a belt, 5 taking the Ash out; train limit 3 (one refuelling, two waiting inside the loop) | Every train 70 → 150 Raw coal and all Ash out in 22.6 s, 1.7 trains a minute; combinator powered; see [Railways under Pyanodons](../research/py-railway.md) |
 
 ## How the blueprints are labelled
 
