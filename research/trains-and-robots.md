@@ -151,3 +151,50 @@ Boiler gives half its value (the crushed-coal block: 140 MW of fuel, 70 MW).
    trains and one for roboports.
 7. City blocks (Cellforge) with trains and construction robots. Logistic robots come with green
    science.
+
+## 7. Rubber before the trains? (save of 41:07, 2026-10-26)
+
+The author began the battery line (Factory Planner, 41:07: 6 Batteries a minute) and met Rubber
+and Boron trioxide on the way. The Battery recipe takes neither; they come in with the first Auogs.
+Facts from the data, every recipe path available at the save's research checked; rates from the
+recorder and `tools/rate-probe` on the save of 41:07.
+
+- **Where they come in.** The Auog paddock and the Reproductive complex have a base speed of
+  −100 % (`effect_receiver`), so they run only with Auogs in their module slots, and the complex's
+  pup recipe accepts no other module. The first Auogs therefore come from the Creature chamber: 2
+  Generic earth DNA samples, 5 Bio samples, 3 cDNA, an Auog codex and a Bear DNA sample each. A cDNA
+  takes three Laboratory instruments (one itself, one in its Retrovirus, one in its Plasmids); one
+  Laboratory instrument takes 5 Rubber and 1.5 Optical sets, and 3 Optical sets take 1 Boron
+  trioxide. **One Auog: 45 Rubber and 4.5 Boron trioxide**, and 145 red science packs for its
+  samples. Two Auogs, one in the complex and one in a paddock, start the breeding; pups and
+  maturing take no Rubber.
+- **The trains need neither.** Locomotive, Cargo wagon, rails, signals, train stop, Battery and the
+  combinators can all be made without Rubber or Boron trioxide at this research.
+- **Robots.** Construction robotics can be researched now (Battery - Stage 1 and Automation 2 are
+  done; 200 units). The author still carries the 100 Construction pynobots MK 04 (speed 0.24,
+  payload 5; MK 01: 0.08 and 1). Py roboport MK 01: 2 Batteries, no Rubber; the Drone recharging
+  station and the Construction Zone Extender need neither. A Construction pynobot MK 01 takes 3
+  Belts (1.5 Rubber), 2 Batteries, 50 Fish oil and a Gearbox MK 01 (20 more Fish oil), and 3
+  Intermetallics. Fish oil limits it first: the fish block gives 0.417 a second (chapter 14), so at
+  70 a robot at most 21 robots an hour; the battery draft allows 3 a minute and one Heavy oil
+  refinery's Rubber 10. In the save of 41:07 the fish block stands full (nothing takes its Fish
+  oil). Logistic pynobots need green science (Logistic robotics).
+- **What Rubber in quantity costs.** One Rubber: 100 Aromatics (50 Polybutadiene), 100 Anthracene
+  oil (2 Carbon black), 50 Vacuum, 0.5 Titanium plate, 1 Latex. The author's draft for 60 a minute
+  needs 100 Aromatics a second; the base made 17.2 (recorder, 41:40–42:20), and the zinc drills
+  alone use about 22 while they run. The Boron trioxide draft for 60 a minute needs 66.7 Hydrogen
+  a second and 34.5 MW; the Hydrogen to spare is about 4.8 a second (chapter 15, with the vents).
+- **Later.** Green science takes Rubber for good: each Animal sample and every third Solidified
+  sarcorus needs a Plasmids, so 12 packs take 2⅓ Laboratory instruments, about 12 Rubber and 1.2
+  Boron trioxide.
+- **So: no Rubber in quantity before the trains**, robots or not. One Heavy oil refinery with the
+  Reformer and the Multi-purpose cracker part-time (a quarter of the draft) makes 15 a minute:
+  enough for two Auogs (90), a hundred MK 01 robots (150) and later green science. While it runs it
+  draws 25 Aromatics a second, more than the base makes, so a small chest that fills and stops suits
+  it. Boron trioxide likewise: a few a minute, which the Hydrogen now vented can cover. The nearest
+  Raw borax lies at x 400–464, y −48 to −16 (about 19 M), at the west end of the rail network,
+  within belt reach (Crystal mine MK 01, which takes Syngas).
+- **Ammonia from the battery draft.** The draft gives 180 Ammonia a minute that nothing uses. Like
+  Coal gas and Hydrogen in chapter 15, it would stop Urea decomposition, and with it the Cyanic acid
+  and the Batteries, without an outlet. Ammonia counts as a gas for the Tailings pond (15 °C is its
+  gas temperature), so a pond only vents it, like a Gas vent.
