@@ -229,7 +229,8 @@ parameters for yours.
   each composition: [Railways under Pyanodons](research/py-railway.md)). `station` builds the whole
   blueprint with every setting (inserters, chests, combinators) around its train stop and sends
   trains to the stop with the schedule Cybersyn gives a refueler visit, optionally with more trains
-  passing by behind them: time at the stop, fuel and Ash before and after, whether the train
+  passing by behind them (`depot`: Cybersyn's depot schedule instead, several stops of one name,
+  `limit` overrides their train limits): time at the stop, fuel and Ash before and after, whether the train
   stands wholly in the stop's block, trains a minute. `build` builds the whole blueprint and reports
   what could not be built (overlaps) and electric entities outside every pole's supply area. Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
   save-reading setup.

@@ -167,6 +167,37 @@ The author's final version (13:41) names the stop 加油站, sets its train limi
 Small electric pole wired to the big one: rebuilt in the engine, the combinator stands in a pole's
 supply area, and the four trains refuel exactly as before (22.6 s, 70 → 150, Ash 0).
 
+## The author's depot (2026-10-25)
+
+车库-1 (export of 14:20, not yet in blueprints/): a turnaround loop for the same stubs as the refuel
+station. The entrance splits into four parallel diagonal tracks that join again at chain signals,
+then a single track round the loop splits onto four depot tracks (chain signal in, rail signal
+out, 22 tiles between, a stop 车库 with train limit 2 and a combinator in depot mode on each), which
+merge into the exit. The entrance with its four diagonals is one block (no signal where they split),
+so it holds one train.
+
+Measured with `tools/junction-bench` mode `station` on the grid piece with stubs (trains get
+Cybersyn's depot schedule: the depot's name with 100 ticks of inactivity as the only record; a
+train going past follows them on the main line, 31.1 s alone):
+
+| Train limit | Trains sent | What happened |
+|---|---|---|
+| 2 (as built) | 8 | One parked. The second took the second slot of that same stop and waited in the entrance block for its track, for good; everyone behind, the train going past included, stood on the main line; three depot tracks stayed empty |
+| 2 (as built) | 5 | Four parked, one per track; the fifth waited in the entrance block for good; the train going past got through (49.2 s) |
+| 1 | 4 | One per track, each wholly inside its block, 4 s apart; the train going past 45.0 s |
+| 1 | 5 | Four parked; the fifth found every stop full and stopped where it was, on the main line; the train going past never got through |
+
+- Each depot track holds one 1+2 train, so the right limit is 1. Cybersyn's own command
+  `/cybersyn-abolish-same-depot` sets depot stops without a limit to 1 (from its source).
+- A network needs at least as many depot slots (all stops of the depot's name together) as trains.
+- More tracks follow the same pattern (chain in, rail out, limit 1); the space to the junction
+  limits how many.
+- A waiting place behind each depot stop (to allow limit 2) does not suit Cybersyn's depot bypass
+  (on by default): a train returning to the depot is already available for orders (from its
+  source), so the one waiting behind a parked train can be given a delivery and then has to wait
+  until the parked one leaves. With bypass off (a depot combinator setting) only trains standing
+  at a depot stop get orders, but every train then drives back to the depot after each delivery.
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,

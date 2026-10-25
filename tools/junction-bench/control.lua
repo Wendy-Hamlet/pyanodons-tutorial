@@ -966,20 +966,28 @@ end
 
 local function station_setup(surface)
   build_all(surface)
+  -- One train stop, or several of one name (a depot); options.limit overrides their train limits.
   local stops = surface.find_entities_filtered({ type = "train-stop" })
-  if #stops ~= 1 then error(#stops .. " train stops") end
+  if #stops == 0 then error("no train stop") end
   local stop = stops[1]
-  out("train stop %q at %.1f,%.1f, train limit %s", stop.backer_name, stop.position.x, stop.position.y,
-    stop.trains_limit < 4e9 and stop.trains_limit or "none")
+  for _, s in ipairs(stops) do
+    if s.backer_name ~= stop.backer_name then error("train stops of different names") end
+    if opts.limit then s.trains_limit = opts.limit end
+    out("train stop %q at %.1f,%.1f, train limit %s", s.backer_name, s.position.x, s.position.y,
+      s.trains_limit < 4e9 and s.trains_limit or "none")
+  end
   if stop.backer_name == "" then stop.backer_name = "station" end
-  S.stop = stop
+  S.stop, S.stops = stop, {}
+  for _, s in ipairs(stops) do S.stops[s.unit_number] = s end
   -- The entrance and exit: the station's two open track ends, or, with options.entrance_at and
-  -- options.exit_at ({dx, dy} from the train stop), the track ends nearest those points.
+  -- options.exit_at ({dx, dy} from the train stops' middle), the track ends nearest those points.
   local ends = track_ends(rails_of(surface))
+  local cx, cy = 0, 0
+  for _, s in ipairs(stops) do cx, cy = cx + s.position.x / #stops, cy + s.position.y / #stops end
   local function nearest(at)
     local best, bd
     for _, e in ipairs(ends) do
-      local d = (e.x - stop.position.x - at[1]) ^ 2 + (e.y - stop.position.y - at[2]) ^ 2
+      local d = (e.x - cx - at[1]) ^ 2 + (e.y - cy - at[2]) ^ 2
       if not bd or d < bd then best, bd = e, d end
     end
     return best
@@ -992,7 +1000,7 @@ local function station_setup(surface)
     local inbound = e == ends[1] and opts.entrance_at ~= nil
     if not opts.entrance_at then
       inbound = game.train_manager.request_train_path({ type = "any-goal-accessible",
-        starts = { { rail = far, direction = end_facing(far, -ux, -uy) } }, goals = { stop } }).found_path
+        starts = { { rail = far, direction = end_facing(far, -ux, -uy) } }, goals = stops }).found_path
     end
     local t = { ux = ux, uy = uy, rails = rails, d = e.d }
     -- Rail signals along the extension, facing the way trains run.
@@ -1004,6 +1012,8 @@ local function station_setup(surface)
   -- options.trains trains queue on the entrance track, each with options.fuel_count fuel and
   -- options.ash Ash; they get the schedule Cybersyn gives a train it sends to a refueler: a rail
   -- record on the stop's own rail (1 tick), the stop (100 ticks of inactivity), then the exit.
+  -- options.depot: instead the schedule Cybersyn gives a train at its depot, the stop's name with
+  -- 100 ticks of inactivity as its only record: the trains park and stay.
   -- options.through more trains queue behind them and only pass by, to the exit.
   S.trains = {}
   local t = S.inn
@@ -1032,13 +1042,18 @@ local function station_setup(surface)
     local schedule = train.get_schedule()
     -- i counts from the train nearest the station; the through trains come last.
     local through = i > opts.trains
-    if not through then
+    if through then
+      schedule.add_record({ rail = S.exit.rails[#S.exit.rails] })
+    elseif opts.depot then
+      schedule.add_record({ station = stop.backer_name,
+        wait_conditions = { { type = "inactivity", compare_type = "and", ticks = 100 } } })
+    else
       schedule.add_record({ rail = stop.connected_rail, rail_direction = stop.connected_rail_direction, temporary = true,
         wait_conditions = { { type = "time", compare_type = "and", ticks = 1 } } })
       schedule.add_record({ station = stop.backer_name, temporary = true,
         wait_conditions = { { type = "inactivity", compare_type = "and", ticks = 100 } } })
+      schedule.add_record({ rail = S.exit.rails[#S.exit.rails] })
     end
-    schedule.add_record({ rail = S.exit.rails[#S.exit.rails] })
     schedule.go_to_station(1)
     train.manual_mode = false
     S.trains[#S.trains + 1] = { train = train, n = i, through = through }
@@ -1061,16 +1076,21 @@ local function station_tick(tick)
   for _, t in ipairs(S.trains) do
     local train = t.train
     if train.valid and not t.gone then
-      local at = train.station == S.stop and train.state == defines.train_state.wait_station
+      local st = train.station
+      local at = st and S.stops[st.unit_number] and train.state == defines.train_state.wait_station
       if at and not t.arrived then
         t.arrived = tick
         t.fuel0, t.ash0 = fuel_of(train)
         -- Does the whole train stand in the stop's block (so the next one can come up behind)?
         local inside = true
         for _, r in pairs(train.get_rails()) do
-          if not r.is_rail_in_same_rail_block_as(S.stop.connected_rail) then inside = false end
+          if not r.is_rail_in_same_rail_block_as(st.connected_rail) then inside = false end
         end
         t.inside = inside
+        if opts.depot then
+          out("train %d parked at the stop at %.1f,%.1f after %.1f s; %s", t.n, st.position.x, st.position.y,
+            tick / 60, inside and "wholly in the stop's block" or "NOT wholly in the stop's block")
+        end
       elseif t.arrived and not t.left and not at then
         t.left = tick
         local fuel, ash = fuel_of(train)
@@ -1099,12 +1119,12 @@ local function station_tick(tick)
     out("%d trains served in %.1f s (first arrival to last departure): %.1f trains a minute", n,
       n > 0 and (S.last - S.first) / 60 or 0, n > 1 and (n - 1) / ((S.last - S.first) / 3600) or 0)
   end
-  if tick % 3600 == 0 and not S.reported then
+  if tick % 3600 == 0 and (not S.reported or opts.depot) then
     local parts = {}
     for _, t in ipairs(S.trains) do
       if t.train.valid and not t.gone then
         local p = t.train.front_stock.position
-        parts[#parts + 1] = string.format("%d@%.0f,%.0f/%d", t.n, p.x, p.y, t.train.state)
+        parts[#parts + 1] = string.format("%d@%.0f,%.0f/%s", t.n, p.x, p.y, t.arrived and "parked" or t.train.state)
       end
     end
     out("t %d s: %s", tick / 60, table.concat(parts, " "))
