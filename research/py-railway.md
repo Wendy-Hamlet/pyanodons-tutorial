@@ -198,6 +198,28 @@ train going past follows them on the main line, 31.1 s alone):
   until the parked one leaves. With bypass off (a depot combinator setting) only trains standing
   at a depot stop get orders, but every train then drives back to the depot after each delivery.
 
+The author's revision (export of 15:18): eight tracks, train limit 1 each, the entrance diagonals
+gone (one track to the loop) and with them the rail signal at the entrance; plus 车库扩展模块, one
+more track, a copy of the bottom one: laid 4 tiles below the bottom track it joins the loop's
+switch column and the exit merge. Measured the same way (a train going past alone: 34.1 s):
+
+| Depot | Trains sent | Parked (wholly inside their track's block) | Train going past |
+|---|---|---|---|
+| 8 tracks | 1 | 1 | 39.4 s |
+| 8 tracks | 8 | all, the last after 65.2 s | 81.5 s |
+| 8 tracks, a rail signal back at the entrance | 1 | 1 | 37.0 s |
+| 8 tracks, a rail signal back at the entrance | 8 | all, the last after 51.9 s | 67.8 s |
+| 10 tracks (2 modules) | 10 | all | 98.6 s |
+| 27 tracks (19 modules) | 27 | all, 5 s apart at the near tracks, 10 s at the far ones, the last after 227.6 s | 248.3 s |
+
+- With no signal at the depot's entrance (nor on the stub), the whole loop belongs to the
+  main-line block at the diverge: the main line stays closed until each train has gone round the
+  loop. A rail signal at the entrance (on the last straight joint before the curve, 1647.5,-168.5
+  in the blueprint) frees it as soon as the train is in.
+- Up to 19 modules (27 tracks) build on the grid piece with stubs without touching anything
+  (tested that far). Every track is one more train in the switch column and the exit merge, which
+  are single blocks, so the far tracks take longer to reach and to leave.
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,
