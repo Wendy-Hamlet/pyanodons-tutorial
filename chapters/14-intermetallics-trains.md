@@ -431,5 +431,5 @@ same in the save of 35:07 with the author's own fix (section 5).
 - The screenshots: taken by the author with the companion mod (`/pt-shots`) at 35:07, after the
   fix of the fish block, areas planned with `node tools/shots.js plan`.
 
-Next: chapter 15 (to come).
+Next: [chapter 15](15-train-preparation-1.md).
 

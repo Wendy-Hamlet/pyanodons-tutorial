@@ -23,6 +23,7 @@ scripts used, so you can re-check them against your own mod versions.
 12. [Nexelit mining and nickel smelting](chapters/12-nexelit-nickel.md)
 13. [Geothermal power and antimony oxide](chapters/13-geothermal-antimony-oxide.md)
 14. [Intermetallics and getting ready for trains](chapters/14-intermetallics-trains.md)
+15. [Train preparation 1](chapters/15-train-preparation-1.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
@@ -202,6 +203,9 @@ parameters for yours.
 - `wire-probe/` (with `save-probe.ps1 -Ticks 10 -Variant "x:y;x:y"`): how the entities on those
   tiles are switched by circuits: their enable and logistic conditions, what their wires connect
   to and the signals on those networks.
+- `trains-probe/` (with `save-probe.ps1 -Ticks 10`): every train in a save (cars, state, manual
+  or automatic, schedule with its wait conditions, fuel and burnt results, cargo) and every train
+  stop (name, place, train limit, trains bound for it).
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and

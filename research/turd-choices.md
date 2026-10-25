@@ -118,7 +118,26 @@ Caravans carrying goods from outposts (they too move 35 % faster), less so for a
 trains. With Planetary adaptation picked, each Dig-o-saurus still takes 10 samples and 480 s in the
 chamber: a larger Dig site needs that sample production planned.
 
-## 2. Discussed, not picked yet
+## 2. Researched, waiting for a pick
+
+### Moss farm upgrade (researched 35:21, no pick in the save of 41:05)
+
+Read with `tools/turd-probe` on the save of 41:05 ([chapter 15](../chapters/15-train-preparation-1.md)):
+"NOT SELECTED". The options, from pyalienlife 3.1.8 `prototypes/upgrades/moss.lua` (in-game names
+from the locale), for every Moss farm:
+
+- Spore sterilization: each Moss recipe also takes 1 Chlorinated water (Chemical plant, 3 s: 50
+  Pressurized water + 10 Chlorine + 1 Plastic bar), gives 40 % more Moss and takes a quarter less
+  time (rounded up).
+- Coarse substrate re-vitalization: the Moss recipes also give Coarse fraction (recipe Moss-n
+  5(n−1) to 5n), the farms take 50 % more energy.
+- Internal bioreactor: −250 % pollution in the farms; unlocks two recipes that turn refined gases
+  back (Refined syngas + Moss + Muddy sludge → Syngas; Refined natural gas + 2 Moss + Carbon
+  dioxide → Natural gas); a Moss farm then takes a Bioreactor to build.
+- High density culture: the Moss recipes no longer take Muddy sludge (Moss-2 takes 100 with its 100
+  Carbon dioxide, so the author's 15 farms take 8.3 a second, like the Carbon dioxide in section 1).
+
+## 3. Discussed, not picked yet
 
 ### Fish upgrade (discussed 2026-10-21)
 
@@ -173,14 +192,14 @@ turret and Biotechnology machines - Stage 2. Every rendering recipe (Vrauks, Fis
 Lard use would double the Meat and Guts that feed the Dig-o-sauruses (and the Formic acid with
 them); Mercy killing would double the Fish oil from rendering Fish.
 
-## 3. All the other upgrades
+## 4. All the other upgrades
 
 Not researched at 28:53, by the newest science pack they take (data).
 
 | Upgrade | Cost | Needs |
 |---|---|---|
 | Vrauks upgrade | 110 × (1 pY1 + 2 red) | Vrauks - Stage 2 |
-| Moss farm upgrade | 175 × (1 pY1 + 2 red) | Melamine |
+| Moss farm upgrade | 175 × (1 pY1 + 2 red) | Melamine (researched 35:21, see section 2) |
 | Fish upgrade | 275 × (1 pY1 + 2 red) | Cooling tower 1, Fish - Stage 1 (section 2) |
 
 - Green (Logistic science pack): Compost (also military), Arqad, Incubator, Seaweed, Xyhiphoe,

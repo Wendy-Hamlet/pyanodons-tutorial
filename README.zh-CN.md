@@ -21,6 +21,7 @@
 12. [蓝坷垃开采与镍矿冶炼](chapters/12-nexelit-nickel.zh-CN.md)
 13. [地热发电和氧化锑制备](chapters/13-geothermal-antimony-oxide.zh-CN.md)
 14. [金属间化合物与火车准备](chapters/14-intermetallics-trains.zh-CN.md)
+15. [火车准备 1](chapters/15-train-preparation-1.zh-CN.md)
 
 参考：[技巧与机制](research/techniques.zh-CN.md)（所有经过验证的机制、数字和设计原则汇总在一处）· [焦炭、炼钢、碎矿与灰烬分离](research/coke-and-steel.zh-CN.md)（第二章背后的配方、产率和副产物，以及灰烬分离）· [红瓶 + pY1 工厂](research/red-py1-factory.zh-CN.md)（总线、区块、简易电路板和火车前的关键中间体）· [作者的第一个存档](research/first-save-review.zh-CN.md)（哪些靠手搬，以及取代它们的总线）· [Py 下的铁路](research/py-railway.zh-CN.md)（不限速、各种编组的速度和续航、Cybersyn 的运行机制）· [平交铁路路口](research/rail-junctions.zh-CN.md)（作者三种路口的实测、信号问题和改进版）· [地图设置](research/map-settings.zh-CN.md)（Py 推荐预设、作者的改动及其对地图的影响）· [T.U.R.D. 选择](research/turd-choices.zh-CN.md)（作者已做的选择、尚未决定的，以及全部升级）· [采矿机](research/mining-drills.zh-CN.md)（每种采矿机每个矿折合多少原煤，以及哪种发电划算）· [地热发电](research/geothermal.zh-CN.md)（机制与实测：每个裂隙约 75 MW）· [氧化锑](research/antimony-oxide.zh-CN.md)（到火车和机器人为止要多少，以及两种规模）· [蓝图](blueprints/README.zh-CN.md)（实测过的设计，可直接导入）。
 
@@ -68,6 +69,7 @@
 - `turd-probe/`（配合 `save-probe.ps1 -Ticks 10`）：通过 pyalienlife 自己的接口读出存档里已研究的 T.U.R.D. 升级和各自选中的选项，以及已生效的隐藏插件和建筑替换（`research/turd-choices.zh-CN.md`）。
 - `status-probe/`（配合 `save-probe.ps1 -Variant 名称,刻数`）：存档载入后逐刻记录某种实体每一台的状态和电力缓冲、各状态所占比例，以及插件和信标给它的效果：用来区分基地真实的状态和某一刻的假象。
 - `wire-probe/`（配合 `save-probe.ps1 -Ticks 10 -Variant "x:y;x:y"`）：这些格子上的实体怎样受电路控制：启用条件和物流条件、导线连到哪些实体，以及这些电路网络上的信号。
+- `trains-probe/`（配合 `save-probe.ps1 -Ticks 10`）：存档里的每列车（车辆、状态、手动或自动、时刻表及等待条件、燃料和燃烧剩余物、货物）和每个车站（名字、位置、列车数量上限、正开往它的列车）。
 - `bp-bench.ps1 -Bench <名称> [-Variant <方案>]` + `bp-bench/`：蓝图测试台。把 `blueprints/` 里的一张蓝图放到空地图上（用游戏自己的蓝图建造，补齐插件请求），用电力接口给每个电网供电，用脚本保持输入带满载、清空输出带（以及作为流体出口的指定管道，全部清空或按设定速度取走），让研究中心一直研究，并报告每台机器完成的次数与它实际速度下配方允许的次数之比、状态采样、等待中的机器缺哪种原料，以及指定观察的实体。每个测试在 `bp-bench/benches/` 里有一个 JSON 文件（蓝图、输入、输出、流体出口、启动时预放的物品、科技、预热和测量时间、方案）。在读档环境里运行。
 - `junction-bench.ps1 -Blueprint <文件或名称> -Mode map|traffic|edit|run|station|build [-Options <json 或 @文件.json>]` + `junction-bench/` + `junction-bench.js`：铁路路口测试台。把一张蓝图里的铁轨和信号建到空地图上。`map` 写出铁轨、闭塞区、信号、轨道端点，以及任意两个端点之间的路径和沿途经过的信号；`junction-bench.js render` 把它画出来（闭塞区分色、普通信号和连锁信号、指定位置画红圈），`paths` 列出路径，`symmetry` 列出四个方向不一致的铁轨和信号。`traffic` 给每个轨道端点接 320 格带信号的直轨，用寻路找出入口和出口，在每条入口轨道上始终放一列车等着（默认是 Py 的机车加两节货运车厢，`locomotives` 和 `wagons` 可改，可设为以线路速度进场），按场景（混合、直行、左转、右转）开往各出口方向（`lanes` 则让每列车随机去一条出口车道，用来测换道），报告每个方向每分钟通过的列数、穿过路口的时间、列车在哪里等待、死锁，以及一列车都没过的入口。`edit` 把一个方向的信号旋转复制到其他方向，把所有普通信号改成连锁信号，在入口放连锁信号、出口放普通信号，然后把路口写成蓝图字符串。`run` 让一列车（`stock`，燃料和货物可选）在棋盘格蓝图上绕一个街区一直跑到燃料烧完，记录速度、距离和燃料随时间的变化（各编组的续航见[Py 下的铁路](research/py-railway.zh-CN.md)）。`station` 把整张蓝图连同所有设置（机械臂、箱子、运算器）建出来，按 Cybersyn 派车去加油站的时刻表把列车送到它的车站，还可以在后面跟几列只是路过的列车（`depot`：改用 Cybersyn 的车库时刻表，可有多个同名车站，`limit` 改写它们的列车数量上限）；报告每列车在站时间、前后的燃料和灰烬、是否整列停在车站闭塞区内，以及每分钟服务几列。`build` 把整张蓝图建出来，报告哪些实体建不了（重叠）、哪些用电实体不在任何电线杆的供电范围内。结果见[平交铁路路口](research/rail-junctions.zh-CN.md)。在读档环境里运行。
 - `agent/`：让 Claude 在无界面服务器上自己玩 Py（远程控制客户端 `a.js`、带无玩家角色的 `pt-agent` 模组、额度监控 `quota.js`），见[它的说明](tools/agent/README.md)；游玩日志在 [research/agent-play](research/agent-play/journal.md)。
