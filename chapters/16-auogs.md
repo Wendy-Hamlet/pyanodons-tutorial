@@ -22,7 +22,7 @@ Conclusions:
   pups, with no Rubber at all.
 - **One Auog was enough.** The Creature chamber ran from 43:11 to 43:17; from its one Auog the
   Reproductive complex and the paddocks made 69 pups and 46 more Auogs by 43:42. 33 are in the
-  author's inventory and 4 in the paddock that stands; the battery draft needs about 26.
+  author's inventory and 4 in the one paddock on the ground; the battery draft needs about 26.
 - **Rubber in a small line.** The author cut the draft from 60 to 15 a minute after the analysis
   (one Rubber takes 100 Aromatics; the base makes about 17 a second). It made 69 Rubber; its Latex
   goes in by hand.
@@ -108,6 +108,8 @@ battery line needs it for Urea.
 
 ## 3. Rubber: a small line
 
+![The Rubber line at 43:42: left the Heavy oil refinery; in the middle the Multi-purpose cracker with the chimney of its Exhaust pipe for Steam, and to its right the Pressure pump for Vacuum; right the Reformer, making Carbon black from Anthracene oil; the small chests hold Carbon black, Latex, Titanium plates and the Rubber. Above, the Coke boilers; below right, the Creosote unit of chapter 15](../images/ch16-rubber.jpg)
+
 One Rubber (Heavy oil refinery, 4 s) takes 50 Polybutadiene, 2 Carbon black and a Latex;
 Polybutadiene (Multi-purpose cracker, 2 s) is 200 Aromatics, 1,000 Water and a Titanium plate for
 100, with 1,000 Steam besides; Carbon black (Reformer, 2 s) is 200 Anthracene oil and 100 Vacuum
@@ -128,6 +130,8 @@ and 9 Rubber wait in the output chest.
 
 ## 4. Boron trioxide
 
+![The Raw borax outpost at (436, −40), 43:42: the Crystal mine on the borax field (bottom) gets Syngas by the pipe from the west; its Raw borax goes up into the Washer, whose Borax waits in the chest above it and whose Muddy sludge flows into the Sinkhole on the right](../images/ch16-borax.jpg)
+
 The chain (data): Raw borax (Crystal mine MK 01, with Syngas) → Borax (Washer, with Water; Muddy
 sludge besides) → Diborane (Electrolyzer, Borax and Hydrogen) → Boric acid (Electrolyzer, Diborane
 and Water) → Boron trioxide (High pressure furnace, 200 Boric acid and a Coke). By the author's
@@ -145,6 +149,8 @@ The Optical sets come from Glassworks: one Boron trioxide and 100 Molten glass m
 air, 4); 45 were made.
 
 ## 5. The Hot air block
+
+![The Hot air block at 43:42: four Electric mining drills on Raw coal (bottom right) feed three High pressure furnaces; their Coke leaves on the belt below, their hot Coke oven gas rises into three Regenerative heat exchangers that heat Stone bricks; the bricks go round the belt loop to the fourth exchanger at the top, which makes Hot air with the Pressure pump's air; the chimney is the Exhaust pipe for the spent gas](../images/ch16-hot-air.jpg)
 
 The author's blueprint "11.25 hot air", with the note "启动后把木箱拆除" (take the wooden chest away
 once it runs):
@@ -168,6 +174,8 @@ Hot air also improves two recipes the author already has (Hot air - Stage 1): 50
 
 ## 6. Breeding
 
+![The Auog corner north of the base, 43:42: at the top the seven new Moss farms, not yet powered; in the middle the Auog paddock with its four Auogs and, left of it, the Barreling Machine for Water barrels; at the bottom the Zogna bacteria line: Glassworks for Molten glass and empty Petri dishes, assemblers for cable, Lamps and Petri dishes, the Pressure pump, the Incubator, the High pressure furnace for Agar and two Seaweed crop facilities](../images/ch16-auog.jpg)
+
 The Reproductive complex MK 01 (21 × 21 tiles) makes pups: 20 Native flora, 10 Moss and 5 Water
 barrels → 2 to 5 Auog pups and the empty barrels (15 s). The paddock raises them: 4 pups with the
 same food → 2 to 4 Auogs (160 s). With n Auogs inside, either machine runs at 0.5 × n: a paddock
@@ -184,6 +192,8 @@ yet powered: their Moss is for the paddocks' Manure (the draft has 6.46 Moss far
 each).
 
 ## 7. Stone, research and the run-down of chapter 15
+
+![Stone for research, 43:42: right, the eight Electric mining drills on the Stone field and rows of chests; the Stone runs west on the long belt to the twelve Stone furnaces (left), which make bricks of it. Above, the Jaw crushers and screeners of the copper screening; at the bottom the tops of the aluminium drills](../images/ch16-stone.jpg)
 
 The author's note at 41:08 says Stone is short. The recorder shows what it did:
 
