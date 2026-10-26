@@ -8,7 +8,8 @@
 // ptBili.title(text) sets the title; await ptBili.settings() sets the publish settings (see there);
 // await ptBili.cover() opens the cover upload and leaves its file input as #pt-cover (give it
 // cover.jpg), ptBili.confirmCover() accepts the crop dialog; ptBili.state(), ptBili.log() and
-// ptBili.markers() report; ptBili.relink(urls, n) fixes a published chapter's links to later ones.
+// ptBili.markers() report; ptBili.relink(urls, n) fixes a published chapter's links to later ones,
+// ptBili.addNext(prevUrl, url, label) adds a 下一章 link where the header had none.
 // Nothing is saved or published by this script (the editor saves its draft by itself; 发布 or
 // 提交文章 is clicked by hand or by the automation, after checking state()).
 (() => {
@@ -211,6 +212,25 @@
     return changed;
   }
 
-  window.ptBili = { log: () => log.slice(), markers, pending, title, cover, confirmCover, settings, state, relink };
+  // In a published chapter that went out before its next chapter existed (its header has only
+  // "上一章：[第 N 章](...)"): add " · 下一章：[label](url)" after the link to prevUrl. Counts as one
+  // of the article's 3 edits, so add it in the same edit as relink().
+  function addNext(prevUrl, url, label) {
+    const ed = editor();
+    let at = null;
+    ed.state.doc.descendants((node, pos) => {
+      if (at === null && node.type.name === 'link' && node.attrs.href === prevUrl) at = { node, pos };
+    });
+    if (!at) return `no link to ${prevUrl}`;
+    let has = false;
+    ed.state.doc.descendants((node) => { if (node.type.name === 'link' && node.attrs.href === url) has = true; });
+    if (has) return 'already there';
+    const { schema } = ed.state;
+    const link = schema.nodes.link.create({ ...at.node.attrs, href: url, text: label });
+    ed.view.dispatch(ed.state.tr.insert(at.pos + at.node.nodeSize, [schema.text(' · 下一章：'), link]));
+    return 'added';
+  }
+
+  window.ptBili = { log: () => log.slice(), markers, pending, title, cover, confirmCover, settings, state, relink, addNext };
   return 'ptBili ready';
 })();
