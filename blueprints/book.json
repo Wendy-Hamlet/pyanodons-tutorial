@@ -46,6 +46,7 @@
     "rail-grid-edge-stations",
     "rail-refuel",
     "rail-depot",
-    "rail-depot-extension"
+    "rail-depot-extension",
+    "hot-air"
   ]
 }

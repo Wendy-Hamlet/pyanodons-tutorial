@@ -467,4 +467,4 @@ The book now holds 45 blueprints.
 - Screenshots: taken by the author with the companion (`/pt-shots`) at 41:05, areas planned with
   `node tools/shots.js plan`.
 
-Next chapter: chapter 16 (to come): Batteries.
+Next: [chapter 16](16-auogs.md).

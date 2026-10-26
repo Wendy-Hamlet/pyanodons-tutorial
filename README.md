@@ -24,6 +24,7 @@ scripts used, so you can re-check them against your own mod versions.
 13. [Geothermal power and antimony oxide](chapters/13-geothermal-antimony-oxide.md)
 14. [Intermetallics and getting ready for trains](chapters/14-intermetallics-trains.md)
 15. [Train preparation 1](chapters/15-train-preparation-1.md)
+16. [Auogs](chapters/16-auogs.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
