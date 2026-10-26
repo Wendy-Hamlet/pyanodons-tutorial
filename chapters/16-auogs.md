@@ -162,7 +162,8 @@ once it runs):
 - one more: 20 Warm stone bricks + 150 Pressurized air → 150 Hot air + 20 Stone bricks (2 s), the
   bricks going round again; Pressurized air from a Pressure pump.
 
-The wooden chest holds the bricks to start the round. **Measured** (`tools/rate-probe` on the save
+The wooden chest holds the bricks that start the round; the author adds: "需要50石砖来启动（全部机器配方的两倍）"
+(it takes 50 Stone bricks to start, twice the machines' recipes). **Measured** (`tools/rate-probe` on the save
 of 43:42, with an Exhaust pipe placed on the Hot air pipe as a taker): 9.25 to 9.5 Hot air a second
 against 11.25 on the label, 25 Coke oven gas and 1.25 Warm stone bricks a second; the Coke the base
 made rose from 9.7 to 14.7 a second. The Hot air exchanger waited for bricks 88 % of the time (it
