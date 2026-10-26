@@ -123,6 +123,12 @@ local function entities(surface)
       }
       local ok, status = pcall(function() return e.status end)
       if ok and status then entry.status = STATUS[status] end
+      -- Py's Gas vents and Sinkholes void 20,000 of a fluid at a time and read no_ingredients
+      -- while the next batch fills: normal, so it is written as filling_batch.
+      if entry.status == "no_ingredients" and e.type == "furnace" then
+        local c = e.prototype.crafting_categories or {}
+        if c["py-venting"] or c["py-runoff"] then entry.status = "filling_batch" end
+      end
       -- Which electric network: a machine short of power may sit on a network of its own.
       local okn, network = pcall(function() return e.electric_network_id end)
       if okn and network then entry.network = network end

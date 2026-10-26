@@ -4,7 +4,9 @@
 -- crafting machine and drill once a second, grouped by name and recipe (drills: by mined
 -- resource; Boilers and Steam engines: by the row they stand in), and at the end prints what the
 -- whole base made and used per second, and each electric network's mean power by generator and
--- consumer kind.
+-- consumer kind. Py's Gas vents and Sinkholes void a fluid in batches of 20,000 (half a second
+-- each) and read no_ingredients while the next batch fills; they are reported as filling_batch,
+-- and the end prints what flowed into each of them per second (0 means nothing reaches it).
 -- Variant: "WARM,MEASURE" in seconds (default "60,600"), optionally ",STEP,name;name;..." for a
 -- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
 -- used per second in that step, and every machine group whose most frequent status changed; a
@@ -33,6 +35,20 @@ for name in (WATCH or ""):gmatch("[^;,]+") do watch[#watch + 1] = name end
 local function out(fmt, ...) log("CF-RATE " .. string.format(fmt, ...)) end
 local STATUS = {}
 for k, v in pairs(defines.entity_status) do STATUS[v] = k end
+
+-- Gas vents and Sinkholes: furnaces whose recipes void 20,000 of a fluid at a time.
+local function batch_void(e)
+  if e.type ~= "furnace" then return false end
+  local c = e.prototype.crafting_categories or {}
+  return c["py-venting"] or c["py-runoff"] or false
+end
+
+local function status_of(e)
+  local ok, status = pcall(function() return e.status end)
+  local s = ok and STATUS[status] or "-"
+  if s == "no_ingredients" and batch_void(e) then s = "filling_batch" end
+  return s
+end
 
 local function flow(stats)
   return { produced = stats.input_counts, consumed = stats.output_counts }
@@ -69,6 +85,17 @@ local function energy(net)
   return e
 end
 
+-- The recipe a machine runs, or for an idle furnace the one it ran last.
+local function recipe_name(e)
+  local r = e.get_recipe()
+  if r then return r.name end
+  if e.type == "furnace" and e.previous_recipe then
+    local name = e.previous_recipe.name
+    if type(name) ~= "string" then name = name.name end
+    return name
+  end
+end
+
 local function group_key(e)
   -- Boilers and Steam engines have no recipe: grouped by the row they stand in.
   if e.type == "boiler" or e.type == "generator" then
@@ -78,13 +105,7 @@ local function group_key(e)
     local t = e.mining_target
     return e.name .. " on " .. (t and t.name or "-")
   end
-  local r = e.get_recipe()
-  local name = r and r.name
-  if not name and e.type == "furnace" and e.previous_recipe then
-    name = e.previous_recipe.name
-    if type(name) ~= "string" then name = name.name end
-  end
-  return e.name .. " / " .. (name or "-")
+  return e.name .. " / " .. (recipe_name(e) or "-")
 end
 
 script.on_init(function()
@@ -154,8 +175,7 @@ local function step(now, t)
           local f = e.get_fluid(i)
           boxes[#boxes + 1] = f and string.format("%s %.0f", f.name, f.amount) or "-"
         end
-        local ok, status = pcall(function() return e.status end)
-        out("step %d s: %s at %s,%s: %s; fluid boxes: %s", t, e.name, x, y, ok and STATUS[status] or "-", table.concat(boxes, " | "))
+        out("step %d s: %s at %s,%s: %s; fluid boxes: %s", t, e.name, x, y, status_of(e), table.concat(boxes, " | "))
       end
     end
   end
@@ -232,6 +252,13 @@ script.on_nth_tick(60, function()
     storage.step_samples = {}
     storage.machines = surface.find_entities_filtered({ force = "player",
       type = { "assembling-machine", "furnace", "mining-drill", "boiler", "generator" } })
+    storage.voids = {}
+    for _, e in pairs(storage.machines) do
+      if batch_void(e) then
+        local f = e.get_fluid(1)
+        table.insert(storage.voids, { e = e, done = e.products_finished, box = f and f.amount or 0 })
+      end
+    end
     storage.nets = networks(surface)
     storage.power_before = {}
     for id, net in pairs(storage.nets) do storage.power_before[id] = energy(net) end
@@ -245,7 +272,7 @@ script.on_nth_tick(60, function()
       local k = group_key(e)
       local g = storage.samples[k] or {}
       storage.samples[k] = g
-      local s = STATUS[e.status] or "?"
+      local s = status_of(e)
       g[s] = (g[s] or 0) + 1
       if STEP then
         local h = storage.step_samples[k] or {}
@@ -295,6 +322,19 @@ script.on_nth_tick(60, function()
         for _, p in ipairs(list) do parts[#parts + 1] = string.format("%s %.2f", p[1], p[2]) end
         out("power network %d (%d poles) %s %.1f MW: %s", id, net.poles, side, total, table.concat(parts, ", "))
       end
+    end
+  end
+  -- What flowed into each Gas vent and Sinkhole: the batches it voided plus what its box gained.
+  for _, v in pairs(storage.voids or {}) do
+    local e = v.e
+    if e.valid then
+      local name = recipe_name(e)
+      local ing = name and prototypes.recipe[name].ingredients[1]
+      local f = e.get_fluid(1)
+      local batches = e.products_finished - v.done
+      local inflow = (batches * (ing and ing.amount or 20000) + (f and f.amount or 0) - v.box) / MEASURE
+      out("voided by %s at %s,%s: %s %.2f per s flowed in (%d batches; box %.0f)", e.name, e.position.x,
+        e.position.y, ing and ing.name or (f and f.name) or "-", inflow, batches, f and f.amount or 0)
     end
   end
   local keys = {}
