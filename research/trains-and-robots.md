@@ -197,4 +197,4 @@ recorder and `tools/rate-probe` on the save of 41:07.
 - **Ammonia from the battery draft.** The draft gives 180 Ammonia a minute that nothing uses. Like
   Coal gas and Hydrogen in chapter 15, it would stop Urea decomposition, and with it the Cyanic acid
   and the Batteries, without an outlet. Ammonia counts as a gas for the Tailings pond (15 °C is its
-  gas temperature), so a pond only vents it, like a Gas vent.
+  gas temperature), so a pond only vents it, like an Exhaust pipe.

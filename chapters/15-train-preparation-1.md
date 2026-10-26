@@ -385,7 +385,7 @@ What stops it, read from the machines' fluid boxes; the cause is the author's fi
    the Tar line its Steam go out, and Acetylene (lead drills), Calcium carbide and the rest that run
    on Coke follow; without Tar there is no Aromatics (zinc, plastic) and no Creosote (Treated wood
    for rails).
-2. **Hydrogen has nowhere to go.** With a Gas vent on the Coal gas pipe (at (−101.5, −168.5))
+2. **Hydrogen has nowhere to go.** With an Exhaust pipe on the Coal gas pipe (at (−101.5, −168.5))
    the coke block runs again, Tar is held at 40 a second by its one user (chapter 14), and after 40
    minutes everything stops a second time: the pitch refining columns (100 Pitch + 100 Steam →
    10 Hydrogen + Light oil, Naphthalene oil, Anthracene oil and Coke) stand "full output" with Hydrogen
@@ -393,10 +393,10 @@ What stops it, read from the machines' fluid boxes; the cause is the author's fi
    used 9.5 Hydrogen a second in the first ten minutes and none after: the same Glassworks burned no
    more.
 
-With a Gas vent on the Coal gas pipe and one on the Hydrogen pipe by the pitch columns (at (−161.5,
+With an Exhaust pipe on the Coal gas pipe and one on the Hydrogen pipe by the pitch columns (at (−161.5,
 −130.5)) the whole hour runs: Coal gas 54, Tar 34, Coke 10, Pitch 48 a second, 49 MW at the end,
 the same in a second run. Both are needed: with only the first the base stops at 40 minutes. The
-vents were only a test in a copy of the save. **The author's fix was the Stone**: at 41:08 their
+Exhaust pipes were only a test in a copy of the save. **The author's fix was the Stone**: at 41:08 their
 note says "发现缺石矿" (Stone is short), and by 41:30 eight Electric mining drills on Stone and twelve
 Stone furnaces for bricks fed research again (chapter 16). Stone rose to 17–19 a second, Molten glass
 to 14–15 and Syngas to 47–51, and the game never ran down: Tar stayed at 34 to 50 a second up to
