@@ -31,9 +31,11 @@ Conclusions:
   in Py every combinator except Cybersyn's own takes a Battery. The author makes Batteries next.
 - **On the map:** eight two-track junctions east of the base (x 480 to 1680), the refuel station,
   the depot, two trains standing without schedules. The track is not yet joined to the base.
-- **After the save the base runs down within 40 minutes**: Coal gas and then Hydrogen find no outlet,
-  and the coke block and the Tar line stop, taking Coke, Acetylene and Aromatics with them. A Gas
-  vent on each of the two pipes keeps it all running (measured). Zinc, stopped since chapter 13, runs
+- **Left alone, the save runs down within 40 minutes** (measured): research had stopped for want of
+  Stone, so the Glassworks that burn Syngas and Hydrogen for its Molten glass stood full, and the
+  two gases backed up into the coke block and the Tar line, taking Coke, Acetylene and Aromatics with
+  them. The author found the Stone shortage at 41:08 and fixed it; in the game the base kept running.
+  Zinc, stopped since chapter 13, runs
   again since the author turned an Overflow valve into a Check valve just after the save.
 
 ## At a glance
@@ -368,29 +370,40 @@ The save of 41:07, with the author's check valve, does the same; switching off t
 changes nothing. The game itself had started down the same road: Tar fell from 48 a second in the
 window to 40:30 to 31, 25 and 17 in the three windows before the save.
 
-What stops it, read from the machines' fluid boxes:
+What stops it, read from the machines' fluid boxes; the cause is the author's finding:
 
 1. **Coal gas has nowhere to go.** The coke block's first columns (Raw coal → 60 Coal gas + 30 Tar
    + 3 Coal) stand "full output" with their Coal gas box full already in the save. Its users are the
    aluminium drills (which take it only while the Intermetallics line takes Aluminium plates) and,
-   past the Overflow valve, the three Gasifiers, whose Syngas goes to plastic and the nickel drills,
-   both full. Without Coal
-   the next columns make no Coke and no Tar; without Coke the 20 Coke boilers that give the Tar line
-   its Steam go out, and Acetylene (lead drills), Calcium carbide and the rest that run on Coke
-   follow; without Tar there is no Aromatics (zinc, plastic) and no Creosote (Treated wood for rails).
+   past the Overflow valve, the three Gasifiers. Their Syngas has one big user: the Glassworks at
+   y 348.5 burn it, and Hydrogen, as fuel (chapter 8) for the Molten glass whose Flasks go into the
+   pY1 packs. **Research had stopped for want of Stone.** The author: the Stone came from crushing,
+   as a byproduct of the circuit-board and Intermetallics lines, and both stood. The recorder shows
+   it: from 40:40 Stone fell from 8 to 4.3 a second, red packs used from 0.2 to 0.01, Molten glass
+   from 10 to 2.9 and Syngas from 34 to 11; in the save the labs stand "missing science packs".
+   Without Coal the next columns make no Coke and no Tar; without Coke the 20 Coke boilers that give
+   the Tar line its Steam go out, and Acetylene (lead drills), Calcium carbide and the rest that run
+   on Coke follow; without Tar there is no Aromatics (zinc, plastic) and no Creosote (Treated wood
+   for rails).
 2. **Hydrogen has nowhere to go.** With a Gas vent on the Coal gas pipe (at (−101.5, −168.5))
    the coke block runs again, Tar is held at 40 a second by its one user (chapter 14), and after 40
    minutes everything stops a second time: the pitch refining columns (100 Pitch + 100 Steam →
    10 Hydrogen + Light oil, Naphthalene oil, Anthracene oil and Coke) stand "full output" with Hydrogen
    in their output box, Pitch backs up into tar refining, Tar into the coke block. In that run the base
-   used 9.5 Hydrogen a second in the first ten minutes and none after.
+   used 9.5 Hydrogen a second in the first ten minutes and none after: the same Glassworks burned no
+   more.
 
-**With a Gas vent on the Coal gas pipe and one on the Hydrogen pipe by the pitch columns (at (−161.5,
-−130.5)) the whole hour runs**: Coal gas 54, Tar 34, Coke 10, Pitch 48 a second, 49 MW at the end,
+With a Gas vent on the Coal gas pipe and one on the Hydrogen pipe by the pitch columns (at (−161.5,
+−130.5)) the whole hour runs: Coal gas 54, Tar 34, Coke 10, Pitch 48 a second, 49 MW at the end,
 the same in a second run. Both are needed: with only the first the base stops at 40 minutes. The
-vents were placed in a copy of the save as a test; a Tailings pond cannot keep a gas (it empties
-any gas that flows into it, chapter 3), so on these pipes it would only be another vent. A block that stands because nobody takes its product is normal here; these two
-gases are different, because the Coke and Tar the whole base needs come out of the same machines.
+vents were only a test in a copy of the save. **The author's fix was the Stone**: at 41:08 their
+note says "发现缺石矿" (Stone is short), and by 41:30 eight Electric mining drills on Stone and twelve
+Stone furnaces for bricks fed research again (chapter 16). Stone rose to 17–19 a second, Molten glass
+to 14–15 and Syngas to 47–51, and the game never ran down: Tar stayed at 34 to 50 a second up to
+43:40, and the save of 43:42 runs the whole hour (Coal gas 27 to 39, Tar 34, Coke 9.5 a second).
+A block that stands because nobody takes its product is normal here; these two gases are different,
+because the Coke and Tar the whole base needs come out of the same machines, and their outlet is
+research.
 
 ## 12. The blueprints
 
@@ -420,7 +433,8 @@ The book now holds 45 blueprints.
 - In Py, Cybersyn needs a constant combinator for every requesting station, and so Batteries.
   Depots, refuelers and providers work without.
 - A gas that comes out of the same machines as something the base needs must always have an outlet:
-  here Coal gas (with Coke and Tar) and Hydrogen (with the Tar line).
+  here Coal gas (with Coke and Tar) and Hydrogen (with the Tar line). Their outlet was the Glassworks
+  that burn them for research, so research standing still stopped the Coke.
 
 ## 14. How these facts were checked
 
@@ -448,7 +462,8 @@ The book now holds 45 blueprints.
 - The hour after the save: `tools/save-probe.ps1 -Probe rate-probe -Ticks 219700` on both saves, with
   timelines of these products and the fluid boxes of a pitch column and two tar refining units
   (`@x:y`); what-ifs `off@-136.5:-230.5` (the new Creosote unit), `py-gas-vent@-101.5:-168.5:south`
-  and `py-gas-vent@-161.5:-130.5:south`.
+  and `py-gas-vent@-161.5:-130.5:south`; the recorder's windows of Stone, packs, Molten glass and
+  Syngas from 40:20 to 42:00 and the save of 43:42 run for an hour the same way.
 - Screenshots: taken by the author with the companion (`/pt-shots`) at 41:05, areas planned with
   `node tools/shots.js plan`.
 

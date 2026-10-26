@@ -183,7 +183,7 @@ recorder and `tools/rate-probe` on the save of 41:07.
   oil (2 Carbon black), 50 Vacuum, 0.5 Titanium plate, 1 Latex. The author's draft for 60 a minute
   needs 100 Aromatics a second; the base made 17.2 (recorder, 41:40–42:20), and the zinc drills
   alone use about 22 while they run. The Boron trioxide draft for 60 a minute needs 66.7 Hydrogen
-  a second and 34.5 MW; the Hydrogen to spare is about 4.8 a second (chapter 15, with the vents).
+  a second and 34.5 MW; the base makes about 4.8 Hydrogen a second, and the Glassworks burn it as fuel (save of 43:42).
 - **Later.** Green science takes Rubber for good: each Animal sample and every third Solidified
   sarcorus needs a Plasmids, so 12 packs take 2⅓ Laboratory instruments, about 12 Rubber and 1.2
   Boron trioxide.
@@ -191,7 +191,7 @@ recorder and `tools/rate-probe` on the save of 41:07.
   Reformer and the Multi-purpose cracker part-time (a quarter of the draft) makes 15 a minute:
   enough for two Auogs (90), a hundred MK 01 robots (150) and later green science. While it runs it
   draws 25 Aromatics a second, more than the base makes, so a small chest that fills and stops suits
-  it. Boron trioxide likewise: a few a minute, which the Hydrogen now vented can cover. The nearest
+  it. Boron trioxide likewise: a few a minute, which a little of that Hydrogen covers. The nearest
   Raw borax lies at x 400–464, y −48 to −16 (about 19 M), at the west end of the rail network,
   within belt reach (Crystal mine MK 01, which takes Syngas).
 - **Ammonia from the battery draft.** The draft gives 180 Ammonia a minute that nothing uses. Like
