@@ -11,14 +11,17 @@
 -- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
 -- used per second in that step, and every machine group whose most frequent status changed; a
 -- name "@x:y" instead is the entity with fluid boxes on that tile (a machine, a tank, a pond):
--- its status, the fluid in each of its boxes and, for a crafting machine, its input slots.
+-- its status, the fluid in each of its boxes and, for a crafting machine, its input slots; a name
+-- "belts@x1:y1:x2:y2" is the items on the belts in that area.
 -- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
 -- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
 -- places it facing that way (north, east, south, west; default north; an inserter faces the side
 -- it picks up from), "name@x:y:dir:item" also gives an inserter that whitelist filter or a
 -- crafting machine that recipe; "infinity-pipe@x:y::steam*250" is an endless source of that
 -- fluid at that temperature (its output counts in no statistics: made minus used shows it; behind
--- an Underflow valve it only tops a line up, a stand-in for a block not built yet). Some names
+-- an Underflow valve it only tops a line up, a stand-in for a block not built yet), and
+-- "infinity-pipe@x:y::creosote*drain" empties the pipe it joins of that fluid (a stand-in for a
+-- Sinkhole; again made minus used shows what it took). Some names
 -- there are not
 -- entities: "sink@x:y" empties the belt on that tile every tick, "empty@x:y" the chest on that
 -- tile every second (a user taking all the block makes, for a block standing full); what they
@@ -164,9 +167,14 @@ script.on_init(function()
         if e.type == "assembling-machine" then
           e.set_recipe(item)
         elseif e.type == "infinity-pipe" then
-          local fluid, temperature = item:match("^([%w%-_]+)%*?(%d*)$")
-          e.set_infinity_pipe_filter({ name = fluid, percentage = 1,
-            temperature = tonumber(temperature), mode = "at-least" })
+          local drain = item:match("^([%w%-_]+)%*drain$")
+          if drain then
+            e.set_infinity_pipe_filter({ name = drain, percentage = 0, mode = "at-most" })
+          else
+            local fluid, temperature = item:match("^([%w%-_]+)%*?(%d*)$")
+            e.set_infinity_pipe_filter({ name = fluid, percentage = 1,
+              temperature = tonumber(temperature), mode = "at-least" })
+          end
         else
           e.use_filters = true
           e.inserter_filter_mode = "whitelist"
@@ -209,9 +217,28 @@ local function step(now, t)
           table.concat(boxes, " | "), #items > 0 and "; input: " .. table.concat(items, ", ") or "")
       end
     end
+    -- "belts@x1:y1:x2:y2": what the belts in that area carry.
+    local x1, y1, x2, y2 = name:match("^belts@([%-%.%d]+):([%-%.%d]+):([%-%.%d]+):([%-%.%d]+)$")
+    if x1 then
+      local count = {}
+      for _, b in pairs(game.surfaces.nauvis.find_entities_filtered({
+        area = { { tonumber(x1), tonumber(y1) }, { tonumber(x2), tonumber(y2) } },
+        type = { "transport-belt", "underground-belt", "splitter" } })) do
+        for i = 1, b.get_max_transport_line_index() do
+          for _, s in pairs(b.get_transport_line(i).get_contents()) do
+            count[s.name] = (count[s.name] or 0) + s.count
+          end
+        end
+      end
+      local list = {}
+      for n, c in pairs(count) do list[#list + 1] = string.format("%s %d", n, c) end
+      table.sort(list)
+      out("step %d s: belts in %s,%s to %s,%s: %s", t, x1, y1, x2, y2,
+        #list > 0 and table.concat(list, ", ") or "empty")
+    end
   end
   for _, name in ipairs(watch) do
-    if name:sub(1, 1) ~= "@" then
+    if name:sub(1, 1) ~= "@" and not name:match("^belts@") then
       local p, c = 0, 0
       for _, kind in ipairs({ "items", "fluids" }) do
         p = p + (now[kind].produced[name] or 0) - (storage.step_before[kind].produced[name] or 0)

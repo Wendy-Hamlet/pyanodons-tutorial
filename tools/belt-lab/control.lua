@@ -9,6 +9,9 @@
 --   7. A Splitter with a belt on one output only: how many items wait on the other output, with
 --      and without output priority on the side that has the belt, and with the author's filter: the
 --      Deconstruction planner (an item that never comes) sent to the side without a belt.
+--   8. Lane changes on an east-going belt fed on one lane: the author's two-tile change (a detour
+--      side-loaded into an underground entrance), mirrored for the other lane, the same detour with
+--      items on the wrong lane, and the plain-belt changes three and two tiles long.
 -- Lanes are named by compass side of a north-going belt: W (left, line 1) and E (right, line 2).
 
 local N, E, S, W = defines.direction.north, defines.direction.east, defines.direction.south, defines.direction.west
@@ -166,6 +169,46 @@ script.on_init(function()
     s.one_out[i] = { priority = (priority == "right" and "right, filter Deconstruction planner" or priority)
       .. (chest and "" or ", output belt blocked"), splitter = sp, chest = chest }
   end
+
+  -- 8. Lane changes. Each row: an east-going belt from x0, fed with iron ore on one lane at x0 + 1
+  --    (side-loaded from the north for the left lane, from the south for the right lane), the
+  --    change at x0 + 5 onwards, then output belts to a sink; the output belts' lanes are counted.
+  local function ug(x, y, dir, kind)
+    return must(surface.create_entity({ name = "underground-belt", position = { x + 0.5, y + 0.5 }, direction = dir,
+      type = kind, force = "player" }), "underground")
+  end
+  local changes = {
+    { label = "author's two tiles, detour south, items on the left lane", lane = "left", build = function(x, y)
+      belt(surface, x, y, S); belt(surface, x, y + 1, E); belt(surface, x + 1, y + 1, N)
+      ug(x + 1, y, E, "input"); ug(x + 3, y, E, "output"); return x + 4 end },
+    { label = "author's two tiles mirrored, detour north, items on the right lane", lane = "right", build = function(x, y)
+      belt(surface, x, y, N); belt(surface, x, y - 1, E); belt(surface, x + 1, y - 1, S)
+      ug(x + 1, y, E, "input"); ug(x + 3, y, E, "output"); return x + 4 end },
+    { label = "two tiles, detour south, items on the right lane", lane = "right", build = function(x, y)
+      belt(surface, x, y, S); belt(surface, x, y + 1, E); belt(surface, x + 1, y + 1, N)
+      ug(x + 1, y, E, "input"); ug(x + 3, y, E, "output"); return x + 4 end },
+    { label = "plain belts, three tiles, detour south, items on the left lane", lane = "left", build = function(x, y)
+      belt(surface, x, y, S); belt(surface, x, y + 1, E); belt(surface, x + 1, y + 1, E); belt(surface, x + 2, y + 1, N)
+      belt(surface, x + 1, y, E); belt(surface, x + 2, y, E); return x + 3 end },
+    { label = "plain belts, two tiles, detour south, items on the left lane", lane = "left", build = function(x, y)
+      belt(surface, x, y, S); belt(surface, x, y + 1, E); belt(surface, x + 1, y + 1, N)
+      belt(surface, x + 1, y, E); return x + 2 end },
+  }
+  s.changes = {}
+  for i, c in ipairs(changes) do
+    local x0, y0 = -40, -110 + 12 * i
+    for x = x0, x0 + 4 do belt(surface, x, y0, E) end
+    if c.lane == "left" then
+      belt(surface, x0 + 1, y0 - 1, S); source(surface, x0 + 1, y0 - 1, S, "iron-ore")
+    else
+      belt(surface, x0 + 1, y0 + 1, N); source(surface, x0 + 1, y0 + 1, N, "iron-ore")
+    end
+    local x1 = c.build(x0 + 5, y0)
+    local outs = {}
+    for x = x1, x1 + 5 do outs[#outs + 1] = belt(surface, x, y0, E) end
+    sink(surface, x1 + 5, y0, E)
+    s.changes[i] = { label = c.label, outs = outs, before = { surface.find_entity("transport-belt", { x0 + 3.5, y0 + 0.5 }) } }
+  end
 end)
 
 local T5 = 1200 -- the lane counts are read after 20 s, before any output belt backs up
@@ -209,5 +252,10 @@ script.on_event(defines.events.on_tick, function(event)
     end
   end
   out("mechanical inserter belt -> chest: %.2f items/s", s.taker_chest.get_item_count("iron-plate") / (T / 60))
+  for _, c in ipairs(s.changes or {}) do
+    local bl, br = lane_sum(c.before)
+    local l, r = lane_sum(c.outs)
+    out("lane change, %s: before it left %d right %d; after it left %d right %d", c.label, bl, br, l, r)
+  end
   out("DONE")
 end)

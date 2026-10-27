@@ -9,7 +9,7 @@ line north of the base, rebuilt it once after finding a better recipe, and broug
 Times are game times. The numbers come from the game data, the recorder, the author's Factory
 Planner draft 电池 (44:53), and the saves of 43:42 and 45:20 (`tools/inspect-save.ps1`, and
 `tools/rate-probe` for one and three hours, with what-ifs); the author's fixes after the chapter
-were measured on their saves of 45:25 and 45:31.
+were measured on their saves of 45:25, 45:31, 45:40 and 45:52.
 
 Conclusions:
 
@@ -18,9 +18,10 @@ Conclusions:
   then about 5.3: the last two Auog paddocks often wait for Water barrels. With five more Water
   barrels in each of them it keeps 6 for the whole hour. The author has since put 69 barrels in the
   loop, which is enough: on a belt the last paddock runs only from 50 barrels on (the author's
-  count), and about 17 more are on the move. What still holds the line at about 5.6 a minute is the
-  Stone for the Moss farms: one Mechanical inserter takes it out of the Jaw crusher, 0.79 a second
-  against 0.86 needed. With an electric Inserter there, the line made 6 a minute (what-if).
+  count), and about 17 more are on the move. Then the Stone for the Moss farms held the line at
+  about 5.6 a minute: one Mechanical inserter took it out of the Jaw crusher, 0.79 a second against
+  0.86 needed. The author's final version (45:52) takes it out with two and moves it by a two-tile
+  lane change onto the lane the Moss belt's end holds back: 6 Batteries a minute, measured.
 - **The author's redesign: Ammonia into Cyanic acid.** The first draft left 180 Ammonia a minute
   without a user. A Quenching tower makes Cyanic acid from that Ammonia, Methane and Coal (the
   author's note at 44:07); now nothing is left over and a Battery takes 11.3 Urea instead of 21.3:
@@ -42,7 +43,12 @@ Conclusions:
   once.** The Coal gas one waits for the bus pipe to fall under 80 %, while the bus's only other
   way out, the Overflow valve to the Syngas Gasifiers, waits for it to rise over 80 %: Tar falls
   from 36 to under 2 a second, Coke from 10 to under 2, Syngas to nothing, and the Batteries stop
-  after 40 minutes. With that one valve a Pipe again everything runs; the Tar one can stay.
+  after 40 minutes. With that one valve a Pipe again everything runs, as the author has done by
+  45:40; the Tar one stays.
+- **A third timer: Creosote.** Its only user is Treated wood for the rail assembler. On the save of
+  45:52 the Tin plates ran out after about 100 minutes, the rails slowed, the full Creosote pipe
+  stood, and the Tar refining units stopped at about 140 minutes, Coke and the Batteries after them.
+  With the Creosote drained (a stand-in for a Sinkhole) the three hours held.
 
 ## At a glance
 
@@ -116,7 +122,7 @@ Auogs are in the inventory.
 
 ## 3. The line
 
-![The north part of the battery line at 45:25: top left the Smelter for Lead antimony alloy and the High pressure furnace for Graphite; top middle the Moondrop greenhouse growing Moondrop for seeds, below it the Botanical nursery; along the bottom, from the left, the Destructive distillation column making Coal from Wood, the assemblers for Iron sticks and Bolts, the Quenching tower and the greenhouses for Methane and Carbon dioxide; right the Chemical plant for Batteries; the bus comes in from the left](../images/ch17-battery.jpg)
+![The north part of the battery line at 45:52: top left the Smelter for Lead antimony alloy and the High pressure furnace for Graphite; top middle the Moondrop greenhouse growing Moondrop for seeds, below it the Botanical nursery; along the bottom, from the left, the Destructive distillation column making Coal from Wood, the assemblers for Iron sticks and Bolts, the Quenching tower and the greenhouses for Methane and Carbon dioxide; right the Chemical plant for Batteries; the bus comes in from the left](../images/ch17-battery.jpg)
 
 It fills the corner north of the base, x −60 to 10, y −456 to −380, where the Zogna bacteria line of
 chapter 16 already stood:
@@ -153,7 +159,7 @@ has room, the paddocks least.
 
 ## 4. Six a minute, and the Water barrels
 
-![The middle of the line at 45:25: at the top the Jaw crusher, the four Moss farms, the Washer, the Soil extractor and the greenhouse for Carbon dioxide; the belt below them brings Native flora and Moss; then the four Auog paddocks with four Auogs each; bottom left the Barreling Machine, from which the Water barrels run past the paddocks](../images/ch17-manure.jpg)
+![The middle of the line at 45:52: at the top the Jaw crusher, the four Moss farms, the Washer, the Soil extractor and the greenhouse for Carbon dioxide; the belt below them brings Native flora and Moss; then the four Auog paddocks with four Auogs each; bottom left the Barreling Machine, from which the Water barrels run past the paddocks](../images/ch17-manure.jpg)
 
 Run on from the save, the line made 0.100 Batteries a second for 40 minutes, then 0.090, 0.087,
 0.080 and 0.090 in the last four 5-minute steps (`tools/rate-probe`, an hour). The Urea, Ammonia and
@@ -211,7 +217,8 @@ inserter takes its Stone out, one item a swing of 77 ticks, about 0.79 a second 
 second makes 0.63 Moss, enough for 3.2 of the four paddocks: about 80 %, as measured.
 
 The author suspected the Ammonia, which had no priority between the Melamine and the Quenching
-tower; an Overflow valve at (5.5, −396.5) now gives it to the Melamine first. But the Melamine was
+tower; for a while an Overflow valve at (5.5, −396.5) gave it to the Melamine first (a Pipe again
+by 45:40). But the Melamine was
 never short (its reactor stood "output full" 90 % of the time or more in every hour measured, on the
 save of 45:25 before the valve and on that of 45:31 after it), and the Moss farms take no Ammonia.
 
@@ -222,9 +229,24 @@ paddocks worked 87 to 93 %, Manure came to 0.41 to 0.45 a second, and the line m
 a second until its chest, limited to 1,000, was full after about 150 minutes; the Stone did not
 spill past the farms. Without the change, the same three hours gave 0.086 to 0.098 a second.
 
+**The author's fix** (45:31–45:52). First a second Mechanical inserter beside the first (45:40): two
+take out about 1.6 Stone a second, more than the four farms use. The Moss farms' belt already ends
+in a lane filter: an underground entrance at (−33.5, −427.5) whose tunnel goes south, so only the
+belt's north lane goes on towards the paddocks. The farms drop their Moss on that lane, but the
+crusher's inserters dropped their Stone on it too, and with two of them the spare Stone followed
+the Moss. On the save of 45:40 (`tools/rate-probe` with `belts@`), 145 Stone stood on the paddocks'
+Native flora and Moss belt after 5 minutes and 182 after 10; the paddocks got no more Moss and the
+Batteries stopped after 15 minutes. The author found it and redesigned the outlet (45:52): the
+Stone goes round a lane change two tiles long (a detour side-loaded into an underground entrance at
+(−54.5, −427.5); `research/techniques.md`) onto the south lane, which the filter at the end holds
+back. Measured on the save of 45:52 (three hours, the Battery chest emptied as a what-if): 96 Stone
+wait on the farms' belt and none reaches the paddocks' belt; the fourth Moss farm always has Stone;
+the paddocks worked 94 to 99 % (`tools/barrel-probe`), Manure came to 0.42 to 0.46 a second, and the
+line made 0.100 Batteries a second as long as its Coke lasted (section 8).
+
 ## 5. Byproducts and the bus
 
-![The south of the line at 45:25: the Bioreactors for Liquid manure (left) and Urea; above them the Fluidised bed reactor for Melamine, with the Exhaust pipe for its Carbon dioxide on its left and the Sinkhole for its sludge below it; bottom right the Destructive distillation column for Urea decomposition; the belt at the top takes Glass and Melamine north to the Chemical plant](../images/ch17-urea.jpg)
+![The south of the line at 45:52: the Bioreactors for Liquid manure (left) and Urea; above them the Fluidised bed reactor for Melamine, with the Exhaust pipe for its Carbon dioxide on its left and the Sinkhole for its sludge below it; bottom right the Destructive distillation column for Urea decomposition; the belt at the top takes Glass and Melamine north to the Chemical plant](../images/ch17-urea.jpg)
 
 At 6 Batteries a minute the line gives off, a second: 0.75 Hydrogen (Quenching tower), 0.9 Tar and
 0.3 Coal gas (Wood column), 0.3 Carbon dioxide and 0.5 Muddy sludge (Melamine). The last two go into
@@ -251,7 +273,8 @@ pipes were over 80 % full. In a what-if with plain pipes there instead, the hour
 author calls them a slip: "这里应该放底流阀，用来优先消耗py1和电池产生的焦油和煤气" (an Underflow valve
 belongs here, so that the Tar and Coal gas of the pY1 line and the battery line are used first).
 By 45:31 two Underflow valves stand there: they let the columns' Tar and Coal gas into the bus only
-while the bus side is under 80 % full (data). On the Coal gas that locks up; see section 8.
+while the bus side is under 80 % full (data). On the Coal gas that locks up (section 8); by 45:40
+the author had made that one a Pipe again and kept the Tar one.
 
 ## 6. Research and what Batteries are for
 
@@ -361,8 +384,8 @@ bricks then came to 4 to 7 a second, and Sodium alginate, Moss and the Batteries
 until its queue was done: the rest of Starch - Stage 1, Cottongut - Stage 1, Solidified sarcorus and
 Fertilizer - Stage 1 take about 800 pY1 packs (data), about 135 minutes at 0.1 a second, and the
 labs stopped at 140 to 160 minutes. Then the Tar line went down once more (Tar 29 → 5 a second at
-180 minutes): with research stopped, the research Glassworks stop burning Syngas, the run-down of
-chapter 15. In the game the author queues more research, so that last stop belongs to the test.
+180 minutes), the Tar refining units standing "output full" with Creosote: the timer found on the
+save of 45:52 below, not the end of research.
 
 Ways out for the Kerogen (data): it burns (2 MJ, leaving Ash), or a Retorter (Kerogen processing,
 researched) makes Shale oil of it, 25 Kerogen and 100 Steam → 250 Shale oil, which then needs a user
@@ -401,7 +424,27 @@ on stores in that hour. The Tar valve alone does what the author meant: no Overf
 pipe, the tar refinery takes 40 a second, so the pipe falls under 80 % and the columns top it up.
 The Coal gas has no such user: the battery line gives 0.3 Coal gas a second against the columns'
 27, and the rest goes to the Gasifiers only through that Overflow valve. So the fix: the Coal gas
-valve a Pipe again (or an Overflow valve as before); the Tar Underflow valve can stay.
+valve a Pipe again (or an Overflow valve as before); the Tar Underflow valve can stay. **The
+author's fix** (45:40): just that, the Coal gas valve a Pipe again.
+
+**Then Creosote (save of 45:52).** With the valve and the Stone fixed, the save of 45:52 ran at 6
+Batteries a minute, Tar 34 and Coke 9.4 a second, for about two hours; then the Tar line stopped once
+more (`tools/rate-probe`, three hours, with the Tar refining units watched). The units stood "output
+full" with Creosote. Of every 100 Tar they make 24 Creosote (data), whose only user is Treated wood
+(100 Creosote + 1 Wood → 2 Treated wood), and the only user of Treated wood that runs is the rail
+assembler at (−145.5, −208.5), 16 a minute; the Creosote pipe, 91 Pipes from y −224 to −13, was
+already full at the save. The rails slowed when the Tin plates ran out: Tin plates made fell to
+nothing between 80 and 100 minutes, the stored ones lasted until about 110, then Solder, Rails and
+Treated wood fell, the Creosote stood, and Tar, Coke, Acetylene and at last the Batteries (Graphite)
+stopped. What-if: the Creosote pipe drained by an endless pipe (`infinity-pipe@…::creosote*drain`,
+a stand-in for a Sinkhole): the three hours held, Tar 33.5, Coke 9.2 and 6 Batteries a minute, the
+drain taking about 28 Creosote a second.
+
+Why the Tin stopped was not followed to the end. The tin block's Jaw crushers make Stone besides
+Tin; three furnaces turn it into bricks that go north on the bus's brick belt at x −75, and that belt
+stood full from the start (1,004 bricks between y 250 and 497), while since the Kerogen fix the
+brick furnaces at y 30 make 4.3 bricks a second against 2.7 used. With the tin block's bricks taken
+off that belt (`sink@`), Tin plates still came at 1.33 a second at 80 minutes, against 0.87 as built.
 
 The Glassworks at y 348.5 (Molten glass for research) still choose their fuel by the author's three
 pumps of [chapter 8](08-vrauks.md) (Hydrogen first, Syngas when there is none, Gasoline last); their
@@ -409,12 +452,14 @@ circuits are unchanged (`tools/wire-probe`).
 
 ## 9. The blueprints
 
-- **New**: `battery` ("0.1 battery"), the line of section 3, 70 × 75 tiles: 6 Batteries a minute
-  with ten more Water barrels in its loop, 5.3 without. The book now holds 47 blueprints.
+- **New**: `battery` ("0.1 battery"), the line of section 3 as the author finished it at 45:52,
+  70 × 75 tiles: two Mechanical inserters at the Jaw crusher with the two-tile lane change of
+  section 4; put 69 Water barrels in its loop. Measured on the save of 45:52: 6 Batteries a minute.
+  The book now holds 47 blueprints.
 - **Changed**: `simple-circuit-board`, one Pipe to ground fewer and three Small electric poles
   more; the block stood full in the hour after the save, as before.
-- Still waiting: the author's supply station 固体供货站-1 (chapter 15), until a Cybersyn station is
-  built.
+- Not yet taken in: the author's supply station 固体供货站-1 (chapter 15), now in their export again;
+  it belongs to the trains of the next chapter.
 
 ## 10. Key points
 
@@ -429,6 +474,10 @@ circuits are unchanged (`tools/wire-probe`).
   the Raw coal drills ended the Steam for the tar refinery, and with it Coke, Tar, Acetylene and
   research, within two hours and for good; 37 Kerogen chests at the Stone drills (every Stone mined
   brings a Kerogen) ended the Stone bricks, and with them the pY1 packs and the Moss.
+- Two inputs on one belt that end in a lane filter: put each on its own lane. The author's lane
+  change does it in two tiles with an underground entrance (three with plain belts).
+- A byproduct with a single user ties the producer to that user: the tar refinery's Creosote went
+  only into Treated wood for rails, so it ran only as fast as the rails were made.
 - An Underflow valve feeding a pipe whose only other way out is an Overflow valve locks at 80 %:
   one passes only below, the other only above. Give a fluid priority with an Underflow valve only
   where something always draws the pipe down.
@@ -455,6 +504,12 @@ circuits are unchanged (`tools/wire-probe`).
   with the coke columns' two valves as built, as Overflow valves, as Pipes, and only the Coal gas
   one a Pipe (`remove@` and a placed `+py-overflow-valve@x:y:east` or `+pipe@x:y`); the Jaw
   crusher's output inserter swapped for an Inserter with a Medium electric pole (what-if).
+- The saves of 45:40 and 45:52 (`C:\tmp\ch17\py-ch17d.zip`, `py-ch17f.zip`): `tools/rate-probe`
+  with `belts@x1:y1:x2:y2` (what the belts in an area carry), three hours on 45:52 with the Battery
+  chest emptied, the Tar refining units watched, the Creosote drained
+  (`infinity-pipe@…::creosote*drain`), the rail chests emptied, and the tin block's bricks taken off
+  their belt (`sink@`, stopped after 80 minutes); the two-tile lane change measured in
+  `tools/belt-lab` (case 8).
 - The Water barrel loop: `tools/barrel-probe` (where the barrels are, which ingredient a waiting
   paddock lacks, how much each paddock in belt order works), as built and as an endless-speed loop
   that serves the paddocks in belt order, with 40 to 60 barrels, Moss and Native flora topped up
