@@ -15,7 +15,8 @@ Conclusions:
 - **The line makes 6 Batteries a minute, as many as its Chemical plant can.** The first came after
   45:10; at 45:20, 32 wait in the chest. Run on from the save it keeps 6 a minute for 40 minutes,
   then about 5.3: the last two Auog paddocks often wait for Water barrels. With five more Water
-  barrels in each of them it keeps 6 for the whole hour.
+  barrels in each of them it keeps 6 for the whole hour. The author has since put 69 barrels in the
+  loop; then the four Moss farms set the limit, about 5.7 Batteries a minute.
 - **The author's redesign: Ammonia into Cyanic acid.** The first draft left 180 Ammonia a minute
   without a user. A Quenching tower makes Cyanic acid from that Ammonia, Methane and Coal (the
   author's note at 44:07); now nothing is left over and a Battery takes 11.3 Urea instead of 21.3:
@@ -27,10 +28,11 @@ Conclusions:
 - **What Batteries are for next**: one in each combinator (Cybersyn's requests), two in each
   Construction pynobot and roboport, three in every 12 Logistic science packs.
 - **Left alone, the save runs down within the hour and does not recover**, and research stops with
-  it. The cause is not the battery line: six Ash chests at the Raw coal drills north of the base are
-  full (two filled between the two saves), so the Steam for the tar refinery fails, and with it
-  Coke, Tar, Acetylene and the science packs. Emptying the chests, or topping the Steam up (the
-  author's test), keeps the base running.
+  it. The cause is not the battery line but two sets of full chests. Six Ash chests at the Raw coal
+  drills north of the base are full, so the Steam for the tar refinery fails, and with it Coke, Tar,
+  Acetylene and the science packs; the author has since sent that Ash to the Ash separation. Then
+  the 37 Kerogen chests at the Stone drills of chapter 16 are full too: after about 105 minutes the
+  Stone bricks run out, and the pY1 packs, the Moss and the Batteries stop.
 
 ## At a glance
 
@@ -104,7 +106,7 @@ Auogs are in the inventory.
 
 ## 3. The line
 
-![The north part of the battery line at 45:20: top left the Smelter for Lead antimony alloy and the High pressure furnace for Graphite, beside them the Moondrop greenhouse growing Moondrop for seeds and the Botanical nursery; below, the Destructive distillation column that makes Coal from Wood, the assemblers for Iron sticks and Bolts, the Quenching tower and the greenhouses for Methane and Carbon dioxide; right the Chemical plant for Batteries and its chest; the bus comes in from the left](../images/ch17-battery.jpg)
+![The north part of the battery line at 45:25: top left the Smelter for Lead antimony alloy and the High pressure furnace for Graphite; top middle the Moondrop greenhouse growing Moondrop for seeds, below it the Botanical nursery; along the bottom, from the left, the Destructive distillation column making Coal from Wood, the assemblers for Iron sticks and Bolts, the Quenching tower and the greenhouses for Methane and Carbon dioxide; right the Chemical plant for Batteries; the bus comes in from the left](../images/ch17-battery.jpg)
 
 It fills the corner north of the base, x −60 to 10, y −456 to −380, where the Zogna bacteria line of
 chapter 16 already stood:
@@ -141,7 +143,7 @@ has room, the paddocks least.
 
 ## 4. Six a minute, and the Water barrels
 
-![The middle of the line at 45:20: at the top the four Moss farms with the Jaw crusher on the left and the Washer, Soil extractor and Carbon dioxide greenhouse on the right; below them the four Auog paddocks with four Auogs each; at the bottom left the Barreling Machine, from which the Water barrels run past the paddocks and the empty ones come back](../images/ch17-manure.jpg)
+![The middle of the line at 45:25: at the top the Jaw crusher, the four Moss farms, the Washer, the Soil extractor and the greenhouse for Carbon dioxide; the belt below them brings Native flora and Moss; then the four Auog paddocks with four Auogs each; bottom left the Barreling Machine, from which the Water barrels run past the paddocks](../images/ch17-manure.jpg)
 
 Run on from the save, the line made 0.100 Batteries a second for 40 minutes, then 0.090, 0.087,
 0.080 and 0.090 in the last four 5-minute steps (`tools/rate-probe`, an hour). The Urea, Ammonia and
@@ -156,12 +158,28 @@ two wait. The Barreling Machine itself waited for Empty barrels 87 % of the hour
 
 **What-if** (`tools/rate-probe` with `add@x:y::water-barrel*5`, the player handing barrels in): five
 Water barrels more in each of the last two paddocks, and the line made 0.100 a second in every step
-of the hour, the paddocks working 82 %. Ten more in each did the same. The author carries 51 Empty
-and 59 Water barrels.
+of the hour, the paddocks working 82 %. Ten more in each did the same.
+
+The author had reckoned 60 barrels, 4 paddocks × (5 in a running craft + 10 in the input), and
+suspected the belts: a barrel on its way is in no paddock. **The author's test**, an endless-speed
+loop (`tools/barrel-probe`: every Empty barrel a paddock puts out becomes a Water barrel at once and
+goes to the paddock with the fewest; nothing on belts): with 60 barrels the inputs stayed full (40)
+and about 4 barrels were left over; 50 and even 40 barrels gave the same. On the real belts the
+loop of 60 kept 15 barrels on the move on average (14 on belts, the rest in inserters and outputs),
+so the inputs held 29 instead of 40.
+
+With barrels never short, the paddocks still waited 18 to 20 % of the time, now for Moss: the four
+Moss farms make at most 0.8 Moss a second, exactly what four paddocks at speed 2 eat, so every pause
+of a Moss farm shows. Manure then comes to about 0.36 a second, enough for about 5.7 Batteries a
+minute rather than 6; a fifth Moss farm would give room (data).
+
+**The author's fix** (45:20–45:25): more barrels in the loop, 69 in all. Measured on the save of
+45:25 (`tools/barrel-probe`, an hour): no paddock waited for barrels any more; they waited 17 to 20 %
+of the time for Moss, and Manure came to 0.36 a second.
 
 ## 5. Byproducts and the bus
 
-![The south of the line at 45:20: left the Bioreactors for Liquid manure and Urea; in the middle the Fluidised bed reactor for Melamine with the Exhaust pipe for its Carbon dioxide and the Sinkhole for its Muddy sludge; right the Destructive distillation column for Urea decomposition; the belt up the right carries Glass and Melamine north to the Chemical plant](../images/ch17-urea.jpg)
+![The south of the line at 45:25: the Bioreactors for Liquid manure (left) and Urea; above them the Fluidised bed reactor for Melamine, with the Exhaust pipe for its Carbon dioxide on its left and the Sinkhole for its sludge below it; bottom right the Destructive distillation column for Urea decomposition; the belt at the top takes Glass and Melamine north to the Chemical plant](../images/ch17-urea.jpg)
 
 At 6 Batteries a minute the line gives off, a second: 0.75 Hydrogen (Quenching tower), 0.9 Tar and
 0.3 Coal gas (Wood column), 0.3 Carbon dioxide and 0.5 Muddy sludge (Melamine). The last two go into
@@ -185,7 +203,10 @@ pond at (−139, −56) (595,000 free).
 **Overflow valves at the first coke columns.** At 45:15–45:20 the author put Overflow valves where
 the Coal gas and Tar of the coke columns at y −88 join the bus: they now pass only while the
 columns' own pipes are over 80 % full. In a what-if with plain pipes there instead, the hour ran the
-same.
+same. The author calls them a slip: "这里应该放节流阀，用来优先消耗py1和电池产生的焦油和煤气" (a valve
+belongs here that makes the Tar and Coal gas of the pY1 line and the battery line be used first),
+to be changed in the next chapter. The game's valve for that is the Underflow valve: it lets fluid
+through only while the bus side is under 80 % full (data), so the columns would only top the bus up.
 
 ## 6. Research and what Batteries are for
 
@@ -260,7 +281,7 @@ it the lead drills; research has almost stopped at two hours and stops at two an
   Wood column off, its Graphite furnace off, the new Overflow valves replaced by pipes, the Coke
   Splitter without priority, the Gasoline pump of the research Glassworks off, a Tailings pond on
   the Tar pipe. So the battery line is not the cause; the Ash chests were filling before it.
-- The save of 43:42, run for three hours, shows the same timer: Tar holds at 34 a second for two
+- The save of 43:42, run for three hours, runs down too, later: Tar holds at 34 a second for two
   hours and twenty minutes, then falls (23 at 160 minutes, 11 at 180), and research stops at three
   hours.
 
@@ -273,9 +294,38 @@ it the lead drills; research has almost stopped at two hours and stops at two an
   second. A Boiler takes 3.7 MW and makes 7.5 Steam a second at 250 °C (data), so about 12 Boilers,
   14.5 Raw coal and 14.5 Ash a second; that block needs its Ash handled too.
 
-On the way it turned out how the Glassworks at y 348.5 (Molten glass for research) get their fuel:
-three pumps that the author switches by circuit (`tools/wire-probe`): Hydrogen while the Hydrogen
-pipe holds any, Syngas when it is empty, Gasoline only when both are.
+**The author's fix** (45:20–45:25): the ten Ash chests on the field and their inserters taken up;
+the field's Ash now goes on a new belt west along y −24 onto the bus's Ash belts at x −93, which run
+to the Ash separation. Measured on the save of 45:25 (`tools/rate-probe`, three hours): the north
+row of Raw coal Boilers never lacked fuel again (working 83 %, the rest of the time "output full"),
+and Tar held 34 a second for more than two hours.
+
+**Then a second timer: Kerogen.** In Py every Stone mined comes with a Kerogen (data). The author's
+Stone drills of chapter 16 put the Kerogen into 37 wooden chests; at 43:42 many still had room, at
+45:20 all but one are full (1,600 each). The Kerogen then stands on the belt, the 8 drills wait for
+space, and the 12 brick furnaces at y 30 already stood empty at 45:20. The base lives on stored Stone
+bricks (made 1.5 to 1.8 a second, used 3.0) for about 105 minutes. Then the Jaw crushers that turn
+bricks into Stone run dry, and the Sodium alginate furnace waits for Stone (its input: Stone 6 → 0,
+Limestone and Seaweed full): Latex, Stoppers, Glassware and the pY1 packs stop (pY1 used 0.10 → 0.025
+a second at 110 minutes). The Moss farms lack Stone too (Moss 2.0 → 0.3 a second), so the Auog
+paddocks and the Batteries follow, and at 140 minutes the Tar line goes down as well. This time
+research stops first and the Tar line after.
+
+**What-if**: the 37 Kerogen chests emptied every second (they took 6.5 Kerogen a second). Stone
+bricks then came to 4 to 7 a second, and Sodium alginate, Moss and the Batteries held. Research ran
+until its queue was done: the rest of Starch - Stage 1, Cottongut - Stage 1, Solidified sarcorus and
+Fertilizer - Stage 1 take about 800 pY1 packs (data), about 135 minutes at 0.1 a second, and the
+labs stopped at 140 to 160 minutes. Then the Tar line went down once more (Tar 29 → 5 a second at
+180 minutes): with research stopped, the research Glassworks stop burning Syngas, the run-down of
+chapter 15. In the game the author queues more research, so that last stop belongs to the test.
+
+Ways out for the Kerogen (data): it burns (2 MJ, leaving Ash), or a Retorter (Kerogen processing,
+researched) makes Shale oil of it, 25 Kerogen and 100 Steam → 250 Shale oil, which then needs a user
+in turn. More chests only move the timer.
+
+The Glassworks at y 348.5 (Molten glass for research) still choose their fuel by the author's three
+pumps of [chapter 8](08-vrauks.md) (Hydrogen first, Syngas when there is none, Gasoline last); their
+circuits are unchanged (`tools/wire-probe`).
 
 ## 9. The blueprints
 
@@ -294,7 +344,8 @@ pipe holds any, Syngas when it is empty, Gasoline only when both are.
   first machines on the belt fill their slots first.
 - A chest that stores a byproduct is a timer: the base runs until it is full. Six Ash chests at
   the Raw coal drills ended the Steam for the tar refinery, and with it Coke, Tar, Acetylene and
-  research, within two hours and for good.
+  research, within two hours and for good; 37 Kerogen chests at the Stone drills (every Stone mined
+  brings a Kerogen) ended the Stone bricks, and with them the pY1 packs and the Moss.
 - To find the first cause, test what-ifs that each take one suspect away; when all fail alike, the
   cause is elsewhere. An endless source behind an Underflow valve tests a missing input and
   measures how much is missing.
@@ -310,7 +361,12 @@ pipe holds any, Syngas when it is empty, Gasoline only when both are.
 - The author's Factory Planner draft 电池 (44:53): `tools/planner-summary.js`.
 - The hours after the save: `tools/save-probe.ps1 -Probe rate-probe` for one and three hours, with
   the what-ifs `add@` (Water barrels), `empty@` (Ash chests), `off@`, `remove@` with a placed Pipe or
-  Splitter, `tailings-pond@` and `infinity-pipe@…::steam*250` behind a `py-underflow-valve`.
+  Splitter, `tailings-pond@` and `infinity-pipe@…::steam*250` behind a `py-underflow-valve`; the
+  machines' input slots watched with `@x:y`.
+- The save of 45:25 after the author's fixes (`C:\tmp\ch17\py-ch17b.zip`): three hours of
+  `tools/rate-probe`, with the Kerogen chests emptied as a what-if.
+- The Water barrel loop: `tools/barrel-probe` (where the barrels are, which ingredient a waiting
+  paddock lacks), as built and as an endless-speed loop with 60, 50 and 40 barrels.
 - Data facts: `tools/q.js` and the recipes, machines and modules in the data dump.
 - Screenshots: taken by the author with the companion (`/pt-shots`), areas planned with
   `node tools/shots.js plan`.

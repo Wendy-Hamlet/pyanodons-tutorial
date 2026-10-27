@@ -11,7 +11,7 @@
 -- timeline: every STEP seconds it also prints how much of each named item or fluid was made and
 -- used per second in that step, and every machine group whose most frequent status changed; a
 -- name "@x:y" instead is the entity with fluid boxes on that tile (a machine, a tank, a pond):
--- its status and the fluid in each of its boxes.
+-- its status, the fluid in each of its boxes and, for a crafting machine, its input slots.
 -- A last field ",+name@x:y;..." places those entities when the save loads: a what-if (say, the
 -- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
 -- places it facing that way (north, east, south, west; default north; an inserter faces the side
@@ -199,7 +199,14 @@ local function step(now, t)
           local f = e.get_fluid(i)
           boxes[#boxes + 1] = f and string.format("%s %.0f", f.name, f.amount) or "-"
         end
-        out("step %d s: %s at %s,%s: %s; fluid boxes: %s", t, e.name, x, y, status_of(e), table.concat(boxes, " | "))
+        -- A crafting machine's input slots too (which item it waits for).
+        local items = {}
+        local ok, inv = pcall(function() return e.get_inventory(defines.inventory.crafter_input) end)
+        if ok and inv then
+          for _, s in pairs(inv.get_contents()) do items[#items + 1] = string.format("%s %d", s.name, s.count) end
+        end
+        out("step %d s: %s at %s,%s: %s; fluid boxes: %s%s", t, e.name, x, y, status_of(e),
+          table.concat(boxes, " | "), #items > 0 and "; input: " .. table.concat(items, ", ") or "")
       end
     end
   end
