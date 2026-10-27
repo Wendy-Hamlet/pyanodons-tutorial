@@ -48,7 +48,9 @@ Conclusions:
 - **A third timer: Creosote.** Its only user is Treated wood for the rail assembler. On the save of
   45:52 the Tin plates ran out after about 100 minutes, the rails slowed, the full Creosote pipe
   stood, and the Tar refining units stopped at about 140 minutes, Coke and the Batteries after them.
-  With the Creosote drained (a stand-in for a Sinkhole) the three hours held.
+  With the Creosote drained (a stand-in for a Sinkhole) the three hours held. The Tin stopped because
+  its bricks wait on the full left lane of the bus's brick belt (the author's finding); a lane
+  balancer before they join is the author's fix.
 
 ## At a glance
 
@@ -440,11 +442,16 @@ stopped. What-if: the Creosote pipe drained by an endless pipe (`infinity-pipe@â
 a stand-in for a Sinkhole): the three hours held, Tar 33.5, Coke 9.2 and 6 Batteries a minute, the
 drain taking about 28 Creosote a second.
 
-Why the Tin stopped was not followed to the end. The tin block's Jaw crushers make Stone besides
+Why the Tin stopped: the tin block's Jaw crushers make Stone besides
 Tin; three furnaces turn it into bricks that go north on the bus's brick belt at x âˆ’75, and that belt
 stood full from the start (1,004 bricks between y 250 and 497), while since the Kerogen fix the
 brick furnaces at y 30 make 4.3 bricks a second against 2.7 used. With the tin block's bricks taken
 off that belt (`sink@`), Tin plates still came at 1.33 a second at 80 minutes, against 0.87 as built.
+The author then found the cause in the game: the brick belt is full on its left lane, while its
+users take mostly from the right one; a Splitter divides by lane and keeps each item on its lane, so
+the left lane's bricks are not used first even with the Splitter's priority set, and the tin block's
+bricks, arriving on both lanes, wait on the full left lane. The author's fix, for later in the game:
+a lane balancer (their two-sided merge, `research/techniques.md`) on the bricks that join the belt.
 
 The Glassworks at y 348.5 (Molten glass for research) still choose their fuel by the author's three
 pumps of [chapter 8](08-vrauks.md) (Hydrogen first, Syngas when there is none, Gasoline last); their
