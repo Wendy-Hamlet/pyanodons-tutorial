@@ -63,14 +63,16 @@ Conclusions:
 ## 1. Why Auogs come before Batteries
 
 The Battery (Battery - Stage 1; Chemical plant, 10 s) takes Glass, 2 Melamine, a Lead antimony
-alloy, 3 Bolts, 3 Graphite, 3 Zinc plates and 30 Cyanic acid (data). At this research Ammonia and
-Cyanic acid come from one recipe only, Urea decomposition (20 Urea → 30 Ammonia + 30 Cyanic acid),
-and Melamine needs both. Urea comes from Liquid manure and Zogna bacteria in a Bioreactor, Liquid
+alloy, 3 Bolts, 3 Graphite, 3 Zinc plates and 30 Cyanic acid (data). At this research Ammonia
+comes from one recipe only, Urea decomposition (20 Urea → 30 Ammonia + 30 Cyanic acid); Cyanic
+acid comes from it too, or from that Ammonia in a Quenching tower ([chapter 17](17-batteries.md)).
+Melamine needs both. Urea comes from Liquid manure and Zogna bacteria in a Bioreactor, Liquid
 manure from Manure, and Manure from Auog paddocks.
 
 The author's Factory Planner draft for Batteries (43:11) makes 6 a minute and needs 6.46 Auog
 paddocks with 4 Auogs each, about 26 Auogs. It leaves 180 Ammonia a minute that nothing uses: like
 the gases of chapter 15 it needs an outlet, or Urea decomposition stops and the Batteries with it.
+The author's answer came in chapter 17: a Quenching tower turns it into Cyanic acid.
 
 **A paddock runs only with Auogs inside.** The Auog paddock MK 01 has crafting speed 0.5, four
 module slots that take only Auogs, and a base effect of −100 % speed (data): with no Auog it
@@ -287,5 +289,5 @@ which is normal in this base.
 - Screenshots: taken by the author with the companion (`/pt-shots`), areas planned with
   `node tools/shots.js plan`.
 
-Next chapter: chapter 17 (to come): Batteries.
+Next: [chapter 17](17-batteries.md).
 

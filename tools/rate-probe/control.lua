@@ -16,13 +16,20 @@
 -- pole that was taken out), the only change the probe then makes to the base. "name@x:y:south"
 -- places it facing that way (north, east, south, west; default north; an inserter faces the side
 -- it picks up from), "name@x:y:dir:item" also gives an inserter that whitelist filter or a
--- crafting machine that recipe. Three names there are not
+-- crafting machine that recipe; "infinity-pipe@x:y::steam*250" is an endless source of that
+-- fluid at that temperature (its output counts in no statistics: made minus used shows it; behind
+-- an Underflow valve it only tops a line up, a stand-in for a block not built yet). Some names
+-- there are not
 -- entities: "sink@x:y" empties the belt on that tile every tick, "empty@x:y" the chest on that
 -- tile every second (a user taking all the block makes, for a block standing full); what they
 -- took is printed per second at the end. "off@x:y" stops the machine (or inserter) on that tile
 -- (disabled by script: it keeps its connections but makes and uses nothing), to test what a
 -- machine takes from the rest of the base; "clear@x:y" empties that machine's input and output
--- slots once (the player taking out what blocks it).
+-- slots once (the player taking out what blocks it); "add@x:y::item*count" puts that many items
+-- into the machine or chest on that tile once (the player handing in, say, more Water barrels);
+-- "remove@x:y" takes away the entity on that tile (a machine, valve or Splitter; not a belt, pole or
+-- resource), so that a later
+-- "+name@x:y" in the same list can put something else there (a Pipe where a valve was).
 
 local variant = require("variant")
 local PLACE
@@ -111,9 +118,22 @@ end
 script.on_init(function()
   storage.sinks, storage.empties, storage.taken = {}, {}, {}
   local surface = game.surfaces.nauvis
-  for name, x, y, dir, item in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*):?([%w%-_]*)") do
+  for name, x, y, dir, item in (PLACE or ""):gmatch("([%w%-_]+)@([%-%.%d]+):([%-%.%d]+):?(%a*):?([%w%-_%*]*)") do
     local pos = { tonumber(x), tonumber(y) }
-    if name == "sink" or name == "empty" then
+    if name == "add" then
+      local what, count = item:match("^([%w%-_]+)%*(%d+)$")
+      local e = surface.find_entities_filtered({ position = pos,
+        type = { "assembling-machine", "furnace", "container" } })[1]
+      local n = (e and what) and e.insert({ name = what, count = tonumber(count) }) or 0
+      out("add at %s,%s: %s %s×%d of %s", x, y, e and e.name or "NOTHING THERE", what or "?", n, count or "?")
+    elseif name == "remove" then
+      local e = surface.find_entities_filtered({ position = pos, type = { "transport-belt",
+        "underground-belt", "electric-pole", "resource", "tree", "simple-entity" },
+        invert = true })[1]
+      local what = e and e.name or "NOTHING THERE"
+      if e then e.destroy() end
+      out("remove at %s,%s: %s", x, y, what)
+    elseif name == "sink" or name == "empty" then
       local e = surface.find_entities_filtered({ position = pos,
         type = name == "sink" and { "transport-belt", "underground-belt" } or "container" })[1]
       table.insert(name == "sink" and storage.sinks or storage.empties, e)
@@ -143,6 +163,10 @@ script.on_init(function()
       if e and item ~= "" then
         if e.type == "assembling-machine" then
           e.set_recipe(item)
+        elseif e.type == "infinity-pipe" then
+          local fluid, temperature = item:match("^([%w%-_]+)%*?(%d*)$")
+          e.set_infinity_pipe_filter({ name = fluid, percentage = 1,
+            temperature = tonumber(temperature), mode = "at-least" })
         else
           e.use_filters = true
           e.inserter_filter_mode = "whitelist"

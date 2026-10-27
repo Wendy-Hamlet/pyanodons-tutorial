@@ -47,6 +47,7 @@
     "rail-refuel",
     "rail-depot",
     "rail-depot-extension",
-    "hot-air"
+    "hot-air",
+    "battery"
   ]
 }

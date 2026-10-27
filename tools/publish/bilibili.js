@@ -159,7 +159,7 @@ const coverPictures = {
   1: 'ch1-copper-pairs.jpg', 2: 'ch2-steel.jpg', 3: 'ch3-ash-separation.jpg', 4: 'ch4-logs.jpg',
   5: 'ch5-lead-field.jpg', 6: 'ch6-boards.jpg', 7: 'ch7-screening.jpg', 8: 'ch8-vrauks.jpg',
   9: 'ch9-science.jpg', 10: 'ch10-block-west-fixed.jpg', 11: 'ch11-lead-screening.jpg',
-  16: 'ch16-auog.jpg',
+  16: 'ch16-auog.jpg', 17: 'ch17-battery.jpg',
 };
 
 // 1200 x 675 (Bilibili asks for at least 600 x 336): the picture, darkened towards the left, under

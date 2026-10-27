@@ -25,6 +25,7 @@ scripts used, so you can re-check them against your own mod versions.
 14. [Intermetallics and getting ready for trains](chapters/14-intermetallics-trains.md)
 15. [Train preparation 1](chapters/15-train-preparation-1.md)
 16. [Auogs](chapters/16-auogs.md)
+17. [Batteries](chapters/17-batteries.md)
 
 Reference: [Techniques and mechanics](research/techniques.md) (every verified mechanic, number
 and design principle in one place) · [Coke, steel, crushing and Ash separation](research/coke-and-steel.md)
