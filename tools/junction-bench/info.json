@@ -4,5 +4,5 @@
   "title": "Junction bench (measurement, removed after each run)",
   "author": "py-tutorial",
   "factorio_version": "2.1",
-  "dependencies": ["base"]
+  "dependencies": ["base", "? cybersyn"]
 }

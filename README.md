@@ -223,7 +223,7 @@ parameters for yours.
   lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
   sinks, fluid sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
   save-reading setup.
-- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit|run|station|build [-Options <json or @file.json>]` +
+- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit|run|station|build|network [-Options <json or @file.json>]` +
   `junction-bench/` + `junction-bench.js`: the rail junction bench. Builds the rails and signals of
   one blueprint on an empty map. `map` writes its rails, rail blocks, signals, track ends and every
   path between track ends with the signals met on the way; `junction-bench.js render` draws it
@@ -245,7 +245,13 @@ parameters for yours.
   passing by behind them (`depot`: Cybersyn's depot schedule instead, several stops of one name,
   `limit` overrides their train limits): time at the stop, fuel and Ash before and after, whether the train
   stands wholly in the stop's block, trains a minute. `build` builds the whole blueprint and reports
-  what could not be built (overlaps) and electric entities outside every pole's supply area. Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
+  what could not be built (overlaps) and electric entities outside every pole's supply area. `network`
+  builds a whole network (a grid with stations of every kind, put together beforehand), powers it and
+  lets Cybersyn itself run it: the blueprint parameters filled in (`items`, `amount`), the providers'
+  chests and the refuelers' fuel chests filled (`stock`; `restock` tops them up and empties the
+  requesters every 10 s), one train per entry of `fuels` at the depot stops; it logs every Cybersyn
+  train status, every stop visit (time, cargo, fuel) and where trains wait (signal, across blocks, on
+  a road). Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
   save-reading setup.
 - `agent/`: lets Claude play a Py game by itself on a headless server (RCON client `a.js`, the
   `pt-agent` mod with a playerless character, rate-limit watch `quota.js`); see

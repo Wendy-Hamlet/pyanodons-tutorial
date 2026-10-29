@@ -32,6 +32,9 @@
 --     and after, and whether it stood wholly in the stop's block. options.feed keeps belts full.
 --   mode "build": builds the whole blueprint and reports what could not be built and which
 --     electric entities are outside every pole's supply area.
+--   mode "network": builds a whole network blueprint (stations of every kind on a grid, built at
+--     options.at), powers it and lets Cybersyn run it (see network_setup); options.items fill the
+--     blueprint parameters, options.fuels put trains at the depot stops.
 --   options.locomotives (default 1) and options.wagons: the trains of modes "traffic" and "station".
 -- Results are CF-JUNCTION log lines. Run by tools/junction-bench.ps1, which writes bench-data.lua:
 -- the name, the mode, the options and the blueprint's entities as JSON.
@@ -912,8 +915,9 @@ end
 local S = {}
 
 local function build_all(surface)
-  for cx = -8, 8 do
-    for cy = -8, 8 do surface.request_to_generate_chunks({ cx * 32, cy * 32 }, 0) end
+  local c = opts.chunks or 8
+  for cx = -c, c do
+    for cy = -c, c do surface.request_to_generate_chunks({ cx * 32, cy * 32 }, 0) end
   end
   surface.force_generate_chunk_requests()
   local inv = game.create_inventory(1)
@@ -922,16 +926,19 @@ local function build_all(surface)
   if r ~= 0 then out("import_stack returned %d", r) end
   local want = {}
   for _, e in pairs(inv[1].get_blueprint_entities() or {}) do want[e.name] = (want[e.name] or 0) + 1 end
-  local ghosts = inv[1].build_blueprint({ surface = surface, force = "player", position = { 0, 0 },
+  local ghosts = inv[1].build_blueprint({ surface = surface, force = "player", position = opts.at or { 0, 0 },
     build_mode = defines.build_mode.forced })
   local n, got, unpowered, built = 0, {}, {}, {}
   for _, g in pairs(ghosts) do
     if g.valid and g.type == "entity-ghost" then
+      local name, pos = g.ghost_name, g.position
       local _, e = g.silent_revive({ raise_revive = true })
       if e then
         n = n + 1
         got[e.name] = (got[e.name] or 0) + 1
         built[#built + 1] = e
+      elseif opts.list_failed then
+        out("not built: %s at %.1f,%.1f", name, pos.x, pos.y)
       end
     end
   end
@@ -1157,12 +1164,258 @@ local function station_tick(tick)
   end
 end
 
+-- ---------- network ----------
+
+-- Cybersyn itself runs a whole network: the blueprint holds stations of every kind on a grid. It is
+-- built with every setting and powered, the blueprint parameters are filled in, the providers' chests
+-- and the refuelers' fuel chests are filled, and trains are put at the depot stops.
+local N = {}
+local STATUS = { [0] = "at depot", "to provider", "at provider", "to requester", "at requester", "to depot",
+  "to depot (bypass)", "to refueler", "at refueler" }
+local MODE = { ["/"] = "station", ["+"] = "depot", [">>"] = "refueler" }
+local PR = { [0] = "provide+request", "provide only", "request only", "?" }
+
+-- Every entity on the circuit networks of the given wire connectors of an entity.
+local function wired(entity, ids)
+  local found, seen, queue = {}, {}, {}
+  for _, id in ipairs(ids) do
+    local c = entity.get_wire_connector(id, false)
+    if c then queue[#queue + 1] = c end
+  end
+  while #queue > 0 do
+    local c = table.remove(queue)
+    for _, conn in pairs(c.connections) do
+      local t = conn.target
+      local key = t.owner.unit_number .. ":" .. t.wire_connector_id
+      if not seen[key] then
+        seen[key] = true
+        if t.owner ~= entity then found[t.owner.unit_number] = t.owner end
+        queue[#queue + 1] = t
+      end
+    end
+  end
+  return found
+end
+
+local IN = { defines.wire_connector_id.combinator_input_red, defines.wire_connector_id.combinator_input_green }
+
+-- options.items[k + 1] stands for parameter-k (items) and options.amount, if set, for every request.
+local function resolve(s)
+  return (s:gsub("parameter%-(%d)", function(k) return (opts.items or {})[tonumber(k) + 1] or ("parameter-" .. k) end))
+end
+
+local function chest_total(chests)
+  local n, k = 0, 0
+  for _, c in pairs(chests) do
+    if c.type == "container" then n, k = n + c.get_inventory(defines.inventory.chest).get_item_count(), k + 1 end
+  end
+  return n, k
+end
+
+-- On the road: within 13 tiles of a grid line (the grid's tracks and the stations' switches).
+local function on_road(p)
+  local function near(v) local m = v % 240; return m <= 13 or m >= 227 end
+  return near(p.x) or near(p.y)
+end
+
+local function network_setup(surface)
+  build_all(surface)
+  -- Power: one energy interface, wired to one pole of every separate pole network.
+  local at = opts.power_at or { -150, -150 }
+  local eei = surface.create_entity({ name = "electric-energy-interface", position = at, force = "player" })
+  eei.power_production, eei.electric_buffer_size = 1e8, 1e9
+  local hub = surface.create_entity({ name = "small-electric-pole", position = { at[1] + 2, at[2] }, force = "player" })
+  local hc = hub.get_wire_connector(defines.wire_connector_id.pole_copper, true)
+  local joined = 0
+  for _, p in pairs(surface.find_entities_filtered({ type = "electric-pole" })) do
+    if p.electric_network_id ~= hub.electric_network_id then
+      p.get_wire_connector(defines.wire_connector_id.pole_copper, true).connect_to(hc, false)
+      joined = joined + 1
+    end
+  end
+  out("power: %d separate pole network(s) wired to an energy interface", joined)
+  -- Blueprint parameters: stop names and constant combinators.
+  for _, s in pairs(surface.find_entities_filtered({ type = "train-stop" })) do s.backer_name = resolve(s.backer_name) end
+  for _, c in pairs(surface.find_entities_filtered({ name = "constant-combinator" })) do
+    for _, sec in pairs(c.get_control_behavior().sections) do
+      for i = 1, sec.filters_count do
+        local f = sec.get_slot(i)
+        if f.value and f.value.name and f.value.name:match("^parameter%-%d$") then
+          sec.set_slot(i, { value = { type = "item", name = resolve(f.value.name), quality = "normal", comparator = "=" },
+            min = opts.amount and -opts.amount or f.min })
+        end
+      end
+    end
+  end
+  -- Each Cybernetic combinator: its mode, its stop, what it reads; providers' chests filled.
+  N.stations, N.depots, N.fuel_chests = {}, {}, {}
+  for _, comb in pairs(surface.find_entities_filtered({ name = "cybersyn-combinator" })) do
+    local p = comb.get_control_behavior().parameters
+    local stop = surface.find_entities_filtered({ type = "train-stop", position = comb.position, radius = 3 })[1]
+    local mode = MODE[p.operation] or p.operation
+    local bits = p.second_constant or 0
+    local chests = wired(comb, IN)
+    local nchest, nconst = 0, 0
+    for _, e in pairs(chests) do
+      if e.type == "container" then nchest = nchest + 1 elseif e.type == "constant-combinator" then nconst = nconst + 1 end
+    end
+    local name = stop and stop.backer_name or "?"
+    out("%s %q at %.1f,%.1f: %s, train limit %s, wired to %d chest(s) and %d constant combinator(s)", mode, name,
+      stop and stop.position.x or 0, stop and stop.position.y or 0, mode == "station" and PR[bits % 4] or "-",
+      stop and (stop.trains_limit < 4e9 and stop.trains_limit or "none") or "-", nchest, nconst)
+    if mode == "station" then
+      N.stations[#N.stations + 1] = { stop = stop, comb = comb, chests = chests, name = name }
+      local item = name:match("%[item=([^%]]+)%]")
+      if bits % 4 == 1 and item and opts.stock and nchest > 0 then
+        local each = math.ceil(opts.stock / nchest)
+        for _, e in pairs(chests) do
+          if e.type == "container" then e.insert({ name = item, count = each }) end
+        end
+      end
+    elseif mode == "depot" and stop then
+      N.depots[#N.depots + 1] = stop
+    elseif mode == "refueler" and stop then
+      -- Fuel chests: those no filtered (Ash) inserter drops into.
+      local ash = {}
+      for _, i in pairs(surface.find_entities_filtered({ type = "inserter", position = stop.position, radius = 16 })) do
+        if i.use_filters and i.drop_target then ash[i.drop_target.unit_number] = true end
+      end
+      for _, c in pairs(surface.find_entities_filtered({ type = "container", position = stop.position, radius = 14 })) do
+        if not ash[c.unit_number] then
+          c.insert({ name = opts.fuel, count = opts.refuel_stock or 1000 })
+          N.fuel_chests[#N.fuel_chests + 1] = c
+        end
+      end
+    end
+  end
+  -- Trains: one per entry of options.fuels (its fuel count), put just before a depot stop with
+  -- Cybersyn's depot schedule.
+  table.sort(N.depots, function(a, b) return a.position.x + a.position.y * 1e4 < b.position.x + b.position.y * 1e4 end)
+  N.trains = {}
+  for i, fuel in ipairs(opts.fuels or {}) do
+    local stop = N.depots[i]
+    if not stop then error("more trains than depot stops") end
+    local ux, uy = unit(stop.direction)
+    -- A stop stands 2 tiles to the right of its track.
+    local x, y = stop.position.x + 2 * uy - ux * 5.5, stop.position.y - 2 * ux - uy * 5.5
+    local stock = { opts.locomotive }
+    for _ = 1, opts.wagons do stock[#stock + 1] = opts.wagon end
+    local made = {}
+    for j, name in ipairs(stock) do
+      -- (from the car before as it was placed: the game moves rolling stock onto the rail)
+      if j > 1 then
+        local g, prev = gap(stock[j - 1], name), made[j - 1].position
+        x, y = prev.x - ux * g, prev.y - uy * g
+      end
+      local c = surface.create_entity({ name = name, position = { x, y }, direction = stop.direction, force = "player" })
+      if not c then error("could not place " .. name .. " at depot stop " .. i) end
+      made[#made + 1] = c
+    end
+    made[1].get_fuel_inventory().insert({ name = opts.fuel, count = fuel })
+    local train = made[1].train
+    if #train.carriages ~= #stock then error("cars did not couple at depot stop " .. i) end
+    local schedule = train.get_schedule()
+    schedule.add_record({ station = stop.backer_name,
+      wait_conditions = { { type = "inactivity", compare_type = "and", ticks = 100 } } })
+    schedule.go_to_station(1)
+    train.manual_mode = false
+    N.trains[#N.trains + 1] = { train = train, n = i }
+  end
+  out("%d trains of 1 %s + %d %s, fuel %s %s", #N.trains, opts.locomotive, opts.wagons, opts.wagon,
+    table.concat(opts.fuels or {}, "/"), opts.fuel)
+  N.status, N.visit, N.done = {}, {}, {}
+  storage.N = N
+end
+
+local function network_tick(tick)
+  if tick % 60 ~= 0 then return end
+  local now = tick / 60
+  -- options.restock: the providers' chests are topped up and the requesters' emptied every 10 s,
+  -- as if belts kept feeding the one and a factory used up the other.
+  if opts.restock and tick % 600 == 0 then
+    for _, st in ipairs(N.stations) do
+      local item = st.name:match("%[item=([^%]]+)%]")
+      local p = st.comb.get_control_behavior().parameters.second_constant % 4
+      for _, c in pairs(st.chests) do
+        if c.valid and c.type == "container" then
+          if p == 1 and item then c.insert({ name = item, count = 1e6 }) elseif p ~= 1 then c.clear_items_inside() end
+        end
+      end
+    end
+    for _, c in ipairs(N.fuel_chests) do if c.valid then c.insert({ name = opts.fuel, count = 1e6 }) end end
+  end
+  local ct = remote.call("cybersyn", "read_global", "trains") or {}
+  local cs = remote.call("cybersyn", "read_global", "stations") or {}
+  local function sname(id) local s = id and cs[id]; return s and s.entity_stop and s.entity_stop.valid and s.entity_stop.backer_name or "-" end
+  for id, t in pairs(ct) do
+    if N.status[id] ~= t.status then
+      local extra = ""
+      if t.status == 1 and t.manifest then
+        local m = {}
+        for _, e in ipairs(t.manifest) do m[#m + 1] = e.count .. " " .. e.name end
+        extra = string.format(": %s from %s to %s", table.concat(m, ", "), sname(t.p_station_id), sname(t.r_station_id))
+      end
+      out("t %5.0f s  train %d: %s%s", now, t.entity and t.entity.valid and t.entity.id or id, STATUS[t.status] or t.status, extra)
+      N.status[id] = t.status
+      if t.status == 4 then N.done.deliveries = (N.done.deliveries or 0) + 1 end
+    end
+  end
+  -- Every stop visit: how long, cargo and fuel before and after.
+  for _, train in pairs(game.train_manager.get_trains({ surface = "junction" })) do
+    local v = N.visit[train.id]
+    local at = train.state == defines.train_state.wait_station and train.station
+    if at and not v then
+      local fuel = fuel_of(train)
+      N.visit[train.id] = { stop = at.backer_name, t = tick, cargo = cargo_of(train), fuel = fuel }
+    elseif v and not at then
+      local fuel = fuel_of(train)
+      out("t %5.0f s  train %d stood %.1f s at %s: cargo %d -> %d, fuel %d -> %d", now, train.id, (tick - v.t) / 60, v.stop,
+        v.cargo, cargo_of(train), v.fuel, fuel)
+      N.visit[train.id] = nil
+    end
+  end
+  if tick % (60 * (opts.every or 60)) == 0 then
+    -- Trains not moving, and whether they stand on a road.
+    local parts = {}
+    local names = {}
+    for k, v in pairs(defines.train_state) do names[v] = k end
+    for _, train in pairs(game.train_manager.get_trains({ surface = "junction" })) do
+      local s = train.state
+      if s ~= defines.train_state.on_the_path and s ~= defines.train_state.wait_station
+        and s ~= defines.train_state.arrive_station and s ~= defines.train_state.arrive_signal then
+        local road, across = false, false
+        local front = train.front_end and train.front_end.rail
+        for _, r in pairs(train.get_rails()) do
+          if on_road(r.position) then road = true end
+          if front and not r.is_rail_in_same_rail_block_as(front) then across = true end
+        end
+        local p, sg = train.front_stock.position, train.signal
+        parts[#parts + 1] = string.format("%d@%.0f,%.0f %s%s%s%s", train.id, p.x, p.y, names[s] or s,
+          sg and string.format(" at signal %.1f,%.1f", sg.position.x, sg.position.y) or "",
+          across and " across blocks" or "", road and " ON THE ROAD" or "")
+      end
+    end
+    out("t %5.0f s  waiting: %s", now, #parts > 0 and table.concat(parts, " ") or "none")
+    for _, st in ipairs(N.stations) do
+      local n, k = chest_total(st.chests)
+      local c = nil
+      for _, s in pairs(cs) do
+        if s.entity_stop and s.entity_stop.valid and s.entity_stop.unit_number == st.stop.unit_number then c = s end
+      end
+      out("t %5.0f s  %s: %d items in %d wired chests; Cybersyn: %s", now, st.name, n, k,
+        c and string.format("%s%s, %d deliveries under way, display %d", c.is_p and "p" or "", c.is_r and "r" or "",
+          c.deliveries_total, c.display_state) or "not registered")
+    end
+  end
+end
+
 script.on_init(function()
   local surface = game.create_surface("junction")
   surface.generate_with_lab_tiles = true
   surface.always_day = true
   if data.mode == "station" then station_setup(surface); return end
   if data.mode == "build" then build_all(surface); return end
+  if data.mode == "network" then network_setup(surface); return end
   local box = build(surface)
   if data.mode == "map" then map_mode(surface, box)
   elseif data.mode == "ends" then ends_mode(surface)
@@ -1181,10 +1434,12 @@ script.on_load(function()
   if storage.T then T = storage.T end
   if storage.R then R = storage.R end
   if storage.S then S = storage.S end
+  if storage.N then N = storage.N end
 end)
 
 script.on_event(defines.events.on_tick, function(event)
   if data.mode == "traffic" and T.tracks then traffic_tick(event.tick) end
   if data.mode == "run" and R.train then run_tick(event.tick) end
   if data.mode == "station" and S.trains then station_tick(event.tick) end
+  if data.mode == "network" and N.trains then network_tick(event.tick) end
 end)

@@ -263,6 +263,50 @@ only.
   about 100 s (101.1 and 99.7 s), the 24 inserters' rate; fed by one belt split in two it cannot
   be faster than 15 a second, and without chests a train waits for whatever the belt brings.
 
+## The author's station set, first drafts (2026-10-29)
+
+Export of 22:30, not imported: every station now carries its own piece of main line (the outer lane
+x 11 of a 240 grid edge, absolute snapping) with the switch off and back, so the stub piece
+棋盘格-边-车站定位 is gone. New: 加油站-1-灰烬 (refueler, limit 4), 车库-1 (8 tracks, trains run the
+other way than before), 物品需求站-1-4 and 物品供货站-1-4 (four platforms, each its own stop
+"[item=…]卸货站" / "[item=…]供货站", limit 2, 24 Mechanical inserters and 24 wooden chests a platform,
+blueprint parameters for item and amount, default request −1200), their extension modules (a fifth
+platform) and 车库-1-扩展模块; plus 棋盘格-边-远程输电塔, Big electric poles along a grid edge.
+
+Measured with `tools/junction-bench` (mode `build` for every draft; `station` for the refueler and
+the depot; `network`: the early grid with requester, depot, provider and refueler on its four inner
+edges, Cybersyn running 8 trains):
+
+- Everything builds and every combinator is in a pole's supply area; the requester and provider
+  extensions join cleanly as a fifth platform; the pole piece builds on both grid edges.
+- Refueler: 22.6 s a train, Raw coal 70 → 150, Ash 80 → 0, the train wholly in the platform block;
+  the loop holds the train at the stop and three waiting, so limit 4 fits (a fifth waits on the main
+  line: a train going past 60.5 s instead of 30.6).
+- Depot: 8 trains parked 3.4 s apart, the last after 37.5 s, each wholly in its block; a train
+  going past behind them 44.3 s (the old depot 59.8 s).
+- Stations under Cybersyn (amount 10,000, chests restocked and emptied every 10 s, 20 minutes): a
+  second train for a busy platform waits wholly in the 21.3-tile curve block in front of it, so the
+  shared entry column stays free and limit 2 fits; no train ever waited on the main line. Loading or
+  unloading 2,400 plates takes 126 s (24 inserters, about 19 a second). Trains low on fuel refuel
+  after unloading (26–27 s, 50 → 150).
+
+Faults found:
+
+- The top platform of 物品需求站-1-4 and the requester extension: the Cybernetic combinator and the
+  constant combinator have no wire (their chests are wired only to each other), so Cybersyn reads
+  nothing and the platform never requests.
+- The default request −1200 is below the request threshold of the author's save (2,000, the default):
+  ten minutes, not one delivery; with 4,000 the deliveries came.
+- The provider's chests are limited to one slot each, 24 stacks a platform: a train takes at most
+  2,400 plates (of 4,000), and an item stacking to fewer than 84 never reaches 2,000, so it is never
+  sent (measured with Mechanical inserters, stack 50: 1,200 in stock, request failed, no delivery).
+- 车库-1-扩展模块 is the old 车库扩展模块 renamed; its stop and signals face the old direction and it
+  does not fit the new depot (laid above or below the tracks, a curved rail cannot be built and the
+  blocks run together).
+- The provider extension's stop is named "[item=…]卸货站", the requesters' name.
+- Three requester combinators are set to provide and request, the fourth and the extension to
+  request only (from the source: one that provides offers what its chests hold beyond the request).
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,
