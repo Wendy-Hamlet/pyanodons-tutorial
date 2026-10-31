@@ -204,6 +204,7 @@ parameters for yours.
   (plant on a fissure, Regenerative heat exchanger, Steam engines on 500 and 250 degree Steam),
   each on its own network, with and without +20 % mining productivity; with `save-probe.ps1
   -Variant cracks` it lists a save's Geothermal fissures (`research/geothermal.md`).
+- `coal-power-probe/` (with `run-probe.ps1 -Ticks 4400`): coal power stage by stage on a lab map (Coal powerplant, Heat exchanger, High-pressure steam turbine)
 - `turd-probe/` (with `save-probe.ps1 -Ticks 10`): the T.U.R.D. upgrades researched in a save and
   the option picked for each, read through pyalienlife's own interface, with the hidden modules and
   machine replacements in place (`research/turd-choices.md`).
