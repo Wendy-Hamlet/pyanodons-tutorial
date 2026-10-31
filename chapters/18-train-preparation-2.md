@@ -100,6 +100,8 @@ tracks as there are trains: measured in chapter 15, a train beyond that has nowh
 
 ## 5. Item stations
 
+![物品卸货站-1-4 in the sandbox: trains leave the main line at bottom left, loop round to the right, run right to left through the four platforms and rejoin the main line on the left](../images/ch18-item-station.jpg)
+
 物品卸货站 (requester) and 物品供货站 (provider) have the same form and differ in the direction of their belts. All numbers are for a
 1+2 train (21 tiles, 40 slots).
 
@@ -107,6 +109,8 @@ A platform is straight, with the same on both sides of the track: a row of Burne
 row of Burner inserters, then belts; 24 chests and 48 inserters in all. A requester moves goods from the wagons into the chests
 and on to the belts, and the belts of the two sides join under the track; a provider does the reverse, one belt split to both sides.
 All the chests are wired to the Cybernetic combinator, so what it reads is their stock.
+
+![One platform close up: above and below the track a row of Burner inserters, a row of Wooden chests, another row of Burner inserters, belts on the outside; on the left the stop, the Cybernetic combinator and the Constant combinator](../images/ch18-item-platform.jpg)
 
 - **24 Wooden chests of 16 slots, 384 stacks a platform**: 38,400 Iron plates. The chests separate trains from factories: a train
   unloads at once, the factory takes its time.

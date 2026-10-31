@@ -71,6 +71,18 @@ script.on_event(defines.events.on_tick, function()
       out("surface %q: %d entities, %d rails, %d inserters, %d storage tanks, %d stops: %s", sf.name, n,
         sf.count_entities_filtered({ type = "straight-rail" }), sf.count_entities_filtered({ type = "inserter" }),
         sf.count_entities_filtered({ type = "storage-tank" }), #stops, table.concat(stops, " "):sub(1, 900))
+      -- Which station is which: where the tanks, chests and splitters stand.
+      for _, kind in ipairs({ "storage-tank", "container", "splitter" }) do
+        local cells = {}
+        for _, e in pairs(sf.find_entities_filtered({ type = kind })) do
+          local key = string.format("%d,%d", math.floor(e.position.x / 240) * 240, math.floor(e.position.y / 240) * 240)
+          cells[key] = (cells[key] or 0) + 1
+        end
+        local parts = {}
+        for k, v in pairs(cells) do parts[#parts + 1] = k .. " x" .. v end
+        table.sort(parts)
+        out("surface %q %s by 240 cell: %s", sf.name, kind, table.concat(parts, " "):sub(1, 400))
+      end
     end
   end
 end)
