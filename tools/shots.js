@@ -1,9 +1,10 @@
 // Screenshots from the author's real game, taken by the companion mod (/pt-shots).
 //
-//   node tools/shots.js plan name:x1,y1,x2,y2[,zoom] ...
+//   node tools/shots.js plan name[@surface]:x1,y1,x2,y2[,zoom] ...
 //     Writes tools/companion/shots.lua: the areas to shoot, in tile coordinates as
 //     tools/render-area.js prints them. In game, /pt-shots reloads the mod scripts (single
-//     player) and takes each area with entity info (alt view), as JPGs.
+//     player) and takes each area with entity info (alt view), as JPGs. @surface shoots another
+//     surface than nauvis, such as a Blueprint Sandboxes lab (trains-probe lists them).
 //
 //   node tools/shots.js pull
 //     Copies the JPGs from %APPDATA%\Factorio\script-output\py-tutorial-companion\shots into
@@ -19,12 +20,14 @@ const images = path.join(__dirname, '..', 'images');
 const [command, ...rest] = process.argv.slice(2);
 if (command === 'plan' && rest.length) {
   const entries = rest.map((arg) => {
-    const [name, coords] = arg.split(':');
+    const [named, coords] = arg.split(':');
+    const [name, surface] = named.split('@');
     const [x1, y1, x2, y2, zoom = 1] = coords.split(',').map(Number);
     if (!/^[a-z0-9-]+$/.test(name) || [x1, y1, x2, y2, zoom].some(Number.isNaN)) {
-      throw new Error(`bad shot "${arg}" (want name:x1,y1,x2,y2[,zoom])`);
+      throw new Error(`bad shot "${arg}" (want name[@surface]:x1,y1,x2,y2[,zoom])`);
     }
-    return `  { name = ${JSON.stringify(name)}, x1 = ${x1}, y1 = ${y1}, x2 = ${x2}, y2 = ${y2}, zoom = ${zoom} },`;
+    const on = surface ? `, surface = ${JSON.stringify(surface)}` : '';
+    return `  { name = ${JSON.stringify(name)}${on}, x1 = ${x1}, y1 = ${y1}, x2 = ${x2}, y2 = ${y2}, zoom = ${zoom} },`;
   });
   const stamp = new Date().toLocaleString('sv-SE').slice(0, 16);
   fs.writeFileSync(luaFile, `-- Written by tools/shots.js plan; do not edit by hand.\nreturn {\n  generated = ${JSON.stringify(stamp)},\n${entries.join('\n')}\n}\n`);

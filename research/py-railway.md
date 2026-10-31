@@ -421,7 +421,7 @@ The 279-298 s are the wait for the first train, the only empty time in the last 
 went out at about 1,030 s, when the chests reached 0, and plates came again about 250 s later; that gap repeats every round. Belts
 not counted. A request of 80 stacks with threshold 40 keeps full trains and orders at half stock; at 8/s the chests did not empty again.
 
-**The amount from the stack size.** Stack sizes of visible items in the data dump: 1: 54, 5: 20, 10: 765, 20: 75, 50: 825, 100: 1302,
+**The amount from the stack size.** Stack sizes of visible items in the data dump: 1: 54, 5: 21, 10: 765, 20: 76, 50: 829, 100: 1302,
 200: 25, 500: 4, 1000: 28. So −4,000 at threshold 40 ships stacks up to 100 only; stack 200 is Sand, Gravel, Small parts, circuit
 boards and science packs, stack 1000 Stone bricks and Ash. Blueprint parameters can do this with no building: a number parameter takes
 a formula, and the game offers "Stack size of parameter N" as a variable (locale `gui-blueprint-parametrisation.variable-stack-size`;
@@ -434,7 +434,7 @@ parameters of the same value are filled in one by one. A circuit way, also untes
 = 40 (variable `p5`, `p1` in the module), which is also the Request threshold signal, and dependent number parameters `-2 * p5 * p0_s` to
 `p3_s`. The constants' base values are 0, −1, −2, −3, one per platform, so four rows no longer share a number. Their export also had train limit
 0 on the four stops of 1-4 (2 on the module). Cybersyn skips a stop when `deliveries_total >= trains_limit` (`central-planning.lua` 530, 615):
-with those stops as exported and five platforms, 9 minutes, the four had 0 orders, the module's platform 2. The repository's 1-4 has limit 2 again.
+with those stops as exported and five platforms, 9 minutes, the four had 0 orders, the module's platform 2. The repository's 1-4 has limit 2 again, as has the author's final export of 21:47 (module renamed 物品卸货站-1-扩展模块).
 
 The formula itself runs only in the game, so `request_stacks` in `network` mode sets what it gives. Five platforms (1-4 + module), −80 x stack, 3 items/s,
 60 minutes, per train and orders: stack 10: 400 x 28; 50: 2,000 x 7; 100: 4,000 x 4; 200: 8,000 x 3; 1000: 40,000 x 2. All full, no train on the
@@ -447,7 +447,7 @@ with the top fluid platform's Pumps, tanks, Pipe and poles. 6 platforms at each 
 
 **Fluid set.** 流体需求站 and 流体供货站 1-1 to 1-3 are cut from 1-4 the way the author cut the item stations, whose 1-N are exact
 subsets of 1-4: the bottom N platforms, the same rails, signals and poles, and the Pumps, tanks, Pipes and poles of those
-platforms. In `blueprints/rail-fluid-*`, not committed until the author has checked them in game; they import and export
+platforms. In `blueprints/rail-fluid-*`, checked by the author in game (final export 21:47); they import and export
 cleanly (`check-companion.ps1`). Orders a platform, all 50,000, no train on the main line, nothing without a path:
 
 | Platforms | Factory on one tank, 500/s, 15 min | One provider tank fed, 10 min |

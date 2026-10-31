@@ -364,4 +364,4 @@ y 348.5 的玻璃工厂（给研究做熔融玻璃）仍按[第八章](08-vrauks
 - 数据事实：`tools/q.js`，以及数据导出里的配方、机器和插件。
 - 截图：作者用伴随模组拍摄（`/pt-shots`），区域用 `node tools/shots.js plan` 规划。
 
-下一章：第十八章（待续）。
+下一章：[第十八章](18-train-preparation-2.zh-CN.md)。

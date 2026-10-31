@@ -525,4 +525,4 @@ circuits are unchanged (`tools/wire-probe`).
 - Screenshots: taken by the author with the companion (`/pt-shots`), areas planned with
   `node tools/shots.js plan`.
 
-Next chapter: chapter 18 (to come).
+Next: [chapter 18](18-train-preparation-2.md).

@@ -60,4 +60,17 @@ script.on_event(defines.events.on_tick, function()
     out("stop %q at %.1f,%.1f: train limit %s, trains %s", s.backer_name, s.position.x, s.position.y,
       s.trains_limit < 4e9 and s.trains_limit or "none", #bound > 0 and table.concat(bound, " ") or "none")
   end
+  -- Every surface, so that designs built in a sandbox show up too.
+  for _, sf in pairs(game.surfaces) do
+    local n = sf.count_entities_filtered({})
+    if n > 0 then
+      local stops = {}
+      for _, s in pairs(sf.find_entities_filtered({ type = "train-stop" })) do
+        stops[#stops + 1] = string.format("%s@%.0f,%.0f", s.backer_name, s.position.x, s.position.y)
+      end
+      out("surface %q: %d entities, %d rails, %d inserters, %d storage tanks, %d stops: %s", sf.name, n,
+        sf.count_entities_filtered({ type = "straight-rail" }), sf.count_entities_filtered({ type = "inserter" }),
+        sf.count_entities_filtered({ type = "storage-tank" }), #stops, table.concat(stops, " "):sub(1, 900))
+    end
+  end
 end)
