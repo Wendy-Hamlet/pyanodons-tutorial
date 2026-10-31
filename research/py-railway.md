@@ -430,6 +430,21 @@ API cannot fill in parameters, so the formula itself runs only in the author's g
 parameters of the same value are filled in one by one. A circuit way, also untested: a Selector combinator (选择运算器, tech 高级运算器;
 5 Decider combinators + 5 Simple circuit boards + 5 Solder) in Stack size mode and an Arithmetic combinator on each platform.
 
+**The formula in the game (export 21:24).** The author's form on 物品卸货站-1-4 and the requester module: a number parameter 单列火车格数
+= 40 (variable `p5`, `p1` in the module), which is also the Request threshold signal, and dependent number parameters `-2 * p5 * p0_s` to
+`p3_s`. The constants' base values are 0, −1, −2, −3, one per platform, so four rows no longer share a number. Their export also had train limit
+0 on the four stops of 1-4 (2 on the module). Cybersyn skips a stop when `deliveries_total >= trains_limit` (`central-planning.lua` 530, 615):
+with those stops as exported and five platforms, 9 minutes, the four had 0 orders, the module's platform 2. The repository's 1-4 has limit 2 again.
+
+The formula itself runs only in the game, so `request_stacks` in `network` mode sets what it gives. Five platforms (1-4 + module), −80 x stack, 3 items/s,
+60 minutes, per train and orders: stack 10: 400 x 28; 50: 2,000 x 7; 100: 4,000 x 4; 200: 8,000 x 3; 1000: 40,000 x 2. All full, no train on the
+main line. Chests empty before the first train only: 150, 178, 297, 488 and 2,260 s, the time to load a full train (stack 1000: about 37 minutes).
+
+物品卸货站 and 物品供货站 1-1 to 1-3 are cut from the new 1-4 (wires as in the author's old cuts). 1, 2, 3 platforms, items of stack 100, 200, 50,
+5 items/s, 20 minutes: 2 to 4 orders a platform, all full, no train on the main line. Fluid modules: the item module's rails, stop and combinators
+with the top fluid platform's Pumps, tanks, Pipe and poles. 6 platforms at each end, 8 trains: 11-12 orders a platform (factory on one tank, 500/s, 15 minutes),
+14-21 (one provider tank fed, 10 minutes), all 50,000, no train on the main line, nothing without a path.
+
 **Fluid set.** 流体需求站 and 流体供货站 1-1 to 1-3 are cut from 1-4 the way the author cut the item stations, whose 1-N are exact
 subsets of 1-4: the bottom N platforms, the same rails, signals and poles, and the Pumps, tanks, Pipes and poles of those
 platforms. In `blueprints/rail-fluid-*`, not committed until the author has checked them in game; they import and export

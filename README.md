@@ -251,7 +251,7 @@ parameters for yours.
   chests and the refuelers' fuel chests filled (`stock`; `restock` tops them up and empties the
   requesters every 10 s, `restock: "provider"` only the providers), one train per entry of `fuels` at the
   depot stops. Fluid stations too: `items` may name fluids, `fluid_trains` gives the last n trains fluid wagons,
-  `drain` uses that many units or items a second at each requester (the log counts the seconds its chests stood empty), `drain_one` from one tank, `feed_one` fills one
+  `request_stacks` makes every item request that many stacks (what a blueprint formula gives), `drain` uses that many units or items a second at each requester (the log counts the seconds its chests stood empty), `drain_one` from one tank, `feed_one` fills one
   provider tank. It logs every Cybersyn
   train status, every stop visit (time, cargo, fuel) and where trains wait (signal, across blocks, on
   a road). Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the

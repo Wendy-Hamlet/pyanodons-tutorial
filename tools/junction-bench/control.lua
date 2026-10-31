@@ -1258,8 +1258,11 @@ local function network_setup(surface)
         local f = sec.get_slot(i)
         if f.value and f.value.name and f.value.name:match("^parameter%-%d$") then
           local name = resolve(f.value.name)
+          local min = opts.amount and -opts.amount or f.min
+          -- options.request_stacks: what a blueprint formula of the stack size gives, that many stacks of the item.
+          if opts.request_stacks and prototypes.item[name] then min = -opts.request_stacks * prototypes.item[name].stack_size end
           sec.set_slot(i, { value = { type = prototypes.fluid[name] and "fluid" or "item", name = name, quality = "normal", comparator = "=" },
-            min = opts.amount and -opts.amount or f.min })
+            min = min })
         end
       end
     end
