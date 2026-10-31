@@ -198,3 +198,26 @@ recorder and `tools/rate-probe` on the save of 41:07.
   Coal gas and Hydrogen in chapter 15, it would stop Urea decomposition, and with it the Cyanic acid
   and the Batteries, without an outlet. Ammonia counts as a gas for the Tailings pond (15 °C is its
   gas temperature), so a pond only vents it, like an Exhaust pipe.
+
+## 8. Coal power and what the trains are for first (save of 49:46, 2026-10-31)
+
+Power at 49:46 (`tools/rate-probe`, 10 minutes): 83.0 MW made and used; the three Geothermal plants stood 65 % of the time waiting for space.
+Chapter 13's capacity is 231 MW, so about 148 MW is spare; not load-tested again.
+
+Coal power measured stage by stage (`tools/coal-power-probe`, 60 s; stages not piped together):
+
+| Stage | Takes a second | Gives a second |
+|---|---|---|
+| Coal powerplant MK 01 | 3.333 Raw coal (10 MW), 25 Molten salt | 25 Hot molten salt at 1000 degrees |
+| Heat exchanger MK 01, recipe he-01 | 160 Hot molten salt, 60 Pressurized water, 0.517 MW | 160 Molten salt, 60 High-pressure steam |
+| High-pressure steam turbine MK 01 | 60 steam | 472.8 MW |
+
+So a plant is worth 73.9 MW (computed from the three stages) and 6.4 plants, one exchanger and one turbine 472.8 MW on 21.3 Raw coal a second,
+against 70 MW on 30 Raw coal for the crushed-coal block. The salt circulates; filling it takes 300 Salt per 100 Molten salt in a Basic oxygen furnace. Salt comes
+from a Salt mine (20 Intermetallics among its ingredients) on Salt rock, nearest to the network (2064,-176); the Evaporator route needs Advanced separation, a green-pack technology.
+
+Stock at 49:46 (chests and inventory): 164 Intermetallics, 2,367 Small parts, 978 Steel, 1,090 Batteries, 10,161 rails. None of: Gasifiers, Steam engines,
+Mechanical parts, Brakes, Pumps, big tanks, Fluid wagons. Green science: 90 s in a Research center MK 01, 2 Poor alien samples + 1 Solidified sarcorus + 2 Animal samples + 3 Batteries -> 12, so
+0.133/s a machine; at 0.1/s every direct solid input is at most 0.12/s, so it needs no trains. Iron is the first ore to run short: 514k under the drills at 8 ore/s, about 18 hours
+(21 with Mining productivity +20 %), three drills under 1,000; the others have 100 hours or more at today's rates.
+
