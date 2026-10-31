@@ -22,7 +22,7 @@ scripts used, so you can re-check them against your own mod versions.
 11. [Better lead, titanium and tin smelting](chapters/11-lead-titanium-tin-smelting.md)
 12. [Nexelit mining and nickel smelting](chapters/12-nexelit-nickel.md)
 13. [Geothermal power and antimony oxide](chapters/13-geothermal-antimony-oxide.md)
-14. [Intermetallics and getting ready for trains](chapters/14-intermetallics-trains.md)
+14. [Intermetallics and train preparation 0](chapters/14-intermetallics-trains.md)
 15. [Train preparation 1](chapters/15-train-preparation-1.md)
 16. [Auogs](chapters/16-auogs.md)
 17. [Batteries](chapters/17-batteries.md)

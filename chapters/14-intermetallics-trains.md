@@ -1,10 +1,10 @@
-# Chapter 14 — Intermetallics and getting ready for trains
+# Chapter 14 — Intermetallics and train preparation 0
 
 [中文版](14-intermetallics-trains.zh-CN.md) · [Index](../README.md) · Previous:
 [chapter 13](13-geothermal-antimony-oxide.md)
 
 This chapter follows the same recorded run from the save of 32:40 to the save of 34:59. Its
-subject is the author's, **Intermetallics and getting ready for trains** (金属间化合物与火车准备).
+subject is the author's, **Intermetallics and train preparation 0** (金属间化合物与火车准备0).
 The author finished the Intermetallics line begun in chapter 13, with Duralumin made on it, built a
 fish block for the Fish oil of the Gearbox and a block for rails, researched the two train
 technologies and handcrafted the first Locomotive and Cargo wagons. After the save they fixed the

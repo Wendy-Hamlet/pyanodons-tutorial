@@ -20,7 +20,7 @@
 11. [铅矿、钛矿和锡矿冶炼改良](chapters/11-lead-titanium-tin-smelting.zh-CN.md)
 12. [蓝坷垃开采与镍矿冶炼](chapters/12-nexelit-nickel.zh-CN.md)
 13. [地热发电和氧化锑制备](chapters/13-geothermal-antimony-oxide.zh-CN.md)
-14. [金属间化合物与火车准备](chapters/14-intermetallics-trains.zh-CN.md)
+14. [金属间化合物与火车准备0](chapters/14-intermetallics-trains.zh-CN.md)
 15. [火车准备 1](chapters/15-train-preparation-1.zh-CN.md)
 16. [剑背龟](chapters/16-auogs.zh-CN.md)
 17. [电池](chapters/17-batteries.zh-CN.md)
