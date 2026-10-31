@@ -122,6 +122,8 @@ All the chests are wired to the Cybernetic combinator, so what it reads is their
 - **Combinator mode**: 仅需求 (Request only) at requesters, 仅供应 (Provide only) at providers. A requester set to provide and
   request offers whatever it holds beyond its request.
 
+![A platform of 物品供货站: the splitter at top left divides one belt between the two sides of the track, Burner inserters move goods into the chests and on into the wagons](../images/ch18-provider-platform.jpg)
+
 ## 6. Faults found in the drafts
 
 The author fixed each of these. They are here because anyone drawing a station meets the same ones:
@@ -195,6 +197,8 @@ minutes at each end, and all that time it holds a train.
 
 ## 8. Fluid stations
 
+![流体卸货站-1-4 in the sandbox: the rails of the item stations, two PyTanks (100 kL) and two Pumps a platform](../images/ch18-fluid-station.jpg)
+
 The rails and signals of 流体卸货站 and 流体供货站 are the item stations', tile for tile, so they go in the same places. A platform has
 two Pumps, one at each Fluid wagon, and behind them two PyTanks (100 kL) wired to the combinator; the request is −200,000, the two
 tanks. The train is a Locomotive and two Fluid wagons of 25,000 each.
@@ -209,6 +213,8 @@ tanks. The train is a Locomotive and two Fluid wagons of 25,000 each.
 - **With nothing used up** a platform fills after 4 trains and the orders stop; no train is left standing.
 - **Cargo and fluid trains share a depot without trouble**: 4 of each for 15 minutes, cargo trains took only items, fluid trains only
   fluids, and a fluid train changed fluid between trips.
+
+![One fluid platform close up: two Pumps, one at each Fluid wagon, the short Pipe joining the two tanks, and the red wire from the tanks to the Cybernetic combinator](../images/ch18-fluid-platform.jpg)
 
 At every size, all 50,000, no train on the main line, nothing without a path:
 
