@@ -300,12 +300,53 @@ Faults found:
 - The provider's chests are limited to one slot each, 24 stacks a platform: a train takes at most
   2,400 plates (of 4,000), and an item stacking to fewer than 84 never reaches 2,000, so it is never
   sent (measured with Mechanical inserters, stack 50: 1,200 in stock, request failed, no delivery).
-- 车库-1-扩展模块 is the old 车库扩展模块 renamed; its stop and signals face the old direction and it
-  does not fit the new depot (laid above or below the tracks, a curved rail cannot be built and the
-  blocks run together).
 - The provider extension's stop is named "[item=…]卸货站", the requesters' name.
 - Three requester combinators are set to provide and request, the fourth and the extension to
   request only (from the source: one that provides offers what its chests hold beyond the request).
+
+Correction: this list first also said 车库-1-扩展模块 does not fit the new depot. It does: turned 180°
+and laid above the top track (the author's point; only the unturned module had been tried). Measured
+on the 22:30 depot: all 9 tracks one block each, 9 trains parked, the last after 40.8 s, each wholly
+in its block; a train going past 47.8 s.
+
+## The station set, revised (2026-10-31)
+
+Export of 14:18, not imported yet. The author fixed the faults above (chests unlimited, all requesters
+request only, all platforms wired, request −4000, stop names), added one-, two- and three-platform
+versions (物品需求站-1-1/-2/-3, 物品供货站-1-1/-2/-3), and made 车库-1 4 tiles shorter on the collector
+side, its module redone to match (no turning needed now). The refueler and the pole piece are
+unchanged, so their results above stand. Cybersyn is 2.1.3 now (only an elevator fix after 2.1.2).
+Same tools; requester, depot, provider and refueler on the four inner edges of the early grid, 8 trains.
+
+- Depot: 8 trains, the last parked after 36.4 s, a train going past 43.1 s. With modules above the top
+  track, 9 / 10 / 12 tracks: last 39.0 / 41.7 / 47.2 s, going past 45.7 / 48.3 / 53.8 s; every train
+  wholly in its block.
+- The blueprints' own settings, 1 to 4 platforms, 15 minutes each (chests restocked and emptied every
+  10 s): every order 4,000 plates or just under, a full train; loading 4,000 takes 211 s, unloading
+  210 s. No train on the main line, none without a path.
+- Request −4,000 means one train per platform at a time, since Cybersyn counts what is on its way: a new
+  order 455 s after the last, about 8.8 plates/s a platform. Request 10,000, 15 minutes, 8 trains, 1 / 2 /
+  3 / 4 platforms: 4 / 8 / 11 / 15 orders (one platform: 16,000 plates against 8,000); the second train
+  waits wholly in the curve block, sampled every 10 s, never on the main line.
+- Modules join 1-4 only. 1-4 + one module (five platforms) and + two (six): every platform served. On
+  1-1, 1-2 and 1-3 the module builds without complaint, but its left stub misses the exit (1-1: it crosses
+  the exit line and ends; the column it should extend exists only in 1-4): the train loads, then stands at
+  the provider with `no_path` (on 1-1 still there after 20 minutes).
+
+Left in the 14:18 export:
+
+- 物品需求站-1-扩展模块 still has +4000 (constant combinator and parameter default): its platform got no
+  order in 10 minutes, the other four got two each. With −4000 it works (above).
+- 物品供货站-1-4, top platform: three chests still limited to one slot, (66.5,127.5), (67.5,122.5), (74.5,122.5):
+  33,900 plates instead of 38,400; loading no slower (207 s against 211 s).
+
+An item stacking to fewer than 50 is not sent at the default threshold (from the source,
+`central-planning.lua`: a train needs slots >= threshold / stack, rounded up, and 1+2 has 40; 2,000 / 50 =
+40). Measured at −4000: Mechanical inserters and Raw coal (stack 50) 2,000 a train; Empty fuel canisters
+(20) and Worker's food (10) no order in 5 minutes, others within 21 s. Cures, both measured: the
+Request threshold signal in that platform's constant combinator (800 on the canisters: 800 a train), or
+Stack thresholds on its combinator with a threshold of 20 (Worker's food: 400 a train). Plates,
+batteries and Intermetallics stack to 100; below 50 are mostly buildings and canisters.
 
 ## Cybersyn 2.1.2: how it runs
 
