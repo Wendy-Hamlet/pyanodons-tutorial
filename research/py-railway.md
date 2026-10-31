@@ -399,6 +399,51 @@ Without the signal the default 2,000 is read as 2,000 stacks, so nothing is ever
 request must be at least threshold x stack. At stack 100 a threshold of 20 is the 2,000 of today. A full train of stack
 1000 is 40,000 items, about 35 minutes through 24 inserters at the measured 19 a second (computed).
 
+## Requests by stack size, and the fluid set (2026-10-31, export 20:18)
+
+The author ticked Stack thresholds on 物品需求站-1-1 to 1-4 with a threshold of 40 and kept −4,000 (物品需求站-1-扩展模块 is
+unchanged: not ticked, no signal). On both fluid stations: the three Pipes, and on the requester the Fluid request threshold
+50,000; the provider's parameters are now named 供应流体.
+
+**Request and threshold together.** An order needs a shortage of at least the threshold, so a request equal to the threshold
+orders only when the chests are empty. Four platforms of stack-100 plates, stations starting empty, a factory using the given rate
+per platform from the chests (`network` mode, `drain`), 30 minutes:
+
+| Setting | Rate | Orders a platform | Per train | Chests empty, s |
+|---|---|---|---|---|
+| −4,000, threshold 40 (the export) | 5/s | 2 | 4,000 | 526-538 |
+| −8,000, threshold 40 | 5/s | 3 | 4,000 | 279-298 |
+| −8,000, threshold 40 | 8/s | 5 | 4,000 | 280-295 |
+| −4,000, threshold 20 | 5/s | 4 | 2,000-4,000 | 279-291 |
+| −4,000, default threshold, not ticked | 5/s | 4 | 2,000-4,000 | 279-291 |
+
+The 279-298 s are the wait for the first train, the only empty time in the last four rows. In the export's setting the second order
+went out at about 1,030 s, when the chests reached 0, and plates came again about 250 s later; that gap repeats every round. Belts
+not counted. A request of 80 stacks with threshold 40 keeps full trains and orders at half stock; at 8/s the chests did not empty again.
+
+**The amount from the stack size.** Stack sizes of visible items in the data dump: 1: 54, 5: 20, 10: 765, 20: 75, 50: 825, 100: 1302,
+200: 25, 500: 4, 1000: 28. So −4,000 at threshold 40 ships stacks up to 100 only; stack 200 is Sand, Gravel, Small parts, circuit
+boards and science packs, stack 1000 Stone bricks and Ash. Blueprint parameters can do this with no building: a number parameter takes
+a formula, and the game offers "Stack size of parameter N" as a variable (locale `gui-blueprint-parametrisation.variable-stack-size`;
+engine strings `formula`, `dependent`, `_s`). −80 x stack gives the last row of the table in the section above. Not tested: the Lua
+API cannot fill in parameters, so the formula itself runs only in the author's game; so does the question whether four number
+parameters of the same value are filled in one by one. A circuit way, also untested: a Selector combinator (选择运算器, tech 高级运算器;
+5 Decider combinators + 5 Simple circuit boards + 5 Solder) in Stack size mode and an Arithmetic combinator on each platform.
+
+**Fluid set.** 流体需求站 and 流体供货站 1-1 to 1-3 are cut from 1-4 the way the author cut the item stations, whose 1-N are exact
+subsets of 1-4: the bottom N platforms, the same rails, signals and poles, and the Pumps, tanks, Pipes and poles of those
+platforms. In `blueprints/rail-fluid-*`, not committed until the author has checked them in game; they import and export
+cleanly (`check-companion.ps1`). Orders a platform, all 50,000, no train on the main line, nothing without a path:
+
+| Platforms | Factory on one tank, 500/s, 15 min | One provider tank fed, 10 min |
+|---|---|---|
+| 1 | 12 | 30 |
+| 2 | 12 | 29 |
+| 3 | 12 | 28 |
+| 4 | 12 | 26 |
+
+1-4 at 100/s, 15 minutes: 5 orders a platform, all full. Requester 1-1 on provider 1-3: 4 full trains, then stopped.
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,

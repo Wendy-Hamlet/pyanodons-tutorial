@@ -1378,16 +1378,27 @@ local function network_tick(tick)
     end
     for _, c in ipairs(N.fuel_chests) do if c.valid then c.insert({ name = opts.fuel, count = 1e6 }) end end
   end
-  -- options.drain: a factory using this many fluid units a second at each requester's platform, from
-  -- all its tanks; options.drain_one: from one tank only (a factory piped to that tank).
+  -- options.drain: a factory using this many fluid units or items a second at each requester's platform,
+  -- from all its tanks or chests; options.drain_one: from one tank only (a factory piped to that tank).
+  -- st.dry counts the seconds such a factory found its store empty.
   if opts.drain then
     for _, st in ipairs(N.stations) do
-      if st.fluid and st.comb.get_control_behavior().parameters.second_constant % 4 ~= 1 then
-        local tanks = tanks_of(st)
-        if opts.drain_one then
-          tanks[1].extract_fluid({ name = st.fluid, amount = opts.drain })
-        else
-          for _, c in ipairs(tanks) do c.extract_fluid({ name = st.fluid, amount = opts.drain / #tanks }) end
+      if st.comb.get_control_behavior().parameters.second_constant % 4 ~= 1 then
+        if st.fluid then
+          local tanks = tanks_of(st)
+          if opts.drain_one then
+            tanks[1].extract_fluid({ name = st.fluid, amount = opts.drain })
+          else
+            for _, c in ipairs(tanks) do c.extract_fluid({ name = st.fluid, amount = opts.drain / #tanks }) end
+          end
+        elseif st.item then
+          local left = opts.drain
+          for _, c in pairs(st.chests) do
+            if left > 0 and c.valid and c.type == "container" then
+              left = left - c.get_inventory(defines.inventory.chest).remove({ name = st.item, count = left })
+            end
+          end
+          if left > 0 then st.dry = (st.dry or 0) + 1 end
         end
       end
     end
@@ -1450,9 +1461,10 @@ local function network_tick(tick)
       for _, s in pairs(cs) do
         if s.entity_stop and s.entity_stop.valid and s.entity_stop.unit_number == st.stop.unit_number then c = s end
       end
-      out("t %5.0f s  %s: %d items in %d wired chests; Cybersyn: %s", now, st.name, n, k,
+      out("t %5.0f s  %s: %d items in %d wired chests; Cybersyn: %s%s", now, st.name, n, k,
         c and string.format("%s%s, %d deliveries under way, display %d", c.is_p and "p" or "", c.is_r and "r" or "",
-          c.deliveries_total, c.display_state) or "not registered")
+          c.deliveries_total, c.display_state) or "not registered",
+        st.dry and string.format("; dry %d s so far", st.dry) or "")
     end
   end
 end
