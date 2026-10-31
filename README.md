@@ -249,7 +249,10 @@ parameters for yours.
   builds a whole network (a grid with stations of every kind, put together beforehand), powers it and
   lets Cybersyn itself run it: the blueprint parameters filled in (`items`, `amount`), the providers'
   chests and the refuelers' fuel chests filled (`stock`; `restock` tops them up and empties the
-  requesters every 10 s), one train per entry of `fuels` at the depot stops; it logs every Cybersyn
+  requesters every 10 s, `restock: "provider"` only the providers), one train per entry of `fuels` at the
+  depot stops. Fluid stations too: `items` may name fluids, `fluid_trains` gives the last n trains fluid wagons,
+  `drain` uses that many units a second at each requester, `drain_one` from one tank, `feed_one` fills one
+  provider tank. It logs every Cybersyn
   train status, every stop visit (time, cargo, fuel) and where trains wait (signal, across blocks, on
   a road). Results: [Rail junctions at grade](research/rail-junctions.md). Runs in the
   save-reading setup.

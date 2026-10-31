@@ -974,7 +974,8 @@ end
 local function cargo_of(train)
   local n = 0
   for _, w in pairs(train.cargo_wagons) do n = n + w.get_inventory(defines.inventory.cargo_wagon).get_item_count() end
-  return n
+  for _, v in pairs(train.get_fluid_contents()) do n = n + v end
+  return math.floor(n)
 end
 
 local function station_setup(surface)
@@ -1168,7 +1169,7 @@ end
 
 -- Cybersyn itself runs a whole network: the blueprint holds stations of every kind on a grid. It is
 -- built with every setting and powered, the blueprint parameters are filled in, the providers' chests
--- and the refuelers' fuel chests are filled, and trains are put at the depot stops.
+-- and tanks and the refuelers' fuel chests are filled, and trains are put at the depot stops.
 local N = {}
 local STATUS = { [0] = "at depot", "to provider", "at provider", "to requester", "at requester", "to depot",
   "to depot (bypass)", "to refueler", "at refueler" }
@@ -1199,17 +1200,32 @@ end
 
 local IN = { defines.wire_connector_id.combinator_input_red, defines.wire_connector_id.combinator_input_green }
 
--- options.items[k + 1] stands for parameter-k (items) and options.amount, if set, for every request.
+-- options.items[k + 1] stands for parameter-k (an item or a fluid) and options.amount, if set, for every request.
 local function resolve(s)
-  return (s:gsub("parameter%-(%d)", function(k) return (opts.items or {})[tonumber(k) + 1] or ("parameter-" .. k) end))
+  return (s:gsub("%[item=parameter%-(%d)%]", function(k)
+    local name = (opts.items or {})[tonumber(k) + 1]
+    if not name then return nil end
+    return "[" .. (prototypes.fluid[name] and "fluid" or "item") .. "=" .. name .. "]"
+  end):gsub("^parameter%-(%d)$", function(k) return (opts.items or {})[tonumber(k) + 1] end))
+end
+
+local function is_store(e) return e.type == "container" or e.type == "storage-tank" end
+
+-- The wired tanks of a station in a fixed order.
+local function tanks_of(st)
+  local tanks = {}
+  for _, c in pairs(st.chests) do if c.valid and c.type == "storage-tank" then tanks[#tanks + 1] = c end end
+  table.sort(tanks, function(a, b) return a.position.x + a.position.y < b.position.x + b.position.y end)
+  return tanks
 end
 
 local function chest_total(chests)
   local n, k = 0, 0
   for _, c in pairs(chests) do
-    if c.type == "container" then n, k = n + c.get_inventory(defines.inventory.chest).get_item_count(), k + 1 end
+    if c.type == "container" then n, k = n + c.get_inventory(defines.inventory.chest).get_item_count(), k + 1
+    elseif c.type == "storage-tank" then n, k = n + c.get_fluid_count(), k + 1 end
   end
-  return n, k
+  return math.floor(n), k
 end
 
 -- On the road: within 13 tiles of a grid line (the grid's tracks and the stations' switches).
@@ -1241,7 +1257,8 @@ local function network_setup(surface)
       for i = 1, sec.filters_count do
         local f = sec.get_slot(i)
         if f.value and f.value.name and f.value.name:match("^parameter%-%d$") then
-          sec.set_slot(i, { value = { type = "item", name = resolve(f.value.name), quality = "normal", comparator = "=" },
+          local name = resolve(f.value.name)
+          sec.set_slot(i, { value = { type = prototypes.fluid[name] and "fluid" or "item", name = name, quality = "normal", comparator = "=" },
             min = opts.amount and -opts.amount or f.min })
         end
       end
@@ -1257,19 +1274,25 @@ local function network_setup(surface)
     local chests = wired(comb, IN)
     local nchest, nconst = 0, 0
     for _, e in pairs(chests) do
-      if e.type == "container" then nchest = nchest + 1 elseif e.type == "constant-combinator" then nconst = nconst + 1 end
+      if is_store(e) then nchest = nchest + 1 elseif e.type == "constant-combinator" then nconst = nconst + 1 end
     end
     local name = stop and stop.backer_name or "?"
     out("%s %q at %.1f,%.1f: %s, train limit %s, wired to %d chest(s) and %d constant combinator(s)", mode, name,
       stop and stop.position.x or 0, stop and stop.position.y or 0, mode == "station" and PR[bits % 4] or "-",
       stop and (stop.trains_limit < 4e9 and stop.trains_limit or "none") or "-", nchest, nconst)
     if mode == "station" then
-      N.stations[#N.stations + 1] = { stop = stop, comb = comb, chests = chests, name = name }
       local item = name:match("%[item=([^%]]+)%]")
-      if bits % 4 == 1 and item and opts.stock and nchest > 0 then
+      local fluid = name:match("%[fluid=([^%]]+)%]")
+      N.stations[#N.stations + 1] = { stop = stop, comb = comb, chests = chests, name = name, item = item, fluid = fluid }
+      if bits % 4 == 1 and (item or fluid) and opts.stock and nchest > 0 then
         local each = math.ceil(opts.stock / nchest)
         for _, e in pairs(chests) do
-          if e.type == "container" then e.insert({ name = item, count = each }) end
+          if e.type == "container" and item then e.insert({ name = item, count = each }) end
+        end
+        -- options.feed_one: a production line piped to one tank only.
+        local tanks = fluid and tanks_of(N.stations[#N.stations]) or {}
+        for i, e in ipairs(tanks) do
+          if i == 1 or not opts.feed_one then e.insert_fluid({ name = fluid, amount = each }) end
         end
       end
     elseif mode == "depot" and stop then
@@ -1298,8 +1321,10 @@ local function network_setup(surface)
     local ux, uy = unit(stop.direction)
     -- A stop stands 2 tiles to the right of its track.
     local x, y = stop.position.x + 2 * uy - ux * 5.5, stop.position.y - 2 * ux - uy * 5.5
+    -- options.fluid_trains: the last n trains have fluid wagons.
+    local wagon = (opts.fluid_trains and i > #opts.fuels - opts.fluid_trains) and "fluid-wagon" or opts.wagon
     local stock = { opts.locomotive }
-    for _ = 1, opts.wagons do stock[#stock + 1] = opts.wagon end
+    for _ = 1, opts.wagons do stock[#stock + 1] = wagon end
     local made = {}
     for j, name in ipairs(stock) do
       -- (from the car before as it was placed: the game moves rolling stock onto the rail)
@@ -1321,8 +1346,8 @@ local function network_setup(surface)
     train.manual_mode = false
     N.trains[#N.trains + 1] = { train = train, n = i }
   end
-  out("%d trains of 1 %s + %d %s, fuel %s %s", #N.trains, opts.locomotive, opts.wagons, opts.wagon,
-    table.concat(opts.fuels or {}, "/"), opts.fuel)
+  out("%d trains of 1 %s + %d %s (the last %d with fluid wagons), fuel %s %s", #N.trains, opts.locomotive, opts.wagons, opts.wagon,
+    opts.fluid_trains or 0, table.concat(opts.fuels or {}, "/"), opts.fuel)
   N.status, N.visit, N.done = {}, {}, {}
   storage.N = N
 end
@@ -1330,19 +1355,42 @@ end
 local function network_tick(tick)
   if tick % 60 ~= 0 then return end
   local now = tick / 60
-  -- options.restock: the providers' chests are topped up and the requesters' emptied every 10 s,
-  -- as if belts kept feeding the one and a factory used up the other.
+  -- options.restock: the providers' stores are topped up and the requesters' emptied every 10 s, as
+  -- if belts or pipes kept feeding the one and a factory used up the other. restock = "provider": only
+  -- the providers, the requesters keep what they get.
   if opts.restock and tick % 600 == 0 then
     for _, st in ipairs(N.stations) do
-      local item = st.name:match("%[item=([^%]]+)%]")
       local p = st.comb.get_control_behavior().parameters.second_constant % 4
+      if p == 1 and st.fluid then
+        for i, c in ipairs(tanks_of(st)) do
+          if i == 1 or not opts.feed_one then c.insert_fluid({ name = st.fluid, amount = 1e7 }) end
+        end
+      end
       for _, c in pairs(st.chests) do
-        if c.valid and c.type == "container" then
-          if p == 1 and item then c.insert({ name = item, count = 1e6 }) elseif p ~= 1 then c.clear_items_inside() end
+        if c.valid and is_store(c) then
+          if p == 1 then
+            if st.item and c.type == "container" then c.insert({ name = st.item, count = 1e6 }) end
+          elseif opts.restock ~= "provider" then
+            if c.type == "container" then c.clear_items_inside() else c.clear_fluid_inside() end
+          end
         end
       end
     end
     for _, c in ipairs(N.fuel_chests) do if c.valid then c.insert({ name = opts.fuel, count = 1e6 }) end end
+  end
+  -- options.drain: a factory using this many fluid units a second at each requester's platform, from
+  -- all its tanks; options.drain_one: from one tank only (a factory piped to that tank).
+  if opts.drain then
+    for _, st in ipairs(N.stations) do
+      if st.fluid and st.comb.get_control_behavior().parameters.second_constant % 4 ~= 1 then
+        local tanks = tanks_of(st)
+        if opts.drain_one then
+          tanks[1].extract_fluid({ name = st.fluid, amount = opts.drain })
+        else
+          for _, c in ipairs(tanks) do c.extract_fluid({ name = st.fluid, amount = opts.drain / #tanks }) end
+        end
+      end
+    end
   end
   local ct = remote.call("cybersyn", "read_global", "trains") or {}
   local cs = remote.call("cybersyn", "read_global", "stations") or {}

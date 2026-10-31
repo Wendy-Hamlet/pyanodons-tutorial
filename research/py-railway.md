@@ -348,6 +348,57 @@ Request threshold signal in that platform's constant combinator (800 on the cani
 Stack thresholds on its combinator with a threshold of 20 (Worker's food: 400 a train). Plates,
 batteries and Intermetallics stack to 100; below 50 are mostly buildings and canisters.
 
+## Fluid stations and stack thresholds (2026-10-31)
+
+Export of 14:52. The two faults left above are fixed, measured: the requester module's platform gets its 4,000 and
+every provider platform holds 38,400 plates. The item set is imported (`blueprints/rail-requester-*`, `rail-provider-*`,
+`rail-depot*`, `rail-refuel-ash`, `rail-grid-edge-big-poles`).
+
+**流体卸货站-1-4, 流体供货站-1-4** (not imported yet). Rails and signals are the item stations', tile for tile. A
+platform: two Pumps, one at each wagon, two PyTanks (100 kL) wired to the combinator; request −200,000, the two tanks.
+Tested with 1+2 on Fluid wagons (25,000 each), `network` mode:
+
+- The Pumps meet the wagons: 50,000 a train, about 3 s to load and 3 s to unload (the item stations: 211 s and 210 s).
+  Four platforms, 8 trains, tanks refilled and emptied every 10 s: 49 orders in 4 minutes, all 50,000, no train on the main line.
+- With nothing used up the tanks fill (199,900 to 200,000) after 4 trains a platform and the orders stop; no train is left standing.
+- Mixed network (two grid cells, item and fluid stations, 4 cargo + 4 fluid trains, one depot, 15 minutes): the cargo trains took
+  only items, the fluid trains only fluids; a fluid train changes fluid between trips without trouble (Cybersyn waits for an
+  empty train at the requester); nothing without a path.
+
+Faults:
+
+- Only the bottom platform has a Pipe joining its two tanks. Each Pump serves its own tank, so on the other three a factory
+  piped to one tank leaves the other full, and a train that cannot empty waits for ever (Cybersyn's unloading condition is
+  "empty"). Used at 500/s from one tank, 15 minutes: 6 orders on each of the three, then jammed with 2 trains each, 6 of the
+  8 trains; the bottom platform 39 orders. The same at the provider with one tank fed: 2 orders each, then trains wait for a
+  full load that cannot come; bottom platform 26. With a Pipe at (68.5,116.5), (68.5,128.5) and (68.5,140.5) on both
+  blueprints: 33-38 and 26 orders on every platform, no jam.
+- The default fluid threshold is the item threshold, 2,000 (the fluid map setting is 0, off), so slow use sends nearly empty trains.
+  Used at 100/s a platform, 15 minutes: 33-34 orders a platform, nearly all of 2,000-6,000 on a 50,000 train. With the Fluid
+  request threshold signal at 50,000 in the constant combinator: 5 orders a platform, all full. Stack thresholds do not touch fluids.
+- Small: the provider's parameters are named 需求流体 and run from the top platform down (parameter-3 first), the
+  requester's from the bottom up. The stops are named `[item=parameter-k]…`; whether the game shows a fluid's icon there
+  cannot be tested headless (the name does not matter to Cybersyn: four stops of one name ran fine).
+
+**Stack thresholds** (`central-planning.lua` lines 367, 592, 688, 736-737, 999-1002; checkbox on the requester's combinator).
+The threshold counts stacks of the item instead of items; nothing else changes. So it is the smallest delivery, not the amount
+wanted: a train is sent when the shortage is at least that many stacks, the provider holds that many, and the train has
+that many slots (1+2: 40). Each train carries min(shortage, stock, 40 stacks). The request stays in items.
+
+Measured on five platforms with stacks 10, 50, 100, 200, 1000 (Worker's food, Mechanical inserters, Iron plates,
+Small parts, Stone bricks), per train:
+
+| Setting | 10 | 50 | 100 | 200 | 1000 |
+|---|---|---|---|---|---|
+| Ticked, no threshold signal, −4000 | none | none | none | none | none |
+| Threshold 20, −4000 | 400 | 2,000 | 4,000 | 4,000 | none (4 stacks) |
+| Threshold 40, −4000 | 400 | 2,000 | 4,000 | none (20 stacks) | none |
+| Threshold 40, request 80 stacks | 400 | 2,000 | 4,000 | 8,000 | 40,000 |
+
+Without the signal the default 2,000 is read as 2,000 stacks, so nothing is ever sent. The threshold must be at most 40. The
+request must be at least threshold x stack. At stack 100 a threshold of 20 is the 2,000 of today. A full train of stack
+1000 is 40,000 items, about 35 minutes through 24 inserters at the measured 19 a second (computed).
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,
