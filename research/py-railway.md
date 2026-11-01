@@ -459,6 +459,27 @@ cleanly (`check-companion.ps1`). Orders a platform, all 50,000, no train on the 
 
 1-4 at 100/s, 15 minutes: 5 orders a platform, all full. Requester 1-1 on provider 1-3: 4 full trains, then stopped.
 
+## One platform at a time: stations that do several jobs (2026-11-01)
+
+The author's first outpost by train is Borax: Syngas in, Borax and Muddy sludge out, so one station is a requester and a provider, for items and
+fluids. The 1-N stations are all one kind. `tools/bp-layers.js` cuts rail-<kind>-2-1, -3-2 and -4-3 (物品卸货站-3-2 and so on): the difference of 1-N and
+1-(N-1), platform N alone at its absolute place, without the main-line piece, which only 1-1 holds. Each has the parameter table of 1-1 and uses
+parameter-0: a formula reads `p0_s`, and parameter-0 is the only form a one-platform blueprint has come back from the game in (1-1, the modules).
+
+Measured with `junction-bench` mode `layers` (cuts pasted one by one with `build_blueprint`, ghosts built):
+
+- Pasted with the cursor anywhere in the 240 cell, in all four turns, the four cuts of a kind give the 1-4 station exactly: 0 entities missing or extra in 16
+  of 16, circuit wires equal. The small poles at x 56.5 join by themselves, the one wire between platforms that the cuts lose: 1 pole network.
+- 96 pairs of platforms from any two kinds: 12 cannot stand together, all of one form, an item platform directly above a fluid platform. The tank of the
+  fluid platform (y 150..158 on platform 1) covers half of the item platform's south side above it (24 of 48 inserters, 12 of 24 chests). The other way
+  round fits, and so do two item or two fluid platforms. So in a mixed station the item platforms go at the bottom.
+- The tanks of different platforms do not touch; a Pipe joins only the two tanks of one platform.
+
+Mixed run, `network` mode, 15 minutes, 4 cargo + 4 fluid trains, stores refilled and emptied every 10 s. Outpost: 物品供货站-1-1 Borax, 流体卸货站-2-1 Syngas,
+流体供货站-3-2 Muddy sludge; base (the same three turned 180 degrees): 物品卸货站-1-1, 流体供货站-2-1, 流体卸货站-3-2. All six pasted one by one. 4 Borax orders of
+4,000 (40 stacks of 100; the request came from `request_stacks`, as the formula itself cannot run headless), 37 Syngas and 38 Sludge orders of 50,000. Cargo trains took
+only Borax, fluid trains only fluids, no mixing, nothing without a path, no train left on the main line.
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,

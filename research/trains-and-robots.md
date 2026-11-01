@@ -221,3 +221,5 @@ Mechanical parts, Brakes, Pumps, big tanks, Fluid wagons. Green science: 90 s in
 0.133/s a machine; at 0.1/s every direct solid input is at most 0.12/s, so it needs no trains. Iron is the first ore to run short: 514k under the drills at 8 ore/s, about 18 hours
 (21 with Mining productivity +20 %), three drills under 1,000; the others have 100 hours or more at today's rates.
 
+The author's decision, 2026-11-01: green science goes wholly by train, because the point of the network is to replace the bus, however small the flows are; iron needs no train, the
+drills only have to move along the same field. The first train line is Borax: Syngas in, Borax and Muddy sludge out (stations: `research/py-railway.md`, "One platform at a time").

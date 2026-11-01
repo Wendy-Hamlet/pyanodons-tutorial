@@ -131,6 +131,9 @@ parameters for yours.
   whole game as a timeline in fixed slices, used to write chapters from real play), checked by
   `check-recorder.ps1`; it also writes the factory open in Factory Planner (`/pt-fp`), read by
   `planner-summary.js` (targets, inputs, byproducts, power, every line's machines and rates).
+- `bp-layers.js [--options <file>]`: cuts the single-platform stations (`rail-*-2-1`, `-3-2`, `-4-3`) out of
+  the 1-N stations; `--options` writes the options of `junction-bench` mode `layers`, which pastes them one by one against
+  1-4 and tries every pair. `network` mode's `paste` option pastes such blueprints onto a network.
 - `bp-sync.js` + `companion/` + `check-companion.ps1`: moves `blueprints/` into a running
   game as one blueprint book and pulls edited blueprints back; see
   [blueprints](blueprints/README.md#syncing-with-a-running-game).
@@ -225,7 +228,7 @@ parameters for yours.
   lacks and watched entities. One JSON file per bench in `bp-bench/benches/` (blueprint, sources,
   sinks, fluid sinks, items to prime, technologies, warm-up and measuring time, variants). Runs in the
   save-reading setup.
-- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit|run|station|build|network [-Options <json or @file.json>]` +
+- `junction-bench.ps1 -Blueprint <file or name> -Mode map|traffic|edit|run|station|build|network|layers [-Options <json or @file.json>]` +
   `junction-bench/` + `junction-bench.js`: the rail junction bench. Builds the rails and signals of
   one blueprint on an empty map. `map` writes its rails, rail blocks, signals, track ends and every
   path between track ends with the signals met on the way; `junction-bench.js render` draws it

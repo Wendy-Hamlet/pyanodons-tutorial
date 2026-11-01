@@ -34,7 +34,11 @@
 --     electric entities are outside every pole's supply area.
 --   mode "network": builds a whole network blueprint (stations of every kind on a grid, built at
 --     options.at), powers it and lets Cybersyn run it (see network_setup); options.items fill the
---     blueprint parameters, options.fuels put trains at the depot stops.
+--     blueprint parameters, options.fuels put trains at the depot stops. options.paste: further
+--     blueprints built on top one by one, as a player pastes them ({ blueprint, at, direction, item }).
+--   mode "layers": single-platform blueprints (tools/bp-layers.js --options). Pasted one by one they
+--     must give the 1-4 station, at any cursor place and turn, poles joined; every pair of them
+--     from any two kinds is pasted to find the pairs that cannot stand together.
 --   options.locomotives (default 1) and options.wagons: the trains of modes "traffic" and "station".
 -- Results are CF-JUNCTION log lines. Run by tools/junction-bench.ps1, which writes bench-data.lua:
 -- the name, the mode, the options and the blueprint's entities as JSON.
@@ -914,27 +918,52 @@ end
 -- The whole blueprint, every entity with its settings, through a blueprint item; ghosts revived.
 local S = {}
 
-local function build_all(surface)
-  local c = opts.chunks or 8
-  for cx = -c, c do
-    for cy = -c, c do surface.request_to_generate_chunks({ cx * 32, cy * 32 }, 0) end
+-- options.items[k + 1] stands for parameter-k (an item or a fluid).
+local function resolve(s, items)
+  return (s:gsub("%[item=parameter%-(%d)%]", function(k)
+    local name = items[tonumber(k) + 1]
+    if not name then return nil end
+    return "[" .. (prototypes.fluid[name] and "fluid" or "item") .. "=" .. name .. "]"
+  end):gsub("^parameter%-(%d)$", function(k) return items[tonumber(k) + 1] end))
+end
+
+-- Blueprint parameters: stop names and constant combinators. options.amount, if set, is every request.
+local function fill_parameters(stops, combinators, items)
+  for _, s in pairs(stops) do s.backer_name = resolve(s.backer_name, items) end
+  for _, c in pairs(combinators) do
+    for _, sec in pairs(c.get_control_behavior().sections) do
+      for i = 1, sec.filters_count do
+        local f = sec.get_slot(i)
+        if f.value and f.value.name and f.value.name:match("^parameter%-%d$") then
+          local name = resolve(f.value.name, items)
+          local min = opts.amount and -opts.amount or f.min
+          -- options.request_stacks: what a blueprint formula of the stack size gives, that many stacks of the item.
+          if opts.request_stacks and prototypes.item[name] then min = -opts.request_stacks * prototypes.item[name].stack_size end
+          sec.set_slot(i, { value = { type = prototypes.fluid[name] and "fluid" or "item", name = name, quality = "normal", comparator = "=" },
+            min = min })
+        end
+      end
+    end
   end
-  surface.force_generate_chunk_requests()
+end
+
+-- One blueprint string pasted as a player does, at a cursor place and turn, its ghosts built.
+-- Returns the entities built and, as text, what could not be built.
+local function paste(surface, blueprint, position, direction)
   local inv = game.create_inventory(1)
   inv[1].set_stack({ name = "blueprint" })
-  local r = inv[1].import_stack(data.blueprint)
+  local r = inv[1].import_stack(blueprint)
   if r ~= 0 then out("import_stack returned %d", r) end
   local want = {}
   for _, e in pairs(inv[1].get_blueprint_entities() or {}) do want[e.name] = (want[e.name] or 0) + 1 end
-  local ghosts = inv[1].build_blueprint({ surface = surface, force = "player", position = opts.at or { 0, 0 },
+  local ghosts = inv[1].build_blueprint({ surface = surface, force = "player", position = position, direction = direction,
     build_mode = defines.build_mode.forced })
-  local n, got, unpowered, built = 0, {}, {}, {}
+  local got, built = {}, {}
   for _, g in pairs(ghosts) do
     if g.valid and g.type == "entity-ghost" then
       local name, pos = g.ghost_name, g.position
       local _, e = g.silent_revive({ raise_revive = true })
       if e then
-        n = n + 1
         got[e.name] = (got[e.name] or 0) + 1
         built[#built + 1] = e
       elseif opts.list_failed then
@@ -943,21 +972,130 @@ local function build_all(surface)
     end
   end
   inv.destroy()
+  local missing = {}
+  for name, k in pairs(want) do
+    if (got[name] or 0) < k then missing[#missing + 1] = string.format("%s %d of %d", name, got[name] or 0, k) end
+  end
+  table.sort(missing)
+  return built, missing
+end
+
+local function generate(surface)
+  local c = opts.chunks or 8
+  for cx = -c, c do
+    for cy = -c, c do surface.request_to_generate_chunks({ cx * 32, cy * 32 }, 0) end
+  end
+  surface.force_generate_chunk_requests()
+end
+
+local function build_all(surface)
+  generate(surface)
+  local built, missing = paste(surface, data.blueprint, opts.at or { 0, 0 })
+  local n = #built
+  for k, p in ipairs(opts.paste or {}) do
+    -- (the main line of a pasted station lies on the grid already, so its rails count as not built)
+    local more = paste(surface, p.blueprint, p.at or opts.at or { 0, 0 }, p.direction)
+    local stops, combinators = {}, {}
+    for _, e in ipairs(more) do
+      built[#built + 1] = e
+      if e.type == "train-stop" then stops[#stops + 1] = e end
+      if e.name == "constant-combinator" then combinators[#combinators + 1] = e end
+    end
+    if p.item then fill_parameters(stops, combinators, { p.item }) end
+    out("paste %d: %d entities, %s", k, #more, p.item or "no parameter")
+    n = n + #more
+  end
   -- Checked once everything stands: a pole built later still powers what came before it.
+  local unpowered = {}
   for _, e in ipairs(built) do
     -- (electric_network_id: in some pole's supply area; the lab has nothing that makes power.)
     if e.valid and e.prototype.electric_energy_source_prototype and not e.electric_network_id then
       unpowered[#unpowered + 1] = string.format("%s@%.1f,%.1f", e.name, e.position.x, e.position.y)
     end
   end
-  local missing = {}
-  for name, k in pairs(want) do
-    if (got[name] or 0) < k then missing[#missing + 1] = string.format("%s %d of %d", name, got[name] or 0, k) end
-  end
-  table.sort(missing)
   out("built %d entities%s; outside any pole's supply area: %s", n,
     #missing > 0 and ("; not built: " .. table.concat(missing, ", ")) or "",
     #unpowered > 0 and table.concat(unpowered, " ") or "none")
+end
+
+-- ---------- layers ----------
+
+local function layers_mode(surface)
+  generate(surface)
+  local function clear()
+    for _, e in pairs(surface.find_entities()) do e.destroy() end
+  end
+  local function snapshot()
+    local t = {}
+    for _, e in pairs(surface.find_entities()) do
+      t[string.format("%s@%.1f,%.1f d%d", e.name, e.position.x, e.position.y, e.direction)] = true
+    end
+    return t
+  end
+  local function networks()
+    local ids, n = {}, 0
+    for _, p in pairs(surface.find_entities_filtered({ type = "electric-pole" })) do
+      if not ids[p.electric_network_id] then ids[p.electric_network_id] = true; n = n + 1 end
+    end
+    return n
+  end
+  local function circuits()
+    local n = 0
+    for _, e in pairs(surface.find_entities()) do
+      for _, id in ipairs({ defines.wire_connector_id.circuit_red, defines.wire_connector_id.circuit_green,
+        defines.wire_connector_id.combinator_input_red, defines.wire_connector_id.combinator_input_green,
+        defines.wire_connector_id.combinator_output_red, defines.wire_connector_id.combinator_output_green }) do
+        local c = e.valid and e.get_wire_connector(id, false)
+        if c then n = n + c.connection_count end
+      end
+    end
+    return n
+  end
+  local kinds = {}
+  for name in pairs(opts.kinds) do kinds[#kinds + 1] = name end
+  table.sort(kinds)
+
+  -- 1. The cuts pasted one by one, the cursor anywhere in the cell, against the whole 1-4.
+  local CURSOR = { { 5, 5 }, { 230, 7 }, { 9, 231 }, { 200, 200 } }
+  local turns = { 0, 4, 8, 12 }
+  for _, name in ipairs(kinds) do
+    local kind = opts.kinds[name]
+    for _, turn in ipairs(turns) do
+      clear()
+      paste(surface, kind.full, { 120, 120 }, turn)
+      local whole, nets, wires = snapshot(), networks(), circuits()
+      clear()
+      for k, bp in ipairs(kind.layers) do
+        paste(surface, bp, CURSOR[k], turn)
+      end
+      local cut, cnets, cwires = snapshot(), networks(), circuits()
+      local missing, extra = 0, 0
+      for k in pairs(whole) do if not cut[k] then missing = missing + 1 end end
+      for k in pairs(cut) do if not whole[k] then extra = extra + 1 end end
+      out("%s turn %d: against 1-4, %d missing, %d extra; pole networks %d (1-4: %d); circuit wire ends %d (1-4: %d)",
+        name, turn, missing, extra, cnets, nets, cwires, wires)
+    end
+  end
+
+  -- 2. Every pair of platforms from any two kinds.
+  local pairs_tried, failed = 0, 0
+  for _, a in ipairs(kinds) do
+    for _, b in ipairs(kinds) do
+      for i = 1, 4 do
+        for j = i + 1, 4 do
+          clear()
+          paste(surface, opts.kinds[a].layers[i], { 120, 120 })
+          local _, missing = paste(surface, opts.kinds[b].layers[j], { 120, 120 })
+          pairs_tried = pairs_tried + 1
+          if #missing > 0 then
+            failed = failed + 1
+            out("%s platform %d with %s platform %d above: not built: %s", a, i, b, j, table.concat(missing, ", "))
+          end
+        end
+      end
+    end
+  end
+  out("%d pairs of platforms, %d cannot stand together", pairs_tried, failed)
 end
 
 local function fuel_of(train)
@@ -1200,15 +1338,6 @@ end
 
 local IN = { defines.wire_connector_id.combinator_input_red, defines.wire_connector_id.combinator_input_green }
 
--- options.items[k + 1] stands for parameter-k (an item or a fluid) and options.amount, if set, for every request.
-local function resolve(s)
-  return (s:gsub("%[item=parameter%-(%d)%]", function(k)
-    local name = (opts.items or {})[tonumber(k) + 1]
-    if not name then return nil end
-    return "[" .. (prototypes.fluid[name] and "fluid" or "item") .. "=" .. name .. "]"
-  end):gsub("^parameter%-(%d)$", function(k) return (opts.items or {})[tonumber(k) + 1] end))
-end
-
 local function is_store(e) return e.type == "container" or e.type == "storage-tank" end
 
 -- The wired tanks of a station in a fixed order.
@@ -1250,23 +1379,8 @@ local function network_setup(surface)
     end
   end
   out("power: %d separate pole network(s) wired to an energy interface", joined)
-  -- Blueprint parameters: stop names and constant combinators.
-  for _, s in pairs(surface.find_entities_filtered({ type = "train-stop" })) do s.backer_name = resolve(s.backer_name) end
-  for _, c in pairs(surface.find_entities_filtered({ name = "constant-combinator" })) do
-    for _, sec in pairs(c.get_control_behavior().sections) do
-      for i = 1, sec.filters_count do
-        local f = sec.get_slot(i)
-        if f.value and f.value.name and f.value.name:match("^parameter%-%d$") then
-          local name = resolve(f.value.name)
-          local min = opts.amount and -opts.amount or f.min
-          -- options.request_stacks: what a blueprint formula of the stack size gives, that many stacks of the item.
-          if opts.request_stacks and prototypes.item[name] then min = -opts.request_stacks * prototypes.item[name].stack_size end
-          sec.set_slot(i, { value = { type = prototypes.fluid[name] and "fluid" or "item", name = name, quality = "normal", comparator = "=" },
-            min = min })
-        end
-      end
-    end
-  end
+  fill_parameters(surface.find_entities_filtered({ type = "train-stop" }),
+    surface.find_entities_filtered({ name = "constant-combinator" }), opts.items or {})
   -- Each Cybernetic combinator: its mode, its stop, what it reads; providers' chests filled.
   N.stations, N.depots, N.fuel_chests = {}, {}, {}
   for _, comb in pairs(surface.find_entities_filtered({ name = "cybersyn-combinator" })) do
@@ -1479,6 +1593,7 @@ script.on_init(function()
   if data.mode == "station" then station_setup(surface); return end
   if data.mode == "build" then build_all(surface); return end
   if data.mode == "network" then network_setup(surface); return end
+  if data.mode == "layers" then layers_mode(surface); return end
   local box = build(surface)
   if data.mode == "map" then map_mode(surface, box)
   elseif data.mode == "ends" then ends_mode(surface)
