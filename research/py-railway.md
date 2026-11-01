@@ -480,6 +480,26 @@ Mixed run, `network` mode, 15 minutes, 4 cargo + 4 fluid trains, stores refilled
 4,000 (40 stacks of 100; the request came from `request_stacks`, as the formula itself cannot run headless), 37 Syngas and 38 Sludge orders of 50,000. Cargo trains took
 only Borax, fluid trains only fluids, no mixing, nothing without a path, no train left on the main line.
 
+## The first train in the real game (2026-11-01, save 51:29)
+
+The author built the Borax outpost and put a 1+2 train on 加油站; Cybersyn gave it no orders.
+`trains-probe` on that save (`save-probe.ps1 -Save latest -Probe trains-probe`):
+
+- The train stood automatic with an empty schedule, 150 Raw coal, wagons empty, and could reach all
+  five stops of the map (1,511-2,748 tiles to the stations).
+- Cybersyn held four stations, one refueler, **no depot** and no train. The map has no 车库 stop, and
+  no ghost of one. All combinators work, all on network signal-A.
+- From the source (`train-events.lua`, `on_train_changed`): the only place a train enters Cybersyn is
+  `on_train_arrives_depot`, when it stands at a stop registered as a depot, empty. Placing a train,
+  or standing at a refueler or a station, does nothing. So the first trip to the depot is the
+  player's: a schedule with 车库 in it, automatic. After that the mod writes the schedule.
+- The allow-list (`layout.lua`, `is_layout_accepted`) takes a cargo wagon only beside inserters and a
+  fluid wagon only beside pumps, so a station's fluid platform is never served by a cargo train.
+  This save's only complete pair is Syngas, so its cargo train would have had no work in a depot.
+- The outpost waits on that Syngas: 9 Crystal mines MK 01 `missing_required_fluid` (Borax takes 25 Syngas a mining), 10 Washers short of
+  raw Borax, Borax stock 300 unchanged. The base's Syngas store rose 2,056 in 29 s (70.7/s), from
+  31,024; a provider must hold the threshold (50,000) before the first order.
+
 ## Cybersyn 2.1.2: how it runs
 
 Read from the mod's source (`scripts/central-planning.lua`, `train-events.lua`,

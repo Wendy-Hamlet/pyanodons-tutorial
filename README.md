@@ -218,8 +218,11 @@ parameters for yours.
   tiles are switched by circuits: their enable and logistic conditions, what their wires connect
   to and the signals on those networks.
 - `trains-probe/` (with `save-probe.ps1 -Ticks 10`): every train in a save (cars, state, manual
-  or automatic, schedule with its wait conditions, fuel and burnt results, cargo) and every train
-  stop (name, place, train limit, trains bound for it).
+  or automatic, schedule with its wait conditions, fuel and burnt results, cargo), every train
+  stop (name, place, train limit, trains bound for it), which stops each train can reach, ghosts of
+  stops, and Cybersyn's own view: depots, refuelers, stations with what their combinators read,
+  machine states around them, its trains. `-Variant N -Ticks <above N>` reads the stations again N
+  ticks on (is a store filling?).
 - `bp-bench.ps1 -Bench <name> [-Variant <v>]` + `bp-bench/`: the blueprint bench. Builds one
   blueprint of `blueprints/` on an empty map (the game's own blueprint building, module requests
   filled), powers every electric network from an energy interface, keeps the input belts full and
