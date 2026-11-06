@@ -201,6 +201,54 @@ function act.set_condition(a)
   return { name = e.name, condition = cb.circuit_condition }
 end
 
+-- A circuit wire between two entities in reach (wires cost nothing in 2.x): x,y to x2,y2,
+-- color=red|green (default red).
+function act.wire(a)
+  local c = need_char()
+  local e1 = target(a, c)
+  local e2 = target({ x = a.x2, y = a.y2, name = a.name2 }, c)
+  local id = (a.color == "green") and defines.wire_connector_id.circuit_green or defines.wire_connector_id.circuit_red
+  local ok = e1.get_wire_connector(id, true).connect_to(e2.get_wire_connector(id, true), false)
+  return { connected = ok, from = e1.name, to = e2.name }
+end
+
+-- Control behaviour fields as the player sets them in an entity's window: set={field=value,...}
+-- (e.g. an inserter's circuit_set_filters=true, circuit_enable_disable=false).
+function act.cb(a)
+  local c = need_char()
+  local e = target(a, c)
+  local cb = e.get_or_create_control_behavior() or error(e.name .. " has no circuit settings")
+  for k, v in pairs(a.set or {}) do cb[k] = v end
+  return { name = e.name, set = a.set }
+end
+
+-- A decider combinator's single condition and output: signal (virtual signal-each by default) comparator
+-- constant; output signal (default the same), copy=true copies the input count, else 1.
+function act.decider(a)
+  local c = need_char()
+  local e = target(a, c)
+  local cb = e.get_or_create_control_behavior()
+  local function sig(n, t)
+    if not n then return { type = "virtual", name = "signal-each" } end
+    return { type = t or (prototypes.item[n] and "item") or (prototypes.fluid[n] and "fluid") or "virtual", name = n }
+  end
+  cb.parameters = {
+    conditions = { { first_signal = sig(a.signal), comparator = a.comparator or ">", constant = a.constant or 0 } },
+    outputs = { { signal = sig(a.output or a.signal), copy_count_from_input = a.copy ~= false } },
+  }
+  return { name = e.name, parameters = cb.parameters }
+end
+
+-- A crafting machine reads its contents onto the circuit network (circuit_read_contents), as the
+-- player ticks "Read contents" in its window.
+function act.read_contents(a)
+  local c = need_char()
+  local e = target(a, c)
+  local cb = e.get_or_create_control_behavior() or error(e.name .. " has no circuit settings")
+  cb.circuit_read_contents = a.value ~= false
+  return { name = e.name, read_contents = cb.circuit_read_contents }
+end
+
 -- An inserter's (or splitter's) filters in reach: filters=a,b (empty clears), mode=whitelist|blacklist.
 function act.set_filters(a)
   local c = need_char()
@@ -264,6 +312,60 @@ local function take_from(c, e, item, count, all_inventories)
     end
   end
   return got
+end
+
+-- Move items from the character's trash slots back into the main inventory (as a player clicks
+-- them back): item= one item, else all.
+function act.untrash(a)
+  local c = need_char()
+  local trash = c.get_inventory(defines.inventory.character_trash)
+  local main = c.get_main_inventory()
+  local moved = {}
+  for i = 1, #trash do
+    local st = trash[i]
+    if st.valid_for_read and (not a.item or st.name == a.item) then
+      local name, n = st.name, main.insert(st)
+      if n > 0 then
+        moved[name] = (moved[name] or 0) + n
+        if n >= st.count then st.clear() else st.count = st.count - n end
+      end
+    end
+  end
+  return { moved = moved, free_slots = main.count_empty_stacks() }
+end
+
+-- Pick items up off belts by hand, as a player does (F over a belt): every belt, underground belt and
+-- splitter within r (default 3, at most 10) of x,y, both lanes; item= one item (default all),
+-- count= at most this many in all.
+function act.take_belt(a)
+  local c = need_char()
+  local p = util.xy(a) or util.pos(c.position)
+  local r = math.min(a.r or 3, 10)
+  check_reach(c, p, c.reach_distance, "belts")
+  local left = a.count
+  local got, belts = {}, 0
+  for _, e in pairs(surface().find_entities_filtered { area = util.area_around(p, r), type = { "transport-belt", "underground-belt", "splitter" } }) do
+    belts = belts + 1
+    for i = 1, e.get_max_transport_line_index() do
+      local line = e.get_transport_line(i)
+      for _, it in pairs(line.get_contents()) do
+        if (not a.item or it.name == a.item) and (left == nil or left > 0) then
+          local want = math.min(it.count, left or it.count)
+          local room = c.get_main_inventory().get_insertable_count({ name = it.name, quality = it.quality })
+          want = math.min(want, room)
+          if want > 0 then
+            local n = line.remove_item { name = it.name, count = want, quality = it.quality }
+            if n > 0 then
+              c.insert { name = it.name, count = n, quality = it.quality }
+              got[it.name] = (got[it.name] or 0) + n
+              if left then left = left - n end
+            end
+          end
+        end
+      end
+    end
+  end
+  return { took = got, belts = belts }
 end
 
 -- Take items out of an entity (outputs and chests; all=true includes inputs and fuel).

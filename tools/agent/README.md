@@ -60,7 +60,11 @@ ox= oy=`, `blueprint string= x= y=`, `build_ghosts r=`, `clear x= y= w= h=`, `re
 [r=]`, `stop`, `research add=a,b | set=a,b | cancel=true`, `speed value=`, `pause [value=false]`,
 `note text=`, `respawn`, `upkeep` (one round of chores: empty every output, Ash slot and chest in
 range except `keep=` items and input chests, top up every burner: `drills=`, `others=`),
-`input_chest at=[[x,y],...]` (chests upkeep never empties).
+`input_chest at=[[x,y],...]` (chests upkeep never empties), `take_belt x= y= r= [item=] [count=]`
+(pick items off the belts within r, as a player does by hand), `untrash [item=]` (trash slots back
+into the main inventory), `wire x= y= x2= y2= [color=green]` (a circuit wire; free in 2.x),
+`read_contents x= y=` (a crafting machine reads its contents), `cb x= y= set={...}` (control
+behaviour fields), `decider x= y= signal= comparator= constant= [output=] [copy=false]`.
 
 Client-side: `wait seconds= jobs=true crafting=true max=` waits on the game (Bash may not start
 with `sleep`). Git Bash rewrites a leading `/` in arguments, so `raw` takes commands without it.
