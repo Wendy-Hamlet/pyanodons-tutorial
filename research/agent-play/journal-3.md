@@ -67,7 +67,9 @@ composted).
 
 | 55:22–55:35 | New agent op `take_belt` (pick items off belts by hand); 6 Coke off the bus belt -> 6 Boron trioxide -> 18 lens -> 6 Laboratory instruments; the last Retrovirus and the 9th cDNA: the Creature chamber has all 9 (2 Cottongut MK 01 out by 55:30). Ralesia loop fixed: the Soil extractor drops behind itself (a west-facing one drops east), turned to face east; the most upstream plantation runs with 1 module. Prandium lab placed at (94,-460). Harvesters for Petri dishes and Flasks removed. 30 Fish eggs and 97 Wood seeds collected. Paused 55:35 (quota 86 %). |
 
-Next: the Cottongut food chain (Fiberboard in a Pulp mill: Treated wood, Raw fiber, Sodium hydroxide,
+| 55:35–55:50 | Temporary **food workshop** at x 101..125, y -447..-433: Washer (Saline water) -> Electrolyzer (Chlorine recipe: Sodium hydroxide; Chlorine and Hydrogen vented) -> Pulp mill (Fiberboard), Boiler, Assembling machine for Cottongut food, Solid separator for Starch. Py Steam is dear: 494 kJ a unit (water heat capacity 2.1 kJ/°C, 15->250 °C), 34 Raw coal gave ~200 Steam; the Boiler burns the stashed Logs now. First 4 Fiberboard. Stopped at quota 97 % (threshold 98 %). |
+
+Next: Stone for the Washer, 2 more Fiberboard crafts, then the rest of the Cottongut food chain (Fiberboard in a Pulp mill: Treated wood, Raw fiber, Sodium hydroxide,
 Steam; Powdered Ralesia seeds; Starch in a Solid separator; food in an Assembling machine 1), then the
 first raising (1 Cottongut MK 01 as a module, 2 as ingredients, Seaweed, Fish eggs, food).
 
