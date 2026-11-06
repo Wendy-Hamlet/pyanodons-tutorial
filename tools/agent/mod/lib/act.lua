@@ -284,7 +284,11 @@ function act.insert(a)
   local have = c.get_item_count(item)
   local want = math.min(a.count or have, have)
   if want <= 0 then error("no " .. item .. " in the inventory") end
-  local n = e.insert { name = item, count = want }
+  -- inv=modules puts the items into the module slots (a creature as a farm's module), as a player
+  -- drops them there; otherwise the entity takes them where it would (inputs first).
+  local dest = (a.inv == "modules") and e.get_module_inventory() or e
+  if not dest then error(e.name .. " has no module slots") end
+  local n = dest.insert { name = item, count = want }
   if n > 0 then c.remove_item { name = item, count = n } end
   return { inserted = n, into = e.name }
 end

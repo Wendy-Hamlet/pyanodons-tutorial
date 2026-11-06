@@ -73,6 +73,8 @@ composted).
 
 | 57:55–59:05 | All 36 Ralesia modules in (12 per plantation); nursery back on automatic, surplus seeds pass the plantations first and leave at the loop end: **seed belt** (route.js, 114 tiles) from there to the Biosample assembler, with a Native flora inserter (filter) where it crosses the service belt. **Battery belt** (172) from the battery line's chest to the Research center. Tin off the bus tin belt (x -77.5), iron off the iron belt (twice). Food: 9 powder -> 27 Starch -> 32 Cottongut food in all. **Cottongut growth**: Prandium lab 1 (94,-460) raising (1 module) gave 2 MK 01 back and 5 pups MK 01; matured with 3 then 6 modules (MK 01 go into the module slots through a recipe switch: inserting puts them in the input); 8 MK 01 at 59:03, second raising running. Prandium lab 2 (106,-460) placed for later. **Moondrop pair** (greenhouse with 16 Moondrop + nursery, 113..132 x -467..-458): a pair exports at most 1.76 Moondrop a greenhouse craft and must shed spare seeds, so the steady line needs about 3 greenhouses and 2 nurseries; it stalled once when I took its Moondrop. Still hand-fed: Plasmids (Laboratory instruments), Bonemeal, Incubated petri dishes and Urea for the Biosample assembler (no free inserter sides; Urea is all used by the battery line), Basic substrate, Cottongut. |
 
+| 59:05–60:35 | Cottongut grown to **22 Cottongut MK 01** (20 as Prandium lab 1 modules, speed 1.0; 2 as the cub complex's modules) with 37 pups MK 01 in stock; Cottongut pups came only at the raising's 50 %: 7 took 15 raisings. Food: 8 more Fiberboard, 24 + 16 food; the food Boiler burns Logs and Wood now (the bus Coke belt near the north end was emptied by my 794 pick). **First Cottongut** at 60:20 (caged, 7 pups -> 6); a second Reproductive complex (cottongut-cub-1, 4 Cottongut -> 10 pups) at (161,-419), the free 22x22 near PL1 being the author's rail line at y -469; the loop runs by hand (pups and Cottongut carried between the two). Urea harvest chest on the battery line's urea bioreactor (-6.5,-395.5): urea there is manure-bound. New: `insert inv=modules`. Paused 60:35 for the quota. |
+
 Next: Stone for the Washer, 2 more Fiberboard crafts, then the rest of the Cottongut food chain (Fiberboard in a Pulp mill: Treated wood, Raw fiber, Sodium hydroxide,
 Steam; Powdered Ralesia seeds; Starch in a Solid separator; food in an Assembling machine 1), then the
 first raising (1 Cottongut MK 01 as a module, 2 as ingredients, Seaweed, Fish eggs, food).
@@ -116,7 +118,12 @@ unattended while the research was paused). The harvesters for Petri dishes and F
 the Cottongut food chain (~12 Treated wood, ~20 Raw fiber, ~12 Sodium hydroxide for Fiberboard,
 ~70 Moondrop, ~30 Fish eggs, ~40 Wood seeds).
 
-## Where it stands (55:30, paused)
+## Where it stands (60:35, paused)
+
+- Cottongut: 4 Cottongut + 6 pups in hand, a caged craft running in PL1; loop PL1 (caged) <-> cub complex by hand until 20+ Cottongut, then the first Solidified sarcorus (20 Cottongut) and the first green packs.
+- To belt: Cottongut PL1 -> I_sar and -> cub complex, pups back; Moondrop (more greenhouses), Wood seeds, Water barrels; the Biosample assembler's Bonemeal, Incubated petri dishes, Urea; Plasmids (Laboratory instruments by hand); Basic substrate (stock).
+
+## Where it stood (55:30)
 
 - Next: 1 Coke -> 1 Boron trioxide -> 3 lens -> 2 Laboratory instruments: 1 to the Retrovirus
   Incubator (-65.5,255.5), 1 to the cDNA Gene lab with that Retrovirus and the Plasmid the
