@@ -159,7 +159,10 @@ function act.clear(a)
   local p = need_xy(a)
   local w, h = a.w or 10, a.h or a.w or 10
   local area = { { p.x, p.y }, { p.x + w, p.y + h } }
-  local types = a.own and nil or { "tree", "simple-entity", "item-entity" }
+  -- own=true: the player's own entities (any type); otherwise trees, rocks and items on the ground.
+  -- (`a.own and nil or {...}` always gave the list: `and nil` is falsy.)
+  local types = nil
+  if not a.own then types = { "tree", "simple-entity", "item-entity" } end
   local n = 0
   for _, e in pairs(surface().find_entities_filtered { area = area, type = types, name = a.name }) do
     if (a.own and e.force.name == "player" and e.type ~= "character") or (not a.own) then
