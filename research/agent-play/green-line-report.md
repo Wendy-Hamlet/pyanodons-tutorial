@@ -161,3 +161,53 @@ the seed belt, the barrel machine twice and the void thresholds twice).
 4. Mature 2 more Cottongut MK 01 (Prandium lab 2 to 6 modules).
 5. Refill the Laboratory instrument buffer (the author's Rubber line now runs on Aromatics; Latex from
    the harvest chest at (-61.5,-357.5), 1,285 left) and rerun the 30 minutes.
+
+## 5. The least living stock that starts the line, and what it costs
+
+The user's verdict on game 3: the core problem was not automating every product from the start and
+not working on a bus. The living stock below is what has to exist before any belt can run; everything
+after it grows in its own machines. Recipes from the data dump (`tools/q.js`); totals solved by
+`tools/rate-plan.js research/plans/green-startup-min.js`.
+
+| Creature | Least | Why that many | Made by | Grown in place to |
+|---|---|---|---|---|
+| Ralesia | 6 | 5 make the first 8 Ralesia seeds in the nursery, 1 is the plantation's module | 3 Ralesia samples (Botanical nursery, 200 s: 3 cDNA, 5 Biosamples, 1 Ralesia codex, 1 Flower sample, 1 Planter box -> 2) | 36 (12 per plantation) |
+| Cottongut MK 01 | 3 | the raising takes 2 as ingredients, the Prandium lab needs at least 1 as a module (no module, no speed) | Creature chamber, 300 s each: 5 Generic samples, 1 Mouse sample, 5 Biosamples, 3 cDNA, 1 Cottongut codex | 28 (20 + 6 lab modules, 2 cub complex) |
+| Moondrop | 6 (8 made) | 1 greenhouse module + 5 for the first seed craft; a sample gives 4 | 2 Moondrop samples (nursery, 200 s: 1 Moondrop codex, 2 Petri dishes, 1 Planter box), no cDNA | 48 (16 per greenhouse) |
+| Auog | 2 | one module each for the Reproductive complex and the paddock | Creature chamber, 300 s each: 2 Generic samples, 5 Biosamples, 3 cDNA, 1 Auog codex, 1 Bear sample | 6 |
+| Moss | 1 per Moss farm | farm module | the author's Moss | 4 farms |
+
+Plain Cottongut pups for the first caged batch (7) come from the raising at 0.5 a craft: 14 raisings.
+Growing Cottongut MK 01 from 3 to 28 then takes 32 maturings. Together: **46 Cottongut food**, 140
+Seaweed, 28 Fish eggs, 32 Wood, 96 Moondrop (from the greenhouses).
+
+Intermediates of that stock (counts): 24 cDNA (each: 3 Laboratory instruments, 1 Retrovirus, 1 Plasmid),
+72 Laboratory instruments, 430 Biosamples (430 Bio containers), 120 Moss gene samples, 24 Retroviruses,
+24 Plasmids, 27 Generic earth samples, 3 Mouse, 3 Flower, 2 Bear samples, 26 codices, 431 Petri dishes
+(163 incubated), 60 Flasks, 46 Starch (15 Fiberboard, 15 powdered Ralesia seeds).
+
+Raw totals (one-time):
+
+| Raw input | Amount | Raw input | Amount |
+|---|---|---|---|
+| Steam | 44,270 | Molten glass | 31,160 |
+| Water | 10,000 | Native flora | 6,450 |
+| Moss | 2,448 | Seaweed | 2,214 (+140 raising) |
+| Red science packs | 1,205 | Hot air | 1,200 |
+| Tin plate | 903 | Titanium plate | 860 |
+| Copper plate | 820 | Simple circuit boards | 756 |
+| Glass | 722 | Zogna bacteria | 480 |
+| Steel | 454 | Lead plate | 430 |
+| Rubber | 360 | Ralesia seeds | 253 |
+| Rubber stoppers | 240 | Small parts | 180 |
+| Iron plate | 120 | Hollow inductors | 100 |
+| Vrauk cocoons | 96 | Wood seeds | 58 |
+| FeNxSb alloy | 36 | Boron trioxide | 36 |
+| Cellulose | 29 | Iron chests | 27 |
+| Soil | 25 | Fiberboard | 15 |
+| Ash | 15 | Empty planter boxes | 5 |
+
+The deepest of these are the same as for the steady line: Rubber (360: Latex + Aromatics), Boron
+trioxide (36: Borax), FeNxSb (36) and the Petri dish/Flask glass chain (31,160 Molten glass). They are
+the blocks to automate first; the genetics then take a few hours of machine time (Creature chamber and
+sample recipes are 200-300 s each).
