@@ -33,7 +33,7 @@ for _,e in pairs(s.find_entities_filtered{area=a}) do
   if e.type~='character' and e.type~='item-entity' and e.type~='resource' and e.type~='tile-ghost' then
     local b=e.bounding_box
     for x=math.floor(b.left_top.x+0.01),math.ceil(b.right_bottom.x-0.01)-1 do for y=math.floor(b.left_top.y+0.01),math.ceil(b.right_bottom.y-0.01)-1 do occ[#occ+1]=x..','..y end end
-    if e.type=='pipe-to-ground' or e.type=='underground-belt' then ugt[#ugt+1]=math.floor(e.position.x)..','..math.floor(e.position.y) end
+    if e.type=='${kind === 'pipe' ? 'pipe-to-ground' : 'underground-belt'}' then ugt[#ugt+1]=math.floor(e.position.x)..','..math.floor(e.position.y) end
     if e.type=='transport-belt' or e.type=='underground-belt' or e.type=='splitter' then
       local o=e.belt_neighbours and e.belt_neighbours.outputs
       local d=e.direction local v=({[0]={0,-1},[4]={1,0},[8]={0,1},[12]={-1,0}})[d]
@@ -54,7 +54,9 @@ Promise.resolve().then(() => {
   const v = m && m[1];
   if (typeof v !== 'string') throw new Error(`eval failed: ${ans}`);
   const [occS, dropS, flS, ptS, ugS] = v.split('|');
-  const ugT = new Set((ugS || '').split(';').filter(Boolean)); // existing undergrounds: a new pair may not jump over one (they pair with the nearest)
+  // existing undergrounds of the same kind: a new pair may not jump over one (they would pair with the
+  // nearest); belt and pipe undergrounds never pair with each other, so only the route's own kind counts.
+  const ugT = new Set((ugS || '').split(';').filter(Boolean));
   const occ = new Set(occS.split(';').filter(Boolean));
   const dropT = new Set(dropS.split(';').filter(Boolean));
   const pipeT = new Set(flS.split(';').filter(Boolean));   // pipes, tanks, pumps, valves
